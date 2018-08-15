@@ -24,6 +24,8 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import cc.lixiaoyu.wanandroid.adapter.NavFragmentAdapter;
 import cc.lixiaoyu.wanandroid.fragment.HomeFragment;
 import cc.lixiaoyu.wanandroid.fragment.NavFragment;
@@ -32,12 +34,18 @@ import cc.lixiaoyu.wanandroid.fragment.SystemFragment;
 
 public class MainActivity extends AppCompatActivity {
 
-    private DrawerLayout mDrawerLayout;
-    private NavigationView mNavigationView;
-    private Toolbar mToolbar;
-    private TextView mTvTitle;
-    private TabLayout mTabLayout;
-    private ViewPager mViewPager;
+    @BindView(R.id.main_drawer_layout)
+    DrawerLayout mDrawerLayout;
+    @BindView(R.id.main_nav_view)
+    NavigationView mNavigationView;
+    @BindView(R.id.main_toolbar)
+    Toolbar mToolbar;
+    @BindView(R.id.main_tv_title)
+    TextView mTvTitle;
+    @BindView(R.id.main_navbar)
+    TabLayout mTabLayout;
+    @BindView(R.id.main_viewpager)
+    ViewPager mViewPager;
 
     private NavFragmentAdapter mAdapter;
     private List<Fragment>  mFragmentList;
@@ -46,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //ButterKnife注册
+        ButterKnife.bind(this);
         initData();
         initView();
     }
@@ -54,12 +64,6 @@ public class MainActivity extends AppCompatActivity {
      * 初始化控件
      */
     private void initView() {
-        mDrawerLayout = findViewById(R.id.main_drawer_layout);
-        mNavigationView = findViewById(R.id.main_nav_view);
-        mToolbar = findViewById(R.id.main_toolbar);
-        mTvTitle = findViewById(R.id.main_tv_title);
-        mTabLayout = findViewById(R.id.main_navbar);
-        mViewPager = findViewById(R.id.main_viewpager);
 
         mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
