@@ -1,14 +1,23 @@
 package cc.lixiaoyu.wanandroid;
 
 import android.graphics.Color;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 
 import org.w3c.dom.Text;
 
@@ -23,25 +32,54 @@ import cc.lixiaoyu.wanandroid.fragment.SystemFragment;
 
 public class MainActivity extends AppCompatActivity {
 
+    private DrawerLayout mDrawerLayout;
+    private NavigationView mNavigationView;
+    private Toolbar mToolbar;
+    private TextView mTvTitle;
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
+
     private NavFragmentAdapter mAdapter;
     private List<Fragment>  mFragmentList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initData();
         initView();
-
-
     }
 
+    /**
+     * 初始化控件
+     */
     private void initView() {
+        mDrawerLayout = findViewById(R.id.main_drawer_layout);
+        mNavigationView = findViewById(R.id.main_nav_view);
+        mToolbar = findViewById(R.id.main_toolbar);
+        mTvTitle = findViewById(R.id.main_tv_title);
         mTabLayout = findViewById(R.id.main_navbar);
         mViewPager = findViewById(R.id.main_viewpager);
 
-        mAdapter = new NavFragmentAdapter(getSupportFragmentManager(), this, mFragmentList);
+        mToolbar.setTitle("");
+        setSupportActionBar(mToolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if(actionBar != null){
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeAsUpIndicator(R.mipmap.ic_menu);
+        }
+
+        mNavigationView.setCheckedItem(R.id.nav_camera);
+        mNavigationView.setNavigationItemSelectedListener(new NavigationView
+                .OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                mDrawerLayout.closeDrawers();
+                return true;
+            }
+        });
+        mAdapter = new NavFragmentAdapter(getSupportFragmentManager(),
+                this, mFragmentList);
         mViewPager.setAdapter(mAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -81,9 +119,16 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        mTvTitle.setText(mAdapter.getPageTitle(0));
+
     }
 
+    /**
+     * 在底部导航栏tab切换时改变icon的颜色和text的颜色
+     * @param tab
+     */
     private void changeTab(TabLayout.Tab tab) {
+        mTvTitle.setText(mAdapter.getPageTitle(tab.getPosition()));
         for(int i = 0;i<mAdapter.getCount();i++){
             View view = mTabLayout.getTabAt(i).getCustomView();
             ImageView imgIcon = view.findViewById(R.id.tab_item_img);
@@ -98,11 +143,33 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    /**
+     * 初始化数据源
+     */
     private void initData() {
         mFragmentList = new ArrayList<>();
         mFragmentList.add(new HomeFragment());
         mFragmentList.add(new SystemFragment());
         mFragmentList.add(new NavFragment());
         mFragmentList.add(new ProjectFragment());
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                mDrawerLayout.openDrawer(GravityCompat.START);
+                break;
+            case R.id.menu_main_search:
+                //
+                break;
+        }
+        return true;
     }
 }
