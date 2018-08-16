@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:id="@+id/main_drawer_layout">
+    android:id="@+id/main_drawer_layout"
+    android:fitsSystemWindows="true">
     <include
         layout="@layout/app_bar_main"
         android:layout_width="match_parent"

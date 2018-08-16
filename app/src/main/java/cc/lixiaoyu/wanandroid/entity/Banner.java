@@ -1,130 +1,85 @@
 package cc.lixiaoyu.wanandroid.entity;
 
-import com.google.gson.annotations.SerializedName;
-
-import java.util.List;
-
 public class Banner {
 
+    private String desc;
+    private int id;
+    private String imagePath;
+    private int isVisible;
+    private int order;
+    private String title;
+    private int type;
+    private String url;
 
-    private List<BannerData> data;
-    @SerializedName("errorCode")
-    private int errorcode;
-    @SerializedName("errorMsg")
-    private String errormsg;
-
-
-    public void setData(List<BannerData> data) {
-        this.data = data;
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 
-    public List<BannerData> getData() {
-        return data;
-    }
-
-
-    public void setErrorcode(int errorcode) {
-        this.errorcode = errorcode;
-    }
-
-    public int getErrorcode() {
-        return errorcode;
+    public String getDesc() {
+        return desc;
     }
 
 
-    public void setErrormsg(String errormsg) {
-        this.errormsg = errormsg;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getErrormsg() {
-        return errormsg;
+    public int getId() {
+        return id;
     }
 
-    public class BannerData {
 
-        private String desc;
-        private int id;
-        @SerializedName("imagePath")
-        private String imagepath;
-        @SerializedName("isVisible")
-        private int isvisible;
-        private int order;
-        private String title;
-        private int type;
-        private String url;
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
 
 
-        public void setDesc(String desc) {
-            this.desc = desc;
-        }
+    public void setIsVisible(int isVisible) {
+        this.isVisible = isVisible;
+    }
 
-        public String getDesc() {
-            return desc;
-        }
-
-
-        public void setId(int id) {
-            this.id = id;
-        }
-
-        public int getId() {
-            return id;
-        }
+    public int getIsVisible() {
+        return isVisible;
+    }
 
 
-        public void setImagepath(String imagepath) {
-            this.imagepath = imagepath;
-        }
+    public void setOrder(int order) {
+        this.order = order;
+    }
 
-        public String getImagepath() {
-            return imagepath;
-        }
-
-
-        public void setIsvisible(int isvisible) {
-            this.isvisible = isvisible;
-        }
-
-        public int getIsvisible() {
-            return isvisible;
-        }
+    public int getOrder() {
+        return order;
+    }
 
 
-        public void setOrder(int order) {
-            this.order = order;
-        }
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-        public int getOrder() {
-            return order;
-        }
-
-
-        public void setTitle(String title) {
-            this.title = title;
-        }
-
-        public String getTitle() {
-            return title;
-        }
+    public String getTitle() {
+        return title;
+    }
 
 
-        public void setType(int type) {
-            this.type = type;
-        }
+    public void setType(int type) {
+        this.type = type;
+    }
 
-        public int getType() {
-            return type;
-        }
+    public int getType() {
+        return type;
+    }
 
 
-        public void setUrl(String url) {
-            this.url = url;
-        }
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
-        public String getUrl() {
-            return url;
-        }
-
+    public String getUrl() {
+        return url;
     }
 
 }
