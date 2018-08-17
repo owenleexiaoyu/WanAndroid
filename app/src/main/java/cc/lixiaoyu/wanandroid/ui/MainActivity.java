@@ -1,4 +1,4 @@
-package cc.lixiaoyu.wanandroid;
+package cc.lixiaoyu.wanandroid.ui;
 
 import android.os.Build;
 import android.os.Bundle;
@@ -9,7 +9,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -25,11 +24,13 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cc.lixiaoyu.wanandroid.R;
 import cc.lixiaoyu.wanandroid.adapter.NavFragmentAdapter;
-import cc.lixiaoyu.wanandroid.fragment.HomeFragment;
-import cc.lixiaoyu.wanandroid.fragment.NavFragment;
-import cc.lixiaoyu.wanandroid.fragment.ProjectFragment;
-import cc.lixiaoyu.wanandroid.fragment.SystemFragment;
+import cc.lixiaoyu.wanandroid.ui.fragment.HomeFragment;
+import cc.lixiaoyu.wanandroid.ui.fragment.SystemFragment;
+import cc.lixiaoyu.wanandroid.ui.fragment.NavFragment;
+import cc.lixiaoyu.wanandroid.ui.fragment.ProjectFragment;
+
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -130,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 tvTitle.setTextColor(getColor(R.color.orange));
             }else{
                 imgIcon.setImageResource(mAdapter.getIconNormalIds()[i]);
-                tvTitle.setTextColor(getColor(R.color.gray));
+                tvTitle.setTextColor(getColor(R.color.light_gray));
             }
         }
     }

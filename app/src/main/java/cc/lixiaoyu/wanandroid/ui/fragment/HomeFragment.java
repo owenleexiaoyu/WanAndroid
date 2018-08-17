@@ -1,4 +1,4 @@
-package cc.lixiaoyu.wanandroid.fragment;
+package cc.lixiaoyu.wanandroid.ui.fragment;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -37,7 +37,6 @@ import cc.lixiaoyu.wanandroid.entity.Banner;
 import cc.lixiaoyu.wanandroid.entity.WanAndroidResult;
 import cc.lixiaoyu.wanandroid.service.WanAndroidService;
 import cc.lixiaoyu.wanandroid.util.AppConst;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -72,7 +71,7 @@ public class HomeFragment extends Fragment {
                         .setIndicator(mZoomIndicator)
                         .builder();
                 mBannerViewPager.setPageListener(pageBean,
-                        R.layout.layout_banner_item, new PageHelperListener() {
+                        R.layout.item_banner, new PageHelperListener() {
                     @Override
                     public void getItemView(View view, Object o) {
                         Banner data = (Banner) o;

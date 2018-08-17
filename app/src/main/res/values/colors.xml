@@ -4,6 +4,10 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="orange">#FF8B56</color>
-    <color name="gray">#cdcdcd</color>
-
+    <color name="light_gray">#cdcdcd</color>
+    <color name="dark_gray">#393939</color>
+    <color name="light_blue">#06A9F2</color>
+    <color name="yollew">#FEC107</color>
+    <color name="light_yollew">#CDDC3A</color>
+    <color name="green">#259B24</color>
 </resources>

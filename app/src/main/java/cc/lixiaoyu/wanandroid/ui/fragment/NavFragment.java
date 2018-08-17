@@ -1,4 +1,4 @@
-package cc.lixiaoyu.wanandroid.fragment;
+package cc.lixiaoyu.wanandroid.ui.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
