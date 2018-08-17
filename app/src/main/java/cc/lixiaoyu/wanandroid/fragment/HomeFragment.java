@@ -6,6 +6,7 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -45,6 +46,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class HomeFragment extends Fragment {
     private static final String TAG = "HomeFragment";
+    @BindView(R.id.fhome_swipe_refresh)
+    SwipeRefreshLayout mSwipeRefreshLayout;
     @BindView(R.id.fhome_banner)
     BannerViewPager mBannerViewPager;
     @BindView(R.id.fhome_zoom_indicator)
@@ -88,6 +91,7 @@ public class HomeFragment extends Fragment {
             }
             else if(msg.what == 2){
                 mAdapter.notifyDataSetChanged();
+                mSwipeRefreshLayout.setRefreshing(false);
             }
         }
     };
@@ -97,7 +101,9 @@ public class HomeFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home,container, false);
         ButterKnife.bind(this, view);
         mArticleList = new ArrayList<>();
@@ -107,6 +113,12 @@ public class HomeFragment extends Fragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mAdapter = new ArticleAdapter(getActivity(), mArticleList);
         mRecyclerView.setAdapter(mAdapter);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getArtileList();
+            }
+        });
         return view;
     }
 
@@ -120,6 +132,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void getArtileList() {
+        mArticleList.clear();
         Call<WanAndroidResult<ArticlePage>> call = mService.getArticleList("0");
         call.enqueue(new Callback<WanAndroidResult<ArticlePage>>() {
             @Override

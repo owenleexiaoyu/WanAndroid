@@ -75,7 +75,7 @@
         android:id="@+id/item_article_collect"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:src="@color/orange"
+        android:src="@mipmap/ic_heart_gray"
         app:layout_constraintBottom_toBottomOf="@id/item_article_chapter"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginEnd="10dp"/>

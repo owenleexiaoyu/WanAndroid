@@ -10,6 +10,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -30,7 +31,7 @@ import cc.lixiaoyu.wanandroid.fragment.NavFragment;
 import cc.lixiaoyu.wanandroid.fragment.ProjectFragment;
 import cc.lixiaoyu.wanandroid.fragment.SystemFragment;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     @BindView(R.id.main_drawer_layout)
     DrawerLayout mDrawerLayout;
@@ -38,8 +39,6 @@ public class MainActivity extends AppCompatActivity {
     NavigationView mNavigationView;
     @BindView(R.id.main_toolbar)
     Toolbar mToolbar;
-    @BindView(R.id.main_tv_title)
-    TextView mTvTitle;
     @BindView(R.id.main_navbar)
     TabLayout mTabLayout;
     @BindView(R.id.main_viewpager)
@@ -65,24 +64,8 @@ public class MainActivity extends AppCompatActivity {
      * 初始化控件
      */
     private void initView() {
-
-        mToolbar.setTitle("");
-        setSupportActionBar(mToolbar);
-        ActionBar actionBar = getSupportActionBar();
-        if(actionBar != null){
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeAsUpIndicator(R.mipmap.ic_menu);
-        }
-
         mNavigationView.setCheckedItem(R.id.nav_camera);
-        mNavigationView.setNavigationItemSelectedListener(new NavigationView
-                .OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                mDrawerLayout.closeDrawers();
-                return true;
-            }
-        });
+        mNavigationView.setNavigationItemSelectedListener(this);
         mAdapter = new NavFragmentAdapter(getSupportFragmentManager(),
                 this, mFragmentList);
         mViewPager.setAdapter(mAdapter);
@@ -124,8 +107,12 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        mTvTitle.setText(mAdapter.getPageTitle(0));
-
+        mToolbar.setTitle(mAdapter.getPageTitle(0));
+        setSupportActionBar(mToolbar);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, mDrawerLayout, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        mDrawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
     }
 
     /**
@@ -133,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
      * @param tab
      */
     private void changeTab(TabLayout.Tab tab) {
-        mTvTitle.setText(mAdapter.getPageTitle(tab.getPosition()));
+        mToolbar.setTitle(mAdapter.getPageTitle(tab.getPosition()));
         for(int i = 0;i<mAdapter.getCount();i++){
             View view = mTabLayout.getTabAt(i).getCustomView();
             ImageView imgIcon = view.findViewById(R.id.tab_item_img);
@@ -168,13 +155,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            case android.R.id.home:
-                mDrawerLayout.openDrawer(GravityCompat.START);
-                break;
             case R.id.menu_main_search:
                 //
                 break;
         }
+        return true;
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
 }
