@@ -4,6 +4,7 @@ import java.util.List;
 
 import cc.lixiaoyu.wanandroid.entity.ArticlePage;
 import cc.lixiaoyu.wanandroid.entity.Banner;
+import cc.lixiaoyu.wanandroid.entity.PrimaryClass;
 import cc.lixiaoyu.wanandroid.entity.WanAndroidResult;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -25,4 +26,6 @@ public interface WanAndroidService {
     @GET("article/list/{page}/json")
     Call<WanAndroidResult<ArticlePage>> getArticleList(@Path("page") String page);
 
+    @GET("tree/json")
+    Call<WanAndroidResult<List<PrimaryClass>>> getSystemData();
 }

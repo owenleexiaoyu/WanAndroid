@@ -27,12 +27,15 @@ import cc.lixiaoyu.wanandroid.entity.ArticlePage;
 public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHolder> {
     private List<ArticlePage.Article> articleList;
     private Context context;
-
+    private OnArticleItemClickListener mListener;
     public ArticleAdapter(Context context, List<ArticlePage.Article> articleList) {
         this.articleList = articleList;
         this.context = context;
     }
 
+    public void setArticleItemClickListener(OnArticleItemClickListener listener){
+        mListener = listener;
+    }
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -42,7 +45,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int i) {
         ArticlePage.Article article = articleList.get(i);
         viewHolder.tvAuther.setText(article.getAuthor());
         Date date = new Date(article.getPublishTime());
@@ -58,12 +61,30 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
         }
         viewHolder.tvTitle.setText(article.getTitle());
         viewHolder.tvChapter.setText(article.getChapterName());
+        //为item设置点击事件监听
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mListener != null){
+                    mListener.onItemClick(view, i);
+                }
+            }
+        });
+        viewHolder.imgCollect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mListener != null){
+                    mListener.onCollectBtnClick(view, i);
+                }
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return articleList.size();
     }
+
 
     class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.item_article_auther)
@@ -82,5 +103,10 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
+    }
+
+    public interface OnArticleItemClickListener{
+        void onItemClick(View view,int position);
+        void onCollectBtnClick(View view, int position);
     }
 }

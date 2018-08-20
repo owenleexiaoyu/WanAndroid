@@ -1,5 +1,6 @@
 package cc.lixiaoyu.wanandroid.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -19,6 +20,9 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
+import com.youth.banner.BannerConfig;
+import com.youth.banner.Transformer;
+import com.youth.banner.listener.OnBannerListener;
 import com.zhengsr.viewpagerlib.anim.DepthPageTransformer;
 import com.zhengsr.viewpagerlib.bean.PageBean;
 import com.zhengsr.viewpagerlib.callback.PageHelperListener;
@@ -30,12 +34,14 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cc.lixiaoyu.wanandroid.GlideImageLoader;
 import cc.lixiaoyu.wanandroid.R;
 import cc.lixiaoyu.wanandroid.adapter.ArticleAdapter;
 import cc.lixiaoyu.wanandroid.entity.ArticlePage;
 import cc.lixiaoyu.wanandroid.entity.Banner;
 import cc.lixiaoyu.wanandroid.entity.WanAndroidResult;
 import cc.lixiaoyu.wanandroid.service.WanAndroidService;
+import cc.lixiaoyu.wanandroid.ui.ArticleDetailActivity;
 import cc.lixiaoyu.wanandroid.util.AppConst;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -48,14 +54,13 @@ public class HomeFragment extends Fragment {
     @BindView(R.id.fhome_swipe_refresh)
     SwipeRefreshLayout mSwipeRefreshLayout;
     @BindView(R.id.fhome_banner)
-    BannerViewPager mBannerViewPager;
-    @BindView(R.id.fhome_zoom_indicator)
-    ZoomIndicator mZoomIndicator;
+    com.youth.banner.Banner mBanner;
     @BindView(R.id.fhome_recyclerview)
     RecyclerView mRecyclerView;
 
     private ArticleAdapter mAdapter;
     private List<Banner> mBannerList;
+    private List<String> mBannerTitleList;
     private List<ArticlePage.Article> mArticleList;
     private Gson mGson;
     private Retrofit mRetrofit;
@@ -66,27 +71,29 @@ public class HomeFragment extends Fragment {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             if(msg.what == 1){
-                PageBean pageBean = new PageBean.Builder<Banner>()
-                        .setDataObjects(mBannerList)
-                        .setIndicator(mZoomIndicator)
-                        .builder();
-                mBannerViewPager.setPageListener(pageBean,
-                        R.layout.item_banner, new PageHelperListener() {
+                mBannerTitleList = new ArrayList<>();
+                for(Banner banner : mBannerList){
+                    mBannerTitleList.add(banner.getTitle());
+                }
+                mBanner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);
+                mBanner.setImageLoader(new GlideImageLoader());
+                mBanner.setImages(mBannerList);
+                mBanner.setIndicatorGravity(BannerConfig.RIGHT);
+                mBanner.setBannerTitles(mBannerTitleList);
+                mBanner.setBannerAnimation(Transformer.DepthPage);
+                mBanner.isAutoPlay(true);
+                mBanner.setDelayTime(1500);
+                mBanner.setOnBannerListener(new OnBannerListener() {
                     @Override
-                    public void getItemView(View view, Object o) {
-                        Banner data = (Banner) o;
-                        ImageView imageView = view.findViewById(R.id.banner_item_img);
-                        TextView textView = view.findViewById(R.id.banner_item_text);
-                        textView.setText(data.getTitle());
-                        RequestOptions options = new RequestOptions()
-                                .centerCrop();
-                        Glide.with(getActivity())
-                                .load(data.getImagePath())
-                                .apply(options)
-                                .into(imageView);
+                    public void OnBannerClick(int position) {
+                        Banner banner = mBannerList.get(position);
+                        Intent intent = new Intent(getActivity(), ArticleDetailActivity.class);
+                        intent.putExtra("url",banner.getUrl());
+                        intent.putExtra("title",banner.getTitle());
+                        startActivity(intent);
                     }
                 });
-                mBannerViewPager.setPageTransformer(false, new DepthPageTransformer());
+                mBanner.start();
             }
             else if(msg.what == 2){
                 mAdapter.notifyDataSetChanged();
@@ -109,8 +116,26 @@ public class HomeFragment extends Fragment {
         initRetrofit();
         getBanner();
         getArtileList();
+
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mAdapter = new ArticleAdapter(getActivity(), mArticleList);
+        mAdapter.setArticleItemClickListener(new ArticleAdapter.OnArticleItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                ArticlePage.Article article = mArticleList.get(position);
+                String url = article.getLink();
+                String title = article.getTitle();
+                Intent intent = new Intent(getActivity(), ArticleDetailActivity.class);
+                intent.putExtra("url", url);
+                intent.putExtra("title",title);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onCollectBtnClick(View view, int position) {
+                Toast.makeText(getActivity(), "点击了收藏按钮", Toast.LENGTH_SHORT).show();
+            }
+        });
         mRecyclerView.setAdapter(mAdapter);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -169,5 +194,17 @@ public class HomeFragment extends Fragment {
                 Toast.makeText(getActivity(), "出错了", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mBanner.startAutoPlay();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mBanner.stopAutoPlay();
     }
 }
