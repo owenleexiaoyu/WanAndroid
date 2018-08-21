@@ -1,4 +1,4 @@
-package cc.lixiaoyu.wanandroid;
+package cc.lixiaoyu.wanandroid.util;
 
 import android.content.Context;
 import android.widget.ImageView;

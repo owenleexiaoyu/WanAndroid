@@ -1,4 +1,4 @@
-package cc.lixiaoyu.wanandroid.ui;
+package cc.lixiaoyu.wanandroid.ui.activity;
 
 import android.os.Build;
 import android.os.Bundle;
@@ -26,13 +26,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cc.lixiaoyu.wanandroid.R;
 import cc.lixiaoyu.wanandroid.adapter.NavFragmentAdapter;
+import cc.lixiaoyu.wanandroid.base.BaseActivity;
 import cc.lixiaoyu.wanandroid.ui.fragment.HomeFragment;
 import cc.lixiaoyu.wanandroid.ui.fragment.SystemFragment;
 import cc.lixiaoyu.wanandroid.ui.fragment.NavFragment;
 import cc.lixiaoyu.wanandroid.ui.fragment.ProjectFragment;
 
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     @BindView(R.id.main_drawer_layout)
     DrawerLayout mDrawerLayout;
@@ -51,20 +52,31 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
-        //ButterKnife注册
-        ButterKnife.bind(this);
-        initData();
-        initView();
+
     }
 
+
+    /**
+     * 初始化数据源
+     */
+    @Override
+    protected void initData() {
+        mFragmentList = new ArrayList<>();
+        mFragmentList.add(new HomeFragment());
+        mFragmentList.add(new SystemFragment());
+        mFragmentList.add(new NavFragment());
+        mFragmentList.add(new ProjectFragment());
+    }
     /**
      * 初始化控件
      */
-    private void initView() {
+    @Override
+    protected void initView() {
+        //ButterKnife注册
+        ButterKnife.bind(this);
         mNavigationView.setCheckedItem(R.id.nav_camera);
         mNavigationView.setNavigationItemSelectedListener(this);
         mAdapter = new NavFragmentAdapter(getSupportFragmentManager(),
@@ -116,6 +128,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
     }
 
+    @Override
+    protected int attachLayout() {
+        return R.layout.activity_main;
+    }
+
     /**
      * 在底部导航栏tab切换时改变icon的颜色和text的颜色
      * @param tab
@@ -142,16 +159,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    /**
-     * 初始化数据源
-     */
-    private void initData() {
-        mFragmentList = new ArrayList<>();
-        mFragmentList.add(new HomeFragment());
-        mFragmentList.add(new SystemFragment());
-        mFragmentList.add(new NavFragment());
-        mFragmentList.add(new ProjectFragment());
-    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

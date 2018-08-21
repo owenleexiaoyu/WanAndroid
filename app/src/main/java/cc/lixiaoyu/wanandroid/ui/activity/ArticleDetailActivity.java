@@ -1,5 +1,6 @@
-package cc.lixiaoyu.wanandroid.ui;
+package cc.lixiaoyu.wanandroid.ui.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -18,36 +19,52 @@ import android.widget.ProgressBar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cc.lixiaoyu.wanandroid.R;
+import cc.lixiaoyu.wanandroid.base.BaseSwipeBackActivity;
+import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
 /**
  * 文章详情页
  */
-public class ArticleDetailActivity extends AppCompatActivity{
+public class ArticleDetailActivity extends BaseSwipeBackActivity {
     @BindView(R.id.detail_webview)
     WebView mWebView;
     @BindView(R.id.detail_toolbar)
     Toolbar mToolbar;
     @BindView(R.id.detail_progressbar)
     ProgressBar mProgressBar;
+
+    private String mTitle;
+    private String mUrl;
+
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail);
-        ButterKnife.bind(this);
+    protected void initData() {
         Intent intent = getIntent();
-        String url = intent.getStringExtra("url");
-        String title = intent.getStringExtra("title");
-        mToolbar.setTitle(title);
+        mUrl = intent.getStringExtra("url");
+        mTitle = intent.getStringExtra("title");
+    }
+
+    @Override
+    protected void initView() {
+        ButterKnife.bind(this);
+        mToolbar.setTitle(mTitle);
         setSupportActionBar(mToolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeAsUpIndicator(R.mipmap.ic_back);
+        actionBar.setHomeButtonEnabled(true);
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.setWebChromeClient(new WebChromeClient());
         mWebView.setWebViewClient(new MyWebViewClient());
-        mWebView.loadUrl(url);
+        mWebView.loadUrl(mUrl);
     }
 
+    @Override
+    protected int attachLayout() {
+        return R.layout.activity_detail;
+    }
+
+    /**
+     * 自定义WebViewClient，在网页开始加载时显示进度条，加载完成后隐藏进度条
+     */
     class MyWebViewClient extends WebViewClient{
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
@@ -62,13 +79,18 @@ public class ArticleDetailActivity extends AppCompatActivity{
         }
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case android.R.id.home:
-                finish();
-                break;
-        }
-        return true;
+
+
+    /**
+     * 从其他Activity跳转到本Activity，代替startActivity
+     * @param context
+     * @param title
+     * @param url
+     */
+    public static void actionStart(Context context, String title, String url){
+        Intent intent = new Intent(context, ArticleDetailActivity.class);
+        intent.putExtra("title", title);
+        intent.putExtra("url", url);
+        context.startActivity(intent);
     }
 }

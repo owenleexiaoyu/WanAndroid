@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.MainActivity">
+    tools:context=".ui.activity.MainActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -17,28 +17,25 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@color/orange"
             app:layout_scrollFlags="enterAlways|snap|scroll"
-            app:popupTheme="@style/AppTheme.PopupOverlay"/>
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
     </android.support.design.widget.AppBarLayout>
-    <LinearLayout
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/main_viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-        <android.support.v4.view.ViewPager
-            android:id="@+id/main_viewpager"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-        <android.support.design.widget.TabLayout
-            android:id="@+id/main_navbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:layout_gravity="bottom"
-            android:background="@android:color/white"
-            android:elevation="6dp"
-            android:translationZ="6dp"
-            app:layout_scrollFlags="enterAlways|snap|scroll"
-            app:tabIndicatorHeight="0dp"
-            app:tabTextColor="@color/light_gray"/>
-    </LinearLayout>
+    <android.support.design.widget.TabLayout
+        android:id="@+id/main_navbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:background="@android:color/white"
+        android:elevation="6dp"
+        android:translationZ="6dp"
+        app:layout_behavior="cc.lixiaoyu.wanandroid.BottomTabLayoutBehavior"
+        app:tabIndicatorHeight="0dp"
+        app:tabTextColor="@color/light_gray" />
 </android.support.design.widget.CoordinatorLayout>

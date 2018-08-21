@@ -1,5 +1,6 @@
 package cc.lixiaoyu.wanandroid.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -23,8 +24,11 @@ import cc.lixiaoyu.wanandroid.R;
 import cc.lixiaoyu.wanandroid.adapter.SystemAdapter;
 import cc.lixiaoyu.wanandroid.entity.PrimaryClass;
 import cc.lixiaoyu.wanandroid.entity.WanAndroidResult;
-import cc.lixiaoyu.wanandroid.service.WanAndroidService;
+import cc.lixiaoyu.wanandroid.api.WanAndroidService;
+import cc.lixiaoyu.wanandroid.ui.activity.SubClassActivity;
 import cc.lixiaoyu.wanandroid.util.AppConst;
+import cc.lixiaoyu.wanandroid.util.RetrofitUtil;
+import cc.lixiaoyu.wanandroid.util.ToastUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -38,21 +42,12 @@ public class SystemFragment extends Fragment {
     RecyclerView mRecyclerView;
     private List<PrimaryClass> mDataList;
     private SystemAdapter systemAdapter;
-    private Handler mHandler = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what){
-                case 1:
-                    systemAdapter.notifyDataSetChanged();
-                    Log.d(TAG, "handleMessage: 成功了");
-                    break;
-            }
-        }
-    };
+
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_system,container, false);
         ButterKnife.bind(this, view);
         initData();
@@ -60,7 +55,7 @@ public class SystemFragment extends Fragment {
         systemAdapter.setItemClickListener(new SystemAdapter.OnSystemItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-
+                SubClassActivity.actionStart(getActivity(), mDataList.get(position));
             }
         });
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -70,11 +65,7 @@ public class SystemFragment extends Fragment {
 
     private void initData(){
         mDataList = new ArrayList<>();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(AppConst.WANANDROID_BASEURL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        WanAndroidService service = retrofit.create(WanAndroidService.class);
+        WanAndroidService service = RetrofitUtil.getWanAndroidService();
         Call<WanAndroidResult<List<PrimaryClass>>> call = service.getSystemData();
         call.enqueue(new Callback<WanAndroidResult<List<PrimaryClass>>>() {
             @Override
@@ -83,13 +74,13 @@ public class SystemFragment extends Fragment {
                 WanAndroidResult<List<PrimaryClass>> result = response.body();
                 if(result.getErrorCode() == 0){
                     mDataList.addAll(result.getData());
-                    mHandler.sendEmptyMessage(1);
+                    systemAdapter.notifyDataSetChanged();
                 }
             }
 
             @Override
             public void onFailure(Call<WanAndroidResult<List<PrimaryClass>>> call, Throwable t) {
-                Toast.makeText(getActivity(), "出错了", Toast.LENGTH_SHORT).show();
+                ToastUtil.showToast("出错了");
             }
         });
     }

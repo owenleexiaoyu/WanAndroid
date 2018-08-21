@@ -1,5 +1,9 @@
 package cc.lixiaoyu.wanandroid.entity;
 
+/**
+ * WANAndroid返回数据最外层的实体类
+ * @param <T>
+ */
 public class WanAndroidResult<T> {
     private int errorCode;
     private String errorMsg;

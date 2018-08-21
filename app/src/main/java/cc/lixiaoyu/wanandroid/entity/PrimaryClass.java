@@ -1,11 +1,12 @@
 package cc.lixiaoyu.wanandroid.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * 知识体系的一级分类的实体类
  */
-public class PrimaryClass {
+public class PrimaryClass implements Serializable{
 
     private List<SubClass> children;
 
@@ -70,7 +71,7 @@ public class PrimaryClass {
         this.parentChapterId = parentChapterId;
     }
 
-    public class SubClass {
+    public class SubClass implements Serializable {
 
         private List<String> children;
         private int courseId;
