@@ -112,22 +112,22 @@ public class SubClassFragment extends BasePageFragment {
             }
         });
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mAdapter = new ArticleAdapter(getActivity(), mArticleList);
-        mAdapter.setArticleItemClickListener(new ArticleAdapter.OnArticleItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                ArticlePage.Article article = mArticleList.get(position);
-                String url = article.getLink();
-                String title = article.getTitle();
-                //携带Title和URL跳转到ArticleDetailActivity
-                ArticleDetailActivity.actionStart(getActivity(), title, url);
-            }
-
-            @Override
-            public void onCollectBtnClick(View view, int position) {
-
-            }
-        });
+        mAdapter = new ArticleAdapter(R.layout.item_recyclerview_article, mArticleList);
+//        mAdapter.setArticleItemClickListener(new ArticleAdapter.OnArticleItemClickListener() {
+//            @Override
+//            public void onItemClick(View view, int position) {
+//                ArticlePage.Article article = mArticleList.get(position);
+//                String url = article.getLink();
+//                String title = article.getTitle();
+//                //携带Title和URL跳转到ArticleDetailActivity
+//                ArticleDetailActivity.actionStart(getActivity(), title, url);
+//            }
+//
+//            @Override
+//            public void onCollectBtnClick(View view, int position) {
+//
+//            }
+//        });
         mRecyclerView.setAdapter(mAdapter);
     }
 }
