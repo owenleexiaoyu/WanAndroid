@@ -1,12 +1,12 @@
 package cc.lixiaoyu.wanandroid.adapter;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
+import android.support.annotation.Nullable;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
 
 import java.util.List;
 
@@ -15,55 +15,28 @@ import butterknife.ButterKnife;
 import cc.lixiaoyu.wanandroid.R;
 import cc.lixiaoyu.wanandroid.entity.PrimaryClass;
 
-public class SystemAdapter extends RecyclerView.Adapter<SystemAdapter.ViewHolder>{
+public class SystemAdapter extends BaseQuickAdapter<PrimaryClass, SystemAdapter.ViewHolder>{
 
-    private List<PrimaryClass> mDataList;
-    private Context mContext;
-
-    private OnSystemItemClickListener mListener;
-    public SystemAdapter(Context context, List<PrimaryClass> mDataList) {
-        this.mContext = context;
-        this.mDataList = mDataList;
-    }
-
-    public void setItemClickListener(OnSystemItemClickListener mListener) {
-        this.mListener = mListener;
-    }
-
-    @NonNull
-    @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(mContext)
-                .inflate(R.layout.item_system_one,viewGroup, false);
-        ViewHolder holder = new ViewHolder(view);
-        return holder;
+    public SystemAdapter(int layoutResId, @Nullable List<PrimaryClass> data) {
+        super(layoutResId, data);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
+    protected void convert(ViewHolder helper, PrimaryClass item) {
         StringBuffer sb = new StringBuffer();
-        PrimaryClass pc = mDataList.get(i);
-        viewHolder.tvTitle.setText(pc.getName());
-        for(PrimaryClass.SubClass sc : pc.getChildren()){
+        helper.tvTitle.setText(item.getName());
+        for(PrimaryClass.SubClass sc : item.getChildren()){
             sb.append(sc.getName()+"   ");
         }
-        viewHolder.tvContent.setText(sb.toString());
-        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(mListener != null){
-                    mListener.onItemClick(view, i);
-                }
-            }
-        });
+        helper.tvContent.setText(sb.toString());
     }
 
     @Override
     public int getItemCount() {
-        return mDataList.size();
+        return mData.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder{
+    class ViewHolder extends BaseViewHolder{
         @BindView(R.id.item_system_one_title)
         TextView tvTitle;
         @BindView(R.id.item_system_one_content)
@@ -74,7 +47,5 @@ public class SystemAdapter extends RecyclerView.Adapter<SystemAdapter.ViewHolder
             ButterKnife.bind(this, itemView);
         }
     }
-    public interface OnSystemItemClickListener{
-        void onItemClick(View view,int position);
-    }
+
 }

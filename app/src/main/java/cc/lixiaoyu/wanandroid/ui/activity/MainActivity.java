@@ -10,7 +10,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,8 +26,12 @@ import butterknife.ButterKnife;
 import cc.lixiaoyu.wanandroid.R;
 import cc.lixiaoyu.wanandroid.adapter.NavFragmentAdapter;
 import cc.lixiaoyu.wanandroid.base.BaseActivity;
-import cc.lixiaoyu.wanandroid.ui.fragment.HomeFragment;
-import cc.lixiaoyu.wanandroid.ui.fragment.SystemFragment;
+import cc.lixiaoyu.wanandroid.mvp.model.HomeModel;
+import cc.lixiaoyu.wanandroid.mvp.model.KnowledgeTreeModel;
+import cc.lixiaoyu.wanandroid.mvp.presenter.HomePresenter;
+import cc.lixiaoyu.wanandroid.mvp.presenter.KnowledgeTreePresenter;
+import cc.lixiaoyu.wanandroid.mvp.view.HomeFragment;
+import cc.lixiaoyu.wanandroid.mvp.view.KnowledgeTreeFragment;
 import cc.lixiaoyu.wanandroid.ui.fragment.NavFragment;
 import cc.lixiaoyu.wanandroid.ui.fragment.ProjectFragment;
 
@@ -49,13 +52,16 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private NavFragmentAdapter mAdapter;
     private List<Fragment>  mFragmentList;
 
+
+    private HomePresenter mHomePresenter;
+    private KnowledgeTreePresenter mKnowledgePresenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
-
     }
 
 
@@ -65,10 +71,16 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     protected void initData() {
         mFragmentList = new ArrayList<>();
-        mFragmentList.add(new HomeFragment());
-        mFragmentList.add(new SystemFragment());
+        HomeFragment homeFragment = HomeFragment.newInstance();
+        KnowledgeTreeFragment knowledgeFragment = KnowledgeTreeFragment.newInstanse();
+        mFragmentList.add(homeFragment);
+        mFragmentList.add(knowledgeFragment);
         mFragmentList.add(new NavFragment());
         mFragmentList.add(new ProjectFragment());
+
+        mHomePresenter = new HomePresenter(homeFragment, new HomeModel());
+        mKnowledgePresenter = new KnowledgeTreePresenter(knowledgeFragment, new KnowledgeTreeModel());
+
     }
     /**
      * 初始化控件

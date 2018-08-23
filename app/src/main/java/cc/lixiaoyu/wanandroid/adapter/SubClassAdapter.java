@@ -8,11 +8,14 @@ import android.support.v4.app.FragmentPagerAdapter;
 import java.util.List;
 
 import cc.lixiaoyu.wanandroid.entity.PrimaryClass;
+import cc.lixiaoyu.wanandroid.mvp.model.SubClassModel;
+import cc.lixiaoyu.wanandroid.mvp.presenter.SubClassPresenter;
 import cc.lixiaoyu.wanandroid.ui.fragment.SubClassFragment;
 
 public class SubClassAdapter extends FragmentPagerAdapter {
 
     private List<PrimaryClass.SubClass> subClassList;
+    private SubClassPresenter mSubClassPresenter;
 
     public SubClassAdapter(FragmentManager fm, List<PrimaryClass.SubClass> subClassList) {
         super(fm);
@@ -21,7 +24,9 @@ public class SubClassAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int i) {
-        return SubClassFragment.newInstance(subClassList.get(i));
+        SubClassFragment subClassFragment = SubClassFragment.newInstance(subClassList.get(i));
+        mSubClassPresenter = new SubClassPresenter(subClassFragment, new SubClassModel());
+        return subClassFragment;
     }
 
     @Override

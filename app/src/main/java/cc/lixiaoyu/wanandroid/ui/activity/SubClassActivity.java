@@ -18,8 +18,10 @@ import cc.lixiaoyu.wanandroid.R;
 import cc.lixiaoyu.wanandroid.adapter.SubClassAdapter;
 import cc.lixiaoyu.wanandroid.base.BaseSwipeBackActivity;
 import cc.lixiaoyu.wanandroid.entity.PrimaryClass;
+import cc.lixiaoyu.wanandroid.mvp.presenter.SubClassPresenter;
 
 public class SubClassActivity extends BaseSwipeBackActivity {
+
     @BindView(R.id.subclass_toolbar)
     Toolbar mToolbar;
     @BindView(R.id.subclass_tablayout)

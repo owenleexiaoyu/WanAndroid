@@ -22,18 +22,26 @@ public interface WanAndroidService {
      * @return
      */
     @GET("banner/json")
-    Call<WanAndroidResult<List<Banner>>> getBanner();
+    Call<WanAndroidResult<List<Banner>>> getBannerData();
 
     /**
      * 获取文章列表
+     * http://www.wanandroid.com/article/list/1/json?cid=60
+     *
      * @param page   页码
      * @param cid    文章所属的二级分类，为空时获取所有的文章
      * @return
      */
     @GET("article/list/{page}/json")
-    Call<WanAndroidResult<ArticlePage>> getArticleList(@Path("page") String page, @Nullable @Query("cid") String cid);
+    Call<WanAndroidResult<ArticlePage>> getArticleList(@Path("page") int page, @Nullable @Query("cid") String cid);
 
+    /**
+     * 获取知识体系数据
+     * http://www.wanandroid.com/tree/json
+     *
+     * @return
+     */
     @GET("tree/json")
-    Call<WanAndroidResult<List<PrimaryClass>>> getSystemData();
+    Call<WanAndroidResult<List<PrimaryClass>>> getKnowledgeTreeData();
 
 }
