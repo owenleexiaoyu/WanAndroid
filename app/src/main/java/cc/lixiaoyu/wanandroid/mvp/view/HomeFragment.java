@@ -129,7 +129,8 @@ public class HomeFragment extends Fragment implements HomeContract.View{
 
     @Override
     public void showArticleList(List<ArticlePage.Article> articles) {
-        mAdapter.addData(articles);
+
+        mAdapter.replaceData(articles);
         mSmartRefreshLayout.finishRefresh();
     }
 

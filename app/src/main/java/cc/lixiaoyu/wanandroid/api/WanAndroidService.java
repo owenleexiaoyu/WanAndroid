@@ -7,6 +7,8 @@ import java.util.List;
 import cc.lixiaoyu.wanandroid.entity.ArticlePage;
 import cc.lixiaoyu.wanandroid.entity.Banner;
 import cc.lixiaoyu.wanandroid.entity.PrimaryClass;
+import cc.lixiaoyu.wanandroid.entity.ProjectPage;
+import cc.lixiaoyu.wanandroid.entity.ProjectTitle;
 import cc.lixiaoyu.wanandroid.entity.WanAndroidResult;
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -43,5 +45,23 @@ public interface WanAndroidService {
      */
     @GET("tree/json")
     Call<WanAndroidResult<List<PrimaryClass>>> getKnowledgeTreeData();
+
+    /**
+     * 获取项目分类信息
+     * http://www.wanandroid.com/project/tree/json
+     *
+     * @return
+     */
+    @GET("project/tree/json")
+    Call<WanAndroidResult<List<ProjectTitle>>> getProjectsData();
+
+    /**
+     * 获取项目分类中的项目列表数据
+     * @param page   页码，从1开始
+     * @param cid    分类的id
+     * @return
+     */
+    @GET("project/list/{page}/json")
+    Call<WanAndroidResult<ProjectPage>> getProjectArtilesByCid(@Path("page") int page, @Query("cid") String cid);
 
 }

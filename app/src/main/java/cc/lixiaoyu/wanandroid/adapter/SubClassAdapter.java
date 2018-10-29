@@ -10,7 +10,7 @@ import java.util.List;
 import cc.lixiaoyu.wanandroid.entity.PrimaryClass;
 import cc.lixiaoyu.wanandroid.mvp.model.SubClassModel;
 import cc.lixiaoyu.wanandroid.mvp.presenter.SubClassPresenter;
-import cc.lixiaoyu.wanandroid.ui.fragment.SubClassFragment;
+import cc.lixiaoyu.wanandroid.mvp.view.SubClassFragment;
 
 public class SubClassAdapter extends FragmentPagerAdapter {
 

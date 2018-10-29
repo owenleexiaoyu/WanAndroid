@@ -1,9 +1,8 @@
-package cc.lixiaoyu.wanandroid.ui.fragment;
+package cc.lixiaoyu.wanandroid.mvp.view;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -30,8 +29,9 @@ import cc.lixiaoyu.wanandroid.base.BasePageFragment;
 import cc.lixiaoyu.wanandroid.entity.ArticlePage;
 import cc.lixiaoyu.wanandroid.entity.PrimaryClass;
 import cc.lixiaoyu.wanandroid.mvp.contract.SubClassContract;
+import cc.lixiaoyu.wanandroid.ui.activity.ArticleDetailActivity;
 
-public class SubClassFragment extends BasePageFragment implements SubClassContract.View{
+public class SubClassFragment extends BasePageFragment implements SubClassContract.View {
 
     private PrimaryClass.SubClass mSubClass;
     private static final String ARGUMENTS_KEY = "subclass";
@@ -41,14 +41,13 @@ public class SubClassFragment extends BasePageFragment implements SubClassContra
     @BindView(R.id.fsubclass_smartrefreshlayout)
     SmartRefreshLayout mRefreshLayout;
     private ArticleAdapter mAdapter;
-    private List<ArticlePage.Article> mArticleList;
 
     private SubClassContract.Presenter mPresenter;
 
-    public static SubClassFragment newInstance(PrimaryClass.SubClass subClass){
+    public static SubClassFragment newInstance(PrimaryClass.SubClass subClass) {
         Bundle bundle = new Bundle();
         SubClassFragment fragment = new SubClassFragment();
-        bundle.putSerializable(ARGUMENTS_KEY,subClass);
+        bundle.putSerializable(ARGUMENTS_KEY, subClass);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -57,7 +56,7 @@ public class SubClassFragment extends BasePageFragment implements SubClassContra
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
-        if(bundle!= null){
+        if (bundle != null) {
             mSubClass = (PrimaryClass.SubClass) bundle.getSerializable(ARGUMENTS_KEY);
         }
     }
@@ -82,7 +81,7 @@ public class SubClassFragment extends BasePageFragment implements SubClassContra
         mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                //
+                //点击收藏按钮
             }
         });
 
@@ -101,10 +100,16 @@ public class SubClassFragment extends BasePageFragment implements SubClassContra
         mRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(RefreshLayout refreshLayout) {
-                mPresenter.loadMoreArticleByCid(mSubClass.getId()+"");
+                mPresenter.loadMoreArticleByCid(mSubClass.getId() + "");
             }
         });
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.start(mSubClass.getId() + "");
     }
 
     @Override
@@ -117,17 +122,20 @@ public class SubClassFragment extends BasePageFragment implements SubClassContra
     @Override
     public void fetchData() {
         showRefreshing();
-        mPresenter.getArticleListByCid(mSubClass.getId()+"");
+        mPresenter.getArticleListByCid(mSubClass.getId() + "");
     }
 
     @Override
     public void showArticleListByCid(List<ArticlePage.Article> articles) {
-
+        mAdapter.replaceData(articles);
+        mRefreshLayout.finishRefresh();
     }
 
     @Override
     public void showOpenArticleDetail(ArticlePage.Article article) {
-
+        //携带Title和URL跳转到ArticleDetailActivity
+        ArticleDetailActivity.actionStart(getActivity(),
+                article.getTitle(), article.getLink());
     }
 
     @Override
@@ -148,6 +156,19 @@ public class SubClassFragment extends BasePageFragment implements SubClassContra
     @Override
     public void completeRefresh() {
         mRefreshLayout.finishRefresh();
+    }
+
+    @Override
+    public void showLoadMoreArticleByCid(List<ArticlePage.Article> articles, boolean success) {
+        //如果成功
+        if (success) {
+            mAdapter.addData(articles);
+            mRefreshLayout.finishLoadMore();
+        }
+        //如果失败
+        else {
+            mRefreshLayout.finishLoadMore(false);
+        }
     }
 
     @Override

@@ -29,6 +29,7 @@ public class HomePresenter implements HomeContract.Presenter {
 
     @Override
     public void getArticleList() {
+        mCurrentPage = 0;
         Call<WanAndroidResult<ArticlePage>> call = homeModel.getArticleList(mCurrentPage);
         call.enqueue(new Callback<WanAndroidResult<ArticlePage>>() {
             @Override

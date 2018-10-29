@@ -22,6 +22,7 @@ public interface SubClassContract {
         void showCancelCollectArticle(ArticlePage.Article article);
         void showRefreshing();
         void completeRefresh();
+        void showLoadMoreArticleByCid(List<ArticlePage.Article> articles, boolean success);
     }
 
     interface Presenter extends BasePresenter{
@@ -54,5 +55,11 @@ public interface SubClassContract {
          * @param article
          */
         void cancelCollectArticle(ArticlePage.Article article);
+
+        /**
+         * 开始
+         * @param cid
+         */
+        void start(String cid);
     }
 }

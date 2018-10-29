@@ -23,21 +23,10 @@ import cc.lixiaoyu.wanandroid.R;
 import cc.lixiaoyu.wanandroid.entity.ArticlePage;
 
 public class ArticleAdapter extends BaseQuickAdapter<ArticlePage.Article, ArticleAdapter.ViewHolder> {
-    private static final int ITEM_TYPE_NORMAL = 0;
-    private static final int ITEM_TYPE_FOOTER = 1;
-    private Context context;
-//    private OnArticleItemClickListener mListener;
-
 
     public ArticleAdapter(int layoutResId, @Nullable List<ArticlePage.Article> data) {
         super(layoutResId, data);
     }
-
-
-//    public void setArticleItemClickListener(OnArticleItemClickListener listener){
-//        mListener = listener;
-//    }
-
 
     @Override
     protected void convert(ViewHolder holder, ArticlePage.Article article) {
