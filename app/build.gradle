@@ -42,4 +42,5 @@ dependencies {
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.35'
 
     implementation 'com.ashokvarma.android:bottom-navigation-bar:2.1.0'
+    implementation 'com.hyman:flowlayout-lib:1.1.2'
 }

@@ -71,7 +71,7 @@ public class ProjectPage {
         return total;
     }
 
-    class ProjectData {
+    public class ProjectData {
 
         private String apkLink;
         private String author;
@@ -83,11 +83,11 @@ public class ProjectPage {
         private String envelopePic;
         private boolean fresh;
         private int id;
-        private Date link;
+        private String link;
         private String niceDate;
         private String origin;
         private String projectLink;
-        private int publishTime;
+        private long publishTime;
         private int superChapterId;
         private String superChapterName;
         private List<ProjectPage.Tags> tags;
@@ -178,10 +178,10 @@ public class ProjectPage {
         }
 
 
-        public void setLink(Date link) {
+        public void setLink(String link) {
             this.link = link;
         }
-        public Date getLink() {
+        public String getLink() {
             return link;
         }
 
@@ -210,10 +210,10 @@ public class ProjectPage {
         }
 
 
-        public void setPublishTime(int publishTime) {
+        public void setPublishTime(long publishTime) {
             this.publishTime = publishTime;
         }
-        public int getPublishTime() {
+        public long getPublishTime() {
             return publishTime;
         }
 
@@ -283,7 +283,7 @@ public class ProjectPage {
 
     }
 
-    class Tags {
+    public class Tags {
 
         private String name;
         private String url;

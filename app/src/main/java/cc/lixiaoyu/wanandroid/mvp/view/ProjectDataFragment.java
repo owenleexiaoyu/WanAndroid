@@ -24,30 +24,33 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cc.lixiaoyu.wanandroid.R;
-import cc.lixiaoyu.wanandroid.adapter.ArticleAdapter;
+import cc.lixiaoyu.wanandroid.adapter.ProjectDataAdapter;
 import cc.lixiaoyu.wanandroid.base.BasePageFragment;
-import cc.lixiaoyu.wanandroid.entity.ArticlePage;
-import cc.lixiaoyu.wanandroid.entity.PrimaryClass;
-import cc.lixiaoyu.wanandroid.mvp.contract.SubClassContract;
+import cc.lixiaoyu.wanandroid.entity.ProjectPage;
+import cc.lixiaoyu.wanandroid.entity.ProjectTitle;
+import cc.lixiaoyu.wanandroid.mvp.contract.ProjectDataContract;
 import cc.lixiaoyu.wanandroid.ui.activity.ArticleDetailActivity;
 
-public class SubClassFragment extends BasePageFragment implements SubClassContract.View {
+public class ProjectDataFragment extends BasePageFragment implements ProjectDataContract.View{
+    private static final String ARGUMENTS_KEY = "projecttitle";
+    private ProjectTitle mTitle = null;
 
-    private PrimaryClass.SubClass mSubClass;
-    private static final String ARGUMENTS_KEY = "subclass";
-    private Unbinder unbinder;
-    @BindView(R.id.fsubclass_recyclerview)
-    RecyclerView mRecyclerView;
-    @BindView(R.id.fsubclass_smartrefreshlayout)
+    @BindView(R.id.fproject_data_smartrefreshlayout)
     SmartRefreshLayout mRefreshLayout;
-    private ArticleAdapter mAdapter;
 
-    private SubClassContract.Presenter mPresenter;
+    @BindView(R.id.fproject_data_recyclerview)
+    RecyclerView mRecyclerView;
 
-    public static SubClassFragment newInstance(PrimaryClass.SubClass subClass) {
+    private Unbinder unbinder;
+    private ProjectDataAdapter mAdapter;
+    private List<ProjectPage.ProjectData> mDataList;
+
+    private ProjectDataContract.Presenter mPresenter;
+
+    public static ProjectDataFragment newInstance(ProjectTitle title){
         Bundle bundle = new Bundle();
-        SubClassFragment fragment = new SubClassFragment();
-        bundle.putSerializable(ARGUMENTS_KEY, subClass);
+        bundle.putSerializable(ARGUMENTS_KEY, title);
+        ProjectDataFragment fragment = new ProjectDataFragment();
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -57,37 +60,34 @@ public class SubClassFragment extends BasePageFragment implements SubClassContra
         super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
         if (bundle != null) {
-            mSubClass = (PrimaryClass.SubClass) bundle.getSerializable(ARGUMENTS_KEY);
+            mTitle = (ProjectTitle) bundle.getSerializable(ARGUMENTS_KEY);
         }
     }
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_subclass_article, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_project_data, container, false);
         unbinder = ButterKnife.bind(this, view);
 
-        mAdapter = new ArticleAdapter(R.layout.item_recyclerview_article,
-                new ArrayList<ArticlePage.Article>(0));
+        mAdapter = new ProjectDataAdapter(R.layout.item_recyclerview_project_data,
+                new ArrayList<ProjectPage.ProjectData>(0));
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                ArticlePage.Article article = mAdapter.getData().get(position);
+                ProjectPage.ProjectData article = (ProjectPage.ProjectData) adapter.getData().get(position);
                 mPresenter.openArticleDetail(article);
             }
         });
+
         mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 //点击收藏按钮
             }
         });
-
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
         mRefreshLayout.setRefreshHeader(new MaterialHeader(getActivity()));
         mRefreshLayout.setRefreshFooter(new ClassicsFooter(getActivity()));
         mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
@@ -100,7 +100,7 @@ public class SubClassFragment extends BasePageFragment implements SubClassContra
         mRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(RefreshLayout refreshLayout) {
-                mPresenter.loadMoreArticleByCid(mSubClass.getId() + "");
+                mPresenter.loadMoreProjectArticlesByCid(mTitle.getId() + "");
             }
         });
         return view;
@@ -109,42 +109,40 @@ public class SubClassFragment extends BasePageFragment implements SubClassContra
     @Override
     public void onResume() {
         super.onResume();
-        mPresenter.start(mSubClass.getId() + "");
+        mPresenter.start(mTitle.getId()+"");
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        //解除Butterknife绑定
         unbinder.unbind();
     }
 
     @Override
     public void fetchData() {
         showRefreshing();
-        mPresenter.getArticleListByCid(mSubClass.getId() + "");
+        mPresenter.getProjectArticlesByCid(mTitle.getId()+"");
     }
 
     @Override
-    public void showArticleListByCid(List<ArticlePage.Article> articles) {
-        mAdapter.replaceData(articles);
+    public void showProjectArticlesByCid(List<ProjectPage.ProjectData> dataList) {
+        mAdapter.replaceData(dataList);
         completeRefresh();
     }
 
     @Override
-    public void showOpenArticleDetail(ArticlePage.Article article) {
+    public void showOpenArticleDetail(ProjectPage.ProjectData data) {
         //携带Title和URL跳转到ArticleDetailActivity
-        ArticleDetailActivity.actionStart(getActivity(),
-                article.getTitle(), article.getLink());
+        ArticleDetailActivity.actionStart(getActivity(), data.getTitle(), data.getLink());
     }
 
     @Override
-    public void showCollectArticle(ArticlePage.Article article) {
+    public void showCollectArticle(ProjectPage.ProjectData article) {
 
     }
 
     @Override
-    public void showCancelCollectArticle(ArticlePage.Article article) {
+    public void showCancelCollectArticle(ProjectPage.ProjectData article) {
 
     }
 
@@ -159,10 +157,10 @@ public class SubClassFragment extends BasePageFragment implements SubClassContra
     }
 
     @Override
-    public void showLoadMoreArticleByCid(List<ArticlePage.Article> articles, boolean success) {
+    public void showLoadMoreProjectArticleByCid(List<ProjectPage.ProjectData> dataList, boolean success) {
         //如果成功
         if (success) {
-            mAdapter.addData(articles);
+            mAdapter.addData(dataList);
             mRefreshLayout.finishLoadMore();
         }
         //如果失败
@@ -172,7 +170,7 @@ public class SubClassFragment extends BasePageFragment implements SubClassContra
     }
 
     @Override
-    public void setPresenter(SubClassContract.Presenter presenter) {
+    public void setPresenter(ProjectDataContract.Presenter presenter) {
         mPresenter = presenter;
     }
 }

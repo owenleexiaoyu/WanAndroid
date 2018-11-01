@@ -1,8 +1,9 @@
 package cc.lixiaoyu.wanandroid.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class ProjectTitle {
+public class ProjectTitle implements Serializable{
 
     private List<String> children;
     private int courseId;

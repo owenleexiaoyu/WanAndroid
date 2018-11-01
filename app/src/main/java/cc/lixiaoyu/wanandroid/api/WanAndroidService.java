@@ -6,6 +6,7 @@ import java.util.List;
 
 import cc.lixiaoyu.wanandroid.entity.ArticlePage;
 import cc.lixiaoyu.wanandroid.entity.Banner;
+import cc.lixiaoyu.wanandroid.entity.Nav;
 import cc.lixiaoyu.wanandroid.entity.PrimaryClass;
 import cc.lixiaoyu.wanandroid.entity.ProjectPage;
 import cc.lixiaoyu.wanandroid.entity.ProjectTitle;
@@ -62,6 +63,14 @@ public interface WanAndroidService {
      * @return
      */
     @GET("project/list/{page}/json")
-    Call<WanAndroidResult<ProjectPage>> getProjectArtilesByCid(@Path("page") int page, @Query("cid") String cid);
+    Call<WanAndroidResult<ProjectPage>> getProjectArticlesByCid(@Path("page") int page, @Query("cid") String cid);
+
+    /**
+     * 获取导航数据
+     * http://www.wanandroid.com/navi/json
+     * @return
+     */
+    @GET("navi/json")
+    Call<WanAndroidResult<List<Nav>>> getNavData();
 
 }

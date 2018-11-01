@@ -12,27 +12,25 @@ import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cc.lixiaoyu.wanandroid.R;
-import cc.lixiaoyu.wanandroid.entity.ArticlePage;
+import cc.lixiaoyu.wanandroid.entity.ProjectPage;
 
-public class ArticleAdapter extends BaseQuickAdapter<ArticlePage.Article, ArticleAdapter.ViewHolder> {
+public class ProjectDataAdapter extends BaseQuickAdapter<ProjectPage.ProjectData, ProjectDataAdapter.ViewHolder> {
 
-    public ArticleAdapter(int layoutResId, @Nullable List<ArticlePage.Article> data) {
+    public ProjectDataAdapter(int layoutResId, @Nullable List<ProjectPage.ProjectData> data) {
         super(layoutResId, data);
     }
 
     @Override
-    protected void convert(ViewHolder holder, ArticlePage.Article article) {
+    protected void convert(ViewHolder holder, ProjectPage.ProjectData article) {
         holder.tvAuther.setText(article.getAuthor());
-        holder.tvTime.setText(article.getNiceDate());
         holder.tvTitle.setText(article.getTitle());
-        holder.tvChapter.setText(article.getChapterName());
+        holder.tvDesc.setText(article.getDesc());
+        holder.tvTime.setText(article.getNiceDate());
         if(TextUtils.isEmpty(article.getEnvelopePic())){
             holder.imgPhoto.setVisibility(View.GONE);
         }else{
@@ -47,17 +45,17 @@ public class ArticleAdapter extends BaseQuickAdapter<ArticlePage.Article, Articl
 
 
     class ViewHolder extends BaseViewHolder {
-        @BindView(R.id.item_article_auther)
+        @BindView(R.id.item_project_author)
         TextView tvAuther;
-        @BindView(R.id.item_article_time)
+        @BindView(R.id.item_project_time)
         TextView tvTime;
-        @BindView(R.id.item_article_img)
+        @BindView(R.id.item_project_img)
         ImageView imgPhoto;
-        @BindView(R.id.item_article_title)
+        @BindView(R.id.item_project_title)
         TextView tvTitle;
-        @BindView(R.id.item_article_chapter)
-        TextView tvChapter;
-        @BindView(R.id.item_article_collect)
+        @BindView(R.id.item_project_desc)
+        TextView tvDesc;
+        @BindView(R.id.item_project_collect)
         ImageView imgCollect;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

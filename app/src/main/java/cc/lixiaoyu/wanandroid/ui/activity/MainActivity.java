@@ -29,7 +29,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cc.lixiaoyu.wanandroid.R;
-import cc.lixiaoyu.wanandroid.adapter.NavFragmentAdapter;
 import cc.lixiaoyu.wanandroid.base.BaseActivity;
 import cc.lixiaoyu.wanandroid.mvp.model.HomeModel;
 import cc.lixiaoyu.wanandroid.mvp.model.KnowledgeTreeModel;
@@ -75,14 +74,16 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         mFragmentList = new ArrayList<>();
         HomeFragment homeFragment = HomeFragment.newInstance();
         KnowledgeTreeFragment knowledgeFragment = KnowledgeTreeFragment.newInstanse();
+        NavFragment navFragment = NavFragment.newInstance();
+        ProjectFragment projectFragment = ProjectFragment.newInstance();
+
         mFragmentList.add(homeFragment);
         mFragmentList.add(knowledgeFragment);
-        mFragmentList.add(new NavFragment());
-        mFragmentList.add(new ProjectFragment());
+        mFragmentList.add(navFragment);
+        mFragmentList.add(projectFragment);
 
         mHomePresenter = new HomePresenter(homeFragment, new HomeModel());
         mKnowledgePresenter = new KnowledgeTreePresenter(knowledgeFragment, new KnowledgeTreeModel());
-
     }
     /**
      * 初始化控件
