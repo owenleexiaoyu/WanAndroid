@@ -3,12 +3,15 @@ package cc.lixiaoyu.wanandroid.app;
 import android.app.Application;
 import android.content.Context;
 
+import org.litepal.LitePal;
+
 public class MyApplication extends Application {
     private static Context mContext;
     @Override
     public void onCreate() {
         super.onCreate();
         mContext = getApplicationContext();
+        initLitepal();
     }
 
     /**
@@ -17,5 +20,12 @@ public class MyApplication extends Application {
      */
     public static Context getGlobalContext(){
         return mContext;
+    }
+
+    /**
+     * 初始化Litepal数据库
+     */
+    private void initLitepal(){
+        LitePal.initialize(this);
     }
 }

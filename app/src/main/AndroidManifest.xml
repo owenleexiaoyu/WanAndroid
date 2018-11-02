@@ -22,6 +22,8 @@
         <activity android:name=".ui.activity.ArticleDetailActivity"/>
         <activity android:name=".ui.activity.SubClassActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".ui.activity.LoginActivity"/>
+        <activity android:name=".ui.activity.SearchActivity"/>
     </application>
 
 </manifest>

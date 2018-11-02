@@ -6,13 +6,20 @@ import java.util.List;
 
 import cc.lixiaoyu.wanandroid.entity.ArticlePage;
 import cc.lixiaoyu.wanandroid.entity.Banner;
+import cc.lixiaoyu.wanandroid.entity.HotKey;
 import cc.lixiaoyu.wanandroid.entity.Nav;
 import cc.lixiaoyu.wanandroid.entity.PrimaryClass;
 import cc.lixiaoyu.wanandroid.entity.ProjectPage;
 import cc.lixiaoyu.wanandroid.entity.ProjectTitle;
+import cc.lixiaoyu.wanandroid.entity.User;
 import cc.lixiaoyu.wanandroid.entity.WanAndroidResult;
+import cc.lixiaoyu.wanandroid.entity.WebSite;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -72,5 +79,61 @@ public interface WanAndroidService {
      */
     @GET("navi/json")
     Call<WanAndroidResult<List<Nav>>> getNavData();
+
+    /**
+     * 获取搜索热词
+     * http://www.wanandroid.com//hotkey/json
+     *
+     * @return
+     */
+    @GET("hotkey/json")
+    Call<WanAndroidResult<List<HotKey>>> getHotKey();
+
+    /**
+     * 获取常用网站
+     * http://www.wanandroid.com/friend/json
+     *
+     * @return
+     */
+    @GET("friend/json")
+    Call<WanAndroidResult<List<WebSite>>> getCommonSite();
+
+
+    /**
+     * 登录
+     * @param username  用户名
+     * @param password  密码
+     * http://www.wanandroid.com/user/login
+     *
+     * @return
+     */
+    @POST("user/login")
+    @FormUrlEncoded
+    Call<WanAndroidResult<User>> login(@Field("username") String username, @Field("password") String password);
+
+    /**
+     * 注册
+     * @param username      用户名
+     * @param password      密码
+     * @param rePassword    再次输入密码
+     * http://www.wanandroid.com/user/register
+     *
+     * @return
+     */
+    @POST("user/register")
+    @FormUrlEncoded
+    Call<WanAndroidResult<User>> register(@Field("username") String username,
+                                          @Field("password") String password,
+                                          @Field("repassword") String rePassword);
+
+    /**
+     * 退出登录
+     *
+     * http://www.wanandroid.com/user/logout/json
+     *
+     * @return
+     */
+    @GET("user/logout/json")
+    Call<WanAndroidResult<String>> logout();
 
 }

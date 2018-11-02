@@ -5,6 +5,12 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
+import org.litepal.LitePal;
+import org.litepal.crud.LitePalSupport;
+
+import cc.lixiaoyu.wanandroid.entity.User;
+import cc.lixiaoyu.wanandroid.util.DataManager;
+
 /**
  * 基类Activity，处理一些公共逻辑
  */
@@ -30,18 +36,20 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     /**
      * 加载布局文件
+     *
      * @return
      */
     protected abstract int attachLayout();
 
     /**
      * 处理返回按钮事件
+     *
      * @param item
      * @return
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
                 break;
@@ -51,9 +59,11 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     /**
      * 判断用户是否登录
+     *
      * @return
      */
-    protected boolean isLogined(){
-        return false;
+    protected boolean isLogined() {
+        User me = DataManager.getCurrentUser();
+        return me != null;
     }
 }

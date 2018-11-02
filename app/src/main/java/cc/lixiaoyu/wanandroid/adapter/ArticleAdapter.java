@@ -12,8 +12,6 @@ import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -29,7 +27,7 @@ public class ArticleAdapter extends BaseQuickAdapter<ArticlePage.Article, Articl
 
     @Override
     protected void convert(ViewHolder holder, ArticlePage.Article article) {
-        holder.tvAuther.setText(article.getAuthor());
+        holder.tvAuthor.setText(article.getAuthor());
         holder.tvTime.setText(article.getNiceDate());
         holder.tvTitle.setText(article.getTitle());
         holder.tvChapter.setText(article.getChapterName());
@@ -47,8 +45,8 @@ public class ArticleAdapter extends BaseQuickAdapter<ArticlePage.Article, Articl
 
 
     class ViewHolder extends BaseViewHolder {
-        @BindView(R.id.item_article_auther)
-        TextView tvAuther;
+        @BindView(R.id.item_article_author)
+        TextView tvAuthor;
         @BindView(R.id.item_article_time)
         TextView tvTime;
         @BindView(R.id.item_article_img)
