@@ -3,12 +3,8 @@ package cc.lixiaoyu.wanandroid.ui.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
@@ -19,8 +15,8 @@ import android.widget.ProgressBar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cc.lixiaoyu.wanandroid.R;
+import cc.lixiaoyu.wanandroid.base.BasePresenter;
 import cc.lixiaoyu.wanandroid.base.BaseSwipeBackActivity;
-import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
 /**
  * 文章详情页

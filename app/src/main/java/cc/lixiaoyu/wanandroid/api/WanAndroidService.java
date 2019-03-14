@@ -14,6 +14,7 @@ import cc.lixiaoyu.wanandroid.entity.ProjectTitle;
 import cc.lixiaoyu.wanandroid.entity.User;
 import cc.lixiaoyu.wanandroid.entity.WanAndroidResult;
 import cc.lixiaoyu.wanandroid.entity.WebSite;
+import io.reactivex.Observable;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -52,7 +53,7 @@ public interface WanAndroidService {
      * @return
      */
     @GET("tree/json")
-    Call<WanAndroidResult<List<PrimaryClass>>> getKnowledgeTreeData();
+    Observable<WanAndroidResult<List<PrimaryClass>>> getKnowledgeTreeData();
 
     /**
      * 获取项目分类信息
@@ -78,7 +79,7 @@ public interface WanAndroidService {
      * @return
      */
     @GET("navi/json")
-    Call<WanAndroidResult<List<Nav>>> getNavData();
+    Observable<WanAndroidResult<List<Nav>>> getNavData();
 
     /**
      * 获取搜索热词
@@ -134,6 +135,6 @@ public interface WanAndroidService {
      * @return
      */
     @GET("user/logout/json")
-    Call<WanAndroidResult<String>> logout();
+    Observable<WanAndroidResult<String>> logout();
 
 }

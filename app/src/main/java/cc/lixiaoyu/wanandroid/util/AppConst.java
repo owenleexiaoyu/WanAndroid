@@ -5,5 +5,17 @@ package cc.lixiaoyu.wanandroid.util;
  */
 public class AppConst {
 
-    public static final String WANANDROID_BASEURL = "http://www.wanandroid.com/";
+    public static final String WANANDROID_BASEURL = "https://www.wanandroid.com/";
+
+    /**
+     * SharedPreference的键
+     */
+    public static final String SP_KEY_LOGIN_ACCOUNT = "loginaccount";
+    public static final String SP_KEY_LOGIN_PASSWORD = "loginpassword";
+    public static final String SP_KEY_LOGIN_STATE = "loginstate";
+    public static final String SP_KEY_NOGHT_MODE = "nightmode";
+    public static final String SP_KEY_FIRST_START ="firststart";
+    public static final String SP_KEY_NO_IMAGE ="noimage";
+
+
 }

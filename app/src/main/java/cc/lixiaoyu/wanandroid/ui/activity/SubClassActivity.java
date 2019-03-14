@@ -2,12 +2,9 @@ package cc.lixiaoyu.wanandroid.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import java.util.List;
@@ -18,7 +15,6 @@ import cc.lixiaoyu.wanandroid.R;
 import cc.lixiaoyu.wanandroid.adapter.SubClassAdapter;
 import cc.lixiaoyu.wanandroid.base.BaseSwipeBackActivity;
 import cc.lixiaoyu.wanandroid.entity.PrimaryClass;
-import cc.lixiaoyu.wanandroid.mvp.presenter.SubClassPresenter;
 
 public class SubClassActivity extends BaseSwipeBackActivity {
 
@@ -68,4 +64,5 @@ public class SubClassActivity extends BaseSwipeBackActivity {
         intent.putExtra("primaryclass", primaryClass);
         context.startActivity(intent);
     }
+
 }

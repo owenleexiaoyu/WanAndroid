@@ -1,14 +1,10 @@
 package cc.lixiaoyu.wanandroid.ui.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,10 +19,13 @@ import butterknife.Unbinder;
 import cc.lixiaoyu.wanandroid.R;
 import cc.lixiaoyu.wanandroid.api.WanAndroidService;
 import cc.lixiaoyu.wanandroid.entity.User;
+import cc.lixiaoyu.wanandroid.entity.UserState;
 import cc.lixiaoyu.wanandroid.entity.WanAndroidResult;
+import cc.lixiaoyu.wanandroid.event.LoginEvent;
 import cc.lixiaoyu.wanandroid.ui.activity.LoginActivity;
-import cc.lixiaoyu.wanandroid.ui.activity.RegisterActivity;
-import cc.lixiaoyu.wanandroid.util.RetrofitUtil;
+import cc.lixiaoyu.wanandroid.util.DataManager;
+import cc.lixiaoyu.wanandroid.util.RetrofitHelper;
+import cc.lixiaoyu.wanandroid.util.RxBus;
 import cc.lixiaoyu.wanandroid.util.ToastUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -84,9 +83,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.login_btn_login:
-                String userName = mEtUserName.getText().toString().trim();
+                final String userName = mEtUserName.getText().toString().trim();
                 String password = mEtPassword.getText().toString().trim();
-                WanAndroidService service = RetrofitUtil.getWanAndroidService();
+                WanAndroidService service = RetrofitHelper.getInstance().getWanAndroidService();
                 Call<WanAndroidResult<User>> call = service.login(userName, password);
                 call.enqueue(new Callback<WanAndroidResult<User>>() {
                     @Override
@@ -96,11 +95,14 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                         if(result.getErrorCode() == 0){
                             ToastUtil.showToast("登录成功！");
                             User me = result.getData();
-                            //保存到本地数据库
-                            LitePal.deleteAll(User.class);
-                            me.save();
+                            DataManager manager = new DataManager();
+                            manager.setLoginState(true);
+                            manager.setLoginAccount(me.getUsername());
+                            manager.setLoginPassword(me.getPassword());
+                            RxBus.getInstance().post(new LoginEvent(true));
                             //退出登陆界面
                             getActivity().finish();
+
                         }
                     }
 

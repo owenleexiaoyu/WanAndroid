@@ -8,20 +8,40 @@ import android.view.MenuItem;
 import org.litepal.LitePal;
 import org.litepal.crud.LitePalSupport;
 
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import cc.lixiaoyu.wanandroid.entity.User;
+import cc.lixiaoyu.wanandroid.entity.UserState;
 import cc.lixiaoyu.wanandroid.util.DataManager;
+import cc.lixiaoyu.wanandroid.util.RxBus;
+import io.reactivex.functions.Consumer;
 
 /**
  * 基类Activity，处理一些公共逻辑
  */
 public abstract class BaseActivity extends AppCompatActivity {
 
+    private Unbinder unbinder;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(attachLayout());
+        unbinder = ButterKnife.bind(this);
         initData();
         initView();
+    }
+
+    /**
+     * 解绑ButterKnife
+     */
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (unbinder != null && unbinder != Unbinder.EMPTY) {
+            unbinder.unbind();
+            unbinder = null;
+        }
     }
 
     /**
@@ -63,7 +83,6 @@ public abstract class BaseActivity extends AppCompatActivity {
      * @return
      */
     protected boolean isLogined() {
-        User me = DataManager.getCurrentUser();
-        return me != null;
+        return new DataManager().getLoginState();
     }
 }

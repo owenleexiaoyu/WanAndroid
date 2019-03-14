@@ -8,13 +8,12 @@ import android.support.v4.app.FragmentPagerAdapter;
 import java.util.List;
 
 import cc.lixiaoyu.wanandroid.entity.ProjectTitle;
-import cc.lixiaoyu.wanandroid.mvp.model.ProjectDataModel;
-import cc.lixiaoyu.wanandroid.mvp.presenter.ProjectDataPresenter;
-import cc.lixiaoyu.wanandroid.mvp.view.ProjectDataFragment;
+import cc.lixiaoyu.wanandroid.core.projectdata.ProjectDataModel;
+import cc.lixiaoyu.wanandroid.core.projectdata.ProjectDataPresenter;
+import cc.lixiaoyu.wanandroid.core.projectdata.ProjectDataFragment;
 
 public class ProjectAdapter extends FragmentPagerAdapter {
     private List<ProjectTitle> mDataList;
-    private ProjectDataPresenter mPresenter;
     public ProjectAdapter(FragmentManager fm, List<ProjectTitle> dataList) {
         super(fm);
         this.mDataList = dataList;
@@ -23,7 +22,6 @@ public class ProjectAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int i) {
        ProjectDataFragment fragment = ProjectDataFragment.newInstance(mDataList.get(i));
-       mPresenter = new ProjectDataPresenter(fragment, new ProjectDataModel());
        return fragment;
     }
 

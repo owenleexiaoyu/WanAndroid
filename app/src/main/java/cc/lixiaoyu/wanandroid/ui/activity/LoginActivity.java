@@ -5,11 +5,12 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
 import cc.lixiaoyu.wanandroid.R;
-import cc.lixiaoyu.wanandroid.base.BaseSwipeBackActivity;
+import cc.lixiaoyu.wanandroid.base.MVPBaseSwipeBackActivity;
+import cc.lixiaoyu.wanandroid.core.login.LoginPrsenter;
 import cc.lixiaoyu.wanandroid.ui.fragment.LoginFragment;
 import cc.lixiaoyu.wanandroid.ui.fragment.RegisterFragment;
 
-public class LoginActivity extends BaseSwipeBackActivity{
+public class LoginActivity extends MVPBaseSwipeBackActivity<LoginPrsenter> {
 
     private FragmentManager mFragmentManager;
     private FragmentTransaction mTransaction;
@@ -55,5 +56,21 @@ public class LoginActivity extends BaseSwipeBackActivity{
                 transaction.hide(from).show(to).commit();
             }
         }
+    }
+
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
+
+    @Override
+    protected LoginPrsenter createPresenter() {
+        return new LoginPrsenter();
     }
 }

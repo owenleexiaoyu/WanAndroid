@@ -21,7 +21,7 @@ import cc.lixiaoyu.wanandroid.adapter.ProjectAdapter;
 import cc.lixiaoyu.wanandroid.api.WanAndroidService;
 import cc.lixiaoyu.wanandroid.entity.ProjectTitle;
 import cc.lixiaoyu.wanandroid.entity.WanAndroidResult;
-import cc.lixiaoyu.wanandroid.util.RetrofitUtil;
+import cc.lixiaoyu.wanandroid.util.RetrofitHelper;
 import cc.lixiaoyu.wanandroid.util.ToastUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -48,7 +48,7 @@ public class ProjectFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_project,container, false);
         //绑定ButterKnife
         unbinder = ButterKnife.bind(this, view);
-        mService = RetrofitUtil.getWanAndroidService();
+        mService = RetrofitHelper.getInstance().getWanAndroidService();
         mDataList = new ArrayList<>();
 
         mAdapter = new ProjectAdapter(getChildFragmentManager(), mDataList);

@@ -1,5 +1,6 @@
 package cc.lixiaoyu.wanandroid.ui.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,24 +31,31 @@ import butterknife.ButterKnife;
 import cc.lixiaoyu.wanandroid.R;
 import cc.lixiaoyu.wanandroid.api.WanAndroidService;
 import cc.lixiaoyu.wanandroid.base.BaseActivity;
+import cc.lixiaoyu.wanandroid.base.MVPBaseActivity;
+import cc.lixiaoyu.wanandroid.core.main.MainContract;
+import cc.lixiaoyu.wanandroid.core.main.MainPresenter;
+import cc.lixiaoyu.wanandroid.entity.UserState;
 import cc.lixiaoyu.wanandroid.entity.WanAndroidResult;
-import cc.lixiaoyu.wanandroid.mvp.model.HomeModel;
-import cc.lixiaoyu.wanandroid.mvp.model.KnowledgeTreeModel;
-import cc.lixiaoyu.wanandroid.mvp.presenter.HomePresenter;
-import cc.lixiaoyu.wanandroid.mvp.presenter.KnowledgeTreePresenter;
-import cc.lixiaoyu.wanandroid.mvp.view.HomeFragment;
-import cc.lixiaoyu.wanandroid.mvp.view.KnowledgeTreeFragment;
+import cc.lixiaoyu.wanandroid.core.home.HomeModel;
+import cc.lixiaoyu.wanandroid.core.tree.KnowledgeTreeModel;
+import cc.lixiaoyu.wanandroid.core.home.HomePresenter;
+import cc.lixiaoyu.wanandroid.core.tree.KnowledgeTreePresenter;
+import cc.lixiaoyu.wanandroid.core.home.HomeFragment;
+import cc.lixiaoyu.wanandroid.core.tree.KnowledgeTreeFragment;
+import cc.lixiaoyu.wanandroid.event.LoginEvent;
 import cc.lixiaoyu.wanandroid.ui.fragment.NavFragment;
 import cc.lixiaoyu.wanandroid.ui.fragment.ProjectFragment;
 import cc.lixiaoyu.wanandroid.util.DataManager;
-import cc.lixiaoyu.wanandroid.util.RetrofitUtil;
+import cc.lixiaoyu.wanandroid.util.RetrofitHelper;
+import cc.lixiaoyu.wanandroid.util.RxBus;
 import cc.lixiaoyu.wanandroid.util.ToastUtil;
+import io.reactivex.functions.Consumer;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends MVPBaseActivity<MainPresenter> implements MainContract.View{
 
     @BindView(R.id.main_drawer_layout)
     DrawerLayout mDrawerLayout;
@@ -56,12 +65,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     Toolbar mToolbar;
     @BindView(R.id.main_bottom_nav_bar)
     BottomNavigationBar mBottomNavBar;
+    private TextView mTvUserNameOrLogin;
 
+    private Fragment mCurrentFragment = new Fragment();//当前的fragment，用于切换
     private List<Fragment>  mFragmentList;
-    public String [] titles = {"首页","体系","导航","项目"};
+    private FragmentManager mManager;
 
-    private HomePresenter mHomePresenter;
-    private KnowledgeTreePresenter mKnowledgePresenter;
+    public String [] titles = {"首页","体系","导航","项目"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,14 +79,20 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
+        mPresenter.start();
     }
 
+    @Override
+    protected MainPresenter createPresenter() {
+        return new MainPresenter();
+    }
 
     /**
      * 初始化数据源
      */
     @Override
     protected void initData() {
+        mManager = getSupportFragmentManager();
         mFragmentList = new ArrayList<>();
         HomeFragment homeFragment = HomeFragment.newInstance();
         KnowledgeTreeFragment knowledgeFragment = KnowledgeTreeFragment.newInstanse();
@@ -88,25 +104,33 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         mFragmentList.add(navFragment);
         mFragmentList.add(projectFragment);
 
-        mHomePresenter = new HomePresenter(homeFragment, new HomeModel());
-        mKnowledgePresenter = new KnowledgeTreePresenter(knowledgeFragment, new KnowledgeTreeModel());
+        RxBus.getInstance().post(new LoginEvent(false));
     }
+
     /**
      * 初始化控件
      */
     @Override
     protected void initView() {
-        //ButterKnife注册
-        ButterKnife.bind(this);
-        mNavigationView.setCheckedItem(R.id.nav_collection);
-        mNavigationView.setNavigationItemSelectedListener(this);
-
+        initToolbar();
+        initBottomNavBar();
         //展示第一个Fragment
-        final FragmentManager manager = getSupportFragmentManager();
-        final FragmentTransaction transaction = manager.beginTransaction();
-        transaction.add(R.id.main_container, mFragmentList.get(0));
-        transaction.commit();
+        loadFragment(mFragmentList.get(0));
+        initDrawerAndNavigationView();
+    }
 
+    /**
+     * 初始化Toolbar
+     */
+    private void initToolbar(){
+        mToolbar.setTitle(titles[0]);
+        setSupportActionBar(mToolbar);
+    }
+
+    /**
+     * 初始化底部导航栏
+     */
+    private void initBottomNavBar(){
         mBottomNavBar.setMode(BottomNavigationBar.MODE_FIXED);
         mBottomNavBar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC);
         mBottomNavBar.addItem(new BottomNavigationItem(R.mipmap.ic_home_gray, "首页").setActiveColor(R.color.orange))
@@ -119,9 +143,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             @Override
             public void onTabSelected(int position) {
                 mToolbar.setTitle(titles[position]);
-                FragmentTransaction transaction1 = manager.beginTransaction();
-                transaction1.replace(R.id.main_container, mFragmentList.get(position));
-                transaction1.commit();
+                loadFragment(mFragmentList.get(position));
             }
 
             @Override
@@ -134,14 +156,50 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
             }
         });
+    }
 
+    /**
+     * 加载Fragment
+     * @param fragment
+     */
+    private void loadFragment(Fragment fragment){
+        FragmentTransaction transaction = mManager.beginTransaction();
+        //首先判断要加载的Fragment是否已经被添加过，如果没有则添加，如果有则直接show
+        if(!fragment.isAdded()){
+            if(mCurrentFragment != null){
+                transaction.hide(mCurrentFragment);
+            }
+            transaction.add(R.id.main_container, fragment);
+        }
+        else{
+            transaction.hide(mCurrentFragment).show(fragment);
+        }
+        mCurrentFragment = fragment;
+        transaction.commit();
+    }
 
-        mToolbar.setTitle(titles[0]);
-        setSupportActionBar(mToolbar);
+    /**
+     * 初始化侧滑菜单和导航菜单
+     */
+    private void initDrawerAndNavigationView() {
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, mDrawerLayout, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, mDrawerLayout, mToolbar,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         mDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+        mNavigationView.setNavigationItemSelectedListener(new NavigationView.
+                OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()){
+                    case R.id.nav_logout:
+                        logout();
+                        break;
+                }
+                mDrawerLayout.closeDrawer(GravityCompat.START);
+                return true;
+            }
+        });
     }
 
     @Override
@@ -149,37 +207,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         return R.layout.activity_main;
     }
 
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
-    }
-
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        //未登录时显示登录，登录后显示用户名
-        TextView tvUserNameOrLogin = mNavigationView.getHeaderView(0).findViewById(R.id.main_tv_username);
-        //未登录时退出登陆的menuItem隐藏，登录后显示
-        Menu menu = mNavigationView.getMenu();
-        MenuItem logoutItem = menu.findItem(R.id.nav_logout);
-        if(isLogined()){
-            tvUserNameOrLogin.setText(DataManager.getCurrentUser().getUsername());
-            logoutItem.setVisible(true);
-        }else{
-            tvUserNameOrLogin.setText("登录");
-            tvUserNameOrLogin.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mDrawerLayout.closeDrawer(GravityCompat.START);
-                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                }
-            });
-            logoutItem.setVisible(false);
-        }
     }
 
     @Override
@@ -193,35 +224,72 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         return true;
     }
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        switch (menuItem.getItemId()){
-            case R.id.nav_logout:
-                logout();
-                break;
-        }
-        mDrawerLayout.closeDrawer(GravityCompat.START);
-        return true;
+    /**
+     * 退出登录
+     */
+    private void logout() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog dialog = builder.setTitle("提示")
+                .setMessage("确认退出登录吗")
+                .setCancelable(true)
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mPresenter.logout();
+                    }
+                })
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .create();
+        dialog.show();
     }
 
-    private void logout() {
-        WanAndroidService service = RetrofitUtil.getWanAndroidService();
-        Call<WanAndroidResult<String>> call = service.logout();
-        call.enqueue(new Callback<WanAndroidResult<String>>() {
-            @Override
-            public void onResponse(Call<WanAndroidResult<String>> call,
-                                   Response<WanAndroidResult<String>> response) {
-                WanAndroidResult<String> result = response.body();
-                if(result.getErrorCode() == 0){
-                    DataManager.clearCurrentUser();
-                    ToastUtil.showToast("退出登录成功");
-                }
-            }
+    @Override
+    public void showLoading() {
 
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
+
+    @Override
+    public void showLoginView() {
+        if(mNavigationView == null){
+            return;
+        }
+        //登录后显示用户名
+        mTvUserNameOrLogin = mNavigationView.getHeaderView(0).findViewById(R.id.main_tv_username);
+        mTvUserNameOrLogin.setText(mPresenter.getLoginAccount());
+        mTvUserNameOrLogin.setOnClickListener(null);
+        //登录后显示退出登陆的menuItem
+        mNavigationView.getMenu().findItem(R.id.nav_logout).setVisible(true);
+    }
+
+    @Override
+    public void showLogoutView() {
+        if(mNavigationView == null){
+            return;
+        }
+        //未登录时显示登录
+        mTvUserNameOrLogin.setText("登录");
+        mTvUserNameOrLogin.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onFailure(Call<WanAndroidResult<String>> call, Throwable t) {
-                ToastUtil.showToast("退出登录失败，出错了");
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
             }
         });
+        //未登录时退出登陆的menuItem隐藏
+        mNavigationView.getMenu().findItem(R.id.nav_logout).setVisible(false);
+    }
+
+    @Override
+    public void showAutoLoginView() {
+        showLoginView();
     }
 }

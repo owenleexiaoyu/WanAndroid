@@ -33,6 +33,7 @@
     -->
     <list>
         <mapping class="cc.lixiaoyu.wanandroid.entity.User" />
+        <mapping class="cc.lixiaoyu.wanandroid.entity.HistoryData" />
     </list>
 
     <!--
