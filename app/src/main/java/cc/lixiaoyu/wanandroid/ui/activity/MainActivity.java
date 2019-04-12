@@ -27,32 +27,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import cc.lixiaoyu.wanandroid.R;
-import cc.lixiaoyu.wanandroid.api.WanAndroidService;
-import cc.lixiaoyu.wanandroid.base.BaseActivity;
 import cc.lixiaoyu.wanandroid.base.MVPBaseActivity;
 import cc.lixiaoyu.wanandroid.core.main.MainContract;
 import cc.lixiaoyu.wanandroid.core.main.MainPresenter;
-import cc.lixiaoyu.wanandroid.entity.UserState;
-import cc.lixiaoyu.wanandroid.entity.WanAndroidResult;
-import cc.lixiaoyu.wanandroid.core.home.HomeModel;
-import cc.lixiaoyu.wanandroid.core.tree.KnowledgeTreeModel;
-import cc.lixiaoyu.wanandroid.core.home.HomePresenter;
-import cc.lixiaoyu.wanandroid.core.tree.KnowledgeTreePresenter;
+import cc.lixiaoyu.wanandroid.core.search.SearchActivity;
 import cc.lixiaoyu.wanandroid.core.home.HomeFragment;
 import cc.lixiaoyu.wanandroid.core.tree.KnowledgeTreeFragment;
-import cc.lixiaoyu.wanandroid.event.LoginEvent;
 import cc.lixiaoyu.wanandroid.ui.fragment.NavFragment;
 import cc.lixiaoyu.wanandroid.ui.fragment.ProjectFragment;
-import cc.lixiaoyu.wanandroid.util.DataManager;
-import cc.lixiaoyu.wanandroid.util.RetrofitHelper;
-import cc.lixiaoyu.wanandroid.util.RxBus;
-import cc.lixiaoyu.wanandroid.util.ToastUtil;
-import io.reactivex.functions.Consumer;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 
 public class MainActivity extends MVPBaseActivity<MainPresenter> implements MainContract.View{
@@ -104,7 +87,8 @@ public class MainActivity extends MVPBaseActivity<MainPresenter> implements Main
         mFragmentList.add(navFragment);
         mFragmentList.add(projectFragment);
 
-        RxBus.getInstance().post(new LoginEvent(false));
+//        RxBus.getInstance().post(new LoginEvent(false));
+//        RxBus.getInstance().post(new AutoLoginEvent());
     }
 
     /**
@@ -182,6 +166,13 @@ public class MainActivity extends MVPBaseActivity<MainPresenter> implements Main
      * 初始化侧滑菜单和导航菜单
      */
     private void initDrawerAndNavigationView() {
+        //判断是否登录
+        if(mPresenter.getLoginState()){
+            showLoginView();
+        }else{
+            showLogoutView();
+        }
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, mDrawerLayout, mToolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -192,6 +183,13 @@ public class MainActivity extends MVPBaseActivity<MainPresenter> implements Main
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()){
+                    case R.id.nav_collection:
+                        //判断是否登录过，没有登录要先登录
+                        if(mPresenter.getLoginState()){
+                            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                        }else{
+                            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                        }
                     case R.id.nav_logout:
                         logout();
                         break;
@@ -277,6 +275,7 @@ public class MainActivity extends MVPBaseActivity<MainPresenter> implements Main
             return;
         }
         //未登录时显示登录
+        mTvUserNameOrLogin = mNavigationView.getHeaderView(0).findViewById(R.id.main_tv_username);
         mTvUserNameOrLogin.setText("登录");
         mTvUserNameOrLogin.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -88,7 +88,7 @@ public interface WanAndroidService {
      * @return
      */
     @GET("hotkey/json")
-    Call<WanAndroidResult<List<HotKey>>> getHotKey();
+    Observable<WanAndroidResult<List<HotKey>>> getHotKey();
 
     /**
      * 获取常用网站
@@ -97,7 +97,7 @@ public interface WanAndroidService {
      * @return
      */
     @GET("friend/json")
-    Call<WanAndroidResult<List<WebSite>>> getCommonSite();
+    Observable<WanAndroidResult<List<WebSite>>> getCommonSite();
 
 
     /**

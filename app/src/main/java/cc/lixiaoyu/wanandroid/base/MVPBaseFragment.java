@@ -9,9 +9,9 @@ public abstract class MVPBaseFragment<P extends BasePresenter> extends BaseFragm
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         mPresenter = createPresenter();
         mPresenter.attachView(this);
+        super.onCreate(savedInstanceState);
     }
 
     @Override

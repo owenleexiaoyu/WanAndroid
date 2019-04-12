@@ -35,7 +35,7 @@ public class MainPresenter extends MainContract.Presenter {
                 .subscribe(new Consumer<LoginEvent>() {
                     @Override
                     public void accept(LoginEvent loginEvent) throws Exception {
-                        Toast.makeText(MyApplication.getGlobalContext(), "接受到event", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(MyApplication.getGlobalContext(), "接受到event", Toast.LENGTH_SHORT).show();
                         getView().showLoginView();
                     }
                 }));
@@ -66,16 +66,12 @@ public class MainPresenter extends MainContract.Presenter {
     @Override
     public void logout() {
         WanAndroidService service = RetrofitHelper.getInstance().getWanAndroidService();
-        BaseModelFactory.compose(service.logout()).subscribe(new Consumer<String>() {
-            @Override
-            public void accept(String s) throws Exception {
-                mDataManager.setLoginAccount("");
-                mDataManager.setLoginPassword("");
-                mDataManager.setFirstStartState(false);
-                RxBus.getInstance().post(new LoginEvent(false));
-                ToastUtil.showToast("退出登录成功");
-            }
-        });
+        service.logout();
+        mDataManager.setLoginAccount("");
+        mDataManager.setLoginPassword("");
+        mDataManager.setLoginState(false);
+        RxBus.getInstance().post(new LoginEvent(false));
+        ToastUtil.showToast("退出登录成功");
     }
 
     @Override

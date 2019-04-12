@@ -40,6 +40,10 @@ public class ArticleAdapter extends BaseQuickAdapter<ArticlePage.Article, Articl
             Glide.with(mContext).load(article.getEnvelopePic())
                     .apply(options).into(holder.imgPhoto);
         }
+
+        if(article.isCollect()){
+
+        }
         holder.addOnClickListener(R.id.item_article_collect);
     }
 

@@ -7,6 +7,7 @@ import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersisto
 
 import cc.lixiaoyu.wanandroid.api.WanAndroidService;
 import cc.lixiaoyu.wanandroid.app.MyApplication;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -16,7 +17,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * 使用Retrofit的封装类
  */
 public class RetrofitHelper {
-    private static ClearableCookieJar cookieJar;
+
     private static OkHttpClient okHttpClient;
     private Retrofit mRetrofit;
 
@@ -49,16 +50,19 @@ public class RetrofitHelper {
     }
 
     private static OkHttpClient getOkHttpClient(){
-        cookieJar= new PersistentCookieJar(new SetCookieCache(),
-                new SharedPrefsCookiePersistor(MyApplication.getGlobalContext()));
-        okHttpClient = new OkHttpClient.Builder().cookieJar(cookieJar).build();
+        okHttpClient = new OkHttpClient.Builder()
+                .addInterceptor(new SaveCookiesInterceptor(MyApplication.getGlobalContext()))
+                .addInterceptor(new AddCookiesInterceptor(MyApplication.getGlobalContext()))
+                .build();
         return okHttpClient;
     }
+
 
     //实现单例模式的静态内部类
     private static class SingleTonHolder{
         private static final RetrofitHelper INSTANCE = new RetrofitHelper();
     }
+
 }
 
 

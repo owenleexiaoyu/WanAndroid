@@ -1,5 +1,7 @@
 package cc.lixiaoyu.wanandroid.util;
 
+import android.widget.Toast;
+
 import org.litepal.LitePal;
 
 import java.util.ArrayList;
@@ -13,9 +15,15 @@ import cc.lixiaoyu.wanandroid.entity.HistoryData;
 public class DBHelperImpl implements DBHelper {
     @Override
     public boolean addHistoryData(String historyData) {
-        //使用Litepal保存数据
-        HistoryData hd = new HistoryData(historyData);
-        return hd.save();
+        //先查重
+        List<HistoryData> result = LitePal.where("data=?", historyData)
+                .find(HistoryData.class);
+        if(result == null){
+            //使用Litepal保存数据
+            HistoryData hd = new HistoryData(historyData);
+            return hd.save();
+        }
+        return false;
     }
 
     @Override

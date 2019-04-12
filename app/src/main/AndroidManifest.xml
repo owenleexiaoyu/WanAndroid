@@ -23,7 +23,7 @@
         <activity android:name=".ui.activity.SubClassActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".ui.activity.LoginActivity"/>
-        <activity android:name=".ui.activity.SearchActivity"/>
+        <activity android:name=".core.search.SearchActivity"/>
     </application>
 
 </manifest>
