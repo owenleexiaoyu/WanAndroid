@@ -99,6 +99,18 @@ public interface WanAndroidService {
     @GET("friend/json")
     Observable<WanAndroidResult<List<WebSite>>> getCommonSite();
 
+    /**
+     * 通过关键词进行搜索
+     * https://www.wanandroid.com/article/query/0/json
+     *
+     * @param page
+     * @param k
+     * @return
+     */
+    @POST("article/query/{page}/json")
+    @FormUrlEncoded
+    Observable<WanAndroidResult<ArticlePage>> searchArticle(@Path("page") int page, @Field("k") String k);
+
 
     /**
      * 登录

@@ -1,4 +1,4 @@
-package cc.lixiaoyu.wanandroid.ui.activity;
+package cc.lixiaoyu.wanandroid.core.main;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -29,11 +29,10 @@ import java.util.List;
 import butterknife.BindView;
 import cc.lixiaoyu.wanandroid.R;
 import cc.lixiaoyu.wanandroid.base.MVPBaseActivity;
-import cc.lixiaoyu.wanandroid.core.main.MainContract;
-import cc.lixiaoyu.wanandroid.core.main.MainPresenter;
 import cc.lixiaoyu.wanandroid.core.search.SearchActivity;
 import cc.lixiaoyu.wanandroid.core.home.HomeFragment;
 import cc.lixiaoyu.wanandroid.core.tree.KnowledgeTreeFragment;
+import cc.lixiaoyu.wanandroid.ui.activity.LoginActivity;
 import cc.lixiaoyu.wanandroid.ui.fragment.NavFragment;
 import cc.lixiaoyu.wanandroid.ui.fragment.ProjectFragment;
 
@@ -86,9 +85,6 @@ public class MainActivity extends MVPBaseActivity<MainPresenter> implements Main
         mFragmentList.add(knowledgeFragment);
         mFragmentList.add(navFragment);
         mFragmentList.add(projectFragment);
-
-//        RxBus.getInstance().post(new LoginEvent(false));
-//        RxBus.getInstance().post(new AutoLoginEvent());
     }
 
     /**

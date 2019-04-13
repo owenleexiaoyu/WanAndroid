@@ -1,13 +1,8 @@
 package cc.lixiaoyu.wanandroid.core.main;
 
-import android.widget.Toast;
-
 import cc.lixiaoyu.wanandroid.api.WanAndroidService;
-import cc.lixiaoyu.wanandroid.app.MyApplication;
 import cc.lixiaoyu.wanandroid.event.AutoLoginEvent;
 import cc.lixiaoyu.wanandroid.event.LoginEvent;
-import cc.lixiaoyu.wanandroid.ui.activity.MainActivity;
-import cc.lixiaoyu.wanandroid.util.BaseModelFactory;
 import cc.lixiaoyu.wanandroid.util.RetrofitHelper;
 import cc.lixiaoyu.wanandroid.util.RxBus;
 import cc.lixiaoyu.wanandroid.util.ToastUtil;

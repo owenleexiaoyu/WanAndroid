@@ -23,6 +23,7 @@ import cc.lixiaoyu.wanandroid.base.MVPBaseSwipeBackActivity;
 import cc.lixiaoyu.wanandroid.entity.HotKey;
 import cc.lixiaoyu.wanandroid.entity.WebSite;
 import cc.lixiaoyu.wanandroid.ui.activity.ArticleDetailActivity;
+import cc.lixiaoyu.wanandroid.ui.activity.SearchResultActivity;
 import cc.lixiaoyu.wanandroid.util.ToastUtil;
 
 public class SearchActivity extends MVPBaseSwipeBackActivity<SearchContract.Presenter>
@@ -192,6 +193,9 @@ public class SearchActivity extends MVPBaseSwipeBackActivity<SearchContract.Pres
 
     @Override
     public void showSearchResult(String keyword) {
-        ToastUtil.showToast("搜索了关键词："+keyword);
+        //打开搜索结果页
+        SearchResultActivity.actionStart(this, keyword);
+        //关闭当前页面
+        finish();
     }
 }

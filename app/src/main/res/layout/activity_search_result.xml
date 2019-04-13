@@ -10,37 +10,33 @@
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/subclass_toolbar"
+            android:id="@+id/sresult_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:layout_scrollFlags="scroll|enterAlways|snap"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-        <android.support.design.widget.TabLayout
-            android:id="@+id/subclass_tablayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabGravity="center"
-            app:tabIndicatorColor="@android:color/white"
-            app:tabIndicatorHeight="2dp"
-            app:tabMode="scrollable"
-            app:tabSelectedTextColor="@android:color/white"
-            app:tabTextColor="#44ffffff" />
+            app:layout_scrollFlags="enterAlways|snap|scroll"
+            app:popupTheme="@style/AppTheme.PopupOverlay"></android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/subclass_viewpager"
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/sreult_refreshlayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/sresult_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/subclass_btn_up"
+        android:id="@+id/sresult_btn_up"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
         android:layout_margin="20dp"
         android:padding="10dp"
         android:src="@mipmap/ic_up"
-        app:layout_behavior="cc.lixiaoyu.wanandroid.util.ScrollAwareFABBehavior" />
+        app:layout_behavior="cc.lixiaoyu.wanandroid.util.ScrollAwareFABBehavior"/>
+
 </android.support.design.widget.CoordinatorLayout>
