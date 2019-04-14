@@ -33,7 +33,7 @@ public interface WanAndroidService {
      * @return
      */
     @GET("banner/json")
-    Call<WanAndroidResult<List<Banner>>> getBannerData();
+    Observable<WanAndroidResult<List<Banner>>> getBannerData();
 
     /**
      * 获取文章列表
@@ -44,7 +44,16 @@ public interface WanAndroidService {
      * @return
      */
     @GET("article/list/{page}/json")
-    Call<WanAndroidResult<ArticlePage>> getArticleList(@Path("page") int page, @Nullable @Query("cid") String cid);
+    Observable<WanAndroidResult<ArticlePage>> getArticleList(@Path("page") int page, @Nullable @Query("cid") String cid);
+
+    /**
+     * 获取置顶文章
+     * https://www.wanandroid.com/article/top/json
+     *
+     * @return
+     */
+    @GET("article/top/json")
+    Observable<WanAndroidResult<List<ArticlePage.Article>>> getTopArticles();
 
     /**
      * 获取知识体系数据

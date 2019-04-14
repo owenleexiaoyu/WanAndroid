@@ -162,4 +162,10 @@ public class SubClassFragment extends MVPBasePageFragment<SubClassContract.Prese
 
     }
 
+    /**
+     * 回到列表顶部
+     */
+    public void jumpToListTop(){
+        mRecyclerView.smoothScrollToPosition(0);
+    }
 }

@@ -98,4 +98,11 @@ public class KnowledgeTreeFragment extends MVPBaseFragment<KnowledgeTreeContract
     public void hideLoading() {
 
     }
+
+    /**
+     * 回到列表顶部
+     */
+    public void jumpToListTop(){
+        mRecyclerView.smoothScrollToPosition(0);
+    }
 }

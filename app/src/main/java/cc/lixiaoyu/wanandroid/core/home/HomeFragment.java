@@ -117,8 +117,13 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.Presenter> implem
 
     @Override
     public void showArticleList(List<ArticlePage.Article> articles) {
-        mAdapter.replaceData(articles);
+        mAdapter.addData(articles);
         mSmartRefreshLayout.finishRefresh();
+    }
+
+    @Override
+    public void showTopArticles(List<ArticlePage.Article> articles) {
+        mAdapter.replaceData(articles);
     }
 
     /**
@@ -183,6 +188,13 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.Presenter> implem
         //携带Title和URL跳转到ArticleDetailActivity
         ArticleDetailActivity.actionStart(getActivity(),
                 banner.getTitle(), banner.getUrl());
+    }
+
+    /**
+     * 回到列表的顶部
+     */
+    public void jumpToListTop() {
+        mRecyclerView.smoothScrollToPosition(0);
     }
 
     @Override

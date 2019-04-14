@@ -3,4 +3,6 @@
     <string name="search">搜索</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="about_content"></string>
+
 </resources>

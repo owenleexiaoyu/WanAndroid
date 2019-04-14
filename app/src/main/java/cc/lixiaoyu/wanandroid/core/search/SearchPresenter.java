@@ -1,5 +1,7 @@
 package cc.lixiaoyu.wanandroid.core.search;
 
+import android.util.Log;
+
 import java.util.List;
 
 import cc.lixiaoyu.wanandroid.entity.HotKey;

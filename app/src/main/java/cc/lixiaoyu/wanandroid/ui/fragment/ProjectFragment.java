@@ -38,7 +38,8 @@ public class ProjectFragment extends Fragment {
 
     private WanAndroidService mService;
     private List<ProjectTitle> mDataList;
-
+    //当前加载的子fragment的序号
+    private int mCurrentChildFragmentIndex = 0;
     public static ProjectFragment newInstance(){
         return new ProjectFragment();
     }
@@ -54,7 +55,22 @@ public class ProjectFragment extends Fragment {
         mAdapter = new ProjectAdapter(getChildFragmentManager(), mDataList);
         mViewPager.setAdapter(mAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
+        mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i1) {
 
+            }
+
+            @Override
+            public void onPageSelected(int i) {
+                mCurrentChildFragmentIndex = i;
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int i) {
+
+            }
+        });
         Call<WanAndroidResult<List<ProjectTitle>>> call = mService.getProjectsData();
         call.enqueue(new Callback<WanAndroidResult<List<ProjectTitle>>>() {
             @Override
@@ -81,4 +97,11 @@ public class ProjectFragment extends Fragment {
         unbinder.unbind();
     }
 
+    /**
+     * 回到列表顶部
+     */
+    public void jumpToListTop(){
+        //将置顶功能进一步交给Adapter实现
+        mAdapter.jumpToListTop(mCurrentChildFragmentIndex);
+    }
 }

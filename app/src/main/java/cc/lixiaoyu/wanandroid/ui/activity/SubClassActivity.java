@@ -2,10 +2,12 @@ package cc.lixiaoyu.wanandroid.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import java.util.List;
 
@@ -24,11 +26,14 @@ public class SubClassActivity extends BaseSwipeBackActivity {
     TabLayout mTabLayout;
     @BindView(R.id.subclass_viewpager)
     ViewPager mViewPager;
+    @BindView(R.id.subclass_btn_up)
+    FloatingActionButton mBtnUp;
 
     private SubClassAdapter mAdapter;
     private PrimaryClass mPrimaryClass;
     private List<PrimaryClass.SubClass> mDataList;
-
+    //当前加载的Fragment的序号
+    private int mCurrentFragmentIndex = 0;
     @Override
     protected void initData() {
         Intent intent = getIntent();
@@ -46,7 +51,29 @@ public class SubClassActivity extends BaseSwipeBackActivity {
         actionBar.setHomeButtonEnabled(true);
         mAdapter = new SubClassAdapter(getSupportFragmentManager(), mDataList);
         mViewPager.setAdapter(mAdapter);
+        mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i1) {
+
+            }
+
+            @Override
+            public void onPageSelected(int i) {
+                mCurrentFragmentIndex = i;
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int i) {
+
+            }
+        });
         mTabLayout.setupWithViewPager(mViewPager);
+        mBtnUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAdapter.jumpToListTop(mCurrentFragmentIndex);
+            }
+        });
     }
 
     @Override

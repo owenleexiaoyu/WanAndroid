@@ -30,12 +30,15 @@ public class SearchResultAdapter extends BaseQuickAdapter<ArticlePage.Article, S
         holder.tvAuthor.setText(article.getAuthor());
         //处理关键词高亮
         String title = article.getTitle();
+
         int start = title.indexOf("<em class='highlight'>");
         title = title.replace("<em class='highlight'>","");
         int end = title.indexOf("</em>");
         title = title.replace("</em>","");
         SpannableString ss = new SpannableString(title);
-        ss.setSpan(new ForegroundColorSpan(Color.RED), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        if(start >=0 && end >start && end <= title.length()){
+            ss.setSpan(new ForegroundColorSpan(Color.RED), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
         holder.tvTitle.setText(ss);
     }
 

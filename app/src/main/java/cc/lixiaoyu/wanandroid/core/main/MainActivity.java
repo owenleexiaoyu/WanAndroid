@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -32,6 +33,7 @@ import cc.lixiaoyu.wanandroid.base.MVPBaseActivity;
 import cc.lixiaoyu.wanandroid.core.search.SearchActivity;
 import cc.lixiaoyu.wanandroid.core.home.HomeFragment;
 import cc.lixiaoyu.wanandroid.core.tree.KnowledgeTreeFragment;
+import cc.lixiaoyu.wanandroid.ui.activity.AboutActivity;
 import cc.lixiaoyu.wanandroid.ui.activity.LoginActivity;
 import cc.lixiaoyu.wanandroid.ui.fragment.NavFragment;
 import cc.lixiaoyu.wanandroid.ui.fragment.ProjectFragment;
@@ -47,11 +49,15 @@ public class MainActivity extends MVPBaseActivity<MainPresenter> implements Main
     Toolbar mToolbar;
     @BindView(R.id.main_bottom_nav_bar)
     BottomNavigationBar mBottomNavBar;
+    @BindView(R.id.main_btn_up)
+    FloatingActionButton mBtnUp;
     private TextView mTvUserNameOrLogin;
 
     private Fragment mCurrentFragment = new Fragment();//当前的fragment，用于切换
     private List<Fragment>  mFragmentList;
     private FragmentManager mManager;
+    //当前Activity所装载的Fragment的序号
+    private int mCurrentFragmentIndex = 0;
 
     public String [] titles = {"首页","体系","导航","项目"};
 
@@ -97,6 +103,36 @@ public class MainActivity extends MVPBaseActivity<MainPresenter> implements Main
         //展示第一个Fragment
         loadFragment(mFragmentList.get(0));
         initDrawerAndNavigationView();
+        //控制置顶按钮的显示与隐藏
+        showOrHideUpButton();
+        //处理向上置顶按钮的事件
+        mBtnUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (mCurrentFragmentIndex){
+                    case 0:
+                        ((HomeFragment)mFragmentList.get(mCurrentFragmentIndex)).jumpToListTop();
+                        break;
+                    case 1:
+                        ((KnowledgeTreeFragment)mFragmentList.get(mCurrentFragmentIndex)).jumpToListTop();
+                        break;
+                    case 3:
+                        ((ProjectFragment)mFragmentList.get(mCurrentFragmentIndex)).jumpToListTop();
+                        break;
+                }
+            }
+        });
+    }
+
+    /**
+     * 控制置顶按钮的显示与隐藏
+     */
+    private void showOrHideUpButton() {
+        if(mCurrentFragmentIndex == 2){
+            mBtnUp.setVisibility(View.GONE);
+        }else{
+            mBtnUp.setVisibility(View.VISIBLE);
+        }
     }
 
     /**
@@ -123,6 +159,8 @@ public class MainActivity extends MVPBaseActivity<MainPresenter> implements Main
             @Override
             public void onTabSelected(int position) {
                 mToolbar.setTitle(titles[position]);
+                mCurrentFragmentIndex = position;
+                showOrHideUpButton();
                 loadFragment(mFragmentList.get(position));
             }
 
@@ -186,6 +224,10 @@ public class MainActivity extends MVPBaseActivity<MainPresenter> implements Main
                         }else{
                             startActivity(new Intent(MainActivity.this, LoginActivity.class));
                         }
+                        break;
+                    case R.id.nav_about:
+                        startActivity(new Intent(MainActivity.this, AboutActivity.class));
+                        break;
                     case R.id.nav_logout:
                         logout();
                         break;

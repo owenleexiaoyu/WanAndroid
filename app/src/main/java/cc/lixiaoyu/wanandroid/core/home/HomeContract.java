@@ -1,5 +1,6 @@
 package cc.lixiaoyu.wanandroid.core.home;
 
+
 import java.util.List;
 
 import cc.lixiaoyu.wanandroid.base.BaseModel;
@@ -7,13 +8,13 @@ import cc.lixiaoyu.wanandroid.base.BasePresenter;
 import cc.lixiaoyu.wanandroid.base.BaseView;
 import cc.lixiaoyu.wanandroid.entity.ArticlePage;
 import cc.lixiaoyu.wanandroid.entity.Banner;
-import cc.lixiaoyu.wanandroid.entity.WanAndroidResult;
-import retrofit2.Call;
+import io.reactivex.Observable;
 
 public interface HomeContract {
     interface Model extends BaseModel{
-        Call<WanAndroidResult<ArticlePage>> getArticleList(int page);
-        Call<WanAndroidResult<List<Banner>>> getBannerData();
+        Observable<ArticlePage> getArticleList(int page);
+        Observable<List<Banner>> getBannerData();
+        Observable<List<ArticlePage.Article>> getTopArticles();
     }
 
     interface View extends BaseView{
@@ -23,6 +24,13 @@ public interface HomeContract {
          * @param articles
          */
         void showArticleList(List<ArticlePage.Article> articles);
+
+        /**
+         * 显示置顶文章
+         * @param articles
+         */
+        void showTopArticles(List<ArticlePage.Article> articles);
+
 
         /**
          * 显示Banner数据
@@ -72,6 +80,11 @@ public interface HomeContract {
         public abstract void getArticleList();
 
         /**
+         * 获取置顶文章
+         */
+        public abstract void getTopArticles();
+
+        /**
          * 加载更多文章
          */
         public abstract void loadMoreArticle();
@@ -106,5 +119,6 @@ public interface HomeContract {
          * @param article
          */
         public abstract void cancelCollectArticle(int position, ArticlePage.Article article);
+
     }
 }

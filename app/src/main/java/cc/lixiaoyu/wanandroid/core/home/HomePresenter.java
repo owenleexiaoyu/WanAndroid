@@ -7,6 +7,7 @@ import cc.lixiaoyu.wanandroid.entity.ArticlePage;
 import cc.lixiaoyu.wanandroid.entity.Banner;
 import cc.lixiaoyu.wanandroid.entity.WanAndroidResult;
 import cc.lixiaoyu.wanandroid.util.ToastUtil;
+import io.reactivex.functions.Consumer;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -25,19 +26,23 @@ public class HomePresenter extends HomeContract.Presenter {
     @Override
     public void getArticleList() {
         mCurrentPage = 0;
-        Call<WanAndroidResult<ArticlePage>> call = homeModel.getArticleList(mCurrentPage);
-        call.enqueue(new Callback<WanAndroidResult<ArticlePage>>() {
+        getTopArticles();
+        homeModel.getArticleList(mCurrentPage).subscribe(new Consumer<ArticlePage>() {
             @Override
-            public void onResponse(Call<WanAndroidResult<ArticlePage>> call,
-                                   Response<WanAndroidResult<ArticlePage>> response) {
-                WanAndroidResult<ArticlePage> result = response.body();
-                List<ArticlePage.Article> articles = result.getData().getArticleList();
-                getView().showArticleList(articles);
+            public void accept(ArticlePage articlePage) throws Exception {
+                getView().showArticleList(articlePage.getArticleList());
             }
+        });
 
+    }
+
+    @Override
+    public void getTopArticles() {
+        homeModel.getTopArticles()
+                .subscribe(new Consumer<List<ArticlePage.Article>>() {
             @Override
-            public void onFailure(Call<WanAndroidResult<ArticlePage>> call, Throwable t) {
-                ToastUtil.showToast("出错了");
+            public void accept(List<ArticlePage.Article> articles) throws Exception {
+                getView().showTopArticles(articles);
             }
         });
     }
@@ -45,44 +50,24 @@ public class HomePresenter extends HomeContract.Presenter {
     @Override
     public void loadMoreArticle() {
         mCurrentPage++;
-        Call<WanAndroidResult<ArticlePage>> call = homeModel.getArticleList(mCurrentPage);
-        call.enqueue(new Callback<WanAndroidResult<ArticlePage>>() {
+        homeModel.getArticleList(mCurrentPage).subscribe(new Consumer<ArticlePage>() {
             @Override
-            public void onResponse(Call<WanAndroidResult<ArticlePage>> call,
-                                   Response<WanAndroidResult<ArticlePage>> response) {
-                WanAndroidResult<ArticlePage> result = response.body();
-                List<ArticlePage.Article> newList = result.getData().getArticleList();
-                getView().showLoadMore(newList, true);
-            }
-
-            @Override
-            public void onFailure(Call<WanAndroidResult<ArticlePage>> call, Throwable t) {
-                getView().showLoadMore(null, false);
+            public void accept(ArticlePage articlePage) throws Exception {
+                getView().showLoadMore(articlePage.getArticleList(), true);
             }
         });
     }
 
     @Override
     public void getBannerData() {
-        Call<WanAndroidResult<List<Banner>>> call = homeModel.getBannerData();
-        call.enqueue(new Callback<WanAndroidResult<List<Banner>>>() {
+        homeModel.getBannerData().subscribe(new Consumer<List<Banner>>() {
             @Override
-            public void onResponse(Call<WanAndroidResult<List<Banner>>> call,
-                                   Response<WanAndroidResult<List<Banner>>> response) {
-                WanAndroidResult<List<Banner>> result = response.body();
-                if (result.getErrorCode() == 0) {
-                    List<Banner> banners = result.getData();
-                    List<String> bannerTitles = new ArrayList<>();
-                    for(Banner banner : banners){
-                        bannerTitles.add(banner.getTitle());
-                    }
-                    getView().showBannerData(banners,bannerTitles);
+            public void accept(List<Banner> banners) throws Exception {
+                List<String> bannerTitles = new ArrayList<>();
+                for(Banner banner : banners){
+                    bannerTitles.add(banner.getTitle());
                 }
-            }
-
-            @Override
-            public void onFailure(Call<WanAndroidResult<List<Banner>>> call, Throwable t) {
-                ToastUtil.showToast("出错了");
+                getView().showBannerData(banners,bannerTitles);
             }
         });
     }

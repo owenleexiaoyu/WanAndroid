@@ -1,18 +1,18 @@
 package cc.lixiaoyu.wanandroid.core.subclass;
 
+
 import java.util.List;
 
 import cc.lixiaoyu.wanandroid.base.BaseModel;
 import cc.lixiaoyu.wanandroid.base.BasePresenter;
 import cc.lixiaoyu.wanandroid.base.BaseView;
 import cc.lixiaoyu.wanandroid.entity.ArticlePage;
-import cc.lixiaoyu.wanandroid.entity.WanAndroidResult;
-import retrofit2.Call;
+import io.reactivex.Observable;
 
 public interface SubClassContract {
 
     interface Model extends BaseModel{
-        Call<WanAndroidResult<ArticlePage>> getArticleListByCid(int page, String cid);
+        Observable<ArticlePage> getArticleListByCid(int page, String cid);
     }
 
     interface View extends BaseView{

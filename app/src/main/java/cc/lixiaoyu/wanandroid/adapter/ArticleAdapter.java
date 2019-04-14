@@ -12,6 +12,8 @@ import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 import butterknife.BindView;
@@ -40,7 +42,12 @@ public class ArticleAdapter extends BaseQuickAdapter<ArticlePage.Article, Articl
             Glide.with(mContext).load(article.getEnvelopePic())
                     .apply(options).into(holder.imgPhoto);
         }
-
+        //设置置顶标签的显示和隐藏
+        if(article.getType() == 0){
+            holder.tvTop.setVisibility(View.GONE);
+        }else if(article.getType() == 1){
+            holder.tvTop.setVisibility(View.VISIBLE);
+        }
         if(article.isCollect()){
 
         }
@@ -59,6 +66,8 @@ public class ArticleAdapter extends BaseQuickAdapter<ArticlePage.Article, Articl
         TextView tvTitle;
         @BindView(R.id.item_article_chapter)
         TextView tvChapter;
+        @BindView(R.id.item_article_top)
+        TextView tvTop;
         @BindView(R.id.item_article_collect)
         ImageView imgCollect;
         public ViewHolder(@NonNull View itemView) {

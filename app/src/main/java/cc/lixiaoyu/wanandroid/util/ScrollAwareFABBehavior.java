@@ -2,6 +2,7 @@ package cc.lixiaoyu.wanandroid.util;
 
 
 import android.content.Context;
+import android.support.annotation.RestrictTo;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewCompat;
@@ -23,7 +24,6 @@ public class ScrollAwareFABBehavior extends FloatingActionButton.Behavior {
         return nestedScrollAxes == ViewCompat.SCROLL_AXIS_VERTICAL ||
                 super.onStartNestedScroll(coordinatorLayout, child, directTargetChild, target, nestedScrollAxes);
     }
-
     @Override
     public void onNestedScroll(CoordinatorLayout coordinatorLayout, FloatingActionButton child,
                                View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
