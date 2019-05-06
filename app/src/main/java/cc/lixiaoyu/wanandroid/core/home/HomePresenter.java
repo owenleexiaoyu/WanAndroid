@@ -6,6 +6,7 @@ import java.util.List;
 import cc.lixiaoyu.wanandroid.entity.ArticlePage;
 import cc.lixiaoyu.wanandroid.entity.Banner;
 import cc.lixiaoyu.wanandroid.entity.WanAndroidResult;
+import cc.lixiaoyu.wanandroid.util.Optional;
 import cc.lixiaoyu.wanandroid.util.ToastUtil;
 import io.reactivex.functions.Consumer;
 import retrofit2.Call;
@@ -27,10 +28,10 @@ public class HomePresenter extends HomeContract.Presenter {
     public void getArticleList() {
         mCurrentPage = 0;
         getTopArticles();
-        homeModel.getArticleList(mCurrentPage).subscribe(new Consumer<ArticlePage>() {
+        homeModel.getArticleList(mCurrentPage).subscribe(new Consumer<Optional<ArticlePage>>() {
             @Override
-            public void accept(ArticlePage articlePage) throws Exception {
-                getView().showArticleList(articlePage.getArticleList());
+            public void accept(Optional<ArticlePage> articlePage) throws Exception {
+                getView().showArticleList(articlePage.getIncludeNull().getArticleList());
             }
         });
 
@@ -39,35 +40,50 @@ public class HomePresenter extends HomeContract.Presenter {
     @Override
     public void getTopArticles() {
         homeModel.getTopArticles()
-                .subscribe(new Consumer<List<ArticlePage.Article>>() {
-            @Override
-            public void accept(List<ArticlePage.Article> articles) throws Exception {
-                getView().showTopArticles(articles);
-            }
-        });
+                .subscribe(new Consumer<Optional<List<ArticlePage.Article>>>() {
+                    @Override
+                    public void accept(Optional<List<ArticlePage.Article>> articles) throws Exception {
+                        getView().showTopArticles(articles.getIncludeNull());
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        ToastUtil.showToast("获取置顶文章失败");
+                    }
+                });
     }
 
     @Override
     public void loadMoreArticle() {
         mCurrentPage++;
-        homeModel.getArticleList(mCurrentPage).subscribe(new Consumer<ArticlePage>() {
+        homeModel.getArticleList(mCurrentPage).subscribe(new Consumer<Optional<ArticlePage>>() {
             @Override
-            public void accept(ArticlePage articlePage) throws Exception {
-                getView().showLoadMore(articlePage.getArticleList(), true);
+            public void accept(Optional<ArticlePage> articlePage) throws Exception {
+                getView().showLoadMore(articlePage.getIncludeNull().getArticleList(), true);
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                ToastUtil.showToast("获取文章列表数据失败");
             }
         });
     }
 
     @Override
     public void getBannerData() {
-        homeModel.getBannerData().subscribe(new Consumer<List<Banner>>() {
+        homeModel.getBannerData().subscribe(new Consumer<Optional<List<Banner>>>() {
             @Override
-            public void accept(List<Banner> banners) throws Exception {
+            public void accept(Optional<List<Banner>> banners) throws Exception {
                 List<String> bannerTitles = new ArrayList<>();
-                for(Banner banner : banners){
+                for (Banner banner : banners.getIncludeNull()) {
                     bannerTitles.add(banner.getTitle());
                 }
-                getView().showBannerData(banners,bannerTitles);
+                getView().showBannerData(banners.getIncludeNull(), bannerTitles);
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                ToastUtil.showToast("获取Banner数据失败");
             }
         });
     }
@@ -83,13 +99,33 @@ public class HomePresenter extends HomeContract.Presenter {
     }
 
     @Override
-    public void collectArticle(int position, ArticlePage.Article article) {
-
+    public void collectArticle(final int position, ArticlePage.Article article) {
+        homeModel.collectArticle(article.getId()).subscribe(new Consumer<Optional<String>>() {
+            @Override
+            public void accept(Optional<String> s) throws Exception {
+                getView().showCollectArticle(true, position);
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                getView().showCollectArticle(false, position);
+            }
+        });
     }
 
     @Override
-    public void cancelCollectArticle(int position, ArticlePage.Article article) {
-
+    public void cancelCollectArticle(final int position, ArticlePage.Article article) {
+        homeModel.unCollectArticle(article.getId()).subscribe(new Consumer<Optional<String>>() {
+            @Override
+            public void accept(Optional<String> s) throws Exception {
+                getView().showCancelCollectArticle(true, position);
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                getView().showCancelCollectArticle(false, position);
+            }
+        });
     }
 
     @Override

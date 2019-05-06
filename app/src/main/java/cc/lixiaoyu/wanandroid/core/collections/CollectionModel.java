@@ -1,25 +1,22 @@
-package cc.lixiaoyu.wanandroid.core.subclass;
+package cc.lixiaoyu.wanandroid.core.collections;
 
 import cc.lixiaoyu.wanandroid.api.WanAndroidService;
-import cc.lixiaoyu.wanandroid.entity.ArticlePage;
-import cc.lixiaoyu.wanandroid.entity.WanAndroidResult;
+import cc.lixiaoyu.wanandroid.entity.CollectionPage;
 import cc.lixiaoyu.wanandroid.util.BaseModelFactory;
 import cc.lixiaoyu.wanandroid.util.Optional;
 import cc.lixiaoyu.wanandroid.util.RetrofitHelper;
 import io.reactivex.Observable;
-import retrofit2.Call;
 
-public class SubClassModel implements SubClassContract.Model{
-
+public class CollectionModel implements CollectionContract.Model {
     private WanAndroidService mService;
 
-    public SubClassModel(){
+    public CollectionModel(){
         mService = RetrofitHelper.getInstance().getWanAndroidService();
     }
 
     @Override
-    public Observable<Optional<ArticlePage>> getArticleListByCid(int page, String cid) {
-        return BaseModelFactory.compose(mService.getArticleList(page, cid));
+    public Observable<Optional<CollectionPage>> getCollectionArticleList(int page) {
+        return BaseModelFactory.compose(mService.getCollectionArticleList(page));
     }
 
     @Override
@@ -29,6 +26,6 @@ public class SubClassModel implements SubClassContract.Model{
 
     @Override
     public Observable<Optional<String>> unCollectArticle(int articleId) {
-        return BaseModelFactory.compose(mService.unCollectArticleFromArticleList(articleId));
+        return BaseModelFactory.compose(mService.unCollectArticleFromCollectionPage(articleId, -1));
     }
 }

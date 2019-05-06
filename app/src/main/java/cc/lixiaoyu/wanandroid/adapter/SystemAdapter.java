@@ -19,6 +19,7 @@ public class SystemAdapter extends BaseQuickAdapter<PrimaryClass, SystemAdapter.
 
     public SystemAdapter(int layoutResId, @Nullable List<PrimaryClass> data) {
         super(layoutResId, data);
+        notifyDataSetChanged();
     }
 
     @Override

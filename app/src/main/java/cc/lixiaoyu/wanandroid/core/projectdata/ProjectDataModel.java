@@ -2,10 +2,10 @@ package cc.lixiaoyu.wanandroid.core.projectdata;
 
 import cc.lixiaoyu.wanandroid.api.WanAndroidService;
 import cc.lixiaoyu.wanandroid.entity.ProjectPage;
-import cc.lixiaoyu.wanandroid.entity.WanAndroidResult;
-import cc.lixiaoyu.wanandroid.core.projectdata.ProjectDataContract;
+import cc.lixiaoyu.wanandroid.util.BaseModelFactory;
+import cc.lixiaoyu.wanandroid.util.Optional;
 import cc.lixiaoyu.wanandroid.util.RetrofitHelper;
-import retrofit2.Call;
+import io.reactivex.Observable;
 
 public class ProjectDataModel implements ProjectDataContract.Model {
     private WanAndroidService mService;
@@ -14,7 +14,17 @@ public class ProjectDataModel implements ProjectDataContract.Model {
     }
 
     @Override
-    public Call<WanAndroidResult<ProjectPage>> getProjectArticlesByCid(int page, String cid) {
-        return mService.getProjectArticlesByCid(page, cid);
+    public Observable<Optional<ProjectPage>> getProjectArticlesByCid(int page, String cid) {
+        return BaseModelFactory.compose(mService.getProjectArticlesByCid(page, cid));
+    }
+
+    @Override
+    public Observable<Optional<String>> collectArticle(int articleId) {
+        return BaseModelFactory.compose(mService.collectArticle(articleId));
+    }
+
+    @Override
+    public Observable<Optional<String>> unCollectArticle(int articleId) {
+        return BaseModelFactory.compose(mService.unCollectArticleFromArticleList(articleId));
     }
 }

@@ -1,5 +1,7 @@
 package cc.lixiaoyu.wanandroid.util;
 
+import android.util.Log;
+
 import java.util.concurrent.TimeUnit;
 
 import cc.lixiaoyu.wanandroid.entity.WanAndroidResult;
@@ -24,7 +26,7 @@ public class BaseModelFactory {
      * @return
      */
     @SuppressWarnings("unchecked")
-    public static <T> Observable<T> compose(Observable<WanAndroidResult<T>> observable){
+    public static <T> Observable<Optional<T>> compose(Observable<WanAndroidResult<T>> observable){
         return observable.compose(transformer);
     }
 
@@ -33,21 +35,71 @@ public class BaseModelFactory {
      * @param <T>
      */
     private static class ResponseTransformer<T> implements
-            ObservableTransformer<WanAndroidResult<T>, T> {
+            ObservableTransformer<WanAndroidResult<T>, Optional<T>> {
 
         @Override
-        public ObservableSource<T> apply(Observable<WanAndroidResult<T>> upstream) {
+        public ObservableSource<Optional<T>> apply(Observable<WanAndroidResult<T>> upstream) {
             return upstream.subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .unsubscribeOn(Schedulers.io())
                     .timeout(5, TimeUnit.SECONDS)
                     .retry(5)
-                    .map(new Function<WanAndroidResult<T>, T>() {
+                    .flatMap(new Function<WanAndroidResult<T>, ObservableSource<Optional<T>>>() {
                         @Override
-                        public T apply(WanAndroidResult<T> result) throws Exception {
-                            return result.getData();
+                        public ObservableSource<Optional<T>> apply(WanAndroidResult<T> result) throws Exception {
+                            if(result.isSuccess()){
+                                return createHttpData(result.transform());
+                            }
+                            else{
+                                return Observable.error(new APIException(result.getErrorCode(),
+                                        result.getErrorMsg()));
+                            }
                         }
                     });
+        }
+
+        public static <T> Observable<Optional<T>> createHttpData(final Optional<T> t) {
+
+            return Observable.create(new ObservableOnSubscribe<Optional<T>>() {
+                @Override
+                public void subscribe(ObservableEmitter<Optional<T>> e) throws Exception {
+                    try {
+                        e.onNext(t);
+                        e.onComplete();
+                    } catch (Exception exc) {
+                        e.onError(exc);
+                    }
+                }
+            });
+        }
+
+        /**
+         * 处理请求结果,BaseResponse
+         * @param result 请求结果
+         * @return 过滤处理, 返回只有data数据的Observable
+         */
+        private Observable<T> flatResponse(final WanAndroidResult<T> result) {
+            return Observable.create(new ObservableOnSubscribe<T>() {
+                @Override
+                public void subscribe(ObservableEmitter<T> emitter) throws Exception {
+                    //成功
+                    if(result.isSuccess()) {
+                        if(!emitter.isDisposed()) {
+                            emitter.onNext(result.getData());
+                        }
+                    }
+                    //失败
+                    else {
+                        if(!emitter.isDisposed()) {
+                            emitter.onError(new APIException(result.getErrorCode(), result.getErrorMsg()));
+                        }
+                        return;
+                    }
+                    if(!emitter.isDisposed()) {
+                        emitter.onComplete();
+                    }
+                }
+            });
         }
     }
 }

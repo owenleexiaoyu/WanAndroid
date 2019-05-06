@@ -2,10 +2,12 @@ package cc.lixiaoyu.wanandroid.api;
 
 import android.support.annotation.Nullable;
 
+import java.util.Collection;
 import java.util.List;
 
 import cc.lixiaoyu.wanandroid.entity.ArticlePage;
 import cc.lixiaoyu.wanandroid.entity.Banner;
+import cc.lixiaoyu.wanandroid.entity.CollectionPage;
 import cc.lixiaoyu.wanandroid.entity.HotKey;
 import cc.lixiaoyu.wanandroid.entity.Nav;
 import cc.lixiaoyu.wanandroid.entity.PrimaryClass;
@@ -80,7 +82,7 @@ public interface WanAndroidService {
      * @return
      */
     @GET("project/list/{page}/json")
-    Call<WanAndroidResult<ProjectPage>> getProjectArticlesByCid(@Path("page") int page, @Query("cid") String cid);
+    Observable<WanAndroidResult<ProjectPage>> getProjectArticlesByCid(@Path("page") int page, @Query("cid") String cid);
 
     /**
      * 获取导航数据
@@ -158,4 +160,43 @@ public interface WanAndroidService {
     @GET("user/logout/json")
     Observable<WanAndroidResult<String>> logout();
 
+    /**
+     * 获取收藏的文章列表
+     *
+     * https://www.wanandroid.com/lg/collect/list/0/json
+     * @return
+     */
+    @GET("lg/collect/list/{page}/json")
+    Observable<WanAndroidResult<CollectionPage>> getCollectionArticleList(@Path("page") int page);
+
+    /**
+     * 收藏文章
+     *
+     * https://www.wanandroid.com/lg/collect/1165/json
+     * @param articleId
+     * @return
+     */
+    @POST("lg/collect/{articleId}/json")
+    Observable<WanAndroidResult<String>> collectArticle(@Path("articleId") int articleId);
+
+    /**
+     * 从收藏界面中取消收藏文章
+     *
+     * https://www.wanandroid.com/lg/uncollect/2805/json
+     * @param articleId
+     * @return
+     */
+    @POST("lg/uncollect/{id}/json")
+    @FormUrlEncoded
+    Observable<WanAndroidResult<String>> unCollectArticleFromCollectionPage(@Path("id") int articleId, @Field("originId") int originId);
+
+    /**
+     * 从文章列表中取消收藏文章
+     *
+     * https://www.wanandroid.com/lg/uncollect/2805/json
+     * @param articleId
+     * @return
+     */
+    @POST("lg/uncollect_originId/{id}/json")
+    Observable<WanAndroidResult<String>> unCollectArticleFromArticleList(@Path("id") int articleId);
 }

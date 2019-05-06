@@ -5,6 +5,7 @@ import java.util.List;
 import cc.lixiaoyu.wanandroid.entity.PrimaryClass;
 import cc.lixiaoyu.wanandroid.core.tree.KnowledgeTreeContract;
 import cc.lixiaoyu.wanandroid.core.tree.KnowledgeTreeModel;
+import cc.lixiaoyu.wanandroid.util.Optional;
 import io.reactivex.functions.Consumer;
 
 public class KnowledgeTreePresenter extends KnowledgeTreeContract.Presenter {
@@ -19,11 +20,11 @@ public class KnowledgeTreePresenter extends KnowledgeTreeContract.Presenter {
     public void getKnowledgeTreeData() {
 
         mModel.getKnowledgeTreeData()
-                .subscribe(new Consumer<List<PrimaryClass>>() {
+                .subscribe(new Consumer<Optional<List<PrimaryClass>>>() {
                     @Override
-                    public void accept(List<PrimaryClass> primaryClassList) throws Exception {
+                    public void accept(Optional<List<PrimaryClass>> primaryClassList) throws Exception {
                         //回调给View层进行数据展示
-                        getView().showKnowledgeTreeData(primaryClassList);
+                        getView().showKnowledgeTreeData(primaryClassList.getIncludeNull());
                     }
                 });
     }

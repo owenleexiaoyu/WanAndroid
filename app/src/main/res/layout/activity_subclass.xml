@@ -42,5 +42,5 @@
         android:layout_margin="20dp"
         android:padding="10dp"
         android:src="@mipmap/ic_up"
-        app:layout_behavior="cc.lixiaoyu.wanandroid.util.ScrollAwareFABBehavior" />
+        app:layout_behavior="cc.lixiaoyu.wanandroid.util.behavior.ScrollAwareFABBehavior" />
 </android.support.design.widget.CoordinatorLayout>

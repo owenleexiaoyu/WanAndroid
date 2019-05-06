@@ -1,4 +1,4 @@
-package cc.lixiaoyu.wanandroid;
+package cc.lixiaoyu.wanandroid.util.behavior;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;

@@ -7,6 +7,7 @@ import java.util.List;
 import cc.lixiaoyu.wanandroid.entity.HotKey;
 import cc.lixiaoyu.wanandroid.entity.WebSite;
 import cc.lixiaoyu.wanandroid.util.DataManager;
+import cc.lixiaoyu.wanandroid.util.Optional;
 import io.reactivex.functions.Consumer;
 
 public class SearchPresenter extends SearchContract.Presenter{
@@ -20,20 +21,20 @@ public class SearchPresenter extends SearchContract.Presenter{
 
     @Override
     public void getHotkey() {
-        mModel.getHotKey().subscribe(new Consumer<List<HotKey>>() {
+        mModel.getHotKey().subscribe(new Consumer<Optional<List<HotKey>>>() {
             @Override
-            public void accept(List<HotKey> hotKeys) throws Exception {
-                getView().showHotkey(hotKeys);
+            public void accept(Optional<List<HotKey>> hotKeys) throws Exception {
+                getView().showHotkey(hotKeys.getIncludeNull());
             }
         });
     }
 
     @Override
     public void getCommonSite() {
-        mModel.getCommonSite().subscribe(new Consumer<List<WebSite>>() {
+        mModel.getCommonSite().subscribe(new Consumer<Optional<List<WebSite>>>() {
             @Override
-            public void accept(List<WebSite> webSites) throws Exception {
-                getView().showCommonSite(webSites);
+            public void accept(Optional<List<WebSite>> webSites) throws Exception {
+                getView().showCommonSite(webSites.getIncludeNull());
             }
         });
     }

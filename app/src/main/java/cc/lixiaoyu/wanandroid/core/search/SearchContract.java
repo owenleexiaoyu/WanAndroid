@@ -7,6 +7,7 @@ import cc.lixiaoyu.wanandroid.base.BasePresenter;
 import cc.lixiaoyu.wanandroid.base.BaseView;
 import cc.lixiaoyu.wanandroid.entity.HotKey;
 import cc.lixiaoyu.wanandroid.entity.WebSite;
+import cc.lixiaoyu.wanandroid.util.Optional;
 import io.reactivex.Observable;
 
 public interface SearchContract {
@@ -16,13 +17,13 @@ public interface SearchContract {
          * 获取热搜词汇
          * @return
          */
-        Observable<List<HotKey>> getHotKey();
+        Observable<Optional<List<HotKey>>> getHotKey();
 
         /**
          * 获取常用网站
          * @return
          */
-        Observable<List<WebSite>> getCommonSite();
+        Observable<Optional<List<WebSite>>> getCommonSite();
     }
 
     interface View extends BaseView{

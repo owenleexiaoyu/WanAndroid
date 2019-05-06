@@ -7,7 +7,6 @@ import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersisto
 
 import cc.lixiaoyu.wanandroid.api.WanAndroidService;
 import cc.lixiaoyu.wanandroid.app.MyApplication;
-import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -31,7 +30,7 @@ public class RetrofitHelper {
     private void initRetrofit() {
         mRetrofit = new Retrofit.Builder()
                 .baseUrl(AppConst.WANANDROID_BASEURL)
-                .callFactory(getOkHttpClient())
+                .client(getOkHttpClient())
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
@@ -50,9 +49,10 @@ public class RetrofitHelper {
     }
 
     private static OkHttpClient getOkHttpClient(){
+        ClearableCookieJar cookieJar = new PersistentCookieJar(new SetCookieCache(),
+                        new SharedPrefsCookiePersistor(MyApplication.getGlobalContext()));
         okHttpClient = new OkHttpClient.Builder()
-                .addInterceptor(new SaveCookiesInterceptor(MyApplication.getGlobalContext()))
-                .addInterceptor(new AddCookiesInterceptor(MyApplication.getGlobalContext()))
+                .cookieJar(cookieJar)
                 .build();
         return okHttpClient;
     }

@@ -7,6 +7,7 @@ import cc.lixiaoyu.wanandroid.entity.HotKey;
 import cc.lixiaoyu.wanandroid.entity.WanAndroidResult;
 import cc.lixiaoyu.wanandroid.entity.WebSite;
 import cc.lixiaoyu.wanandroid.util.BaseModelFactory;
+import cc.lixiaoyu.wanandroid.util.Optional;
 import cc.lixiaoyu.wanandroid.util.RetrofitHelper;
 import io.reactivex.Observable;
 
@@ -19,12 +20,12 @@ public class SearchModel implements SearchContract.Model{
 
 
     @Override
-    public Observable<List<HotKey>> getHotKey() {
+    public Observable<Optional<List<HotKey>>> getHotKey() {
         return BaseModelFactory.compose(mService.getHotKey());
     }
 
     @Override
-    public Observable<List<WebSite>> getCommonSite() {
+    public Observable<Optional<List<WebSite>>> getCommonSite() {
         return BaseModelFactory.compose(mService.getCommonSite());
     }
 }

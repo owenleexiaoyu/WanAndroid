@@ -133,7 +133,7 @@ public class ProjectPage {
         public void setCollect(boolean collect) {
             this.collect = collect;
         }
-        public boolean getCollect() {
+        public boolean isCollect() {
             return collect;
         }
 

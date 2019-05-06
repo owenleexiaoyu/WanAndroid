@@ -30,6 +30,7 @@ import java.util.List;
 import butterknife.BindView;
 import cc.lixiaoyu.wanandroid.R;
 import cc.lixiaoyu.wanandroid.base.MVPBaseActivity;
+import cc.lixiaoyu.wanandroid.core.collections.CollectionActivity;
 import cc.lixiaoyu.wanandroid.core.search.SearchActivity;
 import cc.lixiaoyu.wanandroid.core.home.HomeFragment;
 import cc.lixiaoyu.wanandroid.core.tree.KnowledgeTreeFragment;
@@ -220,8 +221,10 @@ public class MainActivity extends MVPBaseActivity<MainPresenter> implements Main
                     case R.id.nav_collection:
                         //判断是否登录过，没有登录要先登录
                         if(mPresenter.getLoginState()){
-                            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                            //登录后进入收藏界面
+                            startActivity(new Intent(MainActivity.this, CollectionActivity.class));
                         }else{
+                            //未登录则进入登录界面
                             startActivity(new Intent(MainActivity.this, LoginActivity.class));
                         }
                         break;

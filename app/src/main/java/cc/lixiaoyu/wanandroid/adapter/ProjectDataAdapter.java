@@ -40,7 +40,13 @@ public class ProjectDataAdapter extends BaseQuickAdapter<ProjectPage.ProjectData
             Glide.with(mContext).load(article.getEnvelopePic())
                     .apply(options).into(holder.imgPhoto);
         }
-        holder.addOnClickListener(R.id.item_article_collect);
+        //设置文章是否被收藏
+        if(article.isCollect()){
+            holder.imgCollect.setImageResource(R.mipmap.ic_heart_orange);
+        }else{
+            holder.imgCollect.setImageResource(R.mipmap.ic_heart_gray);
+        }
+        holder.addOnClickListener(R.id.item_project_collect);
     }
 
 

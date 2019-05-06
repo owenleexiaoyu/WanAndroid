@@ -8,13 +8,16 @@ import cc.lixiaoyu.wanandroid.base.BasePresenter;
 import cc.lixiaoyu.wanandroid.base.BaseView;
 import cc.lixiaoyu.wanandroid.entity.ArticlePage;
 import cc.lixiaoyu.wanandroid.entity.Banner;
+import cc.lixiaoyu.wanandroid.util.Optional;
 import io.reactivex.Observable;
 
 public interface HomeContract {
     interface Model extends BaseModel{
-        Observable<ArticlePage> getArticleList(int page);
-        Observable<List<Banner>> getBannerData();
-        Observable<List<ArticlePage.Article>> getTopArticles();
+        Observable<Optional<ArticlePage>> getArticleList(int page);
+        Observable<Optional<List<Banner>>> getBannerData();
+        Observable<Optional<List<ArticlePage.Article>>> getTopArticles();
+        Observable<Optional<String>> collectArticle(int articleId);
+        Observable<Optional<String>> unCollectArticle(int articleId);
     }
 
     interface View extends BaseView{
@@ -41,16 +44,16 @@ public interface HomeContract {
         /**
          * 显示收藏文章
          * @param position
-         * @param article
+         * @param success
          */
-        void showCollectArticle(int position, ArticlePage.Article article);
+        void showCollectArticle(boolean success, int position);
 
         /**
          * 显示取消收藏
          * @param position
-         * @param article
+         * @param success
          */
-        void showCancelCollectArticle(int position, ArticlePage.Article article);
+        void showCancelCollectArticle(boolean success, int position);
 
         /**
          * 显示加载更多文章

@@ -48,9 +48,15 @@ public class ArticleAdapter extends BaseQuickAdapter<ArticlePage.Article, Articl
         }else if(article.getType() == 1){
             holder.tvTop.setVisibility(View.VISIBLE);
         }
-        if(article.isCollect()){
 
+        //设置文章是否被收藏
+        if(article.isCollect()){
+            holder.imgCollect.setImageResource(R.mipmap.ic_heart_orange);
+        }else{
+            holder.imgCollect.setImageResource(R.mipmap.ic_heart_gray);
         }
+
+        //为收藏按钮添加点击事件
         holder.addOnClickListener(R.id.item_article_collect);
     }
 

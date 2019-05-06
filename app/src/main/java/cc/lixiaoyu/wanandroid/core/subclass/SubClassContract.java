@@ -7,19 +7,22 @@ import cc.lixiaoyu.wanandroid.base.BaseModel;
 import cc.lixiaoyu.wanandroid.base.BasePresenter;
 import cc.lixiaoyu.wanandroid.base.BaseView;
 import cc.lixiaoyu.wanandroid.entity.ArticlePage;
+import cc.lixiaoyu.wanandroid.util.Optional;
 import io.reactivex.Observable;
 
 public interface SubClassContract {
 
     interface Model extends BaseModel{
-        Observable<ArticlePage> getArticleListByCid(int page, String cid);
+        Observable<Optional<ArticlePage>> getArticleListByCid(int page, String cid);
+        Observable<Optional<String>> collectArticle(int articleId);
+        Observable<Optional<String>> unCollectArticle(int articleId);
     }
 
     interface View extends BaseView{
         void showArticleListByCid(List<ArticlePage.Article> articles);
         void showOpenArticleDetail(ArticlePage.Article article);
-        void showCollectArticle(ArticlePage.Article article);
-        void showCancelCollectArticle(ArticlePage.Article article);
+        void showCollectArticle(boolean success, int position);
+        void showCancelCollectArticle(boolean success, int position);
         void showLoadMoreArticleByCid(List<ArticlePage.Article> articles, boolean success);
     }
 
@@ -46,12 +49,12 @@ public interface SubClassContract {
          * 收藏文章
          * @param article
          */
-        public abstract void collectArticle(ArticlePage.Article article);
+        public abstract void collectArticle(int position, ArticlePage.Article article);
 
         /**
          * 取消收藏文章
          * @param article
          */
-        public abstract void cancelCollectArticle(ArticlePage.Article article);
+        public abstract void cancelCollectArticle(int position, ArticlePage.Article article);
     }
 }

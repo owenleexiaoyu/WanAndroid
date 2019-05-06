@@ -1,5 +1,6 @@
 package cc.lixiaoyu.wanandroid.core.subclass;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,6 +25,8 @@ import cc.lixiaoyu.wanandroid.base.MVPBasePageFragment;
 import cc.lixiaoyu.wanandroid.entity.ArticlePage;
 import cc.lixiaoyu.wanandroid.entity.PrimaryClass;
 import cc.lixiaoyu.wanandroid.ui.activity.ArticleDetailActivity;
+import cc.lixiaoyu.wanandroid.ui.activity.LoginActivity;
+import cc.lixiaoyu.wanandroid.util.ToastUtil;
 
 public class SubClassFragment extends MVPBasePageFragment<SubClassContract.Presenter> implements SubClassContract.View {
 
@@ -72,6 +75,19 @@ public class SubClassFragment extends MVPBasePageFragment<SubClassContract.Prese
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 //点击收藏按钮
+                //判断是否用户登陆
+                if(!mPresenter.getDataManager().getLoginState()){
+                    //未登录，前往登陆页面进行登陆操作
+                    getActivity().startActivity(new Intent(getActivity(), LoginActivity.class));
+                }else{
+                    //登陆后，可以进行文章的收藏与取消收藏操作
+                    //如果文章已经被收藏了，就取消收藏，如果没有收藏，就收藏
+                    if(mAdapter.getItem(position).isCollect()){
+                        mPresenter.cancelCollectArticle(position, mAdapter.getItem(position));
+                    }else{
+                        mPresenter.collectArticle(position, mAdapter.getItem(position));
+                    }
+                }
             }
         });
 
@@ -131,13 +147,25 @@ public class SubClassFragment extends MVPBasePageFragment<SubClassContract.Prese
     }
 
     @Override
-    public void showCollectArticle(ArticlePage.Article article) {
-
+    public void showCollectArticle(boolean success, int position) {
+        if(success){
+            ToastUtil.showToast("收藏文章成功");
+            mAdapter.getData().get(position).setCollect(true);
+            mAdapter.notifyDataSetChanged();
+        }else{
+            ToastUtil.showToast("收藏文章失败");
+        }
     }
 
     @Override
-    public void showCancelCollectArticle(ArticlePage.Article article) {
-
+    public void showCancelCollectArticle(boolean success, int position) {
+        if(success){
+            ToastUtil.showToast("取消收藏文章成功");
+            mAdapter.getData().get(position).setCollect(false);
+            mAdapter.notifyDataSetChanged();
+        }else{
+            ToastUtil.showToast("取消收藏文章失败");
+        }
     }
 
     @Override

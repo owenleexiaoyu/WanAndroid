@@ -1,5 +1,7 @@
 package cc.lixiaoyu.wanandroid.entity;
 
+import cc.lixiaoyu.wanandroid.util.Optional;
+
 /**
  * WANAndroid返回数据最外层的实体类
  * @param <T>
@@ -35,5 +37,9 @@ public class WanAndroidResult<T> {
 
     public boolean isSuccess(){
         return errorCode == 0;
+    }
+
+    public Optional<T> transform(){
+        return new Optional<>(data);
     }
 }

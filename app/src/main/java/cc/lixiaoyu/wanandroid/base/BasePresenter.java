@@ -43,4 +43,9 @@ public abstract class BasePresenter<V extends BaseView> {
     }
 
     public abstract  void start();
+
+
+    public DataManager getDataManager(){
+        return mDataManager;
+    }
 }

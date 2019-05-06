@@ -8,19 +8,23 @@ import cc.lixiaoyu.wanandroid.base.BaseView;
 import cc.lixiaoyu.wanandroid.entity.ArticlePage;
 import cc.lixiaoyu.wanandroid.entity.ProjectPage;
 import cc.lixiaoyu.wanandroid.entity.WanAndroidResult;
+import cc.lixiaoyu.wanandroid.util.Optional;
+import io.reactivex.Observable;
 import retrofit2.Call;
 
 public interface ProjectDataContract {
 
     interface Model extends BaseModel{
-        Call<WanAndroidResult<ProjectPage>> getProjectArticlesByCid(int page, String cid);
+        Observable<Optional<ProjectPage>> getProjectArticlesByCid(int page, String cid);
+        Observable<Optional<String>> collectArticle(int articleId);
+        Observable<Optional<String>> unCollectArticle(int articleId);
     }
 
     interface View extends BaseView{
         void showProjectArticlesByCid(List<ProjectPage.ProjectData> dataList);
         void showOpenArticleDetail(ProjectPage.ProjectData data);
-        void showCollectArticle(ProjectPage.ProjectData article);
-        void showCancelCollectArticle(ProjectPage.ProjectData article);
+        void showCollectArticle(boolean success, int position);
+        void showCancelCollectArticle(boolean success, int position);
         void showLoadMoreProjectArticleByCid(List<ProjectPage.ProjectData> dataList, boolean success);
     }
 
@@ -45,15 +49,17 @@ public interface ProjectDataContract {
 
         /**
          * 收藏文章
+         * @param position
          * @param article
          */
-        public abstract void collectArticle(ProjectPage.ProjectData article);
+        public abstract void collectArticle(int position, ProjectPage.ProjectData article);
 
         /**
          * 取消收藏文章
+         * @param position
          * @param article
          */
-        public abstract void cancelCollectArticle(ProjectPage.ProjectData article);
+        public abstract void cancelCollectArticle(int position, ProjectPage.ProjectData article);
 
     }
 }
