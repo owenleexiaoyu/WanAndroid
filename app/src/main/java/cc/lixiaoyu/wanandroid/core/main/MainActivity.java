@@ -38,6 +38,7 @@ import cc.lixiaoyu.wanandroid.ui.activity.AboutActivity;
 import cc.lixiaoyu.wanandroid.ui.activity.LoginActivity;
 import cc.lixiaoyu.wanandroid.ui.fragment.NavFragment;
 import cc.lixiaoyu.wanandroid.ui.fragment.ProjectFragment;
+import cc.lixiaoyu.wanandroid.ui.fragment.WechatFragment;
 
 
 public class MainActivity extends MVPBaseActivity<MainPresenter> implements MainContract.View{
@@ -60,7 +61,7 @@ public class MainActivity extends MVPBaseActivity<MainPresenter> implements Main
     //当前Activity所装载的Fragment的序号
     private int mCurrentFragmentIndex = 0;
 
-    public String [] titles = {"首页","体系","导航","项目"};
+    public String [] titles = {"首页","体系","公众号","导航","项目"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,11 +86,13 @@ public class MainActivity extends MVPBaseActivity<MainPresenter> implements Main
         mFragmentList = new ArrayList<>();
         HomeFragment homeFragment = HomeFragment.newInstance();
         KnowledgeTreeFragment knowledgeFragment = KnowledgeTreeFragment.newInstanse();
+        WechatFragment wechatFragment = WechatFragment.newInstance();
         NavFragment navFragment = NavFragment.newInstance();
         ProjectFragment projectFragment = ProjectFragment.newInstance();
 
         mFragmentList.add(homeFragment);
         mFragmentList.add(knowledgeFragment);
+        mFragmentList.add(wechatFragment);
         mFragmentList.add(navFragment);
         mFragmentList.add(projectFragment);
     }
@@ -117,7 +120,10 @@ public class MainActivity extends MVPBaseActivity<MainPresenter> implements Main
                     case 1:
                         ((KnowledgeTreeFragment)mFragmentList.get(mCurrentFragmentIndex)).jumpToListTop();
                         break;
-                    case 3:
+                    case 2:
+                        ((WechatFragment)mFragmentList.get(mCurrentFragmentIndex)).jumpToListTop();
+                        break;
+                    case 4:
                         ((ProjectFragment)mFragmentList.get(mCurrentFragmentIndex)).jumpToListTop();
                         break;
                 }
@@ -129,7 +135,7 @@ public class MainActivity extends MVPBaseActivity<MainPresenter> implements Main
      * 控制置顶按钮的显示与隐藏
      */
     private void showOrHideUpButton() {
-        if(mCurrentFragmentIndex == 2){
+        if(mCurrentFragmentIndex == 3){
             mBtnUp.setVisibility(View.GONE);
         }else{
             mBtnUp.setVisibility(View.VISIBLE);
@@ -150,9 +156,10 @@ public class MainActivity extends MVPBaseActivity<MainPresenter> implements Main
     private void initBottomNavBar(){
         mBottomNavBar.setMode(BottomNavigationBar.MODE_FIXED);
         mBottomNavBar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC);
-        mBottomNavBar.addItem(new BottomNavigationItem(R.mipmap.ic_home_gray, "首页").setActiveColor(R.color.orange))
-                .addItem(new BottomNavigationItem(R.mipmap.ic_system_gray, "体系").setActiveColor(R.color.orange))
-                .addItem(new BottomNavigationItem(R.mipmap.ic_nav_gray, "导航").setActiveColor(R.color.orange))
+        mBottomNavBar.addItem(new BottomNavigationItem(R.mipmap.ic_home, "首页").setActiveColor(R.color.orange))
+                .addItem(new BottomNavigationItem(R.mipmap.ic_system, "体系").setActiveColor(R.color.orange))
+                .addItem(new BottomNavigationItem(R.mipmap.ic_wechat, "公众号").setActiveColor(R.color.orange))
+                .addItem(new BottomNavigationItem(R.mipmap.ic_nav, "导航").setActiveColor(R.color.orange))
                 .addItem(new BottomNavigationItem(R.mipmap.ic_project_gray, "项目").setActiveColor(R.color.orange))
                 .setFirstSelectedPosition(0)
                 .initialise();

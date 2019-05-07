@@ -16,6 +16,8 @@ import cc.lixiaoyu.wanandroid.entity.ProjectTitle;
 import cc.lixiaoyu.wanandroid.entity.User;
 import cc.lixiaoyu.wanandroid.entity.WanAndroidResult;
 import cc.lixiaoyu.wanandroid.entity.WebSite;
+import cc.lixiaoyu.wanandroid.entity.WechatPage;
+import cc.lixiaoyu.wanandroid.entity.WechatTitle;
 import io.reactivex.Observable;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -199,4 +201,22 @@ public interface WanAndroidService {
      */
     @POST("lg/uncollect_originId/{id}/json")
     Observable<WanAndroidResult<String>> unCollectArticleFromArticleList(@Path("id") int articleId);
+
+    /**
+     * 获取公众号列表
+     *
+     * https://wanandroid.com/wxarticle/chapters/json
+     * @return
+     */
+    @GET("wxarticle/chapters/json")
+    Observable<WanAndroidResult<List<WechatTitle>>> getWetchatPublicTitles();
+
+    /**
+     * 获取某个公众号下的文章
+     * @param id
+     * @param page
+     * @return
+     */
+    @GET("wxarticle/list/{id}/{page}/json")
+    Observable<WanAndroidResult<WechatPage>> getWechatPublicArticlesById(@Path("id") int id, @Path("page") int page);
 }
