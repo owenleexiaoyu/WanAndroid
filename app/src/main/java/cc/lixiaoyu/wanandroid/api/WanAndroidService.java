@@ -13,6 +13,7 @@ import cc.lixiaoyu.wanandroid.entity.Nav;
 import cc.lixiaoyu.wanandroid.entity.PrimaryClass;
 import cc.lixiaoyu.wanandroid.entity.ProjectPage;
 import cc.lixiaoyu.wanandroid.entity.ProjectTitle;
+import cc.lixiaoyu.wanandroid.entity.TodoEntity;
 import cc.lixiaoyu.wanandroid.entity.User;
 import cc.lixiaoyu.wanandroid.entity.WanAndroidResult;
 import cc.lixiaoyu.wanandroid.entity.WebSite;
@@ -219,4 +220,63 @@ public interface WanAndroidService {
      */
     @GET("wxarticle/list/{id}/{page}/json")
     Observable<WanAndroidResult<WechatPage>> getWechatPublicArticlesById(@Path("id") int id, @Path("page") int page);
+
+    /**
+     * 根据type来获取todo清单
+     *
+     * https://wanandroid.com/lg/todo/list/0/json
+     * @return
+     */
+    @GET("lg/todo/list/{type}/json")
+    Observable<WanAndroidResult<TodoEntity>> getTodoListByType(@Path("type") int type);
+
+    /**
+     * 新增一个todo
+     *
+     * https://wanandroid.com/lg/todo/add/json
+     *
+     * @param title
+     * @param content
+     * @param date
+     * @param type
+     * @return
+     */
+    @POST("lg/todo/add/json")
+    @FormUrlEncoded
+    Observable<WanAndroidResult<TodoEntity.TodoItem>> addTodoItem(@Field("title") String title,
+                                                                  @Field("content") String content,
+                                                                  @Field("date") String date,
+                                                                  @Field("type") int type);
+
+    /**
+     * 更新TodoItem的内容
+     * https://www.wanandroid.com/lg/todo/update/83/json
+     *
+     * @param id
+     * @param title
+     * @param content
+     * @param date
+     * @param type
+     * @param status  0为未完成，1为完成
+     * @return
+     */
+    @POST("lg/todo/update/{id}/json")
+    @FormUrlEncoded
+    Observable<WanAndroidResult<TodoEntity.TodoItem>> updateTodoItem(@Path("id") int id,
+                                                                     @Field("title") String title,
+                                                                     @Field("content") String content,
+                                                                     @Field("date") String date,
+                                                                     @Field("type") int type,
+                                                                     @Field("status") int status);
+
+    /**
+     * 删除一条todoitem
+     * https://www.wanandroid.com/lg/todo/delete/83/json
+     *
+     * @param id
+     * @return
+     */
+    @POST("lg/todo/delete/{id}/json")
+    Observable<WanAndroidResult<String>> deleteTodoItem(@Path("id") int id);
+
 }

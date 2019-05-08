@@ -41,7 +41,6 @@ public class ArticleDetailActivity extends BaseSwipeBackActivity {
 
     @Override
     protected void initView() {
-        ButterKnife.bind(this);
         mToolbar.setTitle(mTitle);
         setSupportActionBar(mToolbar);
         ActionBar actionBar = getSupportActionBar();

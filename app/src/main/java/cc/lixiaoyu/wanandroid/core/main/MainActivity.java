@@ -36,6 +36,7 @@ import cc.lixiaoyu.wanandroid.core.home.HomeFragment;
 import cc.lixiaoyu.wanandroid.core.tree.KnowledgeTreeFragment;
 import cc.lixiaoyu.wanandroid.ui.activity.AboutActivity;
 import cc.lixiaoyu.wanandroid.ui.activity.LoginActivity;
+import cc.lixiaoyu.wanandroid.ui.activity.TodoActivity;
 import cc.lixiaoyu.wanandroid.ui.fragment.NavFragment;
 import cc.lixiaoyu.wanandroid.ui.fragment.ProjectFragment;
 import cc.lixiaoyu.wanandroid.ui.fragment.WechatFragment;
@@ -230,6 +231,16 @@ public class MainActivity extends MVPBaseActivity<MainPresenter> implements Main
                         if(mPresenter.getLoginState()){
                             //登录后进入收藏界面
                             startActivity(new Intent(MainActivity.this, CollectionActivity.class));
+                        }else{
+                            //未登录则进入登录界面
+                            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                        }
+                        break;
+                    case R.id.nav_todo:
+                        //判断是否登录过，没有登录要先登录
+                        if(mPresenter.getLoginState()){
+                            //登录后进入TODO界面
+                            startActivity(new Intent(MainActivity.this, TodoActivity.class));
                         }else{
                             //未登录则进入登录界面
                             startActivity(new Intent(MainActivity.this, LoginActivity.class));
