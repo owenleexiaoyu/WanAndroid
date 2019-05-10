@@ -16,6 +16,8 @@ public class CollectionPresenter extends CollectionContract.Presenter {
 
     @Override
     public void getCollectionArticleList() {
+        //将currentPage重新置为0
+        mCurrentPage = 0;
         mModel.getCollectionArticleList(mCurrentPage)
                 .subscribe(new Consumer<Optional<CollectionPage>>() {
                     @Override
