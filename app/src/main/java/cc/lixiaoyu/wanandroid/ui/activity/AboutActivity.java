@@ -3,8 +3,8 @@ package cc.lixiaoyu.wanandroid.ui.activity;
 
 
 
-import android.support.v7.app.ActionBar;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
 import android.webkit.WebView;
 
 import butterknife.BindView;

@@ -1,11 +1,11 @@
 package cc.lixiaoyu.wanandroid.ui.fragment;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import com.google.android.material.tabs.TabLayout;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,11 +17,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cc.lixiaoyu.wanandroid.R;
-import cc.lixiaoyu.wanandroid.adapter.ArticleAdapter;
-import cc.lixiaoyu.wanandroid.adapter.ProjectAdapter;
 import cc.lixiaoyu.wanandroid.adapter.WechatAdapter;
 import cc.lixiaoyu.wanandroid.api.WanAndroidService;
-import cc.lixiaoyu.wanandroid.entity.ProjectTitle;
 import cc.lixiaoyu.wanandroid.entity.WanAndroidResult;
 import cc.lixiaoyu.wanandroid.entity.WechatTitle;
 import cc.lixiaoyu.wanandroid.util.RetrofitHelper;
@@ -29,9 +26,6 @@ import cc.lixiaoyu.wanandroid.util.ToastUtil;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class WechatFragment extends Fragment {
     private Unbinder unbinder;

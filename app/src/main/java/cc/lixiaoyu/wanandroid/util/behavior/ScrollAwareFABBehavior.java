@@ -2,10 +2,10 @@ package cc.lixiaoyu.wanandroid.util.behavior;
 
 
 import android.content.Context;
-import android.support.annotation.RestrictTo;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.view.ViewCompat;
+import androidx.annotation.RestrictTo;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import androidx.core.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.View;
 

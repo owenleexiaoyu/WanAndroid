@@ -1,16 +1,14 @@
 package cc.lixiaoyu.wanandroid.adapter;
 
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import cc.lixiaoyu.wanandroid.core.projectdata.ProjectDataFragment;
 import cc.lixiaoyu.wanandroid.core.wechat.WechatDataFragment;
-import cc.lixiaoyu.wanandroid.entity.ProjectTitle;
 import cc.lixiaoyu.wanandroid.entity.WechatTitle;
 
 public class WechatAdapter extends FragmentPagerAdapter {

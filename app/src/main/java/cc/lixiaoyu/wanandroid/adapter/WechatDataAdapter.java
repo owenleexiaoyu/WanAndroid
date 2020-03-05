@@ -1,7 +1,7 @@
 package cc.lixiaoyu.wanandroid.adapter;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,7 +17,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cc.lixiaoyu.wanandroid.R;
-import cc.lixiaoyu.wanandroid.entity.ProjectPage;
 import cc.lixiaoyu.wanandroid.entity.WechatPage;
 
 public class WechatDataAdapter extends BaseQuickAdapter<WechatPage.WechatData, WechatDataAdapter.ViewHolder> {

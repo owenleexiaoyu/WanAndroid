@@ -1,8 +1,8 @@
 package cc.lixiaoyu.wanandroid.core.home;
 
 import android.content.Intent;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -22,9 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-import cc.lixiaoyu.wanandroid.base.BasePresenter;
 import cc.lixiaoyu.wanandroid.base.MVPBaseFragment;
 import cc.lixiaoyu.wanandroid.ui.activity.LoginActivity;
 import cc.lixiaoyu.wanandroid.util.GlideImageLoader;

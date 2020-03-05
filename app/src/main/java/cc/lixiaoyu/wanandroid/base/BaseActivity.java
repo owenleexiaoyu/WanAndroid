@@ -1,20 +1,13 @@
 package cc.lixiaoyu.wanandroid.base;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.MenuItem;
-
-import org.litepal.LitePal;
-import org.litepal.crud.LitePalSupport;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import cc.lixiaoyu.wanandroid.entity.User;
-import cc.lixiaoyu.wanandroid.entity.UserState;
 import cc.lixiaoyu.wanandroid.util.DataManager;
-import cc.lixiaoyu.wanandroid.util.RxBus;
-import io.reactivex.functions.Consumer;
 
 /**
  * 基类Activity，处理一些公共逻辑

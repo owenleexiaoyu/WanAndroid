@@ -1,7 +1,7 @@
 package cc.lixiaoyu.wanandroid.base;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 public abstract class MVPBaseActivity<P extends BasePresenter>
         extends BaseActivity implements BaseView{

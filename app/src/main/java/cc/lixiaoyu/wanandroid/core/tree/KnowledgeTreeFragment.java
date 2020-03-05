@@ -1,7 +1,7 @@
 package cc.lixiaoyu.wanandroid.core.tree;
 
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -14,7 +14,6 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cc.lixiaoyu.wanandroid.R;
 import cc.lixiaoyu.wanandroid.adapter.SystemAdapter;
-import cc.lixiaoyu.wanandroid.base.BasePresenter;
 import cc.lixiaoyu.wanandroid.base.MVPBaseFragment;
 import cc.lixiaoyu.wanandroid.entity.PrimaryClass;
 import cc.lixiaoyu.wanandroid.ui.activity.SubClassActivity;

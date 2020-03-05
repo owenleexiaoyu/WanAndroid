@@ -1,8 +1,7 @@
 package cc.lixiaoyu.wanandroid.api;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
-import java.util.Collection;
 import java.util.List;
 
 import cc.lixiaoyu.wanandroid.entity.ArticlePage;
@@ -20,7 +19,6 @@ import cc.lixiaoyu.wanandroid.entity.WebSite;
 import cc.lixiaoyu.wanandroid.entity.WechatPage;
 import cc.lixiaoyu.wanandroid.entity.WechatTitle;
 import io.reactivex.Observable;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;

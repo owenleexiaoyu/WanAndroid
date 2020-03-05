@@ -1,9 +1,9 @@
 package cc.lixiaoyu.wanandroid.core.search;
 
 import android.content.DialogInterface;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,7 +24,6 @@ import cc.lixiaoyu.wanandroid.entity.HotKey;
 import cc.lixiaoyu.wanandroid.entity.WebSite;
 import cc.lixiaoyu.wanandroid.ui.activity.ArticleDetailActivity;
 import cc.lixiaoyu.wanandroid.ui.activity.SearchResultActivity;
-import cc.lixiaoyu.wanandroid.util.ToastUtil;
 
 public class SearchActivity extends MVPBaseSwipeBackActivity<SearchContract.Presenter>
         implements SearchContract.View{

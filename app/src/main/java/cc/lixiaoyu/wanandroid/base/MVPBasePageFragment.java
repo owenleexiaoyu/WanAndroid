@@ -1,8 +1,7 @@
 package cc.lixiaoyu.wanandroid.base;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import androidx.annotation.Nullable;
 
 /**
  * 懒加载的Fragment基类

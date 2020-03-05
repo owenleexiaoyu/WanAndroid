@@ -2,9 +2,9 @@ package cc.lixiaoyu.wanandroid.core.wechat;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -20,13 +20,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import cc.lixiaoyu.wanandroid.R;
-import cc.lixiaoyu.wanandroid.adapter.ProjectDataAdapter;
 import cc.lixiaoyu.wanandroid.adapter.WechatDataAdapter;
 import cc.lixiaoyu.wanandroid.base.MVPBasePageFragment;
-import cc.lixiaoyu.wanandroid.core.projectdata.ProjectDataContract;
-import cc.lixiaoyu.wanandroid.core.projectdata.ProjectDataPresenter;
-import cc.lixiaoyu.wanandroid.entity.ProjectPage;
-import cc.lixiaoyu.wanandroid.entity.ProjectTitle;
 import cc.lixiaoyu.wanandroid.entity.WechatPage;
 import cc.lixiaoyu.wanandroid.entity.WechatTitle;
 import cc.lixiaoyu.wanandroid.ui.activity.ArticleDetailActivity;
