@@ -1,4 +1,4 @@
-package cc.lixiaoyu.wanandroid.ui.activity;
+package cc.lixiaoyu.wanandroid.core.search.result;
 
 import android.content.Context;
 import android.content.Intent;
@@ -21,11 +21,12 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import cc.lixiaoyu.wanandroid.R;
-import cc.lixiaoyu.wanandroid.adapter.SearchResultAdapter;
 import cc.lixiaoyu.wanandroid.api.WanAndroidService;
 import cc.lixiaoyu.wanandroid.base.BaseSwipeBackActivity;
+import cc.lixiaoyu.wanandroid.entity.Article;
 import cc.lixiaoyu.wanandroid.entity.ArticlePage;
 import cc.lixiaoyu.wanandroid.entity.WanAndroidResult;
+import cc.lixiaoyu.wanandroid.core.detail.ArticleDetailActivity;
 import cc.lixiaoyu.wanandroid.util.RetrofitHelper;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
@@ -74,13 +75,13 @@ public class SearchResultActivity extends BaseSwipeBackActivity {
 
         //初始化Adapter
         mAdapter = new SearchResultAdapter(R.layout.item_recyclerview_search_result,
-                new ArrayList<ArticlePage.Article>(0));
+                new ArrayList<Article>(0));
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                ArticlePage.Article article = mAdapter.getData().get(position);
+                Article article = mAdapter.getData().get(position);
                 ArticleDetailActivity.actionStart(SearchResultActivity.this,
-                        article.getTitle(), article.getLink());
+                        article.toDetailParam());
             }
         });
         getResultList();

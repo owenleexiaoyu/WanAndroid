@@ -6,7 +6,6 @@ import cc.lixiaoyu.wanandroid.base.BaseModel;
 import cc.lixiaoyu.wanandroid.base.BasePresenter;
 import cc.lixiaoyu.wanandroid.base.BaseView;
 import cc.lixiaoyu.wanandroid.entity.HotKey;
-import cc.lixiaoyu.wanandroid.entity.WebSite;
 import cc.lixiaoyu.wanandroid.util.Optional;
 import io.reactivex.Observable;
 

@@ -35,11 +35,11 @@ import cc.lixiaoyu.wanandroid.core.search.SearchActivity;
 import cc.lixiaoyu.wanandroid.core.home.HomeFragment;
 import cc.lixiaoyu.wanandroid.core.tree.KnowledgeTreeFragment;
 import cc.lixiaoyu.wanandroid.ui.activity.AboutActivity;
-import cc.lixiaoyu.wanandroid.ui.activity.LoginActivity;
-import cc.lixiaoyu.wanandroid.ui.activity.TodoActivity;
-import cc.lixiaoyu.wanandroid.ui.fragment.NavFragment;
-import cc.lixiaoyu.wanandroid.ui.fragment.ProjectFragment;
-import cc.lixiaoyu.wanandroid.ui.fragment.WechatFragment;
+import cc.lixiaoyu.wanandroid.core.login.LoginActivity;
+import cc.lixiaoyu.wanandroid.core.todo.TodoActivity;
+import cc.lixiaoyu.wanandroid.core.nav.NavFragment;
+import cc.lixiaoyu.wanandroid.core.project.ProjectFragment;
+import cc.lixiaoyu.wanandroid.core.wechat.WechatFragment;
 
 
 public class MainActivity extends MVPBaseActivity<MainPresenter> implements MainContract.View{

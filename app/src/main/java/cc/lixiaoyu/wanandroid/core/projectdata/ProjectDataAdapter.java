@@ -1,4 +1,4 @@
-package cc.lixiaoyu.wanandroid.adapter;
+package cc.lixiaoyu.wanandroid.core.projectdata;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,16 +17,16 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cc.lixiaoyu.wanandroid.R;
-import cc.lixiaoyu.wanandroid.entity.ProjectPage;
+import cc.lixiaoyu.wanandroid.entity.Article;
 
-public class ProjectDataAdapter extends BaseQuickAdapter<ProjectPage.ProjectData, ProjectDataAdapter.ViewHolder> {
+public class ProjectDataAdapter extends BaseQuickAdapter<Article, ProjectDataAdapter.ViewHolder> {
 
-    public ProjectDataAdapter(int layoutResId, @Nullable List<ProjectPage.ProjectData> data) {
+    public ProjectDataAdapter(int layoutResId, @Nullable List<Article> data) {
         super(layoutResId, data);
     }
 
     @Override
-    protected void convert(ViewHolder holder, ProjectPage.ProjectData article) {
+    protected void convert(ViewHolder holder, Article article) {
         holder.tvAuther.setText(article.getAuthor());
         holder.tvTitle.setText(article.getTitle());
         holder.tvDesc.setText(article.getDesc());

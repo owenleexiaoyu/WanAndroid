@@ -1,4 +1,4 @@
-package cc.lixiaoyu.wanandroid.adapter;
+package cc.lixiaoyu.wanandroid.core.project;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;

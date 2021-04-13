@@ -4,8 +4,6 @@ import java.util.List;
 
 import cc.lixiaoyu.wanandroid.api.WanAndroidService;
 import cc.lixiaoyu.wanandroid.entity.HotKey;
-import cc.lixiaoyu.wanandroid.entity.WanAndroidResult;
-import cc.lixiaoyu.wanandroid.entity.WebSite;
 import cc.lixiaoyu.wanandroid.util.BaseModelFactory;
 import cc.lixiaoyu.wanandroid.util.Optional;
 import cc.lixiaoyu.wanandroid.util.RetrofitHelper;

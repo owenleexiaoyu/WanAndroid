@@ -1,4 +1,4 @@
-package cc.lixiaoyu.wanandroid.adapter;
+package cc.lixiaoyu.wanandroid.core.collections;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,16 +14,17 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cc.lixiaoyu.wanandroid.R;
+import cc.lixiaoyu.wanandroid.entity.Article;
 import cc.lixiaoyu.wanandroid.entity.CollectionPage;
 
-public class CollectionAdapter extends BaseQuickAdapter<CollectionPage.CollectionArticle, CollectionAdapter.ViewHolder> {
+public class CollectionAdapter extends BaseQuickAdapter<Article, CollectionAdapter.ViewHolder> {
 
-    public CollectionAdapter(int layoutResId, @Nullable List<CollectionPage.CollectionArticle> data) {
+    public CollectionAdapter(int layoutResId, @Nullable List<Article> data) {
         super(layoutResId, data);
     }
 
     @Override
-    protected void convert(ViewHolder holder, CollectionPage.CollectionArticle article) {
+    protected void convert(ViewHolder holder, Article article) {
         holder.tvAuthor.setText(article.getAuthor());
         holder.tvTime.setText(article.getNiceDate());
         holder.tvTitle.setText(article.getTitle());

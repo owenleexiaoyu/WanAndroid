@@ -1,4 +1,4 @@
-package cc.lixiaoyu.wanandroid.ui.fragment;
+package cc.lixiaoyu.wanandroid.core.login;
 
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import org.litepal.LitePal;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -18,41 +20,36 @@ import cc.lixiaoyu.wanandroid.R;
 import cc.lixiaoyu.wanandroid.api.WanAndroidService;
 import cc.lixiaoyu.wanandroid.entity.User;
 import cc.lixiaoyu.wanandroid.entity.WanAndroidResult;
-import cc.lixiaoyu.wanandroid.event.LoginEvent;
-import cc.lixiaoyu.wanandroid.ui.activity.LoginActivity;
-import cc.lixiaoyu.wanandroid.util.DataManager;
 import cc.lixiaoyu.wanandroid.util.RetrofitHelper;
-import cc.lixiaoyu.wanandroid.util.RxBus;
 import cc.lixiaoyu.wanandroid.util.ToastUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LoginFragment extends Fragment implements View.OnClickListener {
-    public static final String LOGIN_FRAGMENT_TAG = "LoginFragment";
-    private static final String TAG = "LoginFragment";
+public class RegisterFragment extends Fragment implements View.OnClickListener {
+    public static final String REGISTER_FRAGMENT_TAG = "RegisterFragment";
 
-    @BindView(R.id.login_et_username)
+    @BindView(R.id.register_et_username)
     TextInputEditText mEtUserName;
-    @BindView(R.id.login_et_password)
+    @BindView(R.id.register_et_password)
     TextInputEditText mEtPassword;
-    @BindView(R.id.login_btn_login)
-    Button mBtnLogin;
-    @BindView(R.id.login_tv_toregister)
-    TextView mTvToRegister;
+    @BindView(R.id.register_et_password_again)
+    TextInputEditText mEtPwdAgain;
+    @BindView(R.id.register_btn_register)
+    Button mBtnRegister;
+    @BindView(R.id.register_tv_tologin)
+    TextView mTvToLogin;
 
     private Unbinder unbinder;
     private LoginActivity mActivity;
 
-    public static LoginFragment newInstance(){
-        return new LoginFragment();
+    public static RegisterFragment newInstance(){
+        return new RegisterFragment();
     }
-
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_login, container, false);
+        View view = inflater.inflate(R.layout.fragment_register, container, false);
         unbinder = ButterKnife.bind(this, view);
         return view;
     }
@@ -66,8 +63,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mBtnLogin.setOnClickListener(this);
-        mTvToRegister.setOnClickListener(this);
+        mBtnRegister.setOnClickListener(this);
+        mTvToLogin.setOnClickListener(this);
     }
 
     @Override
@@ -79,40 +76,37 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.login_btn_login:
-                final String userName = mEtUserName.getText().toString().trim();
+            case R.id.register_btn_register:
+                String userName = mEtUserName.getText().toString().trim();
                 String password = mEtPassword.getText().toString().trim();
+                String passwordAgain = mEtPwdAgain.getText().toString().trim();
                 WanAndroidService service = RetrofitHelper.getInstance().getWanAndroidService();
-                Call<WanAndroidResult<User>> call = service.login(userName, password);
+                Call<WanAndroidResult<User>> call = service.register(userName, password, passwordAgain);
                 call.enqueue(new Callback<WanAndroidResult<User>>() {
                     @Override
                     public void onResponse(Call<WanAndroidResult<User>> call,
                                            Response<WanAndroidResult<User>> response) {
                         WanAndroidResult<User> result = response.body();
                         if(result.getErrorCode() == 0){
-                            ToastUtil.showToast("登录成功！");
+                            ToastUtil.showToast("注册成功！");
                             User me = result.getData();
-                            DataManager manager = new DataManager();
-                            manager.setLoginState(true);
-                            manager.setLoginAccount(me.getUsername());
-                            manager.setLoginPassword(me.getPassword());
-                            RxBus.getInstance().post(new LoginEvent(true));
-                            //退出登陆界面
+                            //保存到本地数据库
+                            LitePal.deleteAll(User.class);
+                            me.save();
+                            //退出注册界面
                             getActivity().finish();
-
                         }
                     }
 
                     @Override
                     public void onFailure(Call<WanAndroidResult<User>> call, Throwable t) {
-                        ToastUtil.showToast("登录失败");
+                        ToastUtil.showToast("注册失败");
                         t.printStackTrace();
                     }
                 });
-
                 break;
-            case R.id.login_tv_toregister:
-                mActivity.switchFragment(LOGIN_FRAGMENT_TAG, RegisterFragment.REGISTER_FRAGMENT_TAG);
+            case R.id.register_tv_tologin:
+                mActivity.switchFragment(REGISTER_FRAGMENT_TAG, LoginFragment.LOGIN_FRAGMENT_TAG);
                 break;
         }
     }

@@ -1,4 +1,4 @@
-package cc.lixiaoyu.wanandroid.ui.fragment;
+package cc.lixiaoyu.wanandroid.core.nav;
 
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -23,11 +23,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cc.lixiaoyu.wanandroid.R;
-import cc.lixiaoyu.wanandroid.adapter.NavAdapter;
 import cc.lixiaoyu.wanandroid.api.WanAndroidService;
 import cc.lixiaoyu.wanandroid.entity.Nav;
 import cc.lixiaoyu.wanandroid.entity.WanAndroidResult;
-import cc.lixiaoyu.wanandroid.ui.activity.ArticleDetailActivity;
+import cc.lixiaoyu.wanandroid.core.detail.ArticleDetailActivity;
 import cc.lixiaoyu.wanandroid.util.RetrofitHelper;
 import cc.lixiaoyu.wanandroid.util.ToastUtil;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -108,7 +107,7 @@ public class NavFragment extends Fragment {
             @Override
             public boolean onTagClick(View view, int position, FlowLayout parent) {
                 Nav.NavItem item = mNavItemList.get(position);
-                ArticleDetailActivity.actionStart(getActivity(), item.getTitle(), item.getLink());
+                ArticleDetailActivity.actionStart(getActivity(), item.toDetailParam());
                 return true;
             }
         });

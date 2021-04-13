@@ -21,10 +21,10 @@ import java.util.List;
 
 import butterknife.BindView;
 import cc.lixiaoyu.wanandroid.R;
-import cc.lixiaoyu.wanandroid.adapter.CollectionAdapter;
 import cc.lixiaoyu.wanandroid.base.MVPBaseSwipeBackActivity;
+import cc.lixiaoyu.wanandroid.entity.Article;
 import cc.lixiaoyu.wanandroid.entity.CollectionPage;
-import cc.lixiaoyu.wanandroid.ui.activity.ArticleDetailActivity;
+import cc.lixiaoyu.wanandroid.core.detail.ArticleDetailActivity;
 import cc.lixiaoyu.wanandroid.util.ToastUtil;
 
 public class CollectionActivity extends MVPBaseSwipeBackActivity<CollectionContract.Presenter>
@@ -71,11 +71,11 @@ public class CollectionActivity extends MVPBaseSwipeBackActivity<CollectionContr
         bar.setHomeButtonEnabled(true);
 
         mAdapter = new CollectionAdapter(R.layout.item_recyclerview_collection,
-                new ArrayList<CollectionPage.CollectionArticle>(0));
+                new ArrayList<Article>(0));
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                CollectionPage.CollectionArticle article = mAdapter.getData().get(position);
+                Article article = mAdapter.getData().get(position);
                 mPresenter.openArticleDetail(article);
             }
         });
@@ -83,7 +83,7 @@ public class CollectionActivity extends MVPBaseSwipeBackActivity<CollectionContr
         mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                CollectionPage.CollectionArticle article = mAdapter.getItem(position);
+                Article article = mAdapter.getItem(position);
                 Log.e(TAG, "onItemChildClick: "+article.getTitle());
                 mPresenter.unCollectArticle(position, article.getId());
             }
@@ -124,13 +124,13 @@ public class CollectionActivity extends MVPBaseSwipeBackActivity<CollectionContr
     }
 
     @Override
-    public void showCollectionArticleList(List<CollectionPage.CollectionArticle> articleList) {
+    public void showCollectionArticleList(List<Article> articleList) {
         mAdapter.replaceData(articleList);
         mRefreshLayout.finishRefresh();
     }
 
     @Override
-    public void showLoadMoreCollectionArticle(boolean success, List<CollectionPage.CollectionArticle> articleList) {
+    public void showLoadMoreCollectionArticle(boolean success, List<Article> articleList) {
         if(success){
             mAdapter.addData(articleList);
             mRefreshLayout.finishLoadMore();
@@ -150,9 +150,8 @@ public class CollectionActivity extends MVPBaseSwipeBackActivity<CollectionContr
     }
 
     @Override
-    public void showOpenArticleDetail(CollectionPage.CollectionArticle article) {
-        ArticleDetailActivity.actionStart(CollectionActivity.this,
-                article.getTitle(), article.getLink());
+    public void showOpenArticleDetail(Article article) {
+        ArticleDetailActivity.actionStart(CollectionActivity.this, article.toDetailParam());
     }
 
     @Override

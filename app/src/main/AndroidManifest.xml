@@ -15,19 +15,18 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.ArticleDetailActivity"/>
-        <activity android:name=".ui.activity.SubClassActivity"
+        <activity android:name=".core.detail.ArticleDetailActivity"/>
+        <activity android:name=".core.subclass.SubClassActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".ui.activity.LoginActivity"/>
+        <activity android:name=".core.login.LoginActivity"/>
         <activity android:name=".core.search.SearchActivity"/>
-        <activity android:name=".ui.activity.SearchResultActivity"/>
+        <activity android:name=".core.search.result.SearchResultActivity"/>
         <activity android:name=".ui.activity.AboutActivity" />
         <activity android:name=".core.collections.CollectionActivity"/>
-        <activity android:name=".ui.activity.TodoActivity"/>
+        <activity android:name=".core.todo.TodoActivity"/>
     </application>
 
 </manifest>

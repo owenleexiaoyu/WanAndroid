@@ -4,6 +4,7 @@ package cc.lixiaoyu.wanandroid.core.home;
 import java.util.List;
 
 import cc.lixiaoyu.wanandroid.api.WanAndroidService;
+import cc.lixiaoyu.wanandroid.entity.Article;
 import cc.lixiaoyu.wanandroid.entity.ArticlePage;
 import cc.lixiaoyu.wanandroid.entity.Banner;
 import cc.lixiaoyu.wanandroid.util.BaseModelFactory;
@@ -30,7 +31,7 @@ public class HomeModel implements HomeContract.Model{
     }
 
     @Override
-    public Observable<Optional<List<ArticlePage.Article>>> getTopArticles() {
+    public Observable<Optional<List<Article>>> getTopArticles() {
         return BaseModelFactory.compose(mService.getTopArticles());
     }
 

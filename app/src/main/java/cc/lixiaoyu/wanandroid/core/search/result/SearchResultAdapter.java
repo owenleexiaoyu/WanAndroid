@@ -1,4 +1,4 @@
-package cc.lixiaoyu.wanandroid.adapter;
+package cc.lixiaoyu.wanandroid.core.search.result;
 
 import android.graphics.Color;
 import androidx.annotation.NonNull;
@@ -17,16 +17,16 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cc.lixiaoyu.wanandroid.R;
-import cc.lixiaoyu.wanandroid.entity.ArticlePage;
+import cc.lixiaoyu.wanandroid.entity.Article;
 
-public class SearchResultAdapter extends BaseQuickAdapter<ArticlePage.Article, SearchResultAdapter.ViewHolder> {
+public class SearchResultAdapter extends BaseQuickAdapter<Article, SearchResultAdapter.ViewHolder> {
 
-    public SearchResultAdapter(int layoutResId, @Nullable List<ArticlePage.Article> data) {
+    public SearchResultAdapter(int layoutResId, @Nullable List<Article> data) {
         super(layoutResId, data);
     }
 
     @Override
-    protected void convert(ViewHolder holder, ArticlePage.Article article) {
+    protected void convert(ViewHolder holder, Article article) {
         holder.tvAuthor.setText(article.getAuthor());
         //处理关键词高亮
         String title = article.getTitle();

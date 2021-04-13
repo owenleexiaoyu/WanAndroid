@@ -23,13 +23,14 @@ import java.util.List;
 
 import butterknife.BindView;
 import cc.lixiaoyu.wanandroid.base.MVPBaseFragment;
-import cc.lixiaoyu.wanandroid.ui.activity.LoginActivity;
+import cc.lixiaoyu.wanandroid.core.login.LoginActivity;
+import cc.lixiaoyu.wanandroid.entity.Article;
 import cc.lixiaoyu.wanandroid.util.GlideImageLoader;
 import cc.lixiaoyu.wanandroid.R;
 import cc.lixiaoyu.wanandroid.adapter.ArticleAdapter;
 import cc.lixiaoyu.wanandroid.entity.ArticlePage;
 import cc.lixiaoyu.wanandroid.entity.Banner;
-import cc.lixiaoyu.wanandroid.ui.activity.ArticleDetailActivity;
+import cc.lixiaoyu.wanandroid.core.detail.ArticleDetailActivity;
 import cc.lixiaoyu.wanandroid.util.ToastUtil;
 
 public class HomeFragment extends MVPBaseFragment<HomeContract.Presenter> implements HomeContract.View{
@@ -63,11 +64,11 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.Presenter> implem
 
         //初始化Adapter
         mAdapter = new ArticleAdapter(R.layout.item_recyclerview_article,
-                new ArrayList<ArticlePage.Article>(0));
+                new ArrayList<Article>(0));
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                ArticlePage.Article article = mAdapter.getData().get(position);
+                Article article = mAdapter.getData().get(position);
                 mPresenter.openArticleDetail(article);
             }
         });
@@ -129,13 +130,13 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.Presenter> implem
     }
 
     @Override
-    public void showArticleList(List<ArticlePage.Article> articles) {
+    public void showArticleList(List<Article> articles) {
         mAdapter.addData(articles);
         mSmartRefreshLayout.finishRefresh();
     }
 
     @Override
-    public void showTopArticles(List<ArticlePage.Article> articles) {
+    public void showTopArticles(List<Article> articles) {
         mAdapter.replaceData(articles);
     }
 
@@ -189,7 +190,7 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.Presenter> implem
     }
 
     @Override
-    public void showLoadMore(List<ArticlePage.Article> articles, boolean success) {
+    public void showLoadMore(List<Article> articles, boolean success) {
         //如果成功
         if(success){
             mAdapter.addData(articles);
@@ -202,17 +203,13 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.Presenter> implem
     }
 
     @Override
-    public void showOpenArticleDetail(ArticlePage.Article article) {
-        //携带Title和URL跳转到ArticleDetailActivity
-        ArticleDetailActivity.actionStart(getActivity(),
-                article.getTitle(), article.getLink());
+    public void showOpenArticleDetail(Article article) {
+        ArticleDetailActivity.actionStart(getActivity(), article.toDetailParam());
     }
 
     @Override
     public void showOpenBannerDetail(Banner banner) {
-        //携带Title和URL跳转到ArticleDetailActivity
-        ArticleDetailActivity.actionStart(getActivity(),
-                banner.getTitle(), banner.getUrl());
+        ArticleDetailActivity.actionStart(getActivity(), banner.toDetailParam());
     }
 
     /**

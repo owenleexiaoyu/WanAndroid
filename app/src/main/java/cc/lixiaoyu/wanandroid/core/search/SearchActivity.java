@@ -21,9 +21,8 @@ import butterknife.BindView;
 import cc.lixiaoyu.wanandroid.R;
 import cc.lixiaoyu.wanandroid.base.MVPBaseSwipeBackActivity;
 import cc.lixiaoyu.wanandroid.entity.HotKey;
-import cc.lixiaoyu.wanandroid.entity.WebSite;
-import cc.lixiaoyu.wanandroid.ui.activity.ArticleDetailActivity;
-import cc.lixiaoyu.wanandroid.ui.activity.SearchResultActivity;
+import cc.lixiaoyu.wanandroid.core.detail.ArticleDetailActivity;
+import cc.lixiaoyu.wanandroid.core.search.result.SearchResultActivity;
 
 public class SearchActivity extends MVPBaseSwipeBackActivity<SearchContract.Presenter>
         implements SearchContract.View{
@@ -184,7 +183,7 @@ public class SearchActivity extends MVPBaseSwipeBackActivity<SearchContract.Pres
             public boolean onTagClick(View view, int position, FlowLayout parent) {
                 WebSite webSite = webSites.get(position);
                 ArticleDetailActivity.actionStart(SearchActivity.this,
-                        webSite.getName(), webSite.getLink());
+                        webSite.toDetailParam());
                 return true;
             }
         });

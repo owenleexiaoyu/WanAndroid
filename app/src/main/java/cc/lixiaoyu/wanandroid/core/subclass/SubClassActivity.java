@@ -1,4 +1,4 @@
-package cc.lixiaoyu.wanandroid.ui.activity;
+package cc.lixiaoyu.wanandroid.core.subclass;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,7 +14,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cc.lixiaoyu.wanandroid.R;
-import cc.lixiaoyu.wanandroid.adapter.SubClassAdapter;
 import cc.lixiaoyu.wanandroid.base.BaseSwipeBackActivity;
 import cc.lixiaoyu.wanandroid.entity.PrimaryClass;
 

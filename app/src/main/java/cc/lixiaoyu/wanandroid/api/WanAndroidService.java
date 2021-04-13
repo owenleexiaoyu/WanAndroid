@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 
 import java.util.List;
 
+import cc.lixiaoyu.wanandroid.entity.Article;
 import cc.lixiaoyu.wanandroid.entity.ArticlePage;
 import cc.lixiaoyu.wanandroid.entity.Banner;
 import cc.lixiaoyu.wanandroid.entity.CollectionPage;
@@ -12,10 +13,10 @@ import cc.lixiaoyu.wanandroid.entity.Nav;
 import cc.lixiaoyu.wanandroid.entity.PrimaryClass;
 import cc.lixiaoyu.wanandroid.entity.ProjectPage;
 import cc.lixiaoyu.wanandroid.entity.ProjectTitle;
-import cc.lixiaoyu.wanandroid.entity.TodoEntity;
+import cc.lixiaoyu.wanandroid.core.todo.TodoEntity;
 import cc.lixiaoyu.wanandroid.entity.User;
 import cc.lixiaoyu.wanandroid.entity.WanAndroidResult;
-import cc.lixiaoyu.wanandroid.entity.WebSite;
+import cc.lixiaoyu.wanandroid.core.search.WebSite;
 import cc.lixiaoyu.wanandroid.entity.WechatPage;
 import cc.lixiaoyu.wanandroid.entity.WechatTitle;
 import io.reactivex.Observable;
@@ -56,7 +57,7 @@ public interface WanAndroidService {
      * @return
      */
     @GET("article/top/json")
-    Observable<WanAndroidResult<List<ArticlePage.Article>>> getTopArticles();
+    Observable<WanAndroidResult<List<Article>>> getTopArticles();
 
     /**
      * 获取知识体系数据

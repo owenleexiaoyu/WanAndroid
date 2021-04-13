@@ -3,15 +3,12 @@ package cc.lixiaoyu.wanandroid.core.home;
 import java.util.ArrayList;
 import java.util.List;
 
+import cc.lixiaoyu.wanandroid.entity.Article;
 import cc.lixiaoyu.wanandroid.entity.ArticlePage;
 import cc.lixiaoyu.wanandroid.entity.Banner;
-import cc.lixiaoyu.wanandroid.entity.WanAndroidResult;
 import cc.lixiaoyu.wanandroid.util.Optional;
 import cc.lixiaoyu.wanandroid.util.ToastUtil;
 import io.reactivex.functions.Consumer;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class HomePresenter extends HomeContract.Presenter {
 
@@ -40,9 +37,9 @@ public class HomePresenter extends HomeContract.Presenter {
     @Override
     public void getTopArticles() {
         homeModel.getTopArticles()
-                .subscribe(new Consumer<Optional<List<ArticlePage.Article>>>() {
+                .subscribe(new Consumer<Optional<List<Article>>>() {
                     @Override
-                    public void accept(Optional<List<ArticlePage.Article>> articles) throws Exception {
+                    public void accept(Optional<List<Article>> articles) throws Exception {
                         getView().showTopArticles(articles.getIncludeNull());
                     }
                 }, new Consumer<Throwable>() {
@@ -89,7 +86,7 @@ public class HomePresenter extends HomeContract.Presenter {
     }
 
     @Override
-    public void openArticleDetail(ArticlePage.Article article) {
+    public void openArticleDetail(Article article) {
         getView().showOpenArticleDetail(article);
     }
 
@@ -99,7 +96,7 @@ public class HomePresenter extends HomeContract.Presenter {
     }
 
     @Override
-    public void collectArticle(final int position, ArticlePage.Article article) {
+    public void collectArticle(final int position, Article article) {
         homeModel.collectArticle(article.getId()).subscribe(new Consumer<Optional<String>>() {
             @Override
             public void accept(Optional<String> s) throws Exception {
@@ -114,7 +111,7 @@ public class HomePresenter extends HomeContract.Presenter {
     }
 
     @Override
-    public void cancelCollectArticle(final int position, ArticlePage.Article article) {
+    public void cancelCollectArticle(final int position, Article article) {
         homeModel.unCollectArticle(article.getId()).subscribe(new Consumer<Optional<String>>() {
             @Override
             public void accept(Optional<String> s) throws Exception {

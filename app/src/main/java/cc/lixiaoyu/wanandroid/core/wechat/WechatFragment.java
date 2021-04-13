@@ -1,4 +1,4 @@
-package cc.lixiaoyu.wanandroid.ui.fragment;
+package cc.lixiaoyu.wanandroid.core.wechat;
 
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -17,42 +17,41 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cc.lixiaoyu.wanandroid.R;
-import cc.lixiaoyu.wanandroid.adapter.ProjectAdapter;
 import cc.lixiaoyu.wanandroid.api.WanAndroidService;
-import cc.lixiaoyu.wanandroid.entity.ProjectTitle;
 import cc.lixiaoyu.wanandroid.entity.WanAndroidResult;
+import cc.lixiaoyu.wanandroid.entity.WechatTitle;
 import cc.lixiaoyu.wanandroid.util.RetrofitHelper;
 import cc.lixiaoyu.wanandroid.util.ToastUtil;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
-public class ProjectFragment extends Fragment {
+public class WechatFragment extends Fragment {
     private Unbinder unbinder;
 
-    @BindView(R.id.fproject_tablayout)
+    @BindView(R.id.fwechat_tablayout)
     TabLayout mTabLayout;
-    @BindView(R.id.fproject_viewpager)
+    @BindView(R.id.fwechat_viewpager)
     ViewPager mViewPager;
-    private ProjectAdapter mAdapter;
+    private WechatAdapter mAdapter;
 
     private WanAndroidService mService;
-    private List<ProjectTitle> mDataList;
+    private List<WechatTitle> mDataList;
     //当前加载的子fragment的序号
     private int mCurrentChildFragmentIndex = 0;
-    public static ProjectFragment newInstance(){
-        return new ProjectFragment();
+    public static WechatFragment newInstance(){
+        return new WechatFragment();
     }
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_project,container, false);
+        View view = inflater.inflate(R.layout.fragment_wechat,container, false);
         //绑定ButterKnife
         unbinder = ButterKnife.bind(this, view);
         mService = RetrofitHelper.getInstance().getWanAndroidService();
         mDataList = new ArrayList<>();
 
-        mAdapter = new ProjectAdapter(getChildFragmentManager(), mDataList);
+        mAdapter = new WechatAdapter(getChildFragmentManager(), mDataList);
         mViewPager.setAdapter(mAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
         mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -71,18 +70,20 @@ public class ProjectFragment extends Fragment {
 
             }
         });
-        Call<WanAndroidResult<List<ProjectTitle>>> call = mService.getProjectsData();
-        call.enqueue(new Callback<WanAndroidResult<List<ProjectTitle>>>() {
+
+        mService.getWetchatPublicTitles()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<WanAndroidResult<List<WechatTitle>>>() {
             @Override
-            public void onResponse(Call<WanAndroidResult<List<ProjectTitle>>> call,
-                                   Response<WanAndroidResult<List<ProjectTitle>>> response) {
-                WanAndroidResult<List<ProjectTitle>> result = response.body();
+            public void accept(WanAndroidResult<List<WechatTitle>> result) throws Exception {
                 mDataList.addAll(result.getData());
                 mAdapter.notifyDataSetChanged();
             }
-
+        }, new Consumer<Throwable>() {
             @Override
-            public void onFailure(Call<WanAndroidResult<List<ProjectTitle>>> call, Throwable t) {
+            public void accept(Throwable throwable) throws Exception {
+                throwable.printStackTrace();
                 ToastUtil.showToast("出错了");
             }
         });
