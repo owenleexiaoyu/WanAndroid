@@ -1,4 +1,4 @@
-package cc.lixiaoyu.wanandroid.entity;
+package cc.lixiaoyu.wanandroid.core.todo;
 
 import java.util.List;
 

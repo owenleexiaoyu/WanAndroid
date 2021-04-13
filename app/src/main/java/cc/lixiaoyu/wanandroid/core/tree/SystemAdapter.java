@@ -1,4 +1,4 @@
-package cc.lixiaoyu.wanandroid.adapter;
+package cc.lixiaoyu.wanandroid.core.tree;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

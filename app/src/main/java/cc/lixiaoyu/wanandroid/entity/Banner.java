@@ -1,5 +1,7 @@
 package cc.lixiaoyu.wanandroid.entity;
 
+import cc.lixiaoyu.wanandroid.core.detail.ArticleDetailParam;
+
 public class Banner {
 
     private String desc;
@@ -82,5 +84,8 @@ public class Banner {
         return url;
     }
 
+    public ArticleDetailParam toDetailParam() {
+        return new ArticleDetailParam(id, title, url);
+    }
 }
 

@@ -1,4 +1,6 @@
-package cc.lixiaoyu.wanandroid.entity;
+package cc.lixiaoyu.wanandroid.core.search;
+
+import cc.lixiaoyu.wanandroid.core.detail.ArticleDetailParam;
 
 public class WebSite {
 
@@ -57,5 +59,8 @@ public class WebSite {
         return visible;
     }
 
+    public ArticleDetailParam toDetailParam() {
+        return new ArticleDetailParam(id, name, link);
+    }
 }
 

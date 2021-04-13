@@ -6,6 +6,7 @@ import java.util.List;
 import cc.lixiaoyu.wanandroid.base.BaseModel;
 import cc.lixiaoyu.wanandroid.base.BasePresenter;
 import cc.lixiaoyu.wanandroid.base.BaseView;
+import cc.lixiaoyu.wanandroid.entity.Article;
 import cc.lixiaoyu.wanandroid.entity.ArticlePage;
 import cc.lixiaoyu.wanandroid.entity.Banner;
 import cc.lixiaoyu.wanandroid.util.Optional;
@@ -15,7 +16,7 @@ public interface HomeContract {
     interface Model extends BaseModel{
         Observable<Optional<ArticlePage>> getArticleList(int page);
         Observable<Optional<List<Banner>>> getBannerData();
-        Observable<Optional<List<ArticlePage.Article>>> getTopArticles();
+        Observable<Optional<List<Article>>> getTopArticles();
         Observable<Optional<String>> collectArticle(int articleId);
         Observable<Optional<String>> unCollectArticle(int articleId);
     }
@@ -26,13 +27,13 @@ public interface HomeContract {
          * 显示文章列表
          * @param articles
          */
-        void showArticleList(List<ArticlePage.Article> articles);
+        void showArticleList(List<Article> articles);
 
         /**
          * 显示置顶文章
          * @param articles
          */
-        void showTopArticles(List<ArticlePage.Article> articles);
+        void showTopArticles(List<Article> articles);
 
 
         /**
@@ -60,13 +61,13 @@ public interface HomeContract {
          * @param articles
          * @param success
          */
-        void showLoadMore(List<ArticlePage.Article> articles, boolean success);
+        void showLoadMore(List<Article> articles, boolean success);
 
         /**
          * 显示打开文章详情
          * @param article
          */
-        void showOpenArticleDetail(ArticlePage.Article article);
+        void showOpenArticleDetail(Article article);
 
         /**
          * 显示打开Banner详情
@@ -101,7 +102,7 @@ public interface HomeContract {
          * 打开文章详情页
          * @param article
          */
-        public abstract void openArticleDetail(ArticlePage.Article article);
+        public abstract void openArticleDetail(Article article);
 
         /**
          * 打开Banner详情
@@ -114,14 +115,14 @@ public interface HomeContract {
          * @param position
          * @param article
          */
-        public abstract void collectArticle(int position, ArticlePage.Article article);
+        public abstract void collectArticle(int position, Article article);
 
         /**
          * 取消收藏文章
          * @param position
          * @param article
          */
-        public abstract void cancelCollectArticle(int position, ArticlePage.Article article);
+        public abstract void cancelCollectArticle(int position, Article article);
 
     }
 }

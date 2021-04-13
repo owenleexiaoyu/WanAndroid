@@ -2,6 +2,7 @@ package cc.lixiaoyu.wanandroid.adapter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,23 +18,23 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cc.lixiaoyu.wanandroid.R;
-import cc.lixiaoyu.wanandroid.entity.ArticlePage;
+import cc.lixiaoyu.wanandroid.entity.Article;
 
-public class ArticleAdapter extends BaseQuickAdapter<ArticlePage.Article, ArticleAdapter.ViewHolder> {
+public class ArticleAdapter extends BaseQuickAdapter<Article, ArticleAdapter.ViewHolder> {
 
-    public ArticleAdapter(int layoutResId, @Nullable List<ArticlePage.Article> data) {
+    public ArticleAdapter(int layoutResId, @Nullable List<Article> data) {
         super(layoutResId, data);
     }
 
     @Override
-    protected void convert(ViewHolder holder, ArticlePage.Article article) {
+    protected void convert(ViewHolder holder, Article article) {
         holder.tvAuthor.setText(article.getAuthor());
         holder.tvTime.setText(article.getNiceDate());
         holder.tvTitle.setText(article.getTitle());
         holder.tvChapter.setText(article.getChapterName());
-        if(TextUtils.isEmpty(article.getEnvelopePic())){
+        if (TextUtils.isEmpty(article.getEnvelopePic())) {
             holder.imgPhoto.setVisibility(View.GONE);
-        }else{
+        } else {
             holder.imgPhoto.setVisibility(View.VISIBLE);
             RequestOptions options = new RequestOptions()
                     .centerCrop();
@@ -41,16 +42,16 @@ public class ArticleAdapter extends BaseQuickAdapter<ArticlePage.Article, Articl
                     .apply(options).into(holder.imgPhoto);
         }
         //设置置顶标签的显示和隐藏
-        if(article.getType() == 0){
+        if (article.getType() == 0) {
             holder.tvTop.setVisibility(View.GONE);
-        }else if(article.getType() == 1){
+        } else if (article.getType() == 1) {
             holder.tvTop.setVisibility(View.VISIBLE);
         }
 
         //设置文章是否被收藏
-        if(article.isCollect()){
+        if (article.isCollect()) {
             holder.imgCollect.setImageResource(R.mipmap.ic_heart_orange);
-        }else{
+        } else {
             holder.imgCollect.setImageResource(R.mipmap.ic_heart_gray);
         }
 
@@ -74,6 +75,7 @@ public class ArticleAdapter extends BaseQuickAdapter<ArticlePage.Article, Articl
         TextView tvTop;
         @BindView(R.id.item_article_collect)
         ImageView imgCollect;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

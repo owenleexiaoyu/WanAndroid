@@ -20,12 +20,11 @@ import java.util.List;
 
 import butterknife.BindView;
 import cc.lixiaoyu.wanandroid.R;
-import cc.lixiaoyu.wanandroid.adapter.WechatDataAdapter;
 import cc.lixiaoyu.wanandroid.base.MVPBasePageFragment;
-import cc.lixiaoyu.wanandroid.entity.WechatPage;
+import cc.lixiaoyu.wanandroid.entity.Article;
 import cc.lixiaoyu.wanandroid.entity.WechatTitle;
-import cc.lixiaoyu.wanandroid.ui.activity.ArticleDetailActivity;
-import cc.lixiaoyu.wanandroid.ui.activity.LoginActivity;
+import cc.lixiaoyu.wanandroid.core.detail.ArticleDetailActivity;
+import cc.lixiaoyu.wanandroid.core.login.LoginActivity;
 import cc.lixiaoyu.wanandroid.util.ToastUtil;
 
 public class WechatDataFragment extends MVPBasePageFragment<WechatDataContract.Presenter>
@@ -65,11 +64,11 @@ public class WechatDataFragment extends MVPBasePageFragment<WechatDataContract.P
     @Override
     protected void initView(View view) {
         mAdapter = new WechatDataAdapter(R.layout.item_recyclerview_article,
-                new ArrayList<WechatPage.WechatData>(0));
+                new ArrayList<Article>(0));
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                WechatPage.WechatData article = (WechatPage.WechatData) adapter.getData().get(position);
+                Article article = (Article) adapter.getData().get(position);
                 mPresenter.openArticleDetail(article);
             }
         });
@@ -135,15 +134,15 @@ public class WechatDataFragment extends MVPBasePageFragment<WechatDataContract.P
     }
 
     @Override
-    public void showWechatArticlesById(List<WechatPage.WechatData> dataList) {
+    public void showWechatArticlesById(List<Article> dataList) {
         mAdapter.replaceData(dataList);
         mRefreshLayout.finishRefresh();
     }
 
     @Override
-    public void showOpenArticleDetail(WechatPage.WechatData data) {
+    public void showOpenArticleDetail(Article data) {
         //携带Title和URL跳转到ArticleDetailActivity
-        ArticleDetailActivity.actionStart(getActivity(), data.getTitle(), data.getLink());
+        ArticleDetailActivity.actionStart(getActivity(), data.toDetailParam());
     }
 
     @Override
@@ -169,7 +168,7 @@ public class WechatDataFragment extends MVPBasePageFragment<WechatDataContract.P
     }
 
     @Override
-    public void showLoadMoreWechatArticleById(List<WechatPage.WechatData> dataList, boolean success) {
+    public void showLoadMoreWechatArticleById(List<Article> dataList, boolean success) {
         //如果成功
         if (success) {
             mAdapter.addData(dataList);

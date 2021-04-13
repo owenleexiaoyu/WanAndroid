@@ -5,12 +5,10 @@ import java.util.List;
 import cc.lixiaoyu.wanandroid.base.BaseModel;
 import cc.lixiaoyu.wanandroid.base.BasePresenter;
 import cc.lixiaoyu.wanandroid.base.BaseView;
-import cc.lixiaoyu.wanandroid.entity.ArticlePage;
+import cc.lixiaoyu.wanandroid.entity.Article;
 import cc.lixiaoyu.wanandroid.entity.ProjectPage;
-import cc.lixiaoyu.wanandroid.entity.WanAndroidResult;
 import cc.lixiaoyu.wanandroid.util.Optional;
 import io.reactivex.Observable;
-import retrofit2.Call;
 
 public interface ProjectDataContract {
 
@@ -21,11 +19,11 @@ public interface ProjectDataContract {
     }
 
     interface View extends BaseView{
-        void showProjectArticlesByCid(List<ProjectPage.ProjectData> dataList);
-        void showOpenArticleDetail(ProjectPage.ProjectData data);
+        void showProjectArticlesByCid(List<Article> articleList);
+        void showOpenArticleDetail(Article article);
         void showCollectArticle(boolean success, int position);
         void showCancelCollectArticle(boolean success, int position);
-        void showLoadMoreProjectArticleByCid(List<ProjectPage.ProjectData> dataList, boolean success);
+        void showLoadMoreProjectArticleByCid(List<Article> dataList, boolean success);
     }
 
     abstract class Presenter extends BasePresenter<View>{
@@ -45,21 +43,21 @@ public interface ProjectDataContract {
          * 打开文章详情页
          * @param article
          */
-        public abstract void openArticleDetail(ProjectPage.ProjectData article);
+        public abstract void openArticleDetail(Article article);
 
         /**
          * 收藏文章
          * @param position
          * @param article
          */
-        public abstract void collectArticle(int position, ProjectPage.ProjectData article);
+        public abstract void collectArticle(int position, Article article);
 
         /**
          * 取消收藏文章
          * @param position
          * @param article
          */
-        public abstract void cancelCollectArticle(int position, ProjectPage.ProjectData article);
+        public abstract void cancelCollectArticle(int position, Article article);
 
     }
 }

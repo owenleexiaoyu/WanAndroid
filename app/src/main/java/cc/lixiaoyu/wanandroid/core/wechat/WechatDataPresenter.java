@@ -1,5 +1,6 @@
 package cc.lixiaoyu.wanandroid.core.wechat;
 
+import cc.lixiaoyu.wanandroid.entity.Article;
 import cc.lixiaoyu.wanandroid.entity.WechatPage;
 import cc.lixiaoyu.wanandroid.util.Optional;
 import cc.lixiaoyu.wanandroid.util.ToastUtil;
@@ -17,12 +18,12 @@ public class WechatDataPresenter extends WechatDataContract.Presenter {
     }
 
     @Override
-    public void openArticleDetail(WechatPage.WechatData article) {
+    public void openArticleDetail(Article article) {
         getView().showOpenArticleDetail(article);
     }
 
     @Override
-    public void collectArticle(final int position, WechatPage.WechatData article) {
+    public void collectArticle(final int position, Article article) {
         mModel.collectArticle(article.getId()).subscribe(new Consumer<Optional<String>>() {
             @Override
             public void accept(Optional<String> s) throws Exception {
@@ -37,7 +38,7 @@ public class WechatDataPresenter extends WechatDataContract.Presenter {
     }
 
     @Override
-    public void cancelCollectArticle(final int position, WechatPage.WechatData article) {
+    public void cancelCollectArticle(final int position, Article article) {
         mModel.unCollectArticle(article.getId()).subscribe(new Consumer<Optional<String>>() {
             @Override
             public void accept(Optional<String> s) throws Exception {

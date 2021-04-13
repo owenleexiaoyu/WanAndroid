@@ -1,17 +1,10 @@
 package cc.lixiaoyu.wanandroid.core.projectdata;
 
-import java.util.List;
-
+import cc.lixiaoyu.wanandroid.entity.Article;
 import cc.lixiaoyu.wanandroid.entity.ProjectPage;
-import cc.lixiaoyu.wanandroid.entity.WanAndroidResult;
-import cc.lixiaoyu.wanandroid.core.projectdata.ProjectDataContract;
-import cc.lixiaoyu.wanandroid.core.projectdata.ProjectDataModel;
 import cc.lixiaoyu.wanandroid.util.Optional;
 import cc.lixiaoyu.wanandroid.util.ToastUtil;
 import io.reactivex.functions.Consumer;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class ProjectDataPresenter extends ProjectDataContract.Presenter {
 
@@ -61,12 +54,12 @@ public class ProjectDataPresenter extends ProjectDataContract.Presenter {
     }
 
     @Override
-    public void openArticleDetail(ProjectPage.ProjectData article) {
+    public void openArticleDetail(Article article) {
         getView().showOpenArticleDetail(article);
     }
 
     @Override
-    public void collectArticle(final int position, ProjectPage.ProjectData article) {
+    public void collectArticle(final int position, Article article) {
         mModel.collectArticle(article.getId()).subscribe(new Consumer<Optional<String>>() {
             @Override
             public void accept(Optional<String> s) throws Exception {
@@ -81,7 +74,7 @@ public class ProjectDataPresenter extends ProjectDataContract.Presenter {
     }
 
     @Override
-    public void cancelCollectArticle(final int position, ProjectPage.ProjectData article) {
+    public void cancelCollectArticle(final int position, Article article) {
         mModel.unCollectArticle(article.getId()).subscribe(new Consumer<Optional<String>>() {
             @Override
             public void accept(Optional<String> s) throws Exception {

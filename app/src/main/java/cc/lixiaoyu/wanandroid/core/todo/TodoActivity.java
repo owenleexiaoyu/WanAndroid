@@ -1,4 +1,4 @@
-package cc.lixiaoyu.wanandroid.ui.activity;
+package cc.lixiaoyu.wanandroid.core.todo;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
@@ -37,11 +37,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import cc.lixiaoyu.wanandroid.R;
-import cc.lixiaoyu.wanandroid.adapter.TodoDoneAdapter;
-import cc.lixiaoyu.wanandroid.adapter.TodoUndoneAdapter;
 import cc.lixiaoyu.wanandroid.api.WanAndroidService;
 import cc.lixiaoyu.wanandroid.base.BaseSwipeBackActivity;
-import cc.lixiaoyu.wanandroid.entity.TodoEntity;
 import cc.lixiaoyu.wanandroid.entity.WanAndroidResult;
 import cc.lixiaoyu.wanandroid.util.RetrofitHelper;
 import cc.lixiaoyu.wanandroid.util.ToastUtil;

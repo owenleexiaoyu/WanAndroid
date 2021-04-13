@@ -1,4 +1,4 @@
-package cc.lixiaoyu.wanandroid.adapter;
+package cc.lixiaoyu.wanandroid.core.wechat;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,16 +17,16 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cc.lixiaoyu.wanandroid.R;
-import cc.lixiaoyu.wanandroid.entity.WechatPage;
+import cc.lixiaoyu.wanandroid.entity.Article;
 
-public class WechatDataAdapter extends BaseQuickAdapter<WechatPage.WechatData, WechatDataAdapter.ViewHolder> {
+public class WechatDataAdapter extends BaseQuickAdapter<Article, WechatDataAdapter.ViewHolder> {
 
-    public WechatDataAdapter(int layoutResId, @Nullable List<WechatPage.WechatData> data) {
+    public WechatDataAdapter(int layoutResId, @Nullable List<Article> data) {
         super(layoutResId, data);
     }
 
     @Override
-    protected void convert(ViewHolder holder, WechatPage.WechatData article) {
+    protected void convert(ViewHolder holder, Article article) {
         holder.tvAuthor.setText(article.getAuthor());
         holder.tvTime.setText(article.getNiceDate());
         holder.tvTitle.setText(article.getTitle());

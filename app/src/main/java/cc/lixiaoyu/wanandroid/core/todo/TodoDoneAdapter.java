@@ -1,4 +1,4 @@
-package cc.lixiaoyu.wanandroid.adapter;
+package cc.lixiaoyu.wanandroid.core.todo;
 
 import androidx.annotation.Nullable;
 import android.text.TextUtils;
@@ -14,7 +14,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cc.lixiaoyu.wanandroid.R;
-import cc.lixiaoyu.wanandroid.entity.TodoEntity;
 
 public class TodoDoneAdapter extends BaseQuickAdapter<TodoEntity.TodoItem, TodoDoneAdapter.ViewHolder> {
 

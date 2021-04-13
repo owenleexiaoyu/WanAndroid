@@ -4,6 +4,8 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+import cc.lixiaoyu.wanandroid.core.detail.ArticleDetailParam;
+
 public class Nav {
 
     @SerializedName("articles")
@@ -243,6 +245,10 @@ public class Nav {
 
         public void setZan(int zan) {
             this.zan = zan;
+        }
+
+        public ArticleDetailParam toDetailParam() {
+            return new ArticleDetailParam(id, title, link);
         }
     }
 

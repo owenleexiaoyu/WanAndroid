@@ -1,5 +1,6 @@
 package cc.lixiaoyu.wanandroid.core.collections;
 
+import cc.lixiaoyu.wanandroid.entity.Article;
 import cc.lixiaoyu.wanandroid.entity.CollectionPage;
 import cc.lixiaoyu.wanandroid.util.Optional;
 import io.reactivex.functions.Consumer;
@@ -59,7 +60,7 @@ public class CollectionPresenter extends CollectionContract.Presenter {
     }
 
     @Override
-    public void openArticleDetail(CollectionPage.CollectionArticle article) {
+    public void openArticleDetail(Article article) {
         getView().showOpenArticleDetail(article);
     }
 

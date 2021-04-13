@@ -1,5 +1,6 @@
 package cc.lixiaoyu.wanandroid.core.subclass;
 
+import cc.lixiaoyu.wanandroid.entity.Article;
 import cc.lixiaoyu.wanandroid.entity.ArticlePage;
 import cc.lixiaoyu.wanandroid.util.Optional;
 import io.reactivex.functions.Consumer;
@@ -37,12 +38,12 @@ public class SubClassPresenter extends SubClassContract.Presenter {
     }
 
     @Override
-    public void openArticleDetail(ArticlePage.Article article) {
+    public void openArticleDetail(Article article) {
         getView().showOpenArticleDetail(article);
     }
 
     @Override
-    public void collectArticle(final int position, ArticlePage.Article article) {
+    public void collectArticle(final int position, Article article) {
         mModel.collectArticle(article.getId()).subscribe(new Consumer<Optional<String>>() {
             @Override
             public void accept(Optional<String> s) throws Exception {
@@ -57,7 +58,7 @@ public class SubClassPresenter extends SubClassContract.Presenter {
     }
 
     @Override
-    public void cancelCollectArticle(final int position, ArticlePage.Article article) {
+    public void cancelCollectArticle(final int position, Article article) {
         mModel.unCollectArticle(article.getId()).subscribe(new Consumer<Optional<String>>() {
             @Override
             public void accept(Optional<String> s) throws Exception {

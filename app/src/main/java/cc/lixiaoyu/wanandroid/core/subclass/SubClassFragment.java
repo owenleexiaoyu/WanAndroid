@@ -22,10 +22,11 @@ import butterknife.BindView;
 import cc.lixiaoyu.wanandroid.R;
 import cc.lixiaoyu.wanandroid.adapter.ArticleAdapter;
 import cc.lixiaoyu.wanandroid.base.MVPBasePageFragment;
+import cc.lixiaoyu.wanandroid.entity.Article;
 import cc.lixiaoyu.wanandroid.entity.ArticlePage;
 import cc.lixiaoyu.wanandroid.entity.PrimaryClass;
-import cc.lixiaoyu.wanandroid.ui.activity.ArticleDetailActivity;
-import cc.lixiaoyu.wanandroid.ui.activity.LoginActivity;
+import cc.lixiaoyu.wanandroid.core.detail.ArticleDetailActivity;
+import cc.lixiaoyu.wanandroid.core.login.LoginActivity;
 import cc.lixiaoyu.wanandroid.util.ToastUtil;
 
 public class SubClassFragment extends MVPBasePageFragment<SubClassContract.Presenter> implements SubClassContract.View {
@@ -63,11 +64,11 @@ public class SubClassFragment extends MVPBasePageFragment<SubClassContract.Prese
     @Override
     protected void initView(View view) {
         mAdapter = new ArticleAdapter(R.layout.item_recyclerview_article,
-                new ArrayList<ArticlePage.Article>(0));
+                new ArrayList<Article>(0));
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                ArticlePage.Article article = mAdapter.getData().get(position);
+                Article article = mAdapter.getData().get(position);
                 mPresenter.openArticleDetail(article);
             }
         });
@@ -134,16 +135,14 @@ public class SubClassFragment extends MVPBasePageFragment<SubClassContract.Prese
     }
 
     @Override
-    public void showArticleListByCid(List<ArticlePage.Article> articles) {
+    public void showArticleListByCid(List<Article> articles) {
         mAdapter.replaceData(articles);
         mRefreshLayout.finishRefresh();
     }
 
     @Override
-    public void showOpenArticleDetail(ArticlePage.Article article) {
-        //携带Title和URL跳转到ArticleDetailActivity
-        ArticleDetailActivity.actionStart(getActivity(),
-                article.getTitle(), article.getLink());
+    public void showOpenArticleDetail(Article article) {
+        ArticleDetailActivity.actionStart(getActivity(), article.toDetailParam());
     }
 
     @Override
@@ -169,7 +168,7 @@ public class SubClassFragment extends MVPBasePageFragment<SubClassContract.Prese
     }
 
     @Override
-    public void showLoadMoreArticleByCid(List<ArticlePage.Article> articles, boolean success) {
+    public void showLoadMoreArticleByCid(List<Article> articles, boolean success) {
         //如果成功
         if (success) {
             mAdapter.addData(articles);

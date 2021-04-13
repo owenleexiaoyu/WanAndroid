@@ -6,6 +6,7 @@ import java.util.List;
 import cc.lixiaoyu.wanandroid.base.BaseModel;
 import cc.lixiaoyu.wanandroid.base.BasePresenter;
 import cc.lixiaoyu.wanandroid.base.BaseView;
+import cc.lixiaoyu.wanandroid.entity.Article;
 import cc.lixiaoyu.wanandroid.entity.ArticlePage;
 import cc.lixiaoyu.wanandroid.util.Optional;
 import io.reactivex.Observable;
@@ -19,11 +20,11 @@ public interface SubClassContract {
     }
 
     interface View extends BaseView{
-        void showArticleListByCid(List<ArticlePage.Article> articles);
-        void showOpenArticleDetail(ArticlePage.Article article);
+        void showArticleListByCid(List<Article> articles);
+        void showOpenArticleDetail(Article article);
         void showCollectArticle(boolean success, int position);
         void showCancelCollectArticle(boolean success, int position);
-        void showLoadMoreArticleByCid(List<ArticlePage.Article> articles, boolean success);
+        void showLoadMoreArticleByCid(List<Article> articles, boolean success);
     }
 
     abstract class Presenter extends BasePresenter<View>{
@@ -43,18 +44,18 @@ public interface SubClassContract {
          * 打开文章详情页
          * @param article
          */
-        public abstract void openArticleDetail(ArticlePage.Article article);
+        public abstract void openArticleDetail(Article article);
 
         /**
          * 收藏文章
          * @param article
          */
-        public abstract void collectArticle(int position, ArticlePage.Article article);
+        public abstract void collectArticle(int position, Article article);
 
         /**
          * 取消收藏文章
          * @param article
          */
-        public abstract void cancelCollectArticle(int position, ArticlePage.Article article);
+        public abstract void cancelCollectArticle(int position, Article article);
     }
 }

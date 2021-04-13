@@ -20,12 +20,11 @@ import java.util.List;
 
 import butterknife.BindView;
 import cc.lixiaoyu.wanandroid.R;
-import cc.lixiaoyu.wanandroid.adapter.ProjectDataAdapter;
 import cc.lixiaoyu.wanandroid.base.MVPBasePageFragment;
-import cc.lixiaoyu.wanandroid.entity.ProjectPage;
+import cc.lixiaoyu.wanandroid.entity.Article;
 import cc.lixiaoyu.wanandroid.entity.ProjectTitle;
-import cc.lixiaoyu.wanandroid.ui.activity.ArticleDetailActivity;
-import cc.lixiaoyu.wanandroid.ui.activity.LoginActivity;
+import cc.lixiaoyu.wanandroid.core.detail.ArticleDetailActivity;
+import cc.lixiaoyu.wanandroid.core.login.LoginActivity;
 import cc.lixiaoyu.wanandroid.util.ToastUtil;
 
 public class ProjectDataFragment extends MVPBasePageFragment<ProjectDataContract.Presenter>
@@ -65,11 +64,11 @@ public class ProjectDataFragment extends MVPBasePageFragment<ProjectDataContract
     @Override
     protected void initView(View view) {
         mAdapter = new ProjectDataAdapter(R.layout.item_recyclerview_project_data,
-                new ArrayList<ProjectPage.ProjectData>(0));
+                new ArrayList<>());
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                ProjectPage.ProjectData article = (ProjectPage.ProjectData) adapter.getData().get(position);
+                Article article = (Article) adapter.getData().get(position);
                 mPresenter.openArticleDetail(article);
             }
         });
@@ -135,15 +134,15 @@ public class ProjectDataFragment extends MVPBasePageFragment<ProjectDataContract
     }
 
     @Override
-    public void showProjectArticlesByCid(List<ProjectPage.ProjectData> dataList) {
+    public void showProjectArticlesByCid(List<Article> dataList) {
         mAdapter.replaceData(dataList);
         mRefreshLayout.finishRefresh();
     }
 
     @Override
-    public void showOpenArticleDetail(ProjectPage.ProjectData data) {
+    public void showOpenArticleDetail(Article article) {
         //携带Title和URL跳转到ArticleDetailActivity
-        ArticleDetailActivity.actionStart(getActivity(), data.getTitle(), data.getLink());
+        ArticleDetailActivity.actionStart(getActivity(), article.toDetailParam());
     }
 
     @Override
@@ -169,7 +168,7 @@ public class ProjectDataFragment extends MVPBasePageFragment<ProjectDataContract
     }
 
     @Override
-    public void showLoadMoreProjectArticleByCid(List<ProjectPage.ProjectData> dataList, boolean success) {
+    public void showLoadMoreProjectArticleByCid(List<Article> dataList, boolean success) {
         //如果成功
         if (success) {
             mAdapter.addData(dataList);

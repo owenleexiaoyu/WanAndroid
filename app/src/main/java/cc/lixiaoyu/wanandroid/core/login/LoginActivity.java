@@ -1,4 +1,4 @@
-package cc.lixiaoyu.wanandroid.ui.activity;
+package cc.lixiaoyu.wanandroid.core.login;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -7,8 +7,6 @@ import androidx.fragment.app.FragmentTransaction;
 import cc.lixiaoyu.wanandroid.R;
 
 import cc.lixiaoyu.wanandroid.base.BaseSwipeBackActivity;
-import cc.lixiaoyu.wanandroid.ui.fragment.LoginFragment;
-import cc.lixiaoyu.wanandroid.ui.fragment.RegisterFragment;
 
 public class LoginActivity extends BaseSwipeBackActivity {
 

@@ -1,4 +1,4 @@
-package cc.lixiaoyu.wanandroid.adapter;
+package cc.lixiaoyu.wanandroid.core.nav;
 
 import androidx.annotation.Nullable;
 import android.view.View;

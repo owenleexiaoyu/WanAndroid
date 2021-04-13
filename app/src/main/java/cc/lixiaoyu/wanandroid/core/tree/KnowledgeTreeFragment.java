@@ -13,10 +13,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cc.lixiaoyu.wanandroid.R;
-import cc.lixiaoyu.wanandroid.adapter.SystemAdapter;
 import cc.lixiaoyu.wanandroid.base.MVPBaseFragment;
 import cc.lixiaoyu.wanandroid.entity.PrimaryClass;
-import cc.lixiaoyu.wanandroid.ui.activity.SubClassActivity;
+import cc.lixiaoyu.wanandroid.core.subclass.SubClassActivity;
 
 
 public class KnowledgeTreeFragment extends MVPBaseFragment<KnowledgeTreeContract.Presenter>

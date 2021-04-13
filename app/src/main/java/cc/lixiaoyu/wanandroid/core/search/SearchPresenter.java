@@ -1,11 +1,8 @@
 package cc.lixiaoyu.wanandroid.core.search;
 
-import android.util.Log;
-
 import java.util.List;
 
 import cc.lixiaoyu.wanandroid.entity.HotKey;
-import cc.lixiaoyu.wanandroid.entity.WebSite;
 import cc.lixiaoyu.wanandroid.util.DataManager;
 import cc.lixiaoyu.wanandroid.util.Optional;
 import io.reactivex.functions.Consumer;

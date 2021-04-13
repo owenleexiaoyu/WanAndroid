@@ -30,7 +30,6 @@ public class MainPresenter extends MainContract.Presenter {
                 .subscribe(new Consumer<LoginEvent>() {
                     @Override
                     public void accept(LoginEvent loginEvent) throws Exception {
-//                        Toast.makeText(MyApplication.getGlobalContext(), "接受到event", Toast.LENGTH_SHORT).show();
                         getView().showLoginView();
                     }
                 }));
