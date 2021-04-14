@@ -25,7 +25,7 @@ import cc.lixiaoyu.wanandroid.api.WanAndroidService;
 import cc.lixiaoyu.wanandroid.base.BaseSwipeBackActivity;
 import cc.lixiaoyu.wanandroid.entity.Article;
 import cc.lixiaoyu.wanandroid.entity.ArticlePage;
-import cc.lixiaoyu.wanandroid.entity.WanAndroidResult;
+import cc.lixiaoyu.wanandroid.entity.WanAndroidResponse;
 import cc.lixiaoyu.wanandroid.core.detail.ArticleDetailActivity;
 import cc.lixiaoyu.wanandroid.util.RetrofitHelper;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -127,16 +127,16 @@ public class SearchResultActivity extends BaseSwipeBackActivity {
         mCurrentPage = 0;
         mService.searchArticle(mCurrentPage, mKeyword)
                 .subscribeOn(Schedulers.io())
-                .filter(new Predicate<WanAndroidResult<ArticlePage>>() {
+                .filter(new Predicate<WanAndroidResponse<ArticlePage>>() {
                     @Override
-                    public boolean test(WanAndroidResult<ArticlePage> result) throws Exception {
+                    public boolean test(WanAndroidResponse<ArticlePage> result) throws Exception {
                         return result.getErrorCode() == 0;
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<WanAndroidResult<ArticlePage>>() {
+                .subscribe(new Consumer<WanAndroidResponse<ArticlePage>>() {
                     @Override
-                    public void accept(WanAndroidResult<ArticlePage> result) throws Exception {
+                    public void accept(WanAndroidResponse<ArticlePage> result) throws Exception {
                         mAdapter.replaceData(result.getData().getArticleList());
                         mRefreshLayout.finishRefresh();
                     }
@@ -150,16 +150,16 @@ public class SearchResultActivity extends BaseSwipeBackActivity {
         mCurrentPage++;
         mService.searchArticle(mCurrentPage, mKeyword)
                 .subscribeOn(Schedulers.io())
-                .filter(new Predicate<WanAndroidResult<ArticlePage>>() {
+                .filter(new Predicate<WanAndroidResponse<ArticlePage>>() {
                     @Override
-                    public boolean test(WanAndroidResult<ArticlePage> result) throws Exception {
+                    public boolean test(WanAndroidResponse<ArticlePage> result) throws Exception {
                         return result.getErrorCode() == 0;
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<WanAndroidResult<ArticlePage>>() {
+                .subscribe(new Consumer<WanAndroidResponse<ArticlePage>>() {
                     @Override
-                    public void accept(WanAndroidResult<ArticlePage> result) throws Exception {
+                    public void accept(WanAndroidResponse<ArticlePage> result) throws Exception {
                         mAdapter.addData(result.getData().getArticleList());
                         mRefreshLayout.finishLoadMore();
                     }

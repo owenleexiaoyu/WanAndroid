@@ -6,10 +6,8 @@ import cc.lixiaoyu.wanandroid.base.BaseModel;
 import cc.lixiaoyu.wanandroid.base.BasePresenter;
 import cc.lixiaoyu.wanandroid.base.BaseView;
 import cc.lixiaoyu.wanandroid.entity.PrimaryClass;
-import cc.lixiaoyu.wanandroid.entity.WanAndroidResult;
 import cc.lixiaoyu.wanandroid.util.Optional;
 import io.reactivex.Observable;
-import retrofit2.Call;
 
 public interface KnowledgeTreeContract {
     interface Model extends BaseModel{

@@ -18,7 +18,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cc.lixiaoyu.wanandroid.R;
 import cc.lixiaoyu.wanandroid.api.WanAndroidService;
-import cc.lixiaoyu.wanandroid.entity.WanAndroidResult;
+import cc.lixiaoyu.wanandroid.entity.WanAndroidResponse;
 import cc.lixiaoyu.wanandroid.entity.WechatTitle;
 import cc.lixiaoyu.wanandroid.util.RetrofitHelper;
 import cc.lixiaoyu.wanandroid.util.ToastUtil;
@@ -74,9 +74,9 @@ public class WechatFragment extends Fragment {
         mService.getWetchatPublicTitles()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<WanAndroidResult<List<WechatTitle>>>() {
+                .subscribe(new Consumer<WanAndroidResponse<List<WechatTitle>>>() {
             @Override
-            public void accept(WanAndroidResult<List<WechatTitle>> result) throws Exception {
+            public void accept(WanAndroidResponse<List<WechatTitle>> result) throws Exception {
                 mDataList.addAll(result.getData());
                 mAdapter.notifyDataSetChanged();
             }

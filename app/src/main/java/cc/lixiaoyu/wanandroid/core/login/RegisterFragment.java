@@ -19,7 +19,7 @@ import butterknife.Unbinder;
 import cc.lixiaoyu.wanandroid.R;
 import cc.lixiaoyu.wanandroid.api.WanAndroidService;
 import cc.lixiaoyu.wanandroid.entity.User;
-import cc.lixiaoyu.wanandroid.entity.WanAndroidResult;
+import cc.lixiaoyu.wanandroid.entity.WanAndroidResponse;
 import cc.lixiaoyu.wanandroid.util.RetrofitHelper;
 import cc.lixiaoyu.wanandroid.util.ToastUtil;
 import retrofit2.Call;
@@ -81,12 +81,12 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                 String password = mEtPassword.getText().toString().trim();
                 String passwordAgain = mEtPwdAgain.getText().toString().trim();
                 WanAndroidService service = RetrofitHelper.getInstance().getWanAndroidService();
-                Call<WanAndroidResult<User>> call = service.register(userName, password, passwordAgain);
-                call.enqueue(new Callback<WanAndroidResult<User>>() {
+                Call<WanAndroidResponse<User>> call = service.register(userName, password, passwordAgain);
+                call.enqueue(new Callback<WanAndroidResponse<User>>() {
                     @Override
-                    public void onResponse(Call<WanAndroidResult<User>> call,
-                                           Response<WanAndroidResult<User>> response) {
-                        WanAndroidResult<User> result = response.body();
+                    public void onResponse(Call<WanAndroidResponse<User>> call,
+                                           Response<WanAndroidResponse<User>> response) {
+                        WanAndroidResponse<User> result = response.body();
                         if(result.getErrorCode() == 0){
                             ToastUtil.showToast("注册成功！");
                             User me = result.getData();
@@ -99,7 +99,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                     }
 
                     @Override
-                    public void onFailure(Call<WanAndroidResult<User>> call, Throwable t) {
+                    public void onFailure(Call<WanAndroidResponse<User>> call, Throwable t) {
                         ToastUtil.showToast("注册失败");
                         t.printStackTrace();
                     }

@@ -19,7 +19,7 @@ import butterknife.Unbinder;
 import cc.lixiaoyu.wanandroid.R;
 import cc.lixiaoyu.wanandroid.api.WanAndroidService;
 import cc.lixiaoyu.wanandroid.entity.ProjectTitle;
-import cc.lixiaoyu.wanandroid.entity.WanAndroidResult;
+import cc.lixiaoyu.wanandroid.entity.WanAndroidResponse;
 import cc.lixiaoyu.wanandroid.util.RetrofitHelper;
 import cc.lixiaoyu.wanandroid.util.ToastUtil;
 import retrofit2.Call;
@@ -70,18 +70,18 @@ public class ProjectFragment extends Fragment {
 
             }
         });
-        Call<WanAndroidResult<List<ProjectTitle>>> call = mService.getProjectsData();
-        call.enqueue(new Callback<WanAndroidResult<List<ProjectTitle>>>() {
+        Call<WanAndroidResponse<List<ProjectTitle>>> call = mService.getProjectsData();
+        call.enqueue(new Callback<WanAndroidResponse<List<ProjectTitle>>>() {
             @Override
-            public void onResponse(Call<WanAndroidResult<List<ProjectTitle>>> call,
-                                   Response<WanAndroidResult<List<ProjectTitle>>> response) {
-                WanAndroidResult<List<ProjectTitle>> result = response.body();
+            public void onResponse(Call<WanAndroidResponse<List<ProjectTitle>>> call,
+                                   Response<WanAndroidResponse<List<ProjectTitle>>> response) {
+                WanAndroidResponse<List<ProjectTitle>> result = response.body();
                 mDataList.addAll(result.getData());
                 mAdapter.notifyDataSetChanged();
             }
 
             @Override
-            public void onFailure(Call<WanAndroidResult<List<ProjectTitle>>> call, Throwable t) {
+            public void onFailure(Call<WanAndroidResponse<List<ProjectTitle>>> call, Throwable t) {
                 ToastUtil.showToast("出错了");
             }
         });
