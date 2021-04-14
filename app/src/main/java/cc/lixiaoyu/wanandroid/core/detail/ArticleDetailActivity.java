@@ -1,5 +1,6 @@
 package cc.lixiaoyu.wanandroid.core.detail;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -48,6 +49,7 @@ public class ArticleDetailActivity extends MVPBaseSwipeBackActivity<ArticleDetai
         mArticleDetailParam = (ArticleDetailParam) intent.getSerializableExtra(ARTICLE_DETAIL_PARAM);
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void initView() {
         mTvTitle.setText(mArticleDetailParam.getTitle());
@@ -69,12 +71,16 @@ public class ArticleDetailActivity extends MVPBaseSwipeBackActivity<ArticleDetai
 
     @Override
     public void showLoading() {
-        mProgressBar.setVisibility(View.VISIBLE);
+        if (mProgressBar != null) {
+            mProgressBar.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
     public void hideLoading() {
-        mProgressBar.setVisibility(View.GONE);
+        if (mProgressBar != null) {
+            mProgressBar.setVisibility(View.GONE);
+        }
     }
 
     @Override
