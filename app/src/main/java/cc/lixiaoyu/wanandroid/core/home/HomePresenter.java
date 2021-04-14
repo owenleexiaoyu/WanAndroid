@@ -1,5 +1,7 @@
 package cc.lixiaoyu.wanandroid.core.home;
 
+import android.annotation.SuppressLint;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +23,7 @@ public class HomePresenter extends HomeContract.Presenter {
     }
 
 
+    @SuppressLint("CheckResult")
     @Override
     public void getArticleList() {
         mCurrentPage = 0;
@@ -34,6 +37,7 @@ public class HomePresenter extends HomeContract.Presenter {
 
     }
 
+    @SuppressLint("CheckResult")
     @Override
     public void getTopArticles() {
         homeModel.getTopArticles()
@@ -50,6 +54,7 @@ public class HomePresenter extends HomeContract.Presenter {
                 });
     }
 
+    @SuppressLint("CheckResult")
     @Override
     public void loadMoreArticle() {
         mCurrentPage++;
@@ -66,6 +71,7 @@ public class HomePresenter extends HomeContract.Presenter {
         });
     }
 
+    @SuppressLint("CheckResult")
     @Override
     public void getBannerData() {
         homeModel.getBannerData().subscribe(new Consumer<Optional<List<Banner>>>() {
@@ -95,6 +101,7 @@ public class HomePresenter extends HomeContract.Presenter {
         getView().showOpenBannerDetail(banner);
     }
 
+    @SuppressLint("CheckResult")
     @Override
     public void collectArticle(final int position, Article article) {
         homeModel.collectArticle(article.getId()).subscribe(new Consumer<Optional<String>>() {
@@ -110,6 +117,7 @@ public class HomePresenter extends HomeContract.Presenter {
         });
     }
 
+    @SuppressLint("CheckResult")
     @Override
     public void cancelCollectArticle(final int position, Article article) {
         homeModel.unCollectArticle(article.getId()).subscribe(new Consumer<Optional<String>>() {

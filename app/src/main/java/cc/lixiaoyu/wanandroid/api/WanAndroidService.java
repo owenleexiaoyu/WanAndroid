@@ -15,7 +15,7 @@ import cc.lixiaoyu.wanandroid.entity.ProjectPage;
 import cc.lixiaoyu.wanandroid.entity.ProjectTitle;
 import cc.lixiaoyu.wanandroid.core.todo.TodoEntity;
 import cc.lixiaoyu.wanandroid.entity.User;
-import cc.lixiaoyu.wanandroid.entity.WanAndroidResult;
+import cc.lixiaoyu.wanandroid.entity.WanAndroidResponse;
 import cc.lixiaoyu.wanandroid.core.search.WebSite;
 import cc.lixiaoyu.wanandroid.entity.WechatPage;
 import cc.lixiaoyu.wanandroid.entity.WechatTitle;
@@ -37,7 +37,7 @@ public interface WanAndroidService {
      * @return
      */
     @GET("banner/json")
-    Observable<WanAndroidResult<List<Banner>>> getBannerData();
+    Observable<WanAndroidResponse<List<Banner>>> getBannerData();
 
     /**
      * 获取文章列表
@@ -48,7 +48,7 @@ public interface WanAndroidService {
      * @return
      */
     @GET("article/list/{page}/json")
-    Observable<WanAndroidResult<ArticlePage>> getArticleList(@Path("page") int page, @Nullable @Query("cid") String cid);
+    Observable<WanAndroidResponse<ArticlePage>> getArticleList(@Path("page") int page, @Nullable @Query("cid") String cid);
 
     /**
      * 获取置顶文章
@@ -57,7 +57,7 @@ public interface WanAndroidService {
      * @return
      */
     @GET("article/top/json")
-    Observable<WanAndroidResult<List<Article>>> getTopArticles();
+    Observable<WanAndroidResponse<List<Article>>> getTopArticles();
 
     /**
      * 获取知识体系数据
@@ -66,7 +66,7 @@ public interface WanAndroidService {
      * @return
      */
     @GET("tree/json")
-    Observable<WanAndroidResult<List<PrimaryClass>>> getKnowledgeTreeData();
+    Observable<WanAndroidResponse<List<PrimaryClass>>> getKnowledgeTreeData();
 
     /**
      * 获取项目分类信息
@@ -75,7 +75,7 @@ public interface WanAndroidService {
      * @return
      */
     @GET("project/tree/json")
-    Call<WanAndroidResult<List<ProjectTitle>>> getProjectsData();
+    Call<WanAndroidResponse<List<ProjectTitle>>> getProjectsData();
 
     /**
      * 获取项目分类中的项目列表数据
@@ -84,7 +84,7 @@ public interface WanAndroidService {
      * @return
      */
     @GET("project/list/{page}/json")
-    Observable<WanAndroidResult<ProjectPage>> getProjectArticlesByCid(@Path("page") int page, @Query("cid") String cid);
+    Observable<WanAndroidResponse<ProjectPage>> getProjectArticlesByCid(@Path("page") int page, @Query("cid") String cid);
 
     /**
      * 获取导航数据
@@ -92,7 +92,7 @@ public interface WanAndroidService {
      * @return
      */
     @GET("navi/json")
-    Observable<WanAndroidResult<List<Nav>>> getNavData();
+    Observable<WanAndroidResponse<List<Nav>>> getNavData();
 
     /**
      * 获取搜索热词
@@ -101,7 +101,7 @@ public interface WanAndroidService {
      * @return
      */
     @GET("hotkey/json")
-    Observable<WanAndroidResult<List<HotKey>>> getHotKey();
+    Observable<WanAndroidResponse<List<HotKey>>> getHotKey();
 
     /**
      * 获取常用网站
@@ -110,7 +110,7 @@ public interface WanAndroidService {
      * @return
      */
     @GET("friend/json")
-    Observable<WanAndroidResult<List<WebSite>>> getCommonSite();
+    Observable<WanAndroidResponse<List<WebSite>>> getCommonSite();
 
     /**
      * 通过关键词进行搜索
@@ -122,7 +122,7 @@ public interface WanAndroidService {
      */
     @POST("article/query/{page}/json")
     @FormUrlEncoded
-    Observable<WanAndroidResult<ArticlePage>> searchArticle(@Path("page") int page, @Field("k") String k);
+    Observable<WanAndroidResponse<ArticlePage>> searchArticle(@Path("page") int page, @Field("k") String k);
 
 
     /**
@@ -135,7 +135,7 @@ public interface WanAndroidService {
      */
     @POST("user/login")
     @FormUrlEncoded
-    Call<WanAndroidResult<User>> login(@Field("username") String username, @Field("password") String password);
+    Call<WanAndroidResponse<User>> login(@Field("username") String username, @Field("password") String password);
 
     /**
      * 注册
@@ -148,9 +148,9 @@ public interface WanAndroidService {
      */
     @POST("user/register")
     @FormUrlEncoded
-    Call<WanAndroidResult<User>> register(@Field("username") String username,
-                                          @Field("password") String password,
-                                          @Field("repassword") String rePassword);
+    Call<WanAndroidResponse<User>> register(@Field("username") String username,
+                                            @Field("password") String password,
+                                            @Field("repassword") String rePassword);
 
     /**
      * 退出登录
@@ -160,7 +160,7 @@ public interface WanAndroidService {
      * @return
      */
     @GET("user/logout/json")
-    Observable<WanAndroidResult<String>> logout();
+    Observable<WanAndroidResponse<String>> logout();
 
     /**
      * 获取收藏的文章列表
@@ -169,7 +169,7 @@ public interface WanAndroidService {
      * @return
      */
     @GET("lg/collect/list/{page}/json")
-    Observable<WanAndroidResult<CollectionPage>> getCollectionArticleList(@Path("page") int page);
+    Observable<WanAndroidResponse<CollectionPage>> getCollectionArticleList(@Path("page") int page);
 
     /**
      * 收藏文章
@@ -179,7 +179,7 @@ public interface WanAndroidService {
      * @return
      */
     @POST("lg/collect/{articleId}/json")
-    Observable<WanAndroidResult<String>> collectArticle(@Path("articleId") int articleId);
+    Observable<WanAndroidResponse<String>> collectArticle(@Path("articleId") int articleId);
 
     /**
      * 从收藏界面中取消收藏文章
@@ -190,7 +190,7 @@ public interface WanAndroidService {
      */
     @POST("lg/uncollect/{id}/json")
     @FormUrlEncoded
-    Observable<WanAndroidResult<String>> unCollectArticleFromCollectionPage(@Path("id") int articleId, @Field("originId") int originId);
+    Observable<WanAndroidResponse<String>> unCollectArticleFromCollectionPage(@Path("id") int articleId, @Field("originId") int originId);
 
     /**
      * 从文章列表中取消收藏文章
@@ -200,7 +200,7 @@ public interface WanAndroidService {
      * @return
      */
     @POST("lg/uncollect_originId/{id}/json")
-    Observable<WanAndroidResult<String>> unCollectArticleFromArticleList(@Path("id") int articleId);
+    Observable<WanAndroidResponse<String>> unCollectArticleFromArticleList(@Path("id") int articleId);
 
     /**
      * 获取公众号列表
@@ -209,7 +209,7 @@ public interface WanAndroidService {
      * @return
      */
     @GET("wxarticle/chapters/json")
-    Observable<WanAndroidResult<List<WechatTitle>>> getWetchatPublicTitles();
+    Observable<WanAndroidResponse<List<WechatTitle>>> getWetchatPublicTitles();
 
     /**
      * 获取某个公众号下的文章
@@ -218,7 +218,7 @@ public interface WanAndroidService {
      * @return
      */
     @GET("wxarticle/list/{id}/{page}/json")
-    Observable<WanAndroidResult<WechatPage>> getWechatPublicArticlesById(@Path("id") int id, @Path("page") int page);
+    Observable<WanAndroidResponse<WechatPage>> getWechatPublicArticlesById(@Path("id") int id, @Path("page") int page);
 
     /**
      * 根据type来获取todo清单
@@ -227,7 +227,7 @@ public interface WanAndroidService {
      * @return
      */
     @GET("lg/todo/list/{type}/json")
-    Observable<WanAndroidResult<TodoEntity>> getTodoListByType(@Path("type") int type);
+    Observable<WanAndroidResponse<TodoEntity>> getTodoListByType(@Path("type") int type);
 
     /**
      * 新增一个todo
@@ -242,10 +242,10 @@ public interface WanAndroidService {
      */
     @POST("lg/todo/add/json")
     @FormUrlEncoded
-    Observable<WanAndroidResult<TodoEntity.TodoItem>> addTodoItem(@Field("title") String title,
-                                                                  @Field("content") String content,
-                                                                  @Field("date") String date,
-                                                                  @Field("type") int type);
+    Observable<WanAndroidResponse<TodoEntity.TodoItem>> addTodoItem(@Field("title") String title,
+                                                                    @Field("content") String content,
+                                                                    @Field("date") String date,
+                                                                    @Field("type") int type);
 
     /**
      * 更新TodoItem的内容
@@ -261,12 +261,12 @@ public interface WanAndroidService {
      */
     @POST("lg/todo/update/{id}/json")
     @FormUrlEncoded
-    Observable<WanAndroidResult<TodoEntity.TodoItem>> updateTodoItem(@Path("id") int id,
-                                                                     @Field("title") String title,
-                                                                     @Field("content") String content,
-                                                                     @Field("date") String date,
-                                                                     @Field("type") int type,
-                                                                     @Field("status") int status);
+    Observable<WanAndroidResponse<TodoEntity.TodoItem>> updateTodoItem(@Path("id") int id,
+                                                                       @Field("title") String title,
+                                                                       @Field("content") String content,
+                                                                       @Field("date") String date,
+                                                                       @Field("type") int type,
+                                                                       @Field("status") int status);
 
     /**
      * 删除一条todoitem
@@ -276,6 +276,6 @@ public interface WanAndroidService {
      * @return
      */
     @POST("lg/todo/delete/{id}/json")
-    Observable<WanAndroidResult<String>> deleteTodoItem(@Path("id") int id);
+    Observable<WanAndroidResponse<String>> deleteTodoItem(@Path("id") int id);
 
 }

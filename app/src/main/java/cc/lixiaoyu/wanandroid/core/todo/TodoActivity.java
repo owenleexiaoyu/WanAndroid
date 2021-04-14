@@ -39,7 +39,7 @@ import butterknife.BindView;
 import cc.lixiaoyu.wanandroid.R;
 import cc.lixiaoyu.wanandroid.api.WanAndroidService;
 import cc.lixiaoyu.wanandroid.base.BaseSwipeBackActivity;
-import cc.lixiaoyu.wanandroid.entity.WanAndroidResult;
+import cc.lixiaoyu.wanandroid.entity.WanAndroidResponse;
 import cc.lixiaoyu.wanandroid.util.RetrofitHelper;
 import cc.lixiaoyu.wanandroid.util.ToastUtil;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -272,9 +272,9 @@ public class TodoActivity extends BaseSwipeBackActivity {
         mService.deleteTodoItem(item.getId())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<WanAndroidResult<String>>() {
+                .subscribe(new Consumer<WanAndroidResponse<String>>() {
                     @Override
-                    public void accept(WanAndroidResult<String> result) throws Exception {
+                    public void accept(WanAndroidResponse<String> result) throws Exception {
                         ToastUtil.showToast("删除任务成功");
                         if (status == TODO_STATUS_UNDONE) {
                             mUndoneAdapter.remove(position);
@@ -300,9 +300,9 @@ public class TodoActivity extends BaseSwipeBackActivity {
                 item.getContent(), item.getDateStr(), item.getType(), status)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<WanAndroidResult<TodoEntity.TodoItem>>() {
+                .subscribe(new Consumer<WanAndroidResponse<TodoEntity.TodoItem>>() {
                     @Override
-                    public void accept(WanAndroidResult<TodoEntity.TodoItem> result) throws Exception {
+                    public void accept(WanAndroidResponse<TodoEntity.TodoItem> result) throws Exception {
                         if (status == TODO_STATUS_UNDONE) {
                             ToastUtil.showToast("重新添加到任务列表中");
                             //从已完成的列表中删除
@@ -330,9 +330,9 @@ public class TodoActivity extends BaseSwipeBackActivity {
                 item.getContent(), item.getDateStr(), item.getType(), item.getStatus())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<WanAndroidResult<TodoEntity.TodoItem>>() {
+                .subscribe(new Consumer<WanAndroidResponse<TodoEntity.TodoItem>>() {
                     @Override
-                    public void accept(WanAndroidResult<TodoEntity.TodoItem> result) throws Exception {
+                    public void accept(WanAndroidResponse<TodoEntity.TodoItem> result) throws Exception {
                         ToastUtil.showToast("任务详情已修改");
                         TodoEntity.TodoItem todoItem = mUndoneAdapter.getData().get(position);
                         todoItem = result.getData();
@@ -467,9 +467,9 @@ public class TodoActivity extends BaseSwipeBackActivity {
         mService.addTodoItem(title, content, time, type)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<WanAndroidResult<TodoEntity.TodoItem>>() {
+                .subscribe(new Consumer<WanAndroidResponse<TodoEntity.TodoItem>>() {
                     @Override
-                    public void accept(WanAndroidResult<TodoEntity.TodoItem> result) throws Exception {
+                    public void accept(WanAndroidResponse<TodoEntity.TodoItem> result) throws Exception {
                         mUndoneAdapter.addData(0, result.getData());
                         ToastUtil.showToast("添加成功");
                     }
@@ -485,9 +485,9 @@ public class TodoActivity extends BaseSwipeBackActivity {
         mService.getTodoListByType(type)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<WanAndroidResult<TodoEntity>>() {
+                .subscribe(new Consumer<WanAndroidResponse<TodoEntity>>() {
                     @Override
-                    public void accept(WanAndroidResult<TodoEntity> result) throws Exception {
+                    public void accept(WanAndroidResponse<TodoEntity> result) throws Exception {
                         TodoEntity entity = result.getData();
                         //结束SmartRefreshLayout的刷新动作
                         mUndoneRefreshLayout.finishRefresh();

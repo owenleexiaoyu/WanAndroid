@@ -4,9 +4,10 @@ import cc.lixiaoyu.wanandroid.util.Optional;
 
 /**
  * WANAndroid返回数据最外层的实体类
+ *
  * @param <T>
  */
-public class WanAndroidResult<T> {
+public class WanAndroidResponse<T> {
     private int errorCode;
     private String errorMsg;
     private T data;
@@ -35,11 +36,11 @@ public class WanAndroidResult<T> {
         this.data = data;
     }
 
-    public boolean isSuccess(){
+    public boolean isSuccess() {
         return errorCode == 0;
     }
 
-    public Optional<T> transform(){
+    public Optional<T> transform() {
         return new Optional<>(data);
     }
 }

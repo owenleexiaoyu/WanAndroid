@@ -25,7 +25,7 @@ import butterknife.Unbinder;
 import cc.lixiaoyu.wanandroid.R;
 import cc.lixiaoyu.wanandroid.api.WanAndroidService;
 import cc.lixiaoyu.wanandroid.entity.Nav;
-import cc.lixiaoyu.wanandroid.entity.WanAndroidResult;
+import cc.lixiaoyu.wanandroid.entity.WanAndroidResponse;
 import cc.lixiaoyu.wanandroid.core.detail.ArticleDetailActivity;
 import cc.lixiaoyu.wanandroid.util.RetrofitHelper;
 import cc.lixiaoyu.wanandroid.util.ToastUtil;
@@ -71,16 +71,16 @@ public class NavFragment extends Fragment {
         WanAndroidService service = RetrofitHelper.getInstance().getWanAndroidService();
         service.getNavData()
                 .subscribeOn(Schedulers.io())
-                .filter(new Predicate<WanAndroidResult<List<Nav>>>() {
+                .filter(new Predicate<WanAndroidResponse<List<Nav>>>() {
                     @Override
-                    public boolean test(WanAndroidResult<List<Nav>> result) throws Exception {
+                    public boolean test(WanAndroidResponse<List<Nav>> result) throws Exception {
                         return result.getErrorCode() == 0;
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<WanAndroidResult<List<Nav>>>() {
+                .subscribe(new Consumer<WanAndroidResponse<List<Nav>>>() {
                     @Override
-                    public void accept(WanAndroidResult<List<Nav>> result) throws Exception {
+                    public void accept(WanAndroidResponse<List<Nav>> result) throws Exception {
                         mAdapter.addData(result.getData());
                         mNavItemList = result.getData().get(0).getItems();
                         mFlowLayout.setAdapter(new TagAdapter<Nav.NavItem>(mNavItemList) {
