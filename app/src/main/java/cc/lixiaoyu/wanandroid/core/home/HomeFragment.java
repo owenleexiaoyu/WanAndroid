@@ -1,8 +1,10 @@
 package cc.lixiaoyu.wanandroid.core.home;
 
 import android.content.Intent;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -28,12 +30,11 @@ import cc.lixiaoyu.wanandroid.entity.Article;
 import cc.lixiaoyu.wanandroid.util.GlideImageLoader;
 import cc.lixiaoyu.wanandroid.R;
 import cc.lixiaoyu.wanandroid.adapter.ArticleAdapter;
-import cc.lixiaoyu.wanandroid.entity.ArticlePage;
 import cc.lixiaoyu.wanandroid.entity.Banner;
 import cc.lixiaoyu.wanandroid.core.detail.ArticleDetailActivity;
 import cc.lixiaoyu.wanandroid.util.ToastUtil;
 
-public class HomeFragment extends MVPBaseFragment<HomeContract.Presenter> implements HomeContract.View{
+public class HomeFragment extends MVPBaseFragment<HomeContract.Presenter> implements HomeContract.View {
     private static final String TAG = "HomeFragment";
 
     @BindView(R.id.fhome_smart_refresh)
@@ -43,7 +44,8 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.Presenter> implem
     RecyclerView mRecyclerView;
 
     private ArticleAdapter mAdapter;
-    public static HomeFragment newInstance(){
+
+    public static HomeFragment newInstance() {
         return new HomeFragment();
     }
 
@@ -77,15 +79,15 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.Presenter> implem
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
 //                ToastUtil.showToast("点击了收藏按钮");
                 //判断是否用户登陆
-                if(!mPresenter.getDataManager().getLoginState()){
+                if (!mPresenter.getDataManager().getLoginState()) {
                     //未登录，前往登陆页面进行登陆操作
                     getActivity().startActivity(new Intent(getActivity(), LoginActivity.class));
-                }else{
+                } else {
                     //登陆后，可以进行文章的收藏与取消收藏操作
                     //如果文章已经被收藏了，就取消收藏，如果没有收藏，就收藏
-                    if(mAdapter.getItem(position).isCollect()){
+                    if (mAdapter.getItem(position).isCollect()) {
                         mPresenter.cancelCollectArticle(position, mAdapter.getItem(position));
-                    }else{
+                    } else {
                         mPresenter.collectArticle(position, mAdapter.getItem(position));
                     }
                 }
@@ -169,22 +171,22 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.Presenter> implem
 
     @Override
     public void showCollectArticle(boolean success, int position) {
-        if(success){
+        if (success) {
             ToastUtil.showToast("收藏文章成功");
             mAdapter.getData().get(position).setCollect(true);
             mAdapter.notifyDataSetChanged();
-        }else{
+        } else {
             ToastUtil.showToast("收藏文章失败");
         }
     }
 
     @Override
     public void showCancelCollectArticle(boolean success, int position) {
-        if(success){
+        if (success) {
             ToastUtil.showToast("取消收藏文章成功");
             mAdapter.getData().get(position).setCollect(false);
             mAdapter.notifyDataSetChanged();
-        }else{
+        } else {
             ToastUtil.showToast("取消收藏文章失败");
         }
     }
@@ -192,12 +194,12 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.Presenter> implem
     @Override
     public void showLoadMore(List<Article> articles, boolean success) {
         //如果成功
-        if(success){
+        if (success) {
             mAdapter.addData(articles);
             mSmartRefreshLayout.finishLoadMore();
         }
         //如果失败
-        else{
+        else {
             mSmartRefreshLayout.finishLoadMore(false);
         }
     }

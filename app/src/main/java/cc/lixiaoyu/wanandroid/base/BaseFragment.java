@@ -1,9 +1,11 @@
 package cc.lixiaoyu.wanandroid.base;
 
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +19,7 @@ import butterknife.Unbinder;
 public abstract class BaseFragment extends Fragment {
 
     private Unbinder unbinder;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +33,7 @@ public abstract class BaseFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(attachLayout(), container, false);
         //绑定butterknife
-        unbinder = ButterKnife.bind(this,view);
+        unbinder = ButterKnife.bind(this, view);
         initView(view);
         return view;
     }
@@ -43,12 +46,14 @@ public abstract class BaseFragment extends Fragment {
 
     /**
      * 初始化view
+     *
      * @param view
      */
     protected abstract void initView(View view);
 
     /**
      * 加载布局文件
+     *
      * @return
      */
     protected abstract int attachLayout();

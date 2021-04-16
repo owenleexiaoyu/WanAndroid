@@ -4,17 +4,19 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -42,7 +44,9 @@ import cc.lixiaoyu.wanandroid.core.project.ProjectFragment;
 import cc.lixiaoyu.wanandroid.core.wechat.WechatFragment;
 
 
-public class MainActivity extends MVPBaseActivity<MainPresenter> implements MainContract.View{
+public class MainActivity extends MVPBaseActivity<MainPresenter> implements MainContract.View {
+
+    private static final String CURRENT_INDEX = "current_index";
 
     @BindView(R.id.main_drawer_layout)
     DrawerLayout mDrawerLayout;
@@ -56,20 +60,28 @@ public class MainActivity extends MVPBaseActivity<MainPresenter> implements Main
     FloatingActionButton mBtnUp;
     private TextView mTvUserNameOrLogin;
 
-    private Fragment mCurrentFragment = new Fragment();//当前的fragment，用于切换
-    private List<Fragment>  mFragmentList;
-    private FragmentManager mManager;
-    //当前Activity所装载的Fragment的序号
-    private int mCurrentFragmentIndex = 0;
+    private Fragment mHomeFragment;
+    private Fragment mKnowledgeFragment;
+    private Fragment mWechatFragment;
+    private Fragment mNavFragment;
+    private Fragment mProjectFragment;
 
-    public String [] titles = {"首页","体系","公众号","导航","项目"};
+    private List<Fragment> mFragmentList = new ArrayList<>();
+    //当前所在的 tab 序号
+    private int mCurrentIndex = 0;
+
+    public String[] titles = {"首页", "体系", "公众号", "导航", "项目"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
+        // 这一步要放在调用 super.onCreate 之前
+        if (savedInstanceState != null) {
+            mCurrentIndex = savedInstanceState.getInt(CURRENT_INDEX);
+        }
+        super.onCreate(savedInstanceState);
         mPresenter.start();
     }
 
@@ -83,19 +95,6 @@ public class MainActivity extends MVPBaseActivity<MainPresenter> implements Main
      */
     @Override
     protected void initData() {
-        mManager = getSupportFragmentManager();
-        mFragmentList = new ArrayList<>();
-        HomeFragment homeFragment = HomeFragment.newInstance();
-        KnowledgeTreeFragment knowledgeFragment = KnowledgeTreeFragment.newInstanse();
-        WechatFragment wechatFragment = WechatFragment.newInstance();
-        NavFragment navFragment = NavFragment.newInstance();
-        ProjectFragment projectFragment = ProjectFragment.newInstance();
-
-        mFragmentList.add(homeFragment);
-        mFragmentList.add(knowledgeFragment);
-        mFragmentList.add(wechatFragment);
-        mFragmentList.add(navFragment);
-        mFragmentList.add(projectFragment);
     }
 
     /**
@@ -106,7 +105,7 @@ public class MainActivity extends MVPBaseActivity<MainPresenter> implements Main
         initToolbar();
         initBottomNavBar();
         //展示第一个Fragment
-        loadFragment(mFragmentList.get(0));
+        loadFragment(mCurrentIndex);
         initDrawerAndNavigationView();
         //控制置顶按钮的显示与隐藏
         showOrHideUpButton();
@@ -114,18 +113,18 @@ public class MainActivity extends MVPBaseActivity<MainPresenter> implements Main
         mBtnUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch (mCurrentFragmentIndex){
+                switch (mCurrentIndex) {
                     case 0:
-                        ((HomeFragment)mFragmentList.get(mCurrentFragmentIndex)).jumpToListTop();
+                        ((HomeFragment) mFragmentList.get(mCurrentIndex)).jumpToListTop();
                         break;
                     case 1:
-                        ((KnowledgeTreeFragment)mFragmentList.get(mCurrentFragmentIndex)).jumpToListTop();
+                        ((KnowledgeTreeFragment) mFragmentList.get(mCurrentIndex)).jumpToListTop();
                         break;
                     case 2:
-                        ((WechatFragment)mFragmentList.get(mCurrentFragmentIndex)).jumpToListTop();
+                        ((WechatFragment) mFragmentList.get(mCurrentIndex)).jumpToListTop();
                         break;
                     case 4:
-                        ((ProjectFragment)mFragmentList.get(mCurrentFragmentIndex)).jumpToListTop();
+                        ((ProjectFragment) mFragmentList.get(mCurrentIndex)).jumpToListTop();
                         break;
                 }
             }
@@ -136,9 +135,9 @@ public class MainActivity extends MVPBaseActivity<MainPresenter> implements Main
      * 控制置顶按钮的显示与隐藏
      */
     private void showOrHideUpButton() {
-        if(mCurrentFragmentIndex == 3){
+        if (mCurrentIndex == 3) {
             mBtnUp.setVisibility(View.GONE);
-        }else{
+        } else {
             mBtnUp.setVisibility(View.VISIBLE);
         }
     }
@@ -146,7 +145,7 @@ public class MainActivity extends MVPBaseActivity<MainPresenter> implements Main
     /**
      * 初始化Toolbar
      */
-    private void initToolbar(){
+    private void initToolbar() {
         mToolbar.setTitle(titles[0]);
         setSupportActionBar(mToolbar);
     }
@@ -154,7 +153,7 @@ public class MainActivity extends MVPBaseActivity<MainPresenter> implements Main
     /**
      * 初始化底部导航栏
      */
-    private void initBottomNavBar(){
+    private void initBottomNavBar() {
         mBottomNavBar.setMode(BottomNavigationBar.MODE_FIXED);
         mBottomNavBar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC);
         mBottomNavBar.addItem(new BottomNavigationItem(R.mipmap.ic_home, "首页").setActiveColor(R.color.orange))
@@ -162,15 +161,15 @@ public class MainActivity extends MVPBaseActivity<MainPresenter> implements Main
                 .addItem(new BottomNavigationItem(R.mipmap.ic_wechat, "公众号").setActiveColor(R.color.orange))
                 .addItem(new BottomNavigationItem(R.mipmap.ic_nav, "导航").setActiveColor(R.color.orange))
                 .addItem(new BottomNavigationItem(R.mipmap.ic_project_gray, "项目").setActiveColor(R.color.orange))
-                .setFirstSelectedPosition(0)
+                .setFirstSelectedPosition(mCurrentIndex)
                 .initialise();
         mBottomNavBar.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener() {
             @Override
             public void onTabSelected(int position) {
                 mToolbar.setTitle(titles[position]);
-                mCurrentFragmentIndex = position;
+                mCurrentIndex = position;
                 showOrHideUpButton();
-                loadFragment(mFragmentList.get(position));
+                loadFragment(position);
             }
 
             @Override
@@ -187,22 +186,60 @@ public class MainActivity extends MVPBaseActivity<MainPresenter> implements Main
 
     /**
      * 加载Fragment
-     * @param fragment
+     *
+     * @param index
      */
-    private void loadFragment(Fragment fragment){
-        FragmentTransaction transaction = mManager.beginTransaction();
-        //首先判断要加载的Fragment是否已经被添加过，如果没有则添加，如果有则直接show
-        if(!fragment.isAdded()){
-            if(mCurrentFragment != null){
-                transaction.hide(mCurrentFragment);
+    private void loadFragment(int index) {
+        switch (index) {
+            case 0:
+                if (mHomeFragment == null) {
+                    mHomeFragment = HomeFragment.newInstance();
+                }
+                addAndShowFragment(mHomeFragment);
+                break;
+            case 1:
+                if (mKnowledgeFragment == null) {
+                    mKnowledgeFragment = KnowledgeTreeFragment.newInstanse();
+                }
+                addAndShowFragment(mKnowledgeFragment);
+                break;
+            case 2:
+                if (mWechatFragment == null) {
+                    mWechatFragment = WechatFragment.newInstance();
+                }
+                addAndShowFragment(mWechatFragment);
+                break;
+            case 3:
+                if (mNavFragment == null) {
+                    mNavFragment = NavFragment.newInstance();
+                }
+                addAndShowFragment(mNavFragment);
+                break;
+            case 4:
+                if (mProjectFragment == null) {
+                    mProjectFragment = ProjectFragment.newInstance();
+                }
+                addAndShowFragment(mProjectFragment);
+                break;
+            default:
+                throw new IllegalArgumentException("Index ["+ index+ "] is not support");
+        }
+    }
+
+
+    private void addAndShowFragment(Fragment fragment) {
+        if (fragment == null) return;
+        if (!fragment.isAdded()) {
+            getSupportFragmentManager().beginTransaction().add(R.id.main_container, fragment).commit();
+            mFragmentList.add(fragment);
+        }
+        for (Fragment frag : mFragmentList) {
+            if (frag != fragment) {
+                // 先隐藏其他 Fragment
+                getSupportFragmentManager().beginTransaction().hide(frag).commit();
             }
-            transaction.add(R.id.main_container, fragment);
         }
-        else{
-            transaction.hide(mCurrentFragment).show(fragment);
-        }
-        mCurrentFragment = fragment;
-        transaction.commit();
+        getSupportFragmentManager().beginTransaction().show(fragment).commit();
     }
 
     /**
@@ -210,9 +247,9 @@ public class MainActivity extends MVPBaseActivity<MainPresenter> implements Main
      */
     private void initDrawerAndNavigationView() {
         //判断是否登录
-        if(mPresenter.getLoginState()){
+        if (mPresenter.getLoginState()) {
             showLoginView();
-        }else{
+        } else {
             showLogoutView();
         }
 
@@ -225,23 +262,23 @@ public class MainActivity extends MVPBaseActivity<MainPresenter> implements Main
                 OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch (menuItem.getItemId()){
+                switch (menuItem.getItemId()) {
                     case R.id.nav_collection:
                         //判断是否登录过，没有登录要先登录
-                        if(mPresenter.getLoginState()){
+                        if (mPresenter.getLoginState()) {
                             //登录后进入收藏界面
                             startActivity(new Intent(MainActivity.this, CollectionActivity.class));
-                        }else{
+                        } else {
                             //未登录则进入登录界面
                             startActivity(new Intent(MainActivity.this, LoginActivity.class));
                         }
                         break;
                     case R.id.nav_todo:
                         //判断是否登录过，没有登录要先登录
-                        if(mPresenter.getLoginState()){
+                        if (mPresenter.getLoginState()) {
                             //登录后进入TODO界面
                             startActivity(new Intent(MainActivity.this, TodoActivity.class));
-                        }else{
+                        } else {
                             //未登录则进入登录界面
                             startActivity(new Intent(MainActivity.this, LoginActivity.class));
                         }
@@ -272,7 +309,7 @@ public class MainActivity extends MVPBaseActivity<MainPresenter> implements Main
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.menu_main_search:
                 //打开搜索界面
                 startActivity(new Intent(this, SearchActivity.class));
@@ -317,7 +354,7 @@ public class MainActivity extends MVPBaseActivity<MainPresenter> implements Main
 
     @Override
     public void showLoginView() {
-        if(mNavigationView == null){
+        if (mNavigationView == null) {
             return;
         }
         //登录后显示用户名
@@ -330,7 +367,7 @@ public class MainActivity extends MVPBaseActivity<MainPresenter> implements Main
 
     @Override
     public void showLogoutView() {
-        if(mNavigationView == null){
+        if (mNavigationView == null) {
             return;
         }
         //未登录时显示登录
@@ -350,4 +387,10 @@ public class MainActivity extends MVPBaseActivity<MainPresenter> implements Main
     public void showAutoLoginView() {
         showLoginView();
     }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putInt(CURRENT_INDEX, mCurrentIndex);
+    }
+
 }

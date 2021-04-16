@@ -1,23 +1,18 @@
 package cc.lixiaoyu.wanandroid.core.project;
 
-import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import com.google.android.material.tabs.TabLayout;
-import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+
+import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import cc.lixiaoyu.wanandroid.R;
 import cc.lixiaoyu.wanandroid.api.WanAndroidService;
+import cc.lixiaoyu.wanandroid.base.BaseFragment;
 import cc.lixiaoyu.wanandroid.entity.ProjectTitle;
 import cc.lixiaoyu.wanandroid.entity.WanAndroidResponse;
 import cc.lixiaoyu.wanandroid.util.RetrofitHelper;
@@ -26,8 +21,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ProjectFragment extends Fragment {
-    private Unbinder unbinder;
+public class ProjectFragment extends BaseFragment {
 
     @BindView(R.id.fproject_tablayout)
     TabLayout mTabLayout;
@@ -37,17 +31,21 @@ public class ProjectFragment extends Fragment {
 
     private WanAndroidService mService;
     private List<ProjectTitle> mDataList;
+
     //当前加载的子fragment的序号
     private int mCurrentChildFragmentIndex = 0;
+
     public static ProjectFragment newInstance(){
         return new ProjectFragment();
     }
-    @Nullable
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_project,container, false);
-        //绑定ButterKnife
-        unbinder = ButterKnife.bind(this, view);
+    protected void initData() {
+
+    }
+
+    @Override
+    protected void initView(View view) {
         mService = RetrofitHelper.getInstance().getWanAndroidService();
         mDataList = new ArrayList<>();
 
@@ -85,15 +83,11 @@ public class ProjectFragment extends Fragment {
                 ToastUtil.showToast("出错了");
             }
         });
-
-        return view;
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        //解绑ButterKnife
-        unbinder.unbind();
+    protected int attachLayout() {
+        return R.layout.fragment_project;
     }
 
     /**
