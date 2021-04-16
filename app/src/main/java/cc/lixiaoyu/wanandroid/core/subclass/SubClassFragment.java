@@ -7,12 +7,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
-import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
@@ -23,13 +21,13 @@ import cc.lixiaoyu.wanandroid.R;
 import cc.lixiaoyu.wanandroid.adapter.ArticleAdapter;
 import cc.lixiaoyu.wanandroid.base.MVPBasePageFragment;
 import cc.lixiaoyu.wanandroid.entity.Article;
-import cc.lixiaoyu.wanandroid.entity.ArticlePage;
 import cc.lixiaoyu.wanandroid.entity.PrimaryClass;
 import cc.lixiaoyu.wanandroid.core.detail.ArticleDetailActivity;
 import cc.lixiaoyu.wanandroid.core.login.LoginActivity;
 import cc.lixiaoyu.wanandroid.util.ToastUtil;
 
-public class SubClassFragment extends MVPBasePageFragment<SubClassContract.Presenter> implements SubClassContract.View {
+public class SubClassFragment extends MVPBasePageFragment<SubClassContract.Presenter>
+        implements SubClassContract.View {
 
     private PrimaryClass.SubClass mSubClass;
     private static final String ARGUMENTS_KEY = "subclass";
@@ -64,30 +62,24 @@ public class SubClassFragment extends MVPBasePageFragment<SubClassContract.Prese
     @Override
     protected void initView(View view) {
         mAdapter = new ArticleAdapter(R.layout.item_recyclerview_article,
-                new ArrayList<Article>(0));
-        mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Article article = mAdapter.getData().get(position);
-                mPresenter.openArticleDetail(article);
-            }
+                new ArrayList<>(0));
+        mAdapter.setOnItemClickListener((adapter, view1, position) -> {
+            Article article = mAdapter.getData().get(position);
+            mPresenter.openArticleDetail(article);
         });
-        mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                //点击收藏按钮
-                //判断是否用户登陆
-                if(!mPresenter.getDataManager().getLoginState()){
-                    //未登录，前往登陆页面进行登陆操作
-                    getActivity().startActivity(new Intent(getActivity(), LoginActivity.class));
+        mAdapter.setOnItemChildClickListener((adapter, view12, position) -> {
+            //点击收藏按钮
+            //判断是否用户登陆
+            if(!mPresenter.getDataManager().getLoginState()){
+                //未登录，前往登陆页面进行登陆操作
+                getActivity().startActivity(new Intent(getActivity(), LoginActivity.class));
+            }else{
+                //登陆后，可以进行文章的收藏与取消收藏操作
+                //如果文章已经被收藏了，就取消收藏，如果没有收藏，就收藏
+                if(mAdapter.getItem(position).isCollect()){
+                    mPresenter.cancelCollectArticle(position, mAdapter.getItem(position));
                 }else{
-                    //登陆后，可以进行文章的收藏与取消收藏操作
-                    //如果文章已经被收藏了，就取消收藏，如果没有收藏，就收藏
-                    if(mAdapter.getItem(position).isCollect()){
-                        mPresenter.cancelCollectArticle(position, mAdapter.getItem(position));
-                    }else{
-                        mPresenter.collectArticle(position, mAdapter.getItem(position));
-                    }
+                    mPresenter.collectArticle(position, mAdapter.getItem(position));
                 }
             }
         });
@@ -104,12 +96,7 @@ public class SubClassFragment extends MVPBasePageFragment<SubClassContract.Prese
                 prepareFetchData(true);
             }
         });
-        mRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore(RefreshLayout refreshLayout) {
-                mPresenter.loadMoreArticleByCid(mSubClass.getId() + "");
-            }
-        });
+        mRefreshLayout.setOnLoadMoreListener(refreshLayout -> mPresenter.loadMoreArticleByCid(mSubClass.getId() + ""));
     }
 
     @Override

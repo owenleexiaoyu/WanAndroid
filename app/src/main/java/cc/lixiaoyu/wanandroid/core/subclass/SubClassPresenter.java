@@ -1,5 +1,7 @@
 package cc.lixiaoyu.wanandroid.core.subclass;
 
+import android.annotation.SuppressLint;
+
 import cc.lixiaoyu.wanandroid.entity.Article;
 import cc.lixiaoyu.wanandroid.entity.ArticlePage;
 import cc.lixiaoyu.wanandroid.util.Optional;
@@ -11,19 +13,17 @@ public class SubClassPresenter extends SubClassContract.Presenter {
 
     private int mCurrentPage = 0;
 
-    public SubClassPresenter(){
+    public SubClassPresenter() {
         mModel = new SubClassModel();
     }
 
+    @SuppressLint("CheckResult")
     @Override
     public void getArticleListByCid(String cid) {
         mCurrentPage = 0;
-        mModel.getArticleListByCid(mCurrentPage, cid).subscribe(new Consumer<Optional<ArticlePage>>() {
-            @Override
-            public void accept(Optional<ArticlePage> articlePage) throws Exception {
-                getView().showArticleListByCid(articlePage.getIncludeNull().getArticleList());
-            }
-        });
+        mModel.getArticleListByCid(mCurrentPage, cid).subscribe(articlePage ->
+                getView().showArticleListByCid(articlePage.getIncludeNull().getArticleList())
+        );
     }
 
     @Override
@@ -32,7 +32,7 @@ public class SubClassPresenter extends SubClassContract.Presenter {
         mModel.getArticleListByCid(mCurrentPage, cid).subscribe(new Consumer<Optional<ArticlePage>>() {
             @Override
             public void accept(Optional<ArticlePage> articlePage) throws Exception {
-                getView().showLoadMoreArticleByCid(articlePage.getIncludeNull().getArticleList(),true);
+                getView().showLoadMoreArticleByCid(articlePage.getIncludeNull().getArticleList(), true);
             }
         });
     }

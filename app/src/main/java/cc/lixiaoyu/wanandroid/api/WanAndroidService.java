@@ -20,7 +20,6 @@ import cc.lixiaoyu.wanandroid.core.search.WebSite;
 import cc.lixiaoyu.wanandroid.entity.WechatPage;
 import cc.lixiaoyu.wanandroid.entity.WechatTitle;
 import io.reactivex.Observable;
-import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -48,7 +47,8 @@ public interface WanAndroidService {
      * @return
      */
     @GET("article/list/{page}/json")
-    Observable<WanAndroidResponse<ArticlePage>> getArticleList(@Path("page") int page, @Nullable @Query("cid") String cid);
+    Observable<WanAndroidResponse<ArticlePage>> getArticleList(@Path("page") int page,
+                                                               @Nullable @Query("cid") String cid);
 
     /**
      * 获取置顶文章
@@ -75,7 +75,7 @@ public interface WanAndroidService {
      * @return
      */
     @GET("project/tree/json")
-    Call<WanAndroidResponse<List<ProjectTitle>>> getProjectsData();
+    Observable<WanAndroidResponse<List<ProjectTitle>>> getProjectsData();
 
     /**
      * 获取项目分类中的项目列表数据
@@ -84,7 +84,8 @@ public interface WanAndroidService {
      * @return
      */
     @GET("project/list/{page}/json")
-    Observable<WanAndroidResponse<ProjectPage>> getProjectArticlesByCid(@Path("page") int page, @Query("cid") String cid);
+    Observable<WanAndroidResponse<ProjectPage>> getProjectArticlesByCid(@Path("page") int page,
+                                                                        @Query("cid") String cid);
 
     /**
      * 获取导航数据
@@ -122,7 +123,8 @@ public interface WanAndroidService {
      */
     @POST("article/query/{page}/json")
     @FormUrlEncoded
-    Observable<WanAndroidResponse<ArticlePage>> searchArticle(@Path("page") int page, @Field("k") String k);
+    Observable<WanAndroidResponse<ArticlePage>> searchArticle(@Path("page") int page,
+                                                              @Field("k") String k);
 
 
     /**
@@ -135,7 +137,8 @@ public interface WanAndroidService {
      */
     @POST("user/login")
     @FormUrlEncoded
-    Call<WanAndroidResponse<User>> login(@Field("username") String username, @Field("password") String password);
+    Observable<WanAndroidResponse<User>> login(@Field("username") String username,
+                                         @Field("password") String password);
 
     /**
      * 注册
@@ -148,7 +151,7 @@ public interface WanAndroidService {
      */
     @POST("user/register")
     @FormUrlEncoded
-    Call<WanAndroidResponse<User>> register(@Field("username") String username,
+    Observable<WanAndroidResponse<User>> register(@Field("username") String username,
                                             @Field("password") String password,
                                             @Field("repassword") String rePassword);
 
@@ -190,7 +193,8 @@ public interface WanAndroidService {
      */
     @POST("lg/uncollect/{id}/json")
     @FormUrlEncoded
-    Observable<WanAndroidResponse<String>> unCollectArticleFromCollectionPage(@Path("id") int articleId, @Field("originId") int originId);
+    Observable<WanAndroidResponse<String>> unCollectArticleFromCollectionPage(@Path("id") int articleId,
+                                                                              @Field("originId") int originId);
 
     /**
      * 从文章列表中取消收藏文章
@@ -218,7 +222,8 @@ public interface WanAndroidService {
      * @return
      */
     @GET("wxarticle/list/{id}/{page}/json")
-    Observable<WanAndroidResponse<WechatPage>> getWechatPublicArticlesById(@Path("id") int id, @Path("page") int page);
+    Observable<WanAndroidResponse<WechatPage>> getWechatPublicArticlesById(@Path("id") int id,
+                                                                           @Path("page") int page);
 
     /**
      * 根据type来获取todo清单

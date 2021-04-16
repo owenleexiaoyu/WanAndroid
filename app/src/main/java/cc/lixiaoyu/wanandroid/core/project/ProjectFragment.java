@@ -1,5 +1,6 @@
 package cc.lixiaoyu.wanandroid.core.project;
 
+import android.annotation.SuppressLint;
 import android.view.View;
 
 import androidx.viewpager.widget.ViewPager;
@@ -11,15 +12,12 @@ import java.util.List;
 
 import butterknife.BindView;
 import cc.lixiaoyu.wanandroid.R;
-import cc.lixiaoyu.wanandroid.api.WanAndroidService;
 import cc.lixiaoyu.wanandroid.base.BaseFragment;
 import cc.lixiaoyu.wanandroid.entity.ProjectTitle;
-import cc.lixiaoyu.wanandroid.entity.WanAndroidResponse;
 import cc.lixiaoyu.wanandroid.util.RetrofitHelper;
 import cc.lixiaoyu.wanandroid.util.ToastUtil;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 public class ProjectFragment extends BaseFragment {
 
@@ -29,13 +27,12 @@ public class ProjectFragment extends BaseFragment {
     ViewPager mViewPager;
     private ProjectAdapter mAdapter;
 
-    private WanAndroidService mService;
     private List<ProjectTitle> mDataList;
 
     //当前加载的子fragment的序号
     private int mCurrentChildFragmentIndex = 0;
 
-    public static ProjectFragment newInstance(){
+    public static ProjectFragment newInstance() {
         return new ProjectFragment();
     }
 
@@ -44,9 +41,9 @@ public class ProjectFragment extends BaseFragment {
 
     }
 
+    @SuppressLint("CheckResult")
     @Override
     protected void initView(View view) {
-        mService = RetrofitHelper.getInstance().getWanAndroidService();
         mDataList = new ArrayList<>();
 
         mAdapter = new ProjectAdapter(getChildFragmentManager(), mDataList);
@@ -68,21 +65,16 @@ public class ProjectFragment extends BaseFragment {
 
             }
         });
-        Call<WanAndroidResponse<List<ProjectTitle>>> call = mService.getProjectsData();
-        call.enqueue(new Callback<WanAndroidResponse<List<ProjectTitle>>>() {
-            @Override
-            public void onResponse(Call<WanAndroidResponse<List<ProjectTitle>>> call,
-                                   Response<WanAndroidResponse<List<ProjectTitle>>> response) {
-                WanAndroidResponse<List<ProjectTitle>> result = response.body();
-                mDataList.addAll(result.getData());
-                mAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onFailure(Call<WanAndroidResponse<List<ProjectTitle>>> call, Throwable t) {
-                ToastUtil.showToast("出错了");
-            }
-        });
+        RetrofitHelper.getInstance().getWanAndroidService().getProjectsData()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(result -> {
+                    mDataList.addAll(result.getData());
+                    mAdapter.notifyDataSetChanged();
+                }, throwable -> {
+                    throwable.printStackTrace();
+                    ToastUtil.showToast("出错了");
+                });
     }
 
     @Override
@@ -93,7 +85,7 @@ public class ProjectFragment extends BaseFragment {
     /**
      * 回到列表顶部
      */
-    public void jumpToListTop(){
+    public void jumpToListTop() {
         //将置顶功能进一步交给Adapter实现
         mAdapter.jumpToListTop(mCurrentChildFragmentIndex);
     }

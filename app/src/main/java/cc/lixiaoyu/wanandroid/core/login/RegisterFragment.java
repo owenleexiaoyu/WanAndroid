@@ -1,32 +1,27 @@
 package cc.lixiaoyu.wanandroid.core.login;
 
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import com.google.android.material.textfield.TextInputEditText;
-import androidx.fragment.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+
+import com.google.android.material.textfield.TextInputEditText;
 
 import org.litepal.LitePal;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import cc.lixiaoyu.wanandroid.R;
 import cc.lixiaoyu.wanandroid.api.WanAndroidService;
+import cc.lixiaoyu.wanandroid.base.BaseFragment;
 import cc.lixiaoyu.wanandroid.entity.User;
-import cc.lixiaoyu.wanandroid.entity.WanAndroidResponse;
 import cc.lixiaoyu.wanandroid.util.RetrofitHelper;
 import cc.lixiaoyu.wanandroid.util.ToastUtil;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
-public class RegisterFragment extends Fragment implements View.OnClickListener {
+public class RegisterFragment extends BaseFragment implements View.OnClickListener {
     public static final String REGISTER_FRAGMENT_TAG = "RegisterFragment";
 
     @BindView(R.id.register_et_username)
@@ -40,37 +35,32 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     @BindView(R.id.register_tv_tologin)
     TextView mTvToLogin;
 
-    private Unbinder unbinder;
     private LoginActivity mActivity;
 
     public static RegisterFragment newInstance(){
         return new RegisterFragment();
     }
-    @Nullable
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_register, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        return view;
+    protected void initData() {
+
+    }
+
+    @Override
+    protected void initView(View view) {
+        mBtnRegister.setOnClickListener(this);
+        mTvToLogin.setOnClickListener(this);
+    }
+
+    @Override
+    protected int attachLayout() {
+        return R.layout.fragment_register;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mActivity = (LoginActivity) getActivity();
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        mBtnRegister.setOnClickListener(this);
-        mTvToLogin.setOnClickListener(this);
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
     }
 
     @Override
@@ -81,29 +71,23 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                 String password = mEtPassword.getText().toString().trim();
                 String passwordAgain = mEtPwdAgain.getText().toString().trim();
                 WanAndroidService service = RetrofitHelper.getInstance().getWanAndroidService();
-                Call<WanAndroidResponse<User>> call = service.register(userName, password, passwordAgain);
-                call.enqueue(new Callback<WanAndroidResponse<User>>() {
-                    @Override
-                    public void onResponse(Call<WanAndroidResponse<User>> call,
-                                           Response<WanAndroidResponse<User>> response) {
-                        WanAndroidResponse<User> result = response.body();
-                        if(result.getErrorCode() == 0){
-                            ToastUtil.showToast("注册成功！");
-                            User me = result.getData();
-                            //保存到本地数据库
-                            LitePal.deleteAll(User.class);
-                            me.save();
-                            //退出注册界面
-                            getActivity().finish();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<WanAndroidResponse<User>> call, Throwable t) {
-                        ToastUtil.showToast("注册失败");
-                        t.printStackTrace();
-                    }
-                });
+                service.register(userName, password, passwordAgain)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(result -> {
+                            if (result.getErrorCode() == 0) {
+                                ToastUtil.showToast("注册成功！");
+                                User me = result.getData();
+                                //保存到本地数据库
+                                LitePal.deleteAll(User.class);
+                                me.save();
+                                //退出注册界面
+                                getActivity().finish();
+                            }
+                        }, t -> {
+                            ToastUtil.showToast("注册失败");
+                            t.printStackTrace();
+                        });
                 break;
             case R.id.register_tv_tologin:
                 mActivity.switchFragment(REGISTER_FRAGMENT_TAG, LoginFragment.LOGIN_FRAGMENT_TAG);

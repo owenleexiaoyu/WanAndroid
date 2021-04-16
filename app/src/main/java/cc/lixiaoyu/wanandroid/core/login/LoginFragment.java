@@ -1,35 +1,29 @@
 package cc.lixiaoyu.wanandroid.core.login;
 
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import com.google.android.material.textfield.TextInputEditText;
-import androidx.fragment.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+
+import com.google.android.material.textfield.TextInputEditText;
+
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import cc.lixiaoyu.wanandroid.R;
 import cc.lixiaoyu.wanandroid.api.WanAndroidService;
+import cc.lixiaoyu.wanandroid.base.BaseFragment;
 import cc.lixiaoyu.wanandroid.entity.User;
-import cc.lixiaoyu.wanandroid.entity.WanAndroidResponse;
 import cc.lixiaoyu.wanandroid.event.LoginEvent;
 import cc.lixiaoyu.wanandroid.util.DataManager;
 import cc.lixiaoyu.wanandroid.util.RetrofitHelper;
 import cc.lixiaoyu.wanandroid.util.RxBus;
 import cc.lixiaoyu.wanandroid.util.ToastUtil;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
-public class LoginFragment extends Fragment implements View.OnClickListener {
+public class LoginFragment extends BaseFragment implements View.OnClickListener {
     public static final String LOGIN_FRAGMENT_TAG = "LoginFragment";
-    private static final String TAG = "LoginFragment";
 
     @BindView(R.id.login_et_username)
     TextInputEditText mEtUserName;
@@ -40,20 +34,26 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     @BindView(R.id.login_tv_toregister)
     TextView mTvToRegister;
 
-    private Unbinder unbinder;
     private LoginActivity mActivity;
 
     public static LoginFragment newInstance(){
         return new LoginFragment();
     }
 
-
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_login, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        return view;
+    protected void initData() {
+
+    }
+
+    @Override
+    protected void initView(View view) {
+        mBtnLogin.setOnClickListener(this);
+        mTvToRegister.setOnClickListener(this);
+    }
+
+    @Override
+    protected int attachLayout() {
+        return R.layout.fragment_login;
     }
 
     @Override
@@ -63,51 +63,32 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        mBtnLogin.setOnClickListener(this);
-        mTvToRegister.setOnClickListener(this);
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
-
-    @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.login_btn_login:
                 final String userName = mEtUserName.getText().toString().trim();
                 String password = mEtPassword.getText().toString().trim();
                 WanAndroidService service = RetrofitHelper.getInstance().getWanAndroidService();
-                Call<WanAndroidResponse<User>> call = service.login(userName, password);
-                call.enqueue(new Callback<WanAndroidResponse<User>>() {
-                    @Override
-                    public void onResponse(Call<WanAndroidResponse<User>> call,
-                                           Response<WanAndroidResponse<User>> response) {
-                        WanAndroidResponse<User> result = response.body();
-                        if(result.getErrorCode() == 0){
-                            ToastUtil.showToast("登录成功！");
-                            User me = result.getData();
-                            DataManager manager = new DataManager();
-                            manager.setLoginState(true);
-                            manager.setLoginAccount(me.getUsername());
-                            manager.setLoginPassword(me.getPassword());
-                            RxBus.getInstance().post(new LoginEvent(true));
-                            //退出登陆界面
-                            getActivity().finish();
+                service.login(userName, password)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(result -> {
+                            if (result.getErrorCode() == 0) {
+                                ToastUtil.showToast("登录成功！");
+                                User me = result.getData();
+                                DataManager manager = new DataManager();
+                                manager.setLoginState(true);
+                                manager.setLoginAccount(me.getUsername());
+                                manager.setLoginPassword(me.getPassword());
+                                RxBus.getInstance().post(new LoginEvent(true));
+                                //退出登陆界面
+                                getActivity().finish();
 
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<WanAndroidResponse<User>> call, Throwable t) {
-                        ToastUtil.showToast("登录失败");
-                        t.printStackTrace();
-                    }
-                });
+                            }
+                        }, t -> {
+                            ToastUtil.showToast("登录失败");
+                            t.printStackTrace();
+                        });
 
                 break;
             case R.id.login_tv_toregister:
