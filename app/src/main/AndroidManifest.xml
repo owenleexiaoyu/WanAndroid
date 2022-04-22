@@ -10,10 +10,10 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:name=".app.MyApplication"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".core.main.MainActivity"
@@ -29,7 +29,7 @@
         <activity android:name=".core.login.LoginActivity"/>
         <activity android:name=".core.search.SearchActivity"/>
         <activity android:name=".core.search.result.SearchResultActivity"/>
-        <activity android:name=".ui.activity.AboutActivity" />
+        <activity android:name=".core.about.AboutActivity" />
         <activity android:name=".core.collections.CollectionActivity"/>
         <activity android:name=".core.todo.TodoActivity"/>
     </application>

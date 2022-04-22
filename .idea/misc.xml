@@ -1,5 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="app/src/main/res/drawable-v24/article_ontop_bg.xml" value="0.1155" />
+        <entry key="app/src/main/res/drawable/article_chapter_bg.xml" value="0.1155" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.1155" />
+        <entry key="app/src/main/res/drawable/ic_menu_camera.xml" value="0.1155" />
+        <entry key="app/src/main/res/drawable/ic_menu_slideshow.xml" value="0.1155" />
+        <entry key="app/src/main/res/drawable/nav_item_bg.xml" value="0.1155" />
+        <entry key="app/src/main/res/drawable/round_btn_bg.xml" value="0.1155" />
+        <entry key="app/src/main/res/drawable/toast_bg.xml" value="0.1155" />
+        <entry key="app/src/main/res/drawable/todo_type_bg_common.xml" value="0.1155" />
+        <entry key="app/src/main/res/drawable/todo_type_bg_select.xml" value="0.1155" />
+        <entry key="app/src/main/res/layout/activity_about.xml" value="0.15260416666666668" />
+        <entry key="app/src/main/res/layout/activity_search.xml" value="0.14375" />
+        <entry key="app/src/main/res/layout/fragment_nav.xml" value="0.14375" />
+        <entry key="app/src/main/res/layout/item_nav.xml" value="0.14375" />
+        <entry key="app/src/main/res/layout/item_recyclerview_project_data.xml" value="0.14375" />
+        <entry key="app/src/main/res/layout/item_recyclerview_search_result.xml" value="0.14375" />
+        <entry key="app/src/main/res/layout/item_system_one.xml" value="0.14375" />
+        <entry key="app/src/main/res/layout/layout_nav_item.xml" value="0.14375" />
+        <entry key="app/src/main/res/layout/layout_tab_item.xml" value="0.14375" />
+        <entry key="app/src/main/res/menu/menu_main.xml" value="0.14375" />
+      </map>
+    </option>
+  </component>
   <component name="NullableNotNullManager">
     <option name="myDefaultNullable" value="android.support.annotation.Nullable" />
     <option name="myDefaultNotNull" value="android.support.annotation.NonNull" />

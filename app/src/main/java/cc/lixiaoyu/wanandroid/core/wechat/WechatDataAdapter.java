@@ -43,9 +43,9 @@ public class WechatDataAdapter extends BaseQuickAdapter<Article, WechatDataAdapt
         holder.tvTop.setVisibility(View.GONE);
         //设置文章是否被收藏
         if(article.isCollect()){
-            holder.imgCollect.setImageResource(R.mipmap.ic_heart_orange);
+            holder.imgCollect.setImageResource(R.drawable.ic_heart_orange);
         }else{
-            holder.imgCollect.setImageResource(R.mipmap.ic_heart_gray);
+            holder.imgCollect.setImageResource(R.drawable.ic_heart_gray);
         }
 
         //为收藏按钮添加点击事件

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/menu_detail_collect" android:title="收藏" android:icon="@mipmap/ic_collect" app:showAsAction="never"/>
-    <item android:id="@+id/menu_detail_share" android:title="分享" android:icon="@mipmap/ic_share" app:showAsAction="never"/>
+    <item android:id="@+id/menu_detail_collect" android:title="收藏" android:icon="@drawable/ic_collect" app:showAsAction="never"/>
+    <item android:id="@+id/menu_detail_share" android:title="分享" android:icon="@drawable/ic_share" app:showAsAction="never"/>
 </menu>

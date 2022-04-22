@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">@color/orange</color>
-    <color name="colorPrimaryDark">@color/orange</color>
+    <!--    橘黄色的主色  -->
+    <!--    <color name="colorPrimary">#FF8B56</color>-->
+    <!--    深绿色的主色  -->
+    <color name="colorPrimary">#2AB27F</color>
+    <color name="colorPrimaryDark">@color/colorPrimary</color>
+    <color name="TextPrimary">#161823</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="orange">#FF8B56</color>
     <color name="light_gray">#cdcdcd</color>
     <color name="dark_gray">#393939</color>
     <color name="blue">#3F51B5</color>
@@ -13,7 +16,6 @@
     <color name="light_yellow">#CDDC3A</color>
     <color name="dark_yellow">#E4A340</color>
     <color name="little_yellow">#FFFBF4</color>
-    <color name="green">#259B24</color>
     <color name="dark_green">#2AB27F</color>
     <color name="little_green">#F7FFFD</color>
 </resources>

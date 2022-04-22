@@ -17,12 +17,13 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 import butterknife.BindView;
 import cc.lixiaoyu.wanandroid.R;
 import cc.lixiaoyu.wanandroid.base.MVPBaseSwipeBackActivity;
+import cc.lixiaoyu.wanandroid.core.login.LoginActivity;
+import cc.lixiaoyu.wanandroid.util.ToastUtil;
 
 /**
  * 文章详情页
@@ -41,18 +42,22 @@ public class ArticleDetailActivity extends MVPBaseSwipeBackActivity<ArticleDetai
     @BindView(R.id.detail_progressbar)
     ProgressBar mProgressBar;
 
-    private ArticleDetailParam mArticleDetailParam;
+    private DetailParam mDetailParam;
 
     @Override
     protected void initData() {
         Intent intent = getIntent();
-        mArticleDetailParam = (ArticleDetailParam) intent.getSerializableExtra(ARTICLE_DETAIL_PARAM);
+        mDetailParam = (DetailParam) intent.getSerializableExtra(ARTICLE_DETAIL_PARAM);
+        if (mDetailParam == null) {
+            ToastUtil.showToast("文章参数为空");
+            finish();
+        }
     }
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void initView() {
-        mTvTitle.setText(mArticleDetailParam.getTitle());
+        mTvTitle.setText(mDetailParam.getTitle());
         mTvTitle.setSelected(true);
         setSupportActionBar(mToolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -61,7 +66,7 @@ public class ArticleDetailActivity extends MVPBaseSwipeBackActivity<ArticleDetai
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.setWebChromeClient(new WebChromeClient());
         mWebView.setWebViewClient(new MyWebViewClient());
-        mWebView.loadUrl(mArticleDetailParam.getLink());
+        mWebView.loadUrl(mDetailParam.getLink());
     }
 
     @Override
@@ -85,14 +90,14 @@ public class ArticleDetailActivity extends MVPBaseSwipeBackActivity<ArticleDetai
 
     @Override
     public void showCollectArticle(boolean success) {
-        String toastText = success ? "收藏成功" : "收藏失败";
-        Toast.makeText(this, toastText, Toast.LENGTH_SHORT).show();
+        String toastText = success ? getString(R.string.collect_success) : getString(R.string.collect_fail);
+        ToastUtil.showToast(toastText);
     }
 
     @Override
     public void showUnCollectArticle(boolean success) {
-        String toastText = success ? "取消收藏成功" : "取消收藏失败";
-        Toast.makeText(this, toastText, Toast.LENGTH_SHORT).show();
+        String toastText = success ? getString(R.string.uncollect_success) : getString(R.string.uncollect_fail);
+        ToastUtil.showToast(toastText);
     }
 
     @Override
@@ -127,10 +132,10 @@ public class ArticleDetailActivity extends MVPBaseSwipeBackActivity<ArticleDetai
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_detail_collect:
-                mPresenter.collectArticle(mArticleDetailParam.getArticleId());
+                tryCollectOrUnCollectArticle();
                 break;
             case R.id.menu_detail_share:
-                shareArticle(mArticleDetailParam);
+                shareArticle(mDetailParam);
                 break;
             case android.R.id.home:
                 finish();
@@ -141,9 +146,24 @@ public class ArticleDetailActivity extends MVPBaseSwipeBackActivity<ArticleDetai
         return true;
     }
 
-    private void shareArticle(ArticleDetailParam mArticleDetailParam) {
-        String shareMsg = "这篇文章很不错，快打开看看吧：" + mArticleDetailParam.getTitle() +
-                " -> " + mArticleDetailParam.getLink();
+    private void tryCollectOrUnCollectArticle() {
+        if (!mPresenter.getDataManager().getLoginState()) {
+            //未登录，前往登陆页面进行登陆操作
+            startActivity(new Intent(this, LoginActivity.class));
+        } else {
+            //登陆后，可以进行文章的收藏与取消收藏操作
+            //如果文章已经被收藏了，就取消收藏，如果没有收藏，就收藏
+//            if (isCollect()) {
+//                mPresenter.unCollectArticle(mDetailParam.getArticleId());
+//            } else {
+//                mPresenter.collectArticle(mDetailParam.getArticleId());
+//            }
+        }
+    }
+
+    private void shareArticle(DetailParam mDetailParam) {
+        String shareMsg = getString(R.string.share_hint) + mDetailParam.getTitle() +
+                "（" + mDetailParam.getLink() + "）";
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_SEND);
         intent.putExtra(Intent.EXTRA_TEXT, shareMsg);
@@ -157,7 +177,7 @@ public class ArticleDetailActivity extends MVPBaseSwipeBackActivity<ArticleDetai
      * @param context
      * @param detailParam
      */
-    public static void actionStart(Context context, @NonNull ArticleDetailParam detailParam) {
+    public static void actionStart(Context context, @NonNull DetailParam detailParam) {
         Intent intent = new Intent(context, ArticleDetailActivity.class);
         intent.putExtra(ARTICLE_DETAIL_PARAM, detailParam);
         context.startActivity(intent);

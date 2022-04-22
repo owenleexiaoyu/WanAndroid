@@ -2,10 +2,7 @@ package cc.lixiaoyu.wanandroid.entity;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.Date;
 import java.util.List;
-
-import cc.lixiaoyu.wanandroid.core.detail.ArticleDetailParam;
 
 public class CollectionPage {
 

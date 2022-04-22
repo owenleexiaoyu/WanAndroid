@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.activity.AboutActivity">
+    tools:context=".core.about.AboutActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -24,11 +24,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:background="@android:color/white"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            android:src="@mipmap/ic_launcher_round"
+            android:src="@drawable/ic_launcher_round"
             android:padding="10dp"/>
         <TextView
             android:layout_width="match_parent"

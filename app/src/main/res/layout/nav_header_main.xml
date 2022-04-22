@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center"
-    android:background="@color/orange"
+    android:background="@color/colorPrimary"
     android:orientation="vertical"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
@@ -13,7 +13,7 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginTop="30dp"
-        app:srcCompat="@mipmap/ic_user_icon" />
+        app:srcCompat="@drawable/ic_user_icon" />
 
     <TextView
         android:id="@+id/main_tv_username"

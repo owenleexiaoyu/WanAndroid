@@ -1,10 +1,9 @@
-package cc.lixiaoyu.wanandroid.ui.activity;
-
-
+package cc.lixiaoyu.wanandroid.core.about;
 
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
+
 import android.webkit.WebView;
 
 import butterknife.BindView;

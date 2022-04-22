@@ -36,7 +36,7 @@ import cc.lixiaoyu.wanandroid.core.collections.CollectionActivity;
 import cc.lixiaoyu.wanandroid.core.search.SearchActivity;
 import cc.lixiaoyu.wanandroid.core.home.HomeFragment;
 import cc.lixiaoyu.wanandroid.core.tree.KnowledgeTreeFragment;
-import cc.lixiaoyu.wanandroid.ui.activity.AboutActivity;
+import cc.lixiaoyu.wanandroid.core.about.AboutActivity;
 import cc.lixiaoyu.wanandroid.core.login.LoginActivity;
 import cc.lixiaoyu.wanandroid.core.todo.TodoActivity;
 import cc.lixiaoyu.wanandroid.core.nav.NavFragment;
@@ -156,11 +156,11 @@ public class MainActivity extends MVPBaseActivity<MainPresenter> implements Main
     private void initBottomNavBar() {
         mBottomNavBar.setMode(BottomNavigationBar.MODE_FIXED);
         mBottomNavBar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC);
-        mBottomNavBar.addItem(new BottomNavigationItem(R.mipmap.ic_home, "首页").setActiveColor(R.color.orange))
-                .addItem(new BottomNavigationItem(R.mipmap.ic_system, "体系").setActiveColor(R.color.orange))
-                .addItem(new BottomNavigationItem(R.mipmap.ic_wechat, "公众号").setActiveColor(R.color.orange))
-                .addItem(new BottomNavigationItem(R.mipmap.ic_nav, "导航").setActiveColor(R.color.orange))
-                .addItem(new BottomNavigationItem(R.mipmap.ic_project_gray, "项目").setActiveColor(R.color.orange))
+        mBottomNavBar.addItem(new BottomNavigationItem(R.drawable.ic_home, "首页").setActiveColor(R.color.colorPrimary))
+                .addItem(new BottomNavigationItem(R.drawable.ic_system, "体系").setActiveColor(R.color.colorPrimary))
+                .addItem(new BottomNavigationItem(R.drawable.ic_wechat, "公众号").setActiveColor(R.color.colorPrimary))
+                .addItem(new BottomNavigationItem(R.drawable.ic_nav, "导航").setActiveColor(R.color.colorPrimary))
+                .addItem(new BottomNavigationItem(R.drawable.ic_project_gray, "项目").setActiveColor(R.color.colorPrimary))
                 .setFirstSelectedPosition(mCurrentIndex)
                 .initialise();
         mBottomNavBar.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener() {

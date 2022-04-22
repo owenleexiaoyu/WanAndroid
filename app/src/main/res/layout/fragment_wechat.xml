@@ -7,7 +7,7 @@
 
 
     <com.google.android.material.tabs.TabLayout
-        android:background="@color/orange"
+        android:background="@color/colorPrimary"
         android:id="@+id/fwechat_tablayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

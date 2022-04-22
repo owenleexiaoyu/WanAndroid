@@ -8,7 +8,7 @@
         android:layout_marginTop="80dp"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:src="@mipmap/ic_launcher_round"/>
+        android:src="@drawable/ic_launcher_round"/>
     <com.google.android.material.textfield.TextInputLayout
         android:layout_marginTop="20dp"
         android:layout_marginLeft="20dp"

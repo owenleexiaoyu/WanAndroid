@@ -3,7 +3,7 @@ package cc.lixiaoyu.wanandroid.entity;
 import java.io.Serializable;
 import java.util.List;
 
-import cc.lixiaoyu.wanandroid.core.detail.ArticleDetailParam;
+import cc.lixiaoyu.wanandroid.core.detail.DetailParam;
 
 public class Article implements Serializable {
     private String apkLink;
@@ -214,7 +214,7 @@ public class Article implements Serializable {
         this.zan = zan;
     }
 
-    public ArticleDetailParam toDetailParam() {
-        return new ArticleDetailParam(id, title, link);
+    public DetailParam toDetailParam() {
+        return new DetailParam(id, title, link, DetailParam.DetailType.ARTICLE);
     }
 }

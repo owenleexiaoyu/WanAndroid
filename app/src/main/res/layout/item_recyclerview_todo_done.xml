@@ -29,7 +29,7 @@
             android:id="@+id/item_done_btn_unfinish"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:background="@mipmap/ic_unfinish"
+            android:background="@drawable/ic_unfinish"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"/>
         <TextView
@@ -52,7 +52,7 @@
             android:id="@+id/item_done_btn_delete"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:background="@mipmap/ic_delete2"
+            android:background="@drawable/ic_delete2"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"/>

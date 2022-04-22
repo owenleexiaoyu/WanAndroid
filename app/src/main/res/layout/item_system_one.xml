@@ -20,7 +20,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:text="图片加载"
-            android:textColor="@color/green"
+            android:textColor="@color/light_blue"
             android:textSize="16sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
