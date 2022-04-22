@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="AMZTitleBar">
+        <!--    标题    -->
+        <attr name="title" format="string" />
+        <attr name="start_title" format="string" />
+        <attr name="end_title" format="string" />
+        <!--    文字颜色    -->
+        <attr name="title_color" format="color" />
+        <attr name="start_title_color" format="color" />
+        <attr name="end_title_color" format="color" />
+        <!-- 文字大小 -->
+        <attr name="title_size" format="dimension" />
+        <attr name="start_title_size" format="dimension" />
+        <attr name="end_title_size" format="dimension" />
+        <!--    图标    -->
+        <attr name="start_icon" />
+        <attr name="end_icon" format="reference" />
+        <attr name="start_icon_size" format="dimension" />
+        <attr name="end_icon_size" format="dimension" />
+        <attr name="start_icon_padding" format="dimension" />
+        <attr name="end_icon_padding" format="dimension" />
+        <!-- 返回按钮，默认开 -->
+        <attr name="icon_back" format="boolean" />
+
+        <!-- 按钮背景 -->
+        <attr name="start_background" format="reference|color" />
+        <attr name="end_background" format="reference|color" />
+        <!-- 分割线 -->
+        <attr name="show_bottom_line" format="boolean" />
+        <attr name="bottom_line_color" format="color" />
+    </declare-styleable>
+</resources>

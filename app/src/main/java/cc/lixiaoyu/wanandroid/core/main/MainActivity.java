@@ -35,6 +35,7 @@ import butterknife.BindView;
 import cc.lixiaoyu.wanandroid.R;
 import cc.lixiaoyu.wanandroid.base.mvp.MVPBaseActivity;
 import cc.lixiaoyu.wanandroid.core.collection.CollectionActivity;
+import cc.lixiaoyu.wanandroid.core.profile.ProfileFragment;
 import cc.lixiaoyu.wanandroid.core.search.SearchActivity;
 import cc.lixiaoyu.wanandroid.core.home.HomeFragment;
 import cc.lixiaoyu.wanandroid.core.tree.KnowledgeSystemFragment;
@@ -67,12 +68,20 @@ public class MainActivity extends MVPBaseActivity<MainPresenter> implements Main
     private Fragment mWechatFragment;
     private Fragment mNavFragment;
     private Fragment mProjectFragment;
+    private Fragment mProfileFragment;
 
     private List<Fragment> mFragmentList = new ArrayList<>();
     //当前所在的 tab 序号
     private int mCurrentIndex = 0;
 
-    public String[] titles = {"首页", "体系", "公众号", "导航", "项目"};
+    public int[] titleResIds = {
+            R.string.home_page,
+            R.string.knowledge_system,
+            R.string.wechat_blog,
+            R.string.navigation,
+            R.string.project,
+            R.string.mine
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,7 +157,7 @@ public class MainActivity extends MVPBaseActivity<MainPresenter> implements Main
      * 初始化Toolbar
      */
     private void initToolbar() {
-        mToolbar.setTitle(titles[0]);
+        mToolbar.setTitle(getString(titleResIds[0]));
         setSupportActionBar(mToolbar);
     }
 
@@ -158,22 +167,24 @@ public class MainActivity extends MVPBaseActivity<MainPresenter> implements Main
     private void initBottomNavBar() {
         mBottomNavBar.setMode(BottomNavigationBar.MODE_FIXED);
         mBottomNavBar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC);
-        mBottomNavBar.addItem(new BottomNavigationItem(R.drawable.ic_home, getString(R.string.home_page))
+        mBottomNavBar.addItem(new BottomNavigationItem(R.drawable.ic_home, getString(titleResIds[0]))
                         .setActiveColor(ContextCompat.getColor(this, R.color.ConstBrand)))
-                .addItem(new BottomNavigationItem(R.drawable.ic_knowledge_system, getString(R.string.knowledge_system))
+                .addItem(new BottomNavigationItem(R.drawable.ic_knowledge_system, getString(titleResIds[1]))
                         .setActiveColor(ContextCompat.getColor(this, R.color.ConstBrand)))
-                .addItem(new BottomNavigationItem(R.drawable.ic_wechat, getString(R.string.wechat_blog))
+                .addItem(new BottomNavigationItem(R.drawable.ic_wechat, getString(titleResIds[2]))
                         .setActiveColor(ContextCompat.getColor(this, R.color.ConstBrand)))
-                .addItem(new BottomNavigationItem(R.drawable.ic_navigation, getString(R.string.navigation))
+                .addItem(new BottomNavigationItem(R.drawable.ic_navigation, getString(titleResIds[3]))
                         .setActiveColor(ContextCompat.getColor(this, R.color.ConstBrand)))
-                .addItem(new BottomNavigationItem(R.drawable.ic_project, getString(R.string.project))
+                .addItem(new BottomNavigationItem(R.drawable.ic_project, getString(titleResIds[4]))
+                        .setActiveColor(ContextCompat.getColor(this, R.color.ConstBrand)))
+                .addItem(new BottomNavigationItem(R.drawable.ic_person_black_24dp, getString(titleResIds[5]))
                         .setActiveColor(ContextCompat.getColor(this, R.color.ConstBrand)))
                 .setFirstSelectedPosition(mCurrentIndex)
                 .initialise();
         mBottomNavBar.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener() {
             @Override
             public void onTabSelected(int position) {
-                mToolbar.setTitle(titles[position]);
+                mToolbar.setTitle(getString(titleResIds[position]));
                 mCurrentIndex = position;
                 showOrHideUpButton();
                 loadFragment(position);
@@ -227,6 +238,12 @@ public class MainActivity extends MVPBaseActivity<MainPresenter> implements Main
                     mProjectFragment = ProjectFragment.newInstance();
                 }
                 addAndShowFragment(mProjectFragment);
+                break;
+            case 5:
+                if (mProfileFragment == null) {
+                    mProfileFragment = new ProfileFragment();
+                }
+                addAndShowFragment(mProfileFragment);
                 break;
             default:
                 throw new IllegalArgumentException("Index ["+ index+ "] is not support");

@@ -1,1 +1,3 @@
+include ':demo'
+include ':amz-uikit'
 include ':app'

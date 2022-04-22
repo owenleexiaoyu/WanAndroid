@@ -47,4 +47,6 @@
     <string name="app_name_v1">玩Android V1.0</string>
     <string name="go_top">回到顶部</string>
     <string name="dark_mode">深色模式</string>
+    <string name="mine">我的</string>
+
 </resources>

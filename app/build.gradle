@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 29
@@ -22,16 +23,23 @@ android {
         targetCompatibility = 1.8
         sourceCompatibility = 1.8
     }
+
+    viewBinding {
+        enabled = true
+    }
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'androidx.core:core-ktx:1.3.2'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation "androidx.multidex:multidex:2.0.1"
     implementation 'com.google.android.material:material:1.1.0'
 
     implementation 'com.jakewharton:butterknife:10.2.1'
+    implementation project(path: ':amz-uikit')
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
     implementation 'com.squareup.retrofit2:retrofit:2.7.1'
     implementation 'com.squareup.retrofit2:converter-gson:2.7.1'
@@ -54,6 +62,13 @@ dependencies {
     implementation 'org.litepal.android:java:3.0.0'
     implementation "io.reactivex.rxjava2:rxjava:2.2.6"
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
+
+    // kotlin 协程
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0'
+
+    // 使用viewModelScope
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0-alpha01'
 
     implementation 'com.tencent.bugly:crashreport:latest.release'
     testImplementation 'androidx.test.ext:junit:1.1.1'

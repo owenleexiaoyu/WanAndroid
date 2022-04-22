@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--    橘黄色的主色  -->
-    <!--    <color name="Primary">#FF8B56</color>-->
+
+<!--    <color name="bgColorPrimary">#303030</color>-->
+<!--    <color name="bgColorSecondary">#292929</color>-->
+<!--    <color name="bgColorThird">#262626</color>-->
+
+
     <!--    深绿色的主色  -->
     <color name="Primary">#121212</color>
     <color name="Secondary">#F7FFFD</color>
@@ -16,4 +20,5 @@
     <color name="LinePrimary">#343434</color>
     <color name="BGPrimary">#262626</color>
     <color name="BGSecondary">#121212</color>
+    <color name="BGThird">#303030</color>
 </resources>

@@ -1,5 +1,7 @@
 package cc.lixiaoyu.wanandroid.entity;
 
+import cc.lixiaoyu.wanandroid.util.network.APIException;
+
 /**
  * WANAndroid返回数据最外层的实体类
  *
@@ -26,16 +28,20 @@ public class WanAndroidResponse<T> {
         this.errorMsg = errorMsg;
     }
 
-    public T getData() {
-        return data;
-    }
-
     public void setData(T data) {
         this.data = data;
     }
 
     public boolean isSuccess() {
         return errorCode == 0;
+    }
+
+    public T getData() throws APIException {
+        if (isSuccess()) {
+            return data;
+        } else {
+            throw new APIException(errorCode, errorMsg);
+        }
     }
 
     public Optional<T> transform() {
