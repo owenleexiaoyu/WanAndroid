@@ -1,4 +1,4 @@
-package cc.lixiaoyu.wanandroid.core.collections;
+package cc.lixiaoyu.wanandroid.core.collection;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,7 +15,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cc.lixiaoyu.wanandroid.R;
 import cc.lixiaoyu.wanandroid.entity.Article;
-import cc.lixiaoyu.wanandroid.entity.CollectionPage;
 
 public class CollectionAdapter extends BaseQuickAdapter<Article, CollectionAdapter.ViewHolder> {
 

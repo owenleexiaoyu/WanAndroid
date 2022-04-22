@@ -1,4 +1,4 @@
-package cc.lixiaoyu.wanandroid.core.collections;
+package cc.lixiaoyu.wanandroid.core.collection;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.appcompat.app.ActionBar;

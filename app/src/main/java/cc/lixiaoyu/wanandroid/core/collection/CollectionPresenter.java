@@ -1,4 +1,4 @@
-package cc.lixiaoyu.wanandroid.core.collections;
+package cc.lixiaoyu.wanandroid.core.collection;
 
 import cc.lixiaoyu.wanandroid.entity.Article;
 import cc.lixiaoyu.wanandroid.entity.CollectionPage;

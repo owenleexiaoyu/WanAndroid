@@ -32,7 +32,7 @@ import java.util.List;
 import butterknife.BindView;
 import cc.lixiaoyu.wanandroid.R;
 import cc.lixiaoyu.wanandroid.base.mvp.MVPBaseActivity;
-import cc.lixiaoyu.wanandroid.core.collections.CollectionActivity;
+import cc.lixiaoyu.wanandroid.core.collection.CollectionActivity;
 import cc.lixiaoyu.wanandroid.core.search.SearchActivity;
 import cc.lixiaoyu.wanandroid.core.home.HomeFragment;
 import cc.lixiaoyu.wanandroid.core.tree.KnowledgeTreeFragment;

@@ -30,7 +30,7 @@
         <activity android:name=".core.search.SearchActivity"/>
         <activity android:name=".core.search.result.SearchResultActivity"/>
         <activity android:name=".core.about.AboutActivity" />
-        <activity android:name=".core.collections.CollectionActivity"/>
+        <activity android:name=".core.collection.CollectionActivity"/>
         <activity android:name=".core.todo.TodoActivity"/>
     </application>
 
