@@ -1,12 +1,16 @@
-package cc.lixiaoyu.wanandroid.base;
+package cc.lixiaoyu.wanandroid.base.mvp;
 
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 
+import cc.lixiaoyu.wanandroid.base.BaseFragment;
+import cc.lixiaoyu.wanandroid.base.mvp.BasePresenter;
+import cc.lixiaoyu.wanandroid.base.mvp.BaseView;
+
 /**
- * 懒加载的Fragment基类
+ * MVP 形式的支持懒加载的 BaseFragment
  */
-public abstract class MVPBasePageFragment<P extends BasePresenter> extends BaseFragment implements BaseView{
+public abstract class MVPBasePageFragment<P extends BasePresenter> extends BaseFragment implements BaseView {
 
     protected boolean isViewInitiated;
     protected boolean isVisibleToUser;

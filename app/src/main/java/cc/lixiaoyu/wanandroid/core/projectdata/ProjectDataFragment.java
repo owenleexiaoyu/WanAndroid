@@ -20,7 +20,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import cc.lixiaoyu.wanandroid.R;
-import cc.lixiaoyu.wanandroid.base.MVPBasePageFragment;
+import cc.lixiaoyu.wanandroid.base.mvp.MVPBasePageFragment;
 import cc.lixiaoyu.wanandroid.entity.Article;
 import cc.lixiaoyu.wanandroid.entity.ProjectTitle;
 import cc.lixiaoyu.wanandroid.core.detail.ArticleDetailActivity;

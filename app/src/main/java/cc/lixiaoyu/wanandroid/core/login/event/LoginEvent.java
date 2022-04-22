@@ -1,4 +1,4 @@
-package cc.lixiaoyu.wanandroid.event;
+package cc.lixiaoyu.wanandroid.core.login.event;
 
 public class LoginEvent {
     private boolean isLogin;

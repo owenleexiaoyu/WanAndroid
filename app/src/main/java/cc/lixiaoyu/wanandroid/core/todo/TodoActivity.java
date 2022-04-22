@@ -40,7 +40,7 @@ import cc.lixiaoyu.wanandroid.R;
 import cc.lixiaoyu.wanandroid.api.WanAndroidService;
 import cc.lixiaoyu.wanandroid.base.BaseSwipeBackActivity;
 import cc.lixiaoyu.wanandroid.entity.WanAndroidResponse;
-import cc.lixiaoyu.wanandroid.util.RetrofitHelper;
+import cc.lixiaoyu.wanandroid.util.network.RetrofitManager;
 import cc.lixiaoyu.wanandroid.util.ToastUtil;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
@@ -86,7 +86,7 @@ public class TodoActivity extends BaseSwipeBackActivity {
         viewList.add(view2);
 
         buttonList = new ArrayList<>(4);
-        mService = RetrofitHelper.getInstance().getWanAndroidService();
+        mService = RetrofitManager.getInstance().getWanAndroidService();
     }
 
     @SuppressLint("ResourceType")

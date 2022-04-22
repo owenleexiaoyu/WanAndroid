@@ -1,8 +1,8 @@
 package cc.lixiaoyu.wanandroid.core.main;
 
-import cc.lixiaoyu.wanandroid.base.BaseModel;
-import cc.lixiaoyu.wanandroid.base.BasePresenter;
-import cc.lixiaoyu.wanandroid.base.BaseView;
+import cc.lixiaoyu.wanandroid.base.mvp.BaseModel;
+import cc.lixiaoyu.wanandroid.base.mvp.BasePresenter;
+import cc.lixiaoyu.wanandroid.base.mvp.BaseView;
 
 public interface MainContract {
     interface Model extends BaseModel{

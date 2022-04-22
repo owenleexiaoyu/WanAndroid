@@ -1,12 +1,15 @@
-package cc.lixiaoyu.wanandroid.base;
+package cc.lixiaoyu.wanandroid.base.mvp;
 
 import java.lang.ref.Reference;
 import java.lang.ref.WeakReference;
 
-import cc.lixiaoyu.wanandroid.util.DataManager;
+import cc.lixiaoyu.wanandroid.util.storage.DataManager;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
+/**
+ * MVP 架构中的 Presenter
+ */
 public abstract class BasePresenter<V extends BaseView> {
 
     protected Reference<V> mViewRef;//View 接口类型的弱引用

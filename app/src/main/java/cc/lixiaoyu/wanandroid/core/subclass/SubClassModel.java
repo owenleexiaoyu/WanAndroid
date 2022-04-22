@@ -2,9 +2,9 @@ package cc.lixiaoyu.wanandroid.core.subclass;
 
 import cc.lixiaoyu.wanandroid.api.WanAndroidService;
 import cc.lixiaoyu.wanandroid.entity.ArticlePage;
-import cc.lixiaoyu.wanandroid.util.BaseModelFactory;
-import cc.lixiaoyu.wanandroid.util.Optional;
-import cc.lixiaoyu.wanandroid.util.RetrofitHelper;
+import cc.lixiaoyu.wanandroid.util.network.BaseModelFactory;
+import cc.lixiaoyu.wanandroid.entity.Optional;
+import cc.lixiaoyu.wanandroid.util.network.RetrofitManager;
 import io.reactivex.Observable;
 
 public class SubClassModel implements SubClassContract.Model{
@@ -12,7 +12,7 @@ public class SubClassModel implements SubClassContract.Model{
     private WanAndroidService mService;
 
     public SubClassModel(){
-        mService = RetrofitHelper.getInstance().getWanAndroidService();
+        mService = RetrofitManager.getInstance().getWanAndroidService();
     }
 
     @Override

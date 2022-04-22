@@ -9,7 +9,7 @@ import android.view.MenuItem;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import cc.lixiaoyu.wanandroid.util.DataManager;
+import cc.lixiaoyu.wanandroid.util.storage.DataManager;
 
 /**
  * 基类Activity，处理一些公共逻辑

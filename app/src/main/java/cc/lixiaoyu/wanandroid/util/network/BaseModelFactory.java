@@ -1,8 +1,9 @@
-package cc.lixiaoyu.wanandroid.util;
+package cc.lixiaoyu.wanandroid.util.network;
 
 import java.util.concurrent.TimeUnit;
 
 import cc.lixiaoyu.wanandroid.entity.WanAndroidResponse;
+import cc.lixiaoyu.wanandroid.entity.Optional;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;

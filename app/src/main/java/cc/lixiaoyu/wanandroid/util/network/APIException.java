@@ -1,4 +1,4 @@
-package cc.lixiaoyu.wanandroid.util;
+package cc.lixiaoyu.wanandroid.util.network;
 
 public class APIException extends Exception {
 

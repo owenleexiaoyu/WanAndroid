@@ -4,7 +4,7 @@ import android.annotation.SuppressLint;
 
 import cc.lixiaoyu.wanandroid.entity.Article;
 import cc.lixiaoyu.wanandroid.entity.ArticlePage;
-import cc.lixiaoyu.wanandroid.util.Optional;
+import cc.lixiaoyu.wanandroid.entity.Optional;
 import io.reactivex.functions.Consumer;
 
 public class SubClassPresenter extends SubClassContract.Presenter {

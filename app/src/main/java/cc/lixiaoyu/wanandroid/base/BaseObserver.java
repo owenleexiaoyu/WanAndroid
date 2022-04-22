@@ -4,9 +4,8 @@ import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
-import cc.lixiaoyu.wanandroid.util.APIException;
+import cc.lixiaoyu.wanandroid.util.network.APIException;
 import cc.lixiaoyu.wanandroid.util.ToastUtil;
-import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import retrofit2.HttpException;

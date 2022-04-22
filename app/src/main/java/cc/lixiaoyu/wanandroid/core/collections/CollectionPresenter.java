@@ -2,7 +2,7 @@ package cc.lixiaoyu.wanandroid.core.collections;
 
 import cc.lixiaoyu.wanandroid.entity.Article;
 import cc.lixiaoyu.wanandroid.entity.CollectionPage;
-import cc.lixiaoyu.wanandroid.util.Optional;
+import cc.lixiaoyu.wanandroid.entity.Optional;
 import io.reactivex.functions.Consumer;
 
 public class CollectionPresenter extends CollectionContract.Presenter {

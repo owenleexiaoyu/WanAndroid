@@ -15,7 +15,7 @@ import cc.lixiaoyu.wanandroid.R;
 import cc.lixiaoyu.wanandroid.api.WanAndroidService;
 import cc.lixiaoyu.wanandroid.base.BaseFragment;
 import cc.lixiaoyu.wanandroid.entity.WechatTitle;
-import cc.lixiaoyu.wanandroid.util.RetrofitHelper;
+import cc.lixiaoyu.wanandroid.util.network.RetrofitManager;
 import cc.lixiaoyu.wanandroid.util.ToastUtil;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -39,7 +39,7 @@ public class WechatFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-        mService = RetrofitHelper.getInstance().getWanAndroidService();
+        mService = RetrofitManager.getInstance().getWanAndroidService();
         mDataList = new ArrayList<>();
     }
 

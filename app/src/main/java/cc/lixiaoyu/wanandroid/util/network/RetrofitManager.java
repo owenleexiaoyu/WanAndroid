@@ -1,4 +1,4 @@
-package cc.lixiaoyu.wanandroid.util;
+package cc.lixiaoyu.wanandroid.util.network;
 
 import com.franmontiel.persistentcookiejar.ClearableCookieJar;
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
@@ -7,6 +7,7 @@ import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersisto
 
 import cc.lixiaoyu.wanandroid.api.WanAndroidService;
 import cc.lixiaoyu.wanandroid.app.MyApplication;
+import cc.lixiaoyu.wanandroid.util.AppConst;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -15,12 +16,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * 使用Retrofit的封装类
  */
-public class RetrofitHelper {
+public class RetrofitManager {
 
     private static OkHttpClient okHttpClient;
     private Retrofit mRetrofit;
 
-    private RetrofitHelper(){
+    private RetrofitManager(){
         initRetrofit();
     }
 
@@ -44,7 +45,7 @@ public class RetrofitHelper {
         return mRetrofit.create(WanAndroidService.class);
     }
 
-    public static RetrofitHelper getInstance(){
+    public static RetrofitManager getInstance(){
         return SingleTonHolder.INSTANCE;
     }
 
@@ -59,8 +60,8 @@ public class RetrofitHelper {
 
 
     //实现单例模式的静态内部类
-    private static class SingleTonHolder{
-        private static final RetrofitHelper INSTANCE = new RetrofitHelper();
+    private static class SingleTonHolder {
+        private static final RetrofitManager INSTANCE = new RetrofitManager();
     }
 
 }

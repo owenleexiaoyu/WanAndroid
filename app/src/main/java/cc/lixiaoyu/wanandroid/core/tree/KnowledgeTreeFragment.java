@@ -13,7 +13,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cc.lixiaoyu.wanandroid.R;
-import cc.lixiaoyu.wanandroid.base.MVPBaseFragment;
+import cc.lixiaoyu.wanandroid.base.mvp.MVPBaseFragment;
 import cc.lixiaoyu.wanandroid.entity.PrimaryClass;
 import cc.lixiaoyu.wanandroid.core.subclass.SubClassActivity;
 

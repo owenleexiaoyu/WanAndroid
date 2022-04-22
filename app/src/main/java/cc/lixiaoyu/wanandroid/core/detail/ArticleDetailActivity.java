@@ -21,7 +21,7 @@ import android.widget.TextView;
 
 import butterknife.BindView;
 import cc.lixiaoyu.wanandroid.R;
-import cc.lixiaoyu.wanandroid.base.MVPBaseSwipeBackActivity;
+import cc.lixiaoyu.wanandroid.base.mvp.MVPBaseSwipeBackActivity;
 import cc.lixiaoyu.wanandroid.core.login.LoginActivity;
 import cc.lixiaoyu.wanandroid.util.ToastUtil;
 

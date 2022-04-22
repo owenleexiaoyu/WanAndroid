@@ -2,15 +2,15 @@ package cc.lixiaoyu.wanandroid.core.projectdata;
 
 import cc.lixiaoyu.wanandroid.api.WanAndroidService;
 import cc.lixiaoyu.wanandroid.entity.ProjectPage;
-import cc.lixiaoyu.wanandroid.util.BaseModelFactory;
-import cc.lixiaoyu.wanandroid.util.Optional;
-import cc.lixiaoyu.wanandroid.util.RetrofitHelper;
+import cc.lixiaoyu.wanandroid.util.network.BaseModelFactory;
+import cc.lixiaoyu.wanandroid.entity.Optional;
+import cc.lixiaoyu.wanandroid.util.network.RetrofitManager;
 import io.reactivex.Observable;
 
 public class ProjectDataModel implements ProjectDataContract.Model {
     private WanAndroidService mService;
     public ProjectDataModel(){
-        mService = RetrofitHelper.getInstance().getWanAndroidService();
+        mService = RetrofitManager.getInstance().getWanAndroidService();
     }
 
     @Override

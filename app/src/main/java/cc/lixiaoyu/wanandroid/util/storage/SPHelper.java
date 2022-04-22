@@ -1,4 +1,4 @@
-package cc.lixiaoyu.wanandroid.util;
+package cc.lixiaoyu.wanandroid.util.storage;
 
 /**
  * SharedPreference 帮助类，提供应用中需要使用SharedPreference存储的数据方法

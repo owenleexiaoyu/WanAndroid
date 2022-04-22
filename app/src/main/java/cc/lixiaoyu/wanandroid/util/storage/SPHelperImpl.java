@@ -1,4 +1,6 @@
-package cc.lixiaoyu.wanandroid.util;
+package cc.lixiaoyu.wanandroid.util.storage;
+
+import cc.lixiaoyu.wanandroid.util.AppConst;
 
 /**
  * SPHelper的实现类

@@ -14,9 +14,9 @@ import cc.lixiaoyu.wanandroid.R;
 import cc.lixiaoyu.wanandroid.api.WanAndroidService;
 import cc.lixiaoyu.wanandroid.base.BaseFragment;
 import cc.lixiaoyu.wanandroid.entity.User;
-import cc.lixiaoyu.wanandroid.event.LoginEvent;
-import cc.lixiaoyu.wanandroid.util.DataManager;
-import cc.lixiaoyu.wanandroid.util.RetrofitHelper;
+import cc.lixiaoyu.wanandroid.core.login.event.LoginEvent;
+import cc.lixiaoyu.wanandroid.util.storage.DataManager;
+import cc.lixiaoyu.wanandroid.util.network.RetrofitManager;
 import cc.lixiaoyu.wanandroid.util.RxBus;
 import cc.lixiaoyu.wanandroid.util.ToastUtil;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -68,7 +68,7 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
             case R.id.login_btn_login:
                 final String userName = mEtUserName.getText().toString().trim();
                 String password = mEtPassword.getText().toString().trim();
-                WanAndroidService service = RetrofitHelper.getInstance().getWanAndroidService();
+                WanAndroidService service = RetrofitManager.getInstance().getWanAndroidService();
                 service.login(userName, password)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())

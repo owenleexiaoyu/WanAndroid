@@ -16,7 +16,7 @@ import cc.lixiaoyu.wanandroid.R;
 import cc.lixiaoyu.wanandroid.api.WanAndroidService;
 import cc.lixiaoyu.wanandroid.base.BaseFragment;
 import cc.lixiaoyu.wanandroid.entity.User;
-import cc.lixiaoyu.wanandroid.util.RetrofitHelper;
+import cc.lixiaoyu.wanandroid.util.network.RetrofitManager;
 import cc.lixiaoyu.wanandroid.util.ToastUtil;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -70,7 +70,7 @@ public class RegisterFragment extends BaseFragment implements View.OnClickListen
                 String userName = mEtUserName.getText().toString().trim();
                 String password = mEtPassword.getText().toString().trim();
                 String passwordAgain = mEtPwdAgain.getText().toString().trim();
-                WanAndroidService service = RetrofitHelper.getInstance().getWanAndroidService();
+                WanAndroidService service = RetrofitManager.getInstance().getWanAndroidService();
                 service.register(userName, password, passwordAgain)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())

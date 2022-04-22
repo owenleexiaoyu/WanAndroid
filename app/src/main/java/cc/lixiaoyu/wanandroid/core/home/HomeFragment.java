@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import cc.lixiaoyu.wanandroid.base.MVPBaseFragment;
+import cc.lixiaoyu.wanandroid.base.mvp.MVPBaseFragment;
 import cc.lixiaoyu.wanandroid.core.login.LoginActivity;
 import cc.lixiaoyu.wanandroid.entity.Article;
 import cc.lixiaoyu.wanandroid.util.GlideImageLoader;

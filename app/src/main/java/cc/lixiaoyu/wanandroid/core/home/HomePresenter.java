@@ -8,7 +8,7 @@ import java.util.List;
 import cc.lixiaoyu.wanandroid.entity.Article;
 import cc.lixiaoyu.wanandroid.entity.ArticlePage;
 import cc.lixiaoyu.wanandroid.entity.Banner;
-import cc.lixiaoyu.wanandroid.util.Optional;
+import cc.lixiaoyu.wanandroid.entity.Optional;
 import cc.lixiaoyu.wanandroid.util.ToastUtil;
 import io.reactivex.functions.Consumer;
 

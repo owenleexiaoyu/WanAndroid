@@ -1,13 +1,19 @@
-package cc.lixiaoyu.wanandroid.base;
+package cc.lixiaoyu.wanandroid.base.mvp;
 
 import android.os.Bundle;
 import android.view.View;
 
+import cc.lixiaoyu.wanandroid.base.mvp.BasePresenter;
+import cc.lixiaoyu.wanandroid.base.mvp.MVPBaseActivity;
 import me.imid.swipebacklayout.lib.SwipeBackLayout;
 import me.imid.swipebacklayout.lib.Utils;
 import me.imid.swipebacklayout.lib.app.SwipeBackActivityBase;
 import me.imid.swipebacklayout.lib.app.SwipeBackActivityHelper;
 
+/**
+ * MVP 形式的支持侧滑返回的 BaseActivity
+ * @param <P>
+ */
 public abstract class MVPBaseSwipeBackActivity<P extends BasePresenter> extends MVPBaseActivity<P>
         implements SwipeBackActivityBase {
     private SwipeBackActivityHelper mHelper;

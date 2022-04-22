@@ -1,4 +1,4 @@
-package cc.lixiaoyu.wanandroid.util;
+package cc.lixiaoyu.wanandroid.util.storage;
 
 import android.content.Context;
 import android.content.SharedPreferences;

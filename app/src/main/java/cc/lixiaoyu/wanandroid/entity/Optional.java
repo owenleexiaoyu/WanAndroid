@@ -1,4 +1,4 @@
-package cc.lixiaoyu.wanandroid.util;
+package cc.lixiaoyu.wanandroid.entity;
 
 import androidx.annotation.Nullable;
 

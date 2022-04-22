@@ -1,9 +1,9 @@
 package cc.lixiaoyu.wanandroid.core.main;
 
 import cc.lixiaoyu.wanandroid.api.WanAndroidService;
-import cc.lixiaoyu.wanandroid.event.AutoLoginEvent;
-import cc.lixiaoyu.wanandroid.event.LoginEvent;
-import cc.lixiaoyu.wanandroid.util.RetrofitHelper;
+import cc.lixiaoyu.wanandroid.core.login.event.AutoLoginEvent;
+import cc.lixiaoyu.wanandroid.core.login.event.LoginEvent;
+import cc.lixiaoyu.wanandroid.util.network.RetrofitManager;
 import cc.lixiaoyu.wanandroid.util.RxBus;
 import cc.lixiaoyu.wanandroid.util.ToastUtil;
 import io.reactivex.functions.Consumer;
@@ -59,7 +59,7 @@ public class MainPresenter extends MainContract.Presenter {
 
     @Override
     public void logout() {
-        WanAndroidService service = RetrofitHelper.getInstance().getWanAndroidService();
+        WanAndroidService service = RetrofitManager.getInstance().getWanAndroidService();
         service.logout();
         mDataManager.setLoginAccount("");
         mDataManager.setLoginPassword("");
