@@ -18,14 +18,13 @@
             <TextView
                 android:id="@+id/detail_toolbar_title"
                 android:textSize="18sp"
-                android:textColor="@android:color/white"
+                android:textColor="@color/TextReversePrimary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="marquee"
                 android:marqueeRepeatLimit="-1"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
-                android:layout_marginRight="80dp"
                 android:layout_marginEnd="80dp"
                 android:singleLine="true" />
         </androidx.appcompat.widget.Toolbar>
@@ -35,8 +34,7 @@
         android:id="@+id/detail_webview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-    </WebView>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <ProgressBar
         android:id="@+id/detail_progressbar"

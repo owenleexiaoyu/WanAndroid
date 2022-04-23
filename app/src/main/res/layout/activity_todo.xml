@@ -35,60 +35,61 @@
                 android:id="@+id/todo_radiobtn_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="只用这一个"
+                android:text="@string/todo_category_default"
                 android:background="@drawable/todo_type_bg_selector"
                 android:button="@null"
                 android:paddingTop="6dp"
                 android:paddingBottom="6dp"
                 android:paddingLeft="12dp"
                 android:paddingRight="12dp"
-                android:textColor="@android:color/white"
-                android:layout_marginRight="10dp"
+                android:textColor="@color/TextReversePrimary"
+                android:layout_marginEnd="10dp"
                 android:checked="true"/>
             <RadioButton
                 android:id="@+id/todo_radiobtn_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="工作"
+                android:text="@string/todo_category_work"
                 android:background="@drawable/todo_type_bg_selector"
                 android:button="@null"
                 android:paddingTop="6dp"
                 android:paddingBottom="6dp"
                 android:paddingLeft="12dp"
                 android:paddingRight="12dp"
-                android:textColor="@color/light_blue"
-                android:layout_marginRight="10dp"/>
+                android:textColor="@color/Accent"
+                android:layout_marginEnd="10dp"/>
             <RadioButton
                 android:id="@+id/todo_radiobtn_3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="学习"
+                android:text="@string/todo_category_learn"
                 android:background="@drawable/todo_type_bg_selector"
                 android:button="@null"
                 android:paddingTop="6dp"
                 android:paddingBottom="6dp"
                 android:paddingLeft="12dp"
                 android:paddingRight="12dp"
-                android:textColor="@color/light_blue"
-                android:layout_marginRight="10dp"/>
+                android:textColor="@color/Accent"
+                android:layout_marginEnd="10dp"/>
             <RadioButton
                 android:id="@+id/todo_radiobtn_4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="生活"
+                android:text="@string/todo_category_life"
                 android:background="@drawable/todo_type_bg_selector"
                 android:button="@null"
                 android:paddingTop="6dp"
                 android:paddingBottom="6dp"
                 android:paddingLeft="12dp"
                 android:paddingRight="12dp"
-                android:textColor="@color/light_blue"
-                android:layout_marginRight="10dp"/>
+                android:textColor="@color/Accent"
+                android:layout_marginEnd="10dp"/>
         </RadioGroup>
+
         <androidx.viewpager.widget.ViewPager
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/todo_viewpager"></androidx.viewpager.widget.ViewPager>
+            android:id="@+id/todo_viewpager" />
     </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

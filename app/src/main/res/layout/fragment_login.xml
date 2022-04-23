@@ -19,7 +19,7 @@
             android:id="@+id/login_et_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="用户名"
+            android:hint="@string/username"
             android:inputType="text"/>
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
@@ -28,13 +28,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:passwordToggleEnabled="true"
-        app:passwordToggleTint="@color/colorPrimary"
+        app:passwordToggleTint="@color/Primary"
         app:passwordToggleTintMode="multiply">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/login_et_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="密码"
+            android:hint="@string/password"
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -43,15 +43,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        android:text="登录"
+        android:text="@string/login"
         android:padding="5dp"
-        android:background="@color/light_blue"
-        android:textColor="@android:color/white"
+        android:background="@drawable/bg_primary_round_4"
+        android:textColor="@color/TextReversePrimary"
         android:elevation="5dp"/>
     <TextView
         android:id="@+id/login_tv_toregister"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="没有账号？前去注册吧~"
+        android:text="@string/register_tip"
         android:gravity="center"/>
 </LinearLayout>

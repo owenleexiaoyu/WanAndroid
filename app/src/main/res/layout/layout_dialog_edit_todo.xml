@@ -16,7 +16,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:background="@color/light_gray" />
+        android:background="@color/LinePrimary" />
 
     <EditText
         android:id="@+id/dlog_edit_todo_title"
@@ -57,9 +57,9 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_weight="1"
-            android:background="@color/little_blue"
+            android:background="@color/AccentSecondary"
             android:text="取消"
-            android:textColor="@color/light_blue" />
+            android:textColor="@color/Accent" />
 
         <Button
             android:id="@+id/dlog_edit_todo_edit"
@@ -68,8 +68,8 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_weight="1"
-            android:background="@color/light_blue"
-            android:text="修改"
-            android:textColor="@android:color/white" />
+            android:background="@color/Accent"
+            android:text="@string/edit"
+            android:textColor="@color/TextReversePrimary" />
     </LinearLayout>
 </LinearLayout>

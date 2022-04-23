@@ -28,7 +28,7 @@ public class CollectionAdapter extends BaseQuickAdapter<Article, CollectionAdapt
         holder.tvTime.setText(article.getNiceDate());
         holder.tvTitle.setText(article.getTitle());
         holder.tvChapter.setText(article.getChapterName());
-        holder.imgCollect.setImageResource(R.drawable.ic_heart_orange);
+        holder.imgCollect.setImageResource(R.drawable.ic_favorite_full);
         holder.addOnClickListener(R.id.item_collection_collect);
     }
 

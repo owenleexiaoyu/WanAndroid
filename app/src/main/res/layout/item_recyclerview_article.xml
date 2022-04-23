@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     app:cardCornerRadius="4dp"
     android:elevation="3dp"
     android:layout_marginTop="10dp"
@@ -12,15 +13,15 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/white">
+        android:background="@color/BGPrimary">
 
         <TextView
             android:id="@+id/item_article_top"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="置顶"
+            android:text="@string/pin_top"
             android:textSize="12sp"
-            android:textColor="@android:color/white"
+            android:textColor="@color/TextReversePrimary"
             android:background="@drawable/article_ontop_bg"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -41,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
             android:layout_marginTop="8dp"
-            android:text="1天前"
+            tools:text="1天前"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -51,7 +52,7 @@
             android:layout_height="80dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:src="@color/colorPrimary"
+            android:src="@color/Primary"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/item_article_author"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -78,7 +79,7 @@
             android:layout_marginTop="30dp"
             android:layout_marginBottom="8dp"
             android:background="@drawable/article_chapter_bg"
-            android:textColor="@android:color/white"
+            android:textColor="@color/TextReversePrimary"
             android:textSize="13sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/item_article_title"
@@ -88,7 +89,7 @@
             android:id="@+id/item_article_collect"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:src="@drawable/ic_heart_gray"
+            android:src="@drawable/ic_favorite_border"
             app:layout_constraintBottom_toBottomOf="@id/item_article_chapter"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="10dp"/>

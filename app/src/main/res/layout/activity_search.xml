@@ -35,9 +35,9 @@
                     android:layout_height="30dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
-                    android:textColor="@android:color/white"
-                    android:background="@drawable/round_btn_bg"
-                    android:text="搜索" />
+                    android:textColor="@color/TextReversePrimary"
+                    android:background="@drawable/bg_accent_round_16"
+                    android:text="@string/search" />
             </LinearLayout>
 
         </androidx.appcompat.widget.Toolbar>
@@ -62,14 +62,14 @@
                 <ImageView
                     android:layout_width="5dp"
                     android:layout_height="20dp"
-                    android:src="@color/colorAccent" />
+                    android:src="@color/Accent" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_marginLeft="10dp"
-                    android:text="历史搜索"
+                    android:layout_marginStart="10dp"
+                    android:text="@string/history_search"
                     android:textSize="18sp" />
                 <Button
                     android:layout_width="20dp"
@@ -82,7 +82,7 @@
                 android:id="@+id/search_tf_history"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="5dp"></com.zhy.view.flowlayout.TagFlowLayout>
+                android:padding="5dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -93,13 +93,13 @@
                 <ImageView
                     android:layout_width="5dp"
                     android:layout_height="20dp"
-                    android:src="@color/colorAccent" />
+                    android:src="@color/Accent" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:text="热门搜索"
+                    android:layout_marginStart="10dp"
+                    android:text="@string/hot_search"
                     android:textSize="18sp" />
             </LinearLayout>
 
@@ -107,7 +107,7 @@
                 android:id="@+id/search_tf_hotkeys"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="5dp"></com.zhy.view.flowlayout.TagFlowLayout>
+                android:padding="5dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -118,13 +118,13 @@
                 <ImageView
                     android:layout_width="5dp"
                     android:layout_height="20dp"
-                    android:src="@color/colorAccent" />
+                    android:src="@color/Accent" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:text="常用网站"
+                    android:layout_marginStart="10dp"
+                    android:text="@string/common_websites"
                     android:textSize="18sp" />
             </LinearLayout>
 
@@ -133,9 +133,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
-                android:layout_marginBottom="10dp"></com.zhy.view.flowlayout.TagFlowLayout>
+                android:layout_marginBottom="10dp" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

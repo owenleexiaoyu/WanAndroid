@@ -10,20 +10,20 @@
         android:gravity="center"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
-        android:text="添加待办清单"
+        android:text="@string/add_todo_item"
         android:textSize="18sp" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:background="@color/light_gray" />
+        android:background="@color/LinePrimary" />
 
     <EditText
         android:id="@+id/dlog_add_todo_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:hint="标题（必填）" />
+        android:hint="@string/required_title" />
 
     <EditText
         android:id="@+id/dlog_add_todo_content"
@@ -33,7 +33,7 @@
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
         android:gravity="bottom"
-        android:hint="详情（非必填）"
+        android:hint="@string/optional_description"
         android:lines="3" />
 
     <TextView
@@ -42,7 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:layout_marginBottom="20dp"
-        android:text="时间："
+        android:text="@string/time"
         android:textSize="18sp" />
 
     <LinearLayout
@@ -57,9 +57,9 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_weight="1"
-            android:background="@color/little_blue"
-            android:text="取消"
-            android:textColor="@color/light_blue" />
+            android:background="@color/AccentSecondary"
+            android:text="@string/cancel"
+            android:textColor="@color/Accent" />
 
         <Button
             android:id="@+id/dlog_add_todo_add"
@@ -68,8 +68,8 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_weight="1"
-            android:background="@color/light_blue"
-            android:text="添加"
-            android:textColor="@android:color/white" />
+            android:background="@color/Accent"
+            android:text="@string/add"
+            android:textColor="@color/TextReversePrimary" />
     </LinearLayout>
 </LinearLayout>

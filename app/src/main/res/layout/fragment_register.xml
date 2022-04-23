@@ -19,7 +19,7 @@
             android:id="@+id/register_et_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="用户名"
+            android:hint="@string/username"
             android:inputType="text"/>
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
@@ -28,13 +28,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:passwordToggleEnabled="true"
-        app:passwordToggleTint="@color/colorPrimary"
+        app:passwordToggleTint="@color/Primary"
         app:passwordToggleTintMode="multiply">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/register_et_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="密码"
+            android:hint="@string/password"
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
@@ -44,13 +44,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:passwordToggleEnabled="true"
-        app:passwordToggleTint="@color/colorPrimary"
+        app:passwordToggleTint="@color/Primary"
         app:passwordToggleTintMode="multiply">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/register_et_password_again"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="确认密码"
+            android:hint="@string/confirm_password"
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -61,15 +61,15 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="20dp"
-        android:text="注册"
+        android:text="@string/register"
         android:padding="5dp"
-        android:background="@color/light_blue"
-        android:textColor="@android:color/white"
+        android:background="@drawable/bg_primary_round_4"
+        android:textColor="@color/TextReversePrimary"
         android:elevation="5dp"/>
     <TextView
         android:id="@+id/register_tv_tologin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="已有账号？前去登录吧~"
+        android:text="@string/login_tip"
         android:gravity="center"/>
 </LinearLayout>

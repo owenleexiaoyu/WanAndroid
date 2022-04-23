@@ -1,21 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--    橘黄色的主色  -->
-    <!--    <color name="colorPrimary">#FF8B56</color>-->
+    <!--    <color name="Primary">#FF8B56</color>-->
     <!--    深绿色的主色  -->
-    <color name="colorPrimary">#2AB27F</color>
-    <color name="colorPrimaryDark">@color/colorPrimary</color>
-    <color name="TextPrimary">#161823</color>
-    <color name="colorAccent">#FF4081</color>
-    <color name="light_gray">#cdcdcd</color>
-    <color name="dark_gray">#393939</color>
-    <color name="blue">#3F51B5</color>
-    <color name="light_blue">#2C90E5</color>
-    <color name="little_blue">#F3F9FF</color>
-    <color name="yellow">#FEC107</color>
-    <color name="light_yellow">#CDDC3A</color>
-    <color name="dark_yellow">#E4A340</color>
-    <color name="little_yellow">#FFFBF4</color>
-    <color name="dark_green">#2AB27F</color>
-    <color name="little_green">#F7FFFD</color>
+    <color name="Primary">#009688</color>
+    <color name="Secondary">#F7FFFD</color>
+    <color name="Accent">#2C90E5</color>
+    <color name="AccentSecondary">#F3F9FF</color>
+    <color name="TextPrimary">#212121</color>
+    <color name="TextSecondary">#757575</color>
+    <color name="TextReversePrimary">#FFFFFF</color>
+    <color name="TextReverseSecondary">#44FFFFFF</color>
+    <color name="LinePrimary">#BDBDBD</color>
+    <color name="BGPrimary">#FFFFFF</color>
 </resources>

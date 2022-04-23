@@ -27,7 +27,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/collection_recyclerview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
+            android:layout_height="match_parent" />
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -37,6 +37,8 @@
         android:layout_gravity="bottom|right"
         android:layout_margin="20dp"
         android:padding="10dp"
-        android:src="@drawable/ic_up"
-        app:layout_behavior="cc.lixiaoyu.wanandroid.util.behavior.ScrollAwareFABBehavior"/>
+        android:src="@drawable/ic_arrow_upward"
+        android:tint="@color/BGPrimary"
+        app:layout_behavior="cc.lixiaoyu.wanandroid.util.behavior.ScrollAwareFABBehavior"
+        android:contentDescription="@string/go_top" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

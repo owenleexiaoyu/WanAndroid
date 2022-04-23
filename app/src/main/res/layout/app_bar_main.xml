@@ -31,12 +31,15 @@
         android:id="@+id/main_btn_up"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
-        android:layout_marginRight="20dp"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="20dp"
         android:layout_marginBottom="70dp"
         android:padding="10dp"
-        android:src="@drawable/ic_up"
-        app:layout_behavior="cc.lixiaoyu.wanandroid.util.behavior.ScrollAwareFABBehavior"/>
+        android:src="@drawable/ic_arrow_upward"
+        android:tint="@color/BGPrimary"
+        app:layout_behavior="cc.lixiaoyu.wanandroid.util.behavior.ScrollAwareFABBehavior"
+        android:contentDescription="@string/go_top" />
+
     <com.ashokvarma.bottomnavigation.BottomNavigationBar
         android:id="@+id/main_bottom_nav_bar"
         android:layout_width="match_parent"

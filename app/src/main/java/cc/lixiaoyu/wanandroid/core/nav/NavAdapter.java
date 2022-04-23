@@ -27,10 +27,10 @@ public class NavAdapter extends BaseQuickAdapter<Nav, NavAdapter.ViewHolder>{
     protected void convert(ViewHolder holder, Nav item) {
         holder.tvTitle.setText(item.getName());
         if(item == getData().get(mCurrentItem)){
-            holder.tvTitle.setTextColor(MyApplication.getGlobalContext().getColor(R.color.light_blue));
-            holder.itemView.setBackgroundColor(MyApplication.getGlobalContext().getColor(R.color.little_blue));
+            holder.tvTitle.setTextColor(MyApplication.getGlobalContext().getColor(R.color.Accent));
+            holder.itemView.setBackgroundColor(MyApplication.getGlobalContext().getColor(R.color.AccentSecondary));
         }else{
-            holder.tvTitle.setTextColor(MyApplication.getGlobalContext().getColor(R.color.dark_gray));
+            holder.tvTitle.setTextColor(MyApplication.getGlobalContext().getColor(R.color.TextPrimary));
             holder.itemView.setBackgroundColor(MyApplication.getGlobalContext().getColor(android.R.color.white));
         }
     }

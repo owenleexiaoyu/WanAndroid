@@ -24,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@android:color/white"
+        android:background="@color/BGPrimary"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
         <ImageView
             android:layout_width="match_parent"
@@ -34,18 +34,15 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="玩Android V1.0"
+            android:text="@string/app_name_v1"
             android:textSize="20sp"
             android:gravity="center"/>
-            <WebView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/about_webview"
-                android:layout_marginBottom="30dp"></WebView>
+
+        <WebView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/about_webview"
+            android:layout_marginBottom="30dp" />
 
     </LinearLayout>
-
-
-
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

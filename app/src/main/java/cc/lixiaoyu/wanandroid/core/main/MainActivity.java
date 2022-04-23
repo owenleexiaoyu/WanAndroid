@@ -156,11 +156,11 @@ public class MainActivity extends MVPBaseActivity<MainPresenter> implements Main
     private void initBottomNavBar() {
         mBottomNavBar.setMode(BottomNavigationBar.MODE_FIXED);
         mBottomNavBar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC);
-        mBottomNavBar.addItem(new BottomNavigationItem(R.drawable.ic_home, "首页").setActiveColor(R.color.colorPrimary))
-                .addItem(new BottomNavigationItem(R.drawable.ic_system, "体系").setActiveColor(R.color.colorPrimary))
-                .addItem(new BottomNavigationItem(R.drawable.ic_wechat, "公众号").setActiveColor(R.color.colorPrimary))
-                .addItem(new BottomNavigationItem(R.drawable.ic_nav, "导航").setActiveColor(R.color.colorPrimary))
-                .addItem(new BottomNavigationItem(R.drawable.ic_project_gray, "项目").setActiveColor(R.color.colorPrimary))
+        mBottomNavBar.addItem(new BottomNavigationItem(R.drawable.ic_home, getString(R.string.home_page)).setActiveColor(R.color.Primary))
+                .addItem(new BottomNavigationItem(R.drawable.ic_knowledge_system, getString(R.string.knowledge_system)).setActiveColor(R.color.Primary))
+                .addItem(new BottomNavigationItem(R.drawable.ic_wechat, getString(R.string.wechat_blog)).setActiveColor(R.color.Primary))
+                .addItem(new BottomNavigationItem(R.drawable.ic_navigation, getString(R.string.navigation)).setActiveColor(R.color.Primary))
+                .addItem(new BottomNavigationItem(R.drawable.ic_project, getString(R.string.project)).setActiveColor(R.color.Primary))
                 .setFirstSelectedPosition(mCurrentIndex)
                 .initialise();
         mBottomNavBar.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener() {

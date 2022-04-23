@@ -21,11 +21,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:tabGravity="center"
-            app:tabIndicatorColor="@android:color/white"
+            app:tabIndicatorColor="@color/TextReversePrimary"
             app:tabIndicatorHeight="2dp"
             app:tabMode="scrollable"
-            app:tabSelectedTextColor="@android:color/white"
-            app:tabTextColor="#44ffffff"/>
+            app:tabSelectedTextColor="@color/TextReversePrimary"
+            app:tabTextColor="@color/TextReverseSecondary"/>
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.viewpager.widget.ViewPager
@@ -41,6 +41,8 @@
         android:layout_gravity="bottom|right"
         android:layout_margin="20dp"
         android:padding="10dp"
-        android:src="@drawable/ic_up"
-        app:layout_behavior="cc.lixiaoyu.wanandroid.util.behavior.ScrollAwareFABBehavior" />
+        android:src="@drawable/ic_arrow_upward"
+        android:tint="@color/BGPrimary"
+        app:layout_behavior="cc.lixiaoyu.wanandroid.util.behavior.ScrollAwareFABBehavior"
+        android:contentDescription="@string/go_top" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
     <TextView
@@ -8,9 +9,9 @@
         android:layout_height="wrap_content"
         android:id="@+id/toast_text"
         android:gravity="center"
-        android:textColor="@android:color/white"
+        android:textColor="@color/TextReversePrimary"
         android:textSize="14sp"
-        android:text="@string/app_name"
+        tools:text="@string/app_name"
         android:background="@drawable/toast_bg"
         android:padding="20dp"
         android:layout_margin="20dp"/>

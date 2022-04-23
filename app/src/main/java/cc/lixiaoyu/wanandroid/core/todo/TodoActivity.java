@@ -526,7 +526,7 @@ public class TodoActivity extends BaseSwipeBackActivity {
     private void changeTextColor(int position) {
         for (int i = 0; i < buttonList.size(); i++) {
             if (i != position) {
-                buttonList.get(i).setTextColor(getColor(R.color.light_blue));
+                buttonList.get(i).setTextColor(getColor(R.color.Accent));
             } else {
                 buttonList.get(i).setTextColor(getColor(android.R.color.white));
             }

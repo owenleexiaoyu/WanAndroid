@@ -7,10 +7,12 @@
     tools:context=".core.main.MainActivity"
     android:id="@+id/main_drawer_layout"
     android:fitsSystemWindows="true">
+
     <include
         layout="@layout/app_bar_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/main_nav_view"
         android:layout_width="wrap_content"

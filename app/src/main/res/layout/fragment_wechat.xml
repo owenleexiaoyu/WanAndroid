@@ -7,16 +7,16 @@
 
 
     <com.google.android.material.tabs.TabLayout
-        android:background="@color/colorPrimary"
+        android:background="@color/Primary"
         android:id="@+id/fwechat_tablayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:tabGravity="center"
-        app:tabIndicatorColor="@android:color/white"
+        app:tabIndicatorColor="@color/TextReversePrimary"
         app:tabIndicatorHeight="2dp"
         app:tabMode="scrollable"
-        app:tabSelectedTextColor="@android:color/white"
-        app:tabTextColor="#44ffffff" />
+        app:tabSelectedTextColor="@color/TextReversePrimary"
+        app:tabTextColor="@color/TextReverseSecondary" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/fwechat_viewpager"
