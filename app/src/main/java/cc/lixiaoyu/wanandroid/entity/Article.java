@@ -29,6 +29,7 @@ public class Article implements Serializable {
     private int userId;
     private int visible;
     private int zan;
+    private String shareUser;
 
     public String getApkLink() {
         return apkLink;
@@ -212,6 +213,14 @@ public class Article implements Serializable {
 
     public void setZan(int zan) {
         this.zan = zan;
+    }
+
+    public String getShareUser() {
+        return shareUser;
+    }
+
+    public void setShareUser(String shareUser) {
+        this.shareUser = shareUser;
     }
 
     public DetailParam toDetailParam() {

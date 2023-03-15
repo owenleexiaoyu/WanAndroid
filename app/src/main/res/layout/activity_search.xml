@@ -70,11 +70,14 @@
                     android:layout_weight="1"
                     android:layout_marginStart="10dp"
                     android:text="@string/history_search"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:textColor="@color/TextPrimary" />
+
                 <Button
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:background="@drawable/ic_delete"
+                    android:backgroundTint="@color/TextSecondary"
                     android:id="@+id/search_btn_clearHistory"/>
             </LinearLayout>
 
@@ -100,7 +103,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:text="@string/hot_search"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:textColor="@color/TextPrimary" />
             </LinearLayout>
 
             <com.zhy.view.flowlayout.TagFlowLayout
@@ -125,7 +129,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:text="@string/common_websites"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:textColor="@color/TextPrimary" />
             </LinearLayout>
 
             <com.zhy.view.flowlayout.TagFlowLayout

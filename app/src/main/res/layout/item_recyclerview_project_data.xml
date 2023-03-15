@@ -23,7 +23,7 @@
             android:layout_marginBottom="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:src="@color/Primary"
+            tools:src="@color/Primary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -34,7 +34,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             tools:text="@string/app_name"
-            android:textColor="@android:color/black"
+            android:textColor="@color/TextPrimary"
             android:textSize="16sp"
             android:maxLines="2"
             app:layout_constraintStart_toEndOf="@+id/item_project_img"
@@ -47,7 +47,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginEnd="10dp"
             tools:text="@string/app_name"
-            android:textColor="@android:color/darker_gray"
+            android:textColor="@color/TextSecondary"
             android:textSize="14sp"
             android:maxLines="3"
             app:layout_constraintStart_toStartOf="@+id/item_project_title"
@@ -59,6 +59,10 @@
             android:layout_height="wrap_content"
             tools:text="OwenLee"
             android:textSize="12sp"
+            android:maxLines="1"
+            android:maxWidth="100dp"
+            android:ellipsize="end"
+            android:textColor="@color/TextSecondary"
             app:layout_constraintStart_toStartOf="@id/item_project_title"
             app:layout_constraintBottom_toBottomOf="@id/item_project_img"/>
 
@@ -69,6 +73,7 @@
             android:layout_marginEnd="15dp"
             tools:text="1天前"
             android:textSize="12sp"
+            android:textColor="@color/TextSecondary"
             app:layout_constraintBottom_toBottomOf="@id/item_project_img"
             app:layout_constraintEnd_toStartOf="@id/item_project_collect"/>
 
@@ -77,6 +82,7 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:src="@drawable/ic_favorite_border"
+            android:tint="@color/Primary"
             app:layout_constraintBottom_toBottomOf="@id/item_project_img"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="10dp"/>

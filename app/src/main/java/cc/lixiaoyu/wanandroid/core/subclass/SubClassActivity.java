@@ -19,13 +19,13 @@ import cc.lixiaoyu.wanandroid.entity.PrimaryClass;
 
 public class SubClassActivity extends BaseSwipeBackActivity {
 
-    @BindView(R.id.subclass_toolbar)
+    @BindView(R.id.kc_toolbar)
     Toolbar mToolbar;
-    @BindView(R.id.subclass_tablayout)
+    @BindView(R.id.kc_tablayout)
     TabLayout mTabLayout;
-    @BindView(R.id.subclass_viewpager)
+    @BindView(R.id.kc_viewpager)
     ViewPager mViewPager;
-    @BindView(R.id.subclass_btn_up)
+    @BindView(R.id.kc_btn_up)
     FloatingActionButton mBtnUp;
 
     private SubClassAdapter mAdapter;
@@ -77,7 +77,7 @@ public class SubClassActivity extends BaseSwipeBackActivity {
 
     @Override
     protected int attachLayout() {
-        return R.layout.activity_subclass;
+        return R.layout.activity_knowledge_category;
     }
 
     /**

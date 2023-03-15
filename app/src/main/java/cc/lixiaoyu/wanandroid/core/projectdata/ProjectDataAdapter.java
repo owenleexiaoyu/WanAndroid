@@ -2,6 +2,10 @@ package cc.lixiaoyu.wanandroid.core.projectdata;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+
+import android.content.Context;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -28,12 +32,12 @@ public class ProjectDataAdapter extends BaseQuickAdapter<Article, ProjectDataAda
     @Override
     protected void convert(ViewHolder holder, Article article) {
         holder.tvAuther.setText(article.getAuthor());
-        holder.tvTitle.setText(article.getTitle());
+        holder.tvTitle.setText(Html.fromHtml(article.getTitle()));
         holder.tvDesc.setText(article.getDesc());
         holder.tvTime.setText(article.getNiceDate());
-        if(TextUtils.isEmpty(article.getEnvelopePic())){
+        if (TextUtils.isEmpty(article.getEnvelopePic())) {
             holder.imgPhoto.setVisibility(View.GONE);
-        }else{
+        } else {
             holder.imgPhoto.setVisibility(View.VISIBLE);
             RequestOptions options = new RequestOptions()
                     .centerCrop();
@@ -41,9 +45,11 @@ public class ProjectDataAdapter extends BaseQuickAdapter<Article, ProjectDataAda
                     .apply(options).into(holder.imgPhoto);
         }
         //设置文章是否被收藏
-        if(article.isCollect()){
+        Context ctx = holder.imgCollect.getContext();
+        holder.imgCollect.setColorFilter(ContextCompat.getColor(ctx, R.color.ConstBrand));
+        if (article.isCollect()) {
             holder.imgCollect.setImageResource(R.drawable.ic_favorite_full);
-        }else{
+        } else {
             holder.imgCollect.setImageResource(R.drawable.ic_favorite_border);
         }
         holder.addOnClickListener(R.id.item_project_collect);
@@ -63,6 +69,7 @@ public class ProjectDataAdapter extends BaseQuickAdapter<Article, ProjectDataAda
         TextView tvDesc;
         @BindView(R.id.item_project_collect)
         ImageView imgCollect;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

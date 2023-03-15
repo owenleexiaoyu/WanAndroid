@@ -13,9 +13,9 @@
         android:title="@string/todo_tool" />
 
     <item
-        android:id="@+id/nav_settings"
-        android:icon="@drawable/ic_settings"
-        android:title="@string/settings" />
+        android:id="@+id/nav_dark_light_mode"
+        android:icon="@drawable/ic_dark_mode"
+        android:title="@string/dark_mode" />
     <item
         android:id="@+id/nav_about"
         android:icon="@drawable/ic_info"

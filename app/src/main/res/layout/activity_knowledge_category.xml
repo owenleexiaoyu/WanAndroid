@@ -10,14 +10,14 @@
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/subclass_toolbar"
+            android:id="@+id/kc_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:layout_scrollFlags="scroll|enterAlways|snap"
             app:popupTheme="@style/AppTheme.PopupOverlay"/>
 
         <com.google.android.material.tabs.TabLayout
-            android:id="@+id/subclass_tablayout"
+            android:id="@+id/kc_tablayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:tabGravity="center"
@@ -29,13 +29,13 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.viewpager.widget.ViewPager
-        android:id="@+id/subclass_viewpager"
+        android:id="@+id/kc_viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/subclass_btn_up"
+        android:id="@+id/kc_btn_up"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"

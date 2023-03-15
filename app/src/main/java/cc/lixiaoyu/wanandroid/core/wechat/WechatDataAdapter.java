@@ -2,6 +2,10 @@ package cc.lixiaoyu.wanandroid.core.wechat;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+
+import android.content.Context;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -29,11 +33,11 @@ public class WechatDataAdapter extends BaseQuickAdapter<Article, WechatDataAdapt
     protected void convert(ViewHolder holder, Article article) {
         holder.tvAuthor.setText(article.getAuthor());
         holder.tvTime.setText(article.getNiceDate());
-        holder.tvTitle.setText(article.getTitle());
+        holder.tvTitle.setText(Html.fromHtml(article.getTitle()));
         holder.tvChapter.setText(article.getChapterName());
-        if(TextUtils.isEmpty(article.getEnvelopePic())){
+        if (TextUtils.isEmpty(article.getEnvelopePic())) {
             holder.imgPhoto.setVisibility(View.GONE);
-        }else{
+        } else {
             holder.imgPhoto.setVisibility(View.VISIBLE);
             RequestOptions options = new RequestOptions()
                     .centerCrop();
@@ -42,9 +46,11 @@ public class WechatDataAdapter extends BaseQuickAdapter<Article, WechatDataAdapt
         }
         holder.tvTop.setVisibility(View.GONE);
         //设置文章是否被收藏
-        if(article.isCollect()){
+        Context ctx = holder.imgCollect.getContext();
+        holder.imgCollect.setColorFilter(ContextCompat.getColor(ctx, R.color.ConstBrand));
+        if (article.isCollect()) {
             holder.imgCollect.setImageResource(R.drawable.ic_favorite_full);
-        }else{
+        } else {
             holder.imgCollect.setImageResource(R.drawable.ic_favorite_border);
         }
 
@@ -68,6 +74,7 @@ public class WechatDataAdapter extends BaseQuickAdapter<Article, WechatDataAdapt
         TextView tvTop;
         @BindView(R.id.item_article_collect)
         ImageView imgCollect;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

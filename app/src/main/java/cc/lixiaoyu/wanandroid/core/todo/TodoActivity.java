@@ -53,7 +53,7 @@ public class TodoActivity extends BaseSwipeBackActivity {
 
     @BindView(R.id.todo_toolbar)
     Toolbar mToolbar;
-    @BindView(R.id.todo_radiogroup)
+    @BindView(R.id.todo_category_group)
     RadioGroup mRadioGroup;
     @BindView(R.id.todo_viewpager)
     ViewPager mViewPager;
@@ -104,16 +104,16 @@ public class TodoActivity extends BaseSwipeBackActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
 //                Log.d(TAG, "onCheckedChanged: checkedId="+checkedId);
                 switch (checkedId){
-                    case R.id.todo_radiobtn_1:
+                    case R.id.todo_category_default:
                         mCurrentType = 0;
                         break;
-                    case R.id.todo_radiobtn_2:
+                    case R.id.todo_category_work:
                         mCurrentType = 1;
                         break;
-                    case R.id.todo_radiobtn_3:
+                    case R.id.todo_category_learn:
                         mCurrentType = 2;
                         break;
-                    case R.id.todo_radiobtn_4:
+                    case R.id.todo_category_life:
                         mCurrentType = 3;
                         break;
                 }

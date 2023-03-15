@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/BGPrimary">
 
     <TextView
         android:id="@+id/item_nav_title"
@@ -9,4 +11,4 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

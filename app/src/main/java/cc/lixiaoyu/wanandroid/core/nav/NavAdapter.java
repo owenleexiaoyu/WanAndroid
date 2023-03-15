@@ -1,6 +1,9 @@
 package cc.lixiaoyu.wanandroid.core.nav;
 
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+
+import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 
@@ -15,7 +18,7 @@ import cc.lixiaoyu.wanandroid.R;
 import cc.lixiaoyu.wanandroid.app.MyApplication;
 import cc.lixiaoyu.wanandroid.entity.Nav;
 
-public class NavAdapter extends BaseQuickAdapter<Nav, NavAdapter.ViewHolder>{
+public class NavAdapter extends BaseQuickAdapter<Nav, NavAdapter.ViewHolder> {
 
     private int mCurrentItem = 0;
 
@@ -25,13 +28,12 @@ public class NavAdapter extends BaseQuickAdapter<Nav, NavAdapter.ViewHolder>{
 
     @Override
     protected void convert(ViewHolder holder, Nav item) {
+        Context ctx = holder.itemView.getContext();
         holder.tvTitle.setText(item.getName());
-        if(item == getData().get(mCurrentItem)){
-            holder.tvTitle.setTextColor(MyApplication.getGlobalContext().getColor(R.color.Accent));
-            holder.itemView.setBackgroundColor(MyApplication.getGlobalContext().getColor(R.color.AccentSecondary));
-        }else{
-            holder.tvTitle.setTextColor(MyApplication.getGlobalContext().getColor(R.color.TextPrimary));
-            holder.itemView.setBackgroundColor(MyApplication.getGlobalContext().getColor(android.R.color.white));
+        if (item == getData().get(mCurrentItem)) {
+            holder.tvTitle.setTextColor(ContextCompat.getColor(ctx, R.color.Accent));
+        } else {
+            holder.tvTitle.setTextColor(ContextCompat.getColor(ctx, R.color.TextPrimary));
         }
     }
 
@@ -43,13 +45,13 @@ public class NavAdapter extends BaseQuickAdapter<Nav, NavAdapter.ViewHolder>{
         this.mCurrentItem = currentItem;
     }
 
-    class ViewHolder extends BaseViewHolder{
+    class ViewHolder extends BaseViewHolder {
         @BindView(R.id.item_nav_title)
         TextView tvTitle;
 
         public ViewHolder(View view) {
             super(view);
-            ButterKnife.bind(this,view);
+            ButterKnife.bind(this, view);
         }
     }
 }

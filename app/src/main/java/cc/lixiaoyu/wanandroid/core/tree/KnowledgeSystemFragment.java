@@ -18,17 +18,17 @@ import cc.lixiaoyu.wanandroid.entity.PrimaryClass;
 import cc.lixiaoyu.wanandroid.core.subclass.SubClassActivity;
 
 
-public class KnowledgeTreeFragment extends MVPBaseFragment<KnowledgeTreeContract.Presenter>
+public class KnowledgeSystemFragment extends MVPBaseFragment<KnowledgeTreeContract.Presenter>
         implements KnowledgeTreeContract.View{
 
-    private static final String TAG = "KnowledgeTreeFragment";
+    private static final String TAG = "KnowledgeSystemFragment";
     @BindView(R.id.fsystem_recyclerview)
     RecyclerView mRecyclerView;
     private SystemAdapter mAdapter;
     private Unbinder mUnbinder;
 
-    public static KnowledgeTreeFragment newInstanse(){
-        return new KnowledgeTreeFragment();
+    public static KnowledgeSystemFragment newInstance(){
+        return new KnowledgeSystemFragment();
     }
 
     @Override
@@ -46,7 +46,7 @@ public class KnowledgeTreeFragment extends MVPBaseFragment<KnowledgeTreeContract
     protected void initView(View view) {
         mUnbinder = ButterKnife.bind(this, view);
 
-        mAdapter = new SystemAdapter(R.layout.item_system_one,
+        mAdapter = new SystemAdapter(R.layout.item_knowledge_system_category,
                 new ArrayList<PrimaryClass>(0));
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
@@ -61,7 +61,7 @@ public class KnowledgeTreeFragment extends MVPBaseFragment<KnowledgeTreeContract
 
     @Override
     protected int attachLayout() {
-        return R.layout.fragment_system;
+        return R.layout.fragment_knowledge_system;
     }
 
     @Override

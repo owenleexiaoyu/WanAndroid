@@ -2,6 +2,8 @@ package cc.lixiaoyu.wanandroid.core.collection;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import android.text.Html;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -26,7 +28,7 @@ public class CollectionAdapter extends BaseQuickAdapter<Article, CollectionAdapt
     protected void convert(ViewHolder holder, Article article) {
         holder.tvAuthor.setText(article.getAuthor());
         holder.tvTime.setText(article.getNiceDate());
-        holder.tvTitle.setText(article.getTitle());
+        holder.tvTitle.setText(Html.fromHtml(article.getTitle()));
         holder.tvChapter.setText(article.getChapterName());
         holder.imgCollect.setImageResource(R.drawable.ic_favorite_full);
         holder.addOnClickListener(R.id.item_collection_collect);
