@@ -10,6 +10,8 @@ import androidx.annotation.NonNull;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -31,12 +33,12 @@ import java.util.List;
 
 import butterknife.BindView;
 import cc.lixiaoyu.wanandroid.R;
-import cc.lixiaoyu.wanandroid.base.MVPBaseActivity;
-import cc.lixiaoyu.wanandroid.core.collections.CollectionActivity;
+import cc.lixiaoyu.wanandroid.base.mvp.MVPBaseActivity;
+import cc.lixiaoyu.wanandroid.core.collection.CollectionActivity;
 import cc.lixiaoyu.wanandroid.core.search.SearchActivity;
 import cc.lixiaoyu.wanandroid.core.home.HomeFragment;
-import cc.lixiaoyu.wanandroid.core.tree.KnowledgeTreeFragment;
-import cc.lixiaoyu.wanandroid.ui.activity.AboutActivity;
+import cc.lixiaoyu.wanandroid.core.tree.KnowledgeSystemFragment;
+import cc.lixiaoyu.wanandroid.core.about.AboutActivity;
 import cc.lixiaoyu.wanandroid.core.login.LoginActivity;
 import cc.lixiaoyu.wanandroid.core.todo.TodoActivity;
 import cc.lixiaoyu.wanandroid.core.nav.NavFragment;
@@ -118,7 +120,7 @@ public class MainActivity extends MVPBaseActivity<MainPresenter> implements Main
                         ((HomeFragment) mFragmentList.get(mCurrentIndex)).jumpToListTop();
                         break;
                     case 1:
-                        ((KnowledgeTreeFragment) mFragmentList.get(mCurrentIndex)).jumpToListTop();
+                        ((KnowledgeSystemFragment) mFragmentList.get(mCurrentIndex)).jumpToListTop();
                         break;
                     case 2:
                         ((WechatFragment) mFragmentList.get(mCurrentIndex)).jumpToListTop();
@@ -156,11 +158,16 @@ public class MainActivity extends MVPBaseActivity<MainPresenter> implements Main
     private void initBottomNavBar() {
         mBottomNavBar.setMode(BottomNavigationBar.MODE_FIXED);
         mBottomNavBar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC);
-        mBottomNavBar.addItem(new BottomNavigationItem(R.mipmap.ic_home, "首页").setActiveColor(R.color.orange))
-                .addItem(new BottomNavigationItem(R.mipmap.ic_system, "体系").setActiveColor(R.color.orange))
-                .addItem(new BottomNavigationItem(R.mipmap.ic_wechat, "公众号").setActiveColor(R.color.orange))
-                .addItem(new BottomNavigationItem(R.mipmap.ic_nav, "导航").setActiveColor(R.color.orange))
-                .addItem(new BottomNavigationItem(R.mipmap.ic_project_gray, "项目").setActiveColor(R.color.orange))
+        mBottomNavBar.addItem(new BottomNavigationItem(R.drawable.ic_home, getString(R.string.home_page))
+                        .setActiveColor(ContextCompat.getColor(this, R.color.ConstBrand)))
+                .addItem(new BottomNavigationItem(R.drawable.ic_knowledge_system, getString(R.string.knowledge_system))
+                        .setActiveColor(ContextCompat.getColor(this, R.color.ConstBrand)))
+                .addItem(new BottomNavigationItem(R.drawable.ic_wechat, getString(R.string.wechat_blog))
+                        .setActiveColor(ContextCompat.getColor(this, R.color.ConstBrand)))
+                .addItem(new BottomNavigationItem(R.drawable.ic_navigation, getString(R.string.navigation))
+                        .setActiveColor(ContextCompat.getColor(this, R.color.ConstBrand)))
+                .addItem(new BottomNavigationItem(R.drawable.ic_project, getString(R.string.project))
+                        .setActiveColor(ContextCompat.getColor(this, R.color.ConstBrand)))
                 .setFirstSelectedPosition(mCurrentIndex)
                 .initialise();
         mBottomNavBar.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener() {
@@ -199,7 +206,7 @@ public class MainActivity extends MVPBaseActivity<MainPresenter> implements Main
                 break;
             case 1:
                 if (mKnowledgeFragment == null) {
-                    mKnowledgeFragment = KnowledgeTreeFragment.newInstanse();
+                    mKnowledgeFragment = KnowledgeSystemFragment.newInstance();
                 }
                 addAndShowFragment(mKnowledgeFragment);
                 break;
@@ -283,6 +290,14 @@ public class MainActivity extends MVPBaseActivity<MainPresenter> implements Main
                             startActivity(new Intent(MainActivity.this, LoginActivity.class));
                         }
                         break;
+                    case R.id.nav_dark_light_mode: {
+                        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                        } else {
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                        }
+                        break;
+                    }
                     case R.id.nav_about:
                         startActivity(new Intent(MainActivity.this, AboutActivity.class));
                         break;
@@ -390,6 +405,7 @@ public class MainActivity extends MVPBaseActivity<MainPresenter> implements Main
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
         outState.putInt(CURRENT_INDEX, mCurrentIndex);
     }
 

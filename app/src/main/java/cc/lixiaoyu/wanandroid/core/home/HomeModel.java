@@ -7,9 +7,9 @@ import cc.lixiaoyu.wanandroid.api.WanAndroidService;
 import cc.lixiaoyu.wanandroid.entity.Article;
 import cc.lixiaoyu.wanandroid.entity.ArticlePage;
 import cc.lixiaoyu.wanandroid.entity.Banner;
-import cc.lixiaoyu.wanandroid.util.BaseModelFactory;
-import cc.lixiaoyu.wanandroid.util.Optional;
-import cc.lixiaoyu.wanandroid.util.RetrofitHelper;
+import cc.lixiaoyu.wanandroid.util.network.BaseModelFactory;
+import cc.lixiaoyu.wanandroid.entity.Optional;
+import cc.lixiaoyu.wanandroid.util.network.RetrofitManager;
 import io.reactivex.Observable;
 
 public class HomeModel implements HomeContract.Model{
@@ -17,7 +17,7 @@ public class HomeModel implements HomeContract.Model{
     private WanAndroidService mService;
 
     public HomeModel(){
-        mService = RetrofitHelper.getInstance().getWanAndroidService();
+        mService = RetrofitManager.getInstance().getWanAndroidService();
     }
 
     @Override

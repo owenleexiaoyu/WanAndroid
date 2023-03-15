@@ -40,7 +40,7 @@ import cc.lixiaoyu.wanandroid.R;
 import cc.lixiaoyu.wanandroid.api.WanAndroidService;
 import cc.lixiaoyu.wanandroid.base.BaseSwipeBackActivity;
 import cc.lixiaoyu.wanandroid.entity.WanAndroidResponse;
-import cc.lixiaoyu.wanandroid.util.RetrofitHelper;
+import cc.lixiaoyu.wanandroid.util.network.RetrofitManager;
 import cc.lixiaoyu.wanandroid.util.ToastUtil;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
@@ -53,7 +53,7 @@ public class TodoActivity extends BaseSwipeBackActivity {
 
     @BindView(R.id.todo_toolbar)
     Toolbar mToolbar;
-    @BindView(R.id.todo_radiogroup)
+    @BindView(R.id.todo_category_group)
     RadioGroup mRadioGroup;
     @BindView(R.id.todo_viewpager)
     ViewPager mViewPager;
@@ -86,7 +86,7 @@ public class TodoActivity extends BaseSwipeBackActivity {
         viewList.add(view2);
 
         buttonList = new ArrayList<>(4);
-        mService = RetrofitHelper.getInstance().getWanAndroidService();
+        mService = RetrofitManager.getInstance().getWanAndroidService();
     }
 
     @SuppressLint("ResourceType")
@@ -104,16 +104,16 @@ public class TodoActivity extends BaseSwipeBackActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
 //                Log.d(TAG, "onCheckedChanged: checkedId="+checkedId);
                 switch (checkedId){
-                    case R.id.todo_radiobtn_1:
+                    case R.id.todo_category_default:
                         mCurrentType = 0;
                         break;
-                    case R.id.todo_radiobtn_2:
+                    case R.id.todo_category_work:
                         mCurrentType = 1;
                         break;
-                    case R.id.todo_radiobtn_3:
+                    case R.id.todo_category_learn:
                         mCurrentType = 2;
                         break;
-                    case R.id.todo_radiobtn_4:
+                    case R.id.todo_category_life:
                         mCurrentType = 3;
                         break;
                 }
@@ -526,7 +526,7 @@ public class TodoActivity extends BaseSwipeBackActivity {
     private void changeTextColor(int position) {
         for (int i = 0; i < buttonList.size(); i++) {
             if (i != position) {
-                buttonList.get(i).setTextColor(getColor(R.color.light_blue));
+                buttonList.get(i).setTextColor(getColor(R.color.Accent));
             } else {
                 buttonList.get(i).setTextColor(getColor(android.R.color.white));
             }

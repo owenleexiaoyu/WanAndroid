@@ -3,8 +3,8 @@ package cc.lixiaoyu.wanandroid.core.search;
 import java.util.List;
 
 import cc.lixiaoyu.wanandroid.entity.HotKey;
-import cc.lixiaoyu.wanandroid.util.DataManager;
-import cc.lixiaoyu.wanandroid.util.Optional;
+import cc.lixiaoyu.wanandroid.util.storage.DataManager;
+import cc.lixiaoyu.wanandroid.entity.Optional;
 import io.reactivex.functions.Consumer;
 
 public class SearchPresenter extends SearchContract.Presenter{

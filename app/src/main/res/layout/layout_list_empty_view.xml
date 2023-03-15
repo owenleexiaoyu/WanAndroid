@@ -9,11 +9,11 @@
     <ImageView
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:src="@mipmap/ic_empty"/>
+        android:src="@drawable/img_empty"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="暂无数据"
+        android:text="@string/no_data"
         android:textSize="16sp"
         android:layout_marginTop="5dp"/>
 </LinearLayout>

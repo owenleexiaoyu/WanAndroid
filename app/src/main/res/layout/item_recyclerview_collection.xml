@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     app:cardCornerRadius="4dp"
     android:elevation="3dp"
     android:layout_marginTop="10dp"
@@ -12,7 +13,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/white">
+        android:background="@color/BGPrimary">
 
         <TextView
             android:id="@+id/item_collection_author"
@@ -20,8 +21,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="8dp"
-            android:text="OwenLee"
+            tools:text="OwenLee"
             android:textSize="12sp"
+            android:textColor="@color/TextSecondary"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -31,11 +33,11 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
             android:layout_marginTop="8dp"
-            android:text="1天前"
+            tools:text="1天前"
             android:textSize="12sp"
+            android:textColor="@color/TextSecondary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
 
         <TextView
             android:id="@+id/item_collection_title"
@@ -44,9 +46,8 @@
             android:layout_marginEnd="10dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="8dp"
-            android:layout_marginRight="10dp"
-            android:text="@string/app_name"
-            android:textColor="@android:color/black"
+            tools:text="@string/app_name"
+            android:textColor="@color/TextPrimary"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -59,7 +60,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="8dp"
             android:background="@drawable/article_chapter_bg"
-            android:textColor="@android:color/white"
+            android:textColor="@color/TextReversePrimary"
             android:textSize="13sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/item_collection_title"
@@ -69,7 +70,8 @@
             android:id="@+id/item_collection_collect"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:src="@mipmap/ic_heart_gray"
+            tools:src="@drawable/ic_favorite_full"
+            android:tint="@color/Primary"
             app:layout_constraintBottom_toBottomOf="@id/item_collection_chapter"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="10dp"/>

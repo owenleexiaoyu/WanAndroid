@@ -3,12 +3,12 @@ package cc.lixiaoyu.wanandroid.core.subclass;
 
 import java.util.List;
 
-import cc.lixiaoyu.wanandroid.base.BaseModel;
-import cc.lixiaoyu.wanandroid.base.BasePresenter;
-import cc.lixiaoyu.wanandroid.base.BaseView;
+import cc.lixiaoyu.wanandroid.base.mvp.BaseModel;
+import cc.lixiaoyu.wanandroid.base.mvp.BasePresenter;
+import cc.lixiaoyu.wanandroid.base.mvp.BaseView;
 import cc.lixiaoyu.wanandroid.entity.Article;
 import cc.lixiaoyu.wanandroid.entity.ArticlePage;
-import cc.lixiaoyu.wanandroid.util.Optional;
+import cc.lixiaoyu.wanandroid.entity.Optional;
 import io.reactivex.Observable;
 
 public interface SubClassContract {

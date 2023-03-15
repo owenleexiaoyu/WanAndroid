@@ -2,7 +2,10 @@ package cc.lixiaoyu.wanandroid.adapter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 
+import android.content.Context;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -28,9 +31,13 @@ public class ArticleAdapter extends BaseQuickAdapter<Article, ArticleAdapter.Vie
 
     @Override
     protected void convert(ViewHolder holder, Article article) {
-        holder.tvAuthor.setText(article.getAuthor());
+        String author = !TextUtils.isEmpty(article.getAuthor()) ? article.getAuthor() : article.getShareUser();
+        if (TextUtils.isEmpty(author)) {
+            author = "Unknown";
+        }
+        holder.tvAuthor.setText(author);
         holder.tvTime.setText(article.getNiceDate());
-        holder.tvTitle.setText(article.getTitle());
+        holder.tvTitle.setText(Html.fromHtml(article.getTitle()));
         holder.tvChapter.setText(article.getChapterName());
         if (TextUtils.isEmpty(article.getEnvelopePic())) {
             holder.imgPhoto.setVisibility(View.GONE);
@@ -49,10 +56,12 @@ public class ArticleAdapter extends BaseQuickAdapter<Article, ArticleAdapter.Vie
         }
 
         //设置文章是否被收藏
+        Context ctx = holder.imgCollect.getContext();
+        holder.imgCollect.setColorFilter(ContextCompat.getColor(ctx, R.color.ConstBrand));
         if (article.isCollect()) {
-            holder.imgCollect.setImageResource(R.mipmap.ic_heart_orange);
+            holder.imgCollect.setImageResource(R.drawable.ic_favorite_full);
         } else {
-            holder.imgCollect.setImageResource(R.mipmap.ic_heart_gray);
+            holder.imgCollect.setImageResource(R.drawable.ic_favorite_border);
         }
 
         //为收藏按钮添加点击事件

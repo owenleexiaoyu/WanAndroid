@@ -5,28 +5,24 @@
 
     <item
         android:id="@+id/nav_collection"
-        android:icon="@mipmap/ic_collect"
-        android:title="我的收藏" />
+        android:icon="@drawable/ic_favorite_full"
+        android:title="@string/my_collections" />
     <item
         android:id="@+id/nav_todo"
-        android:icon="@mipmap/ic_todo"
-        android:title="TODO工具" />
-    <!--<item-->
-        <!--android:id="@+id/nav_night_mode"-->
-        <!--android:icon="@mipmap/ic_night"-->
-        <!--android:title="夜间模式" />-->
+        android:icon="@drawable/ic_todo_checklist"
+        android:title="@string/todo_tool" />
 
-    <!--<item-->
-        <!--android:id="@+id/nav_settings"-->
-        <!--android:icon="@mipmap/ic_settings"-->
-        <!--android:title="设置" />-->
+    <item
+        android:id="@+id/nav_dark_light_mode"
+        android:icon="@drawable/ic_dark_mode"
+        android:title="@string/dark_mode" />
     <item
         android:id="@+id/nav_about"
-        android:icon="@mipmap/ic_about"
-        android:title="关于我们" />
+        android:icon="@drawable/ic_info"
+        android:title="@string/about_us" />
     <item
         android:id="@+id/nav_logout"
-        android:icon="@mipmap/ic_logout"
-        android:title="退出登录" />
+        android:icon="@drawable/ic_logout"
+        android:title="@string/logout" />
 
 </menu>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--    橘黄色的主色  -->
+    <!--    <color name="Primary">#FF8B56</color>-->
+    <!--    深绿色的主色  -->
+    <color name="Primary">#121212</color>
+    <color name="Secondary">#F7FFFD</color>
+    <color name="Accent">#2C90E5</color>
+    <color name="AccentSecondary">#F3F9FF</color>
+    <color name="ConstBrand">#009688</color>
+    <color name="ConstHighlight">#F5222D</color>
+    <color name="TextPrimary">#E1E1E1</color>
+    <color name="TextSecondary">#717171</color>
+    <color name="TextReversePrimary">#FFFFFF</color>
+    <color name="TextReverseSecondary">#44FFFFFF</color>
+    <color name="LinePrimary">#343434</color>
+    <color name="BGPrimary">#262626</color>
+    <color name="BGSecondary">#121212</color>
+</resources>

@@ -2,7 +2,7 @@ package cc.lixiaoyu.wanandroid.core.projectdata;
 
 import cc.lixiaoyu.wanandroid.entity.Article;
 import cc.lixiaoyu.wanandroid.entity.ProjectPage;
-import cc.lixiaoyu.wanandroid.util.Optional;
+import cc.lixiaoyu.wanandroid.entity.Optional;
 import cc.lixiaoyu.wanandroid.util.ToastUtil;
 import io.reactivex.functions.Consumer;
 

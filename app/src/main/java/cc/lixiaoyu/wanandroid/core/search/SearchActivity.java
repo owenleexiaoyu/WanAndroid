@@ -19,7 +19,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import cc.lixiaoyu.wanandroid.R;
-import cc.lixiaoyu.wanandroid.base.MVPBaseSwipeBackActivity;
+import cc.lixiaoyu.wanandroid.base.mvp.MVPBaseSwipeBackActivity;
 import cc.lixiaoyu.wanandroid.entity.HotKey;
 import cc.lixiaoyu.wanandroid.core.detail.ArticleDetailActivity;
 import cc.lixiaoyu.wanandroid.core.search.result.SearchResultActivity;

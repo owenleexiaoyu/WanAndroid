@@ -27,7 +27,7 @@ import cc.lixiaoyu.wanandroid.entity.Article;
 import cc.lixiaoyu.wanandroid.entity.ArticlePage;
 import cc.lixiaoyu.wanandroid.entity.WanAndroidResponse;
 import cc.lixiaoyu.wanandroid.core.detail.ArticleDetailActivity;
-import cc.lixiaoyu.wanandroid.util.RetrofitHelper;
+import cc.lixiaoyu.wanandroid.util.network.RetrofitManager;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Predicate;
@@ -61,7 +61,7 @@ public class SearchResultActivity extends BaseSwipeBackActivity {
         //从搜索页获得传递过来的关键词参数
         Intent intent = getIntent();
         mKeyword = intent.getStringExtra("key");
-        mService = RetrofitHelper.getInstance().getWanAndroidService();
+        mService = RetrofitManager.getInstance().getWanAndroidService();
     }
 
     @Override

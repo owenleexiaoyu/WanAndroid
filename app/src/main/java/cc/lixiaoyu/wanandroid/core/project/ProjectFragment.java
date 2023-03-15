@@ -14,7 +14,7 @@ import butterknife.BindView;
 import cc.lixiaoyu.wanandroid.R;
 import cc.lixiaoyu.wanandroid.base.BaseFragment;
 import cc.lixiaoyu.wanandroid.entity.ProjectTitle;
-import cc.lixiaoyu.wanandroid.util.RetrofitHelper;
+import cc.lixiaoyu.wanandroid.util.network.RetrofitManager;
 import cc.lixiaoyu.wanandroid.util.ToastUtil;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -65,7 +65,7 @@ public class ProjectFragment extends BaseFragment {
 
             }
         });
-        RetrofitHelper.getInstance().getWanAndroidService().getProjectsData()
+        RetrofitManager.getInstance().getWanAndroidService().getProjectsData()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(result -> {

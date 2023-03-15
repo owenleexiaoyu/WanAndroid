@@ -27,7 +27,7 @@ import cc.lixiaoyu.wanandroid.api.WanAndroidService;
 import cc.lixiaoyu.wanandroid.entity.Nav;
 import cc.lixiaoyu.wanandroid.entity.WanAndroidResponse;
 import cc.lixiaoyu.wanandroid.core.detail.ArticleDetailActivity;
-import cc.lixiaoyu.wanandroid.util.RetrofitHelper;
+import cc.lixiaoyu.wanandroid.util.network.RetrofitManager;
 import cc.lixiaoyu.wanandroid.util.ToastUtil;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
@@ -68,7 +68,7 @@ public class NavFragment extends Fragment {
         });
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        WanAndroidService service = RetrofitHelper.getInstance().getWanAndroidService();
+        WanAndroidService service = RetrofitManager.getInstance().getWanAndroidService();
         service.getNavData()
                 .subscribeOn(Schedulers.io())
                 .filter(new Predicate<WanAndroidResponse<List<Nav>>>() {

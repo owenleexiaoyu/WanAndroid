@@ -1,7 +1,5 @@
 package cc.lixiaoyu.wanandroid.entity;
 
-import cc.lixiaoyu.wanandroid.util.Optional;
-
 /**
  * WANAndroid返回数据最外层的实体类
  *

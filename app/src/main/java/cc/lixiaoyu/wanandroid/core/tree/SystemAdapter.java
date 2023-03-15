@@ -38,9 +38,9 @@ public class SystemAdapter extends BaseQuickAdapter<PrimaryClass, SystemAdapter.
     }
 
     class ViewHolder extends BaseViewHolder{
-        @BindView(R.id.item_system_one_title)
+        @BindView(R.id.item_knowledge_category_title)
         TextView tvTitle;
-        @BindView(R.id.item_system_one_content)
+        @BindView(R.id.item_knowledge_category_content)
         TextView tvContent;
 
         public ViewHolder(@NonNull View itemView) {

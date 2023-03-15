@@ -3,9 +3,7 @@ package cc.lixiaoyu.wanandroid.core.tree;
 import java.util.List;
 
 import cc.lixiaoyu.wanandroid.entity.PrimaryClass;
-import cc.lixiaoyu.wanandroid.core.tree.KnowledgeTreeContract;
-import cc.lixiaoyu.wanandroid.core.tree.KnowledgeTreeModel;
-import cc.lixiaoyu.wanandroid.util.Optional;
+import cc.lixiaoyu.wanandroid.entity.Optional;
 import io.reactivex.functions.Consumer;
 
 public class KnowledgeTreePresenter extends KnowledgeTreeContract.Presenter {

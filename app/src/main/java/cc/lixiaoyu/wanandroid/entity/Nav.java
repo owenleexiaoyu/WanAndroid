@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-import cc.lixiaoyu.wanandroid.core.detail.ArticleDetailParam;
+import cc.lixiaoyu.wanandroid.core.detail.DetailParam;
 
 public class Nav {
 
@@ -247,8 +247,8 @@ public class Nav {
             this.zan = zan;
         }
 
-        public ArticleDetailParam toDetailParam() {
-            return new ArticleDetailParam(id, title, link);
+        public DetailParam toDetailParam() {
+            return new DetailParam(id, title, link, DetailParam.DetailType.ARTICLE);
         }
     }
 
