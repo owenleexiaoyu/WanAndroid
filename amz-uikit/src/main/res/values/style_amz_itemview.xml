@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <declare-styleable name="AMZItemView">
-        <attr name="start_text" format="string" />
-        <attr name="start_icon" />
-    </declare-styleable>
-</resources>

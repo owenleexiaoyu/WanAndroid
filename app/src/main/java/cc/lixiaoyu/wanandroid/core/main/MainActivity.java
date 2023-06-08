@@ -35,7 +35,6 @@ import butterknife.BindView;
 import cc.lixiaoyu.wanandroid.R;
 import cc.lixiaoyu.wanandroid.base.mvp.MVPBaseActivity;
 import cc.lixiaoyu.wanandroid.core.collection.CollectionActivity;
-import cc.lixiaoyu.wanandroid.core.profile.ProfileFragment;
 import cc.lixiaoyu.wanandroid.core.search.SearchActivity;
 import cc.lixiaoyu.wanandroid.core.home.HomeFragment;
 import cc.lixiaoyu.wanandroid.core.tree.KnowledgeSystemFragment;
@@ -68,7 +67,6 @@ public class MainActivity extends MVPBaseActivity<MainPresenter> implements Main
     private Fragment mWechatFragment;
     private Fragment mNavFragment;
     private Fragment mProjectFragment;
-    private Fragment mProfileFragment;
 
     private List<Fragment> mFragmentList = new ArrayList<>();
     //当前所在的 tab 序号
@@ -177,8 +175,6 @@ public class MainActivity extends MVPBaseActivity<MainPresenter> implements Main
                         .setActiveColor(ContextCompat.getColor(this, R.color.ConstBrand)))
                 .addItem(new BottomNavigationItem(R.drawable.ic_project, getString(titleResIds[4]))
                         .setActiveColor(ContextCompat.getColor(this, R.color.ConstBrand)))
-                .addItem(new BottomNavigationItem(R.drawable.ic_person_black_24dp, getString(titleResIds[5]))
-                        .setActiveColor(ContextCompat.getColor(this, R.color.ConstBrand)))
                 .setFirstSelectedPosition(mCurrentIndex)
                 .initialise();
         mBottomNavBar.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener() {
@@ -238,12 +234,6 @@ public class MainActivity extends MVPBaseActivity<MainPresenter> implements Main
                     mProjectFragment = ProjectFragment.newInstance();
                 }
                 addAndShowFragment(mProjectFragment);
-                break;
-            case 5:
-                if (mProfileFragment == null) {
-                    mProfileFragment = new ProfileFragment();
-                }
-                addAndShowFragment(mProfileFragment);
                 break;
             default:
                 throw new IllegalArgumentException("Index ["+ index+ "] is not support");
