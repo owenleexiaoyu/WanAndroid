@@ -59,13 +59,7 @@ public class MainPresenter extends MainContract.Presenter {
 
     @Override
     public void logout() {
-        WanAndroidService service = RetrofitManager.getInstance().getWanAndroidService();
-        service.logout();
-        mDataManager.setLoginAccount("");
-        mDataManager.setLoginPassword("");
-        mDataManager.setLoginState(false);
-        RxBus.getInstance().post(new LoginEvent(false));
-        ToastUtil.showToast("退出登录成功");
+
     }
 
     @Override

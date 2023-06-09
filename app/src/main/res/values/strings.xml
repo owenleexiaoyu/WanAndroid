@@ -48,5 +48,10 @@
     <string name="go_top">回到顶部</string>
     <string name="dark_mode">深色模式</string>
     <string name="mine">我的</string>
+    <string name="logout_confirm_title">提示</string>
+    <string name="logout_confirm_body">确认退出登录吗</string>
+    <string name="logout_confirm_confirm">确定</string>
+    <string name="logout_confirm_cancel">取消</string>
+    <string name="toast_logout_success">退出登录成功</string>
 
 </resources>

@@ -45,5 +45,5 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:layout_gravity="bottom"
-        app:bnbBackgroundColor="@color/BGSecondary"/>
+        app:bnbBackgroundColor="@color/BGPrimary"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
