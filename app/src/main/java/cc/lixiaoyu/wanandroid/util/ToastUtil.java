@@ -8,7 +8,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import cc.lixiaoyu.wanandroid.R;
-import cc.lixiaoyu.wanandroid.app.MyApplication;
+import cc.lixiaoyu.wanandroid.app.WanApplication;
 
 public class ToastUtil {
     /**
@@ -28,7 +28,7 @@ public class ToastUtil {
     }
 
     private static void show(String text, int showLength) {
-        Context context = MyApplication.getGlobalContext();
+        Context context = WanApplication.Companion.getGlobalContext();
         Toast toast = new Toast(context);
         View view = LayoutInflater.from(context).inflate(R.layout.layout_toast, null);
         TextView tvToast = view.findViewById(R.id.toast_text);

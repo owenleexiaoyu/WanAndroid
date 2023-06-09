@@ -15,7 +15,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cc.lixiaoyu.wanandroid.R;
-import cc.lixiaoyu.wanandroid.app.MyApplication;
 import cc.lixiaoyu.wanandroid.entity.Nav;
 
 public class NavAdapter extends BaseQuickAdapter<Nav, NavAdapter.ViewHolder> {

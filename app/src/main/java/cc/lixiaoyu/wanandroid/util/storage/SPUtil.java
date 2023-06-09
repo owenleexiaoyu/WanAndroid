@@ -3,13 +3,13 @@ package cc.lixiaoyu.wanandroid.util.storage;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import cc.lixiaoyu.wanandroid.app.MyApplication;
+import cc.lixiaoyu.wanandroid.app.WanApplication;
 
 /**
  * SharedPreperence的工具类
  */
 public class SPUtil {
-    private static Context context = MyApplication.getGlobalContext();
+    private static Context context = WanApplication.Companion.getGlobalContext();
     public static final String FILE_DEFAULT = "WanAndroid";
 
     public static void saveData(String key, Object data) {

@@ -6,7 +6,7 @@ import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 
 import cc.lixiaoyu.wanandroid.api.WanAndroidService;
-import cc.lixiaoyu.wanandroid.app.MyApplication;
+import cc.lixiaoyu.wanandroid.app.WanApplication;
 import cc.lixiaoyu.wanandroid.util.AppConst;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
@@ -51,7 +51,7 @@ public class RetrofitManager {
 
     private static OkHttpClient getOkHttpClient(){
         ClearableCookieJar cookieJar = new PersistentCookieJar(new SetCookieCache(),
-                        new SharedPrefsCookiePersistor(MyApplication.getGlobalContext()));
+                        new SharedPrefsCookiePersistor(WanApplication.Companion.getGlobalContext()));
         okHttpClient = new OkHttpClient.Builder()
                 .cookieJar(cookieJar)
                 .build();
