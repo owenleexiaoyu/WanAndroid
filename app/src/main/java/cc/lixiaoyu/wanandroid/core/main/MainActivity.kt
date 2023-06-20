@@ -2,6 +2,7 @@ package cc.lixiaoyu.wanandroid.core.main
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -27,16 +28,16 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var mainVM: MainViewModel
 
-    private var mHomeFragment: Fragment? = null
-    private var mKnowledgeFragment: Fragment? = null
-    private var mWechatFragment: Fragment? = null
-    private var mNavFragment: Fragment? = null
-    private var mProjectFragment: Fragment? = null
-    private val mFragmentList: MutableList<Fragment> = ArrayList()
+    private var homeFragment: Fragment? = null
+    private var knowledgeFragment: Fragment? = null
+    private var wechatFragment: Fragment? = null
+    private var navFragment: Fragment? = null
+    private var projectFragment: Fragment? = null
+    private val fragmentMap: MutableMap<String, Fragment> = mutableMapOf()
 
     private var drawerFragment: Fragment? = null
 
-    var titleResIds = intArrayOf(
+    private val titleResIds = intArrayOf(
         R.string.home_page,
         R.string.knowledge_system,
         R.string.wechat_blog,
@@ -46,6 +47,29 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        savedInstanceState?.let {
+            homeFragment = supportFragmentManager.findFragmentByTag(HOME_FRAGMENT_TAG)
+            homeFragment?.let {
+                fragmentMap.put(HOME_FRAGMENT_TAG, it)
+            }
+            knowledgeFragment = supportFragmentManager.findFragmentByTag(KNOWLEDGE_FRAGMENT_TAG)
+            knowledgeFragment?.let {
+                fragmentMap.put(KNOWLEDGE_FRAGMENT_TAG, it)
+            }
+            wechatFragment = supportFragmentManager.findFragmentByTag(WECHAT_FRAGMENT_TAG)
+            wechatFragment?.let {
+                fragmentMap.put(WECHAT_FRAGMENT_TAG, it)
+            }
+            navFragment = supportFragmentManager.findFragmentByTag(NAV_FRAGMENT_TAG)
+            navFragment?.let {
+                fragmentMap.put(NAV_FRAGMENT_TAG, it)
+            }
+            projectFragment = supportFragmentManager.findFragmentByTag(PROJECT_FRAGMENT_TAG)
+            projectFragment?.let {
+                fragmentMap.put(PROJECT_FRAGMENT_TAG, it)
+            }
+            drawerFragment = supportFragmentManager.findFragmentByTag(DRAWER_FRAGMENT_TAG)
+        }
         mainVM = ViewModelProvider(this)[MainViewModel::class.java]
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -75,10 +99,10 @@ class MainActivity : AppCompatActivity() {
         //处理向上置顶按钮的事件
         binding.mainPage.mainBtnUp.setOnClickListener {
             when (val index = mainVM.currentTabIndex.value ?: 0) {
-                0 -> (mFragmentList[index] as HomeFragment).jumpToListTop()
-                1 -> (mFragmentList[index] as KnowledgeSystemFragment).jumpToListTop()
-                2 -> (mFragmentList[index] as WechatFragment).jumpToListTop()
-                4 -> (mFragmentList[index] as ProjectFragment).jumpToListTop()
+                0 -> (fragmentMap[HOME_FRAGMENT_TAG] as HomeFragment).jumpToListTop()
+                1 -> (fragmentMap[KNOWLEDGE_FRAGMENT_TAG] as KnowledgeSystemFragment).jumpToListTop()
+                2 -> (fragmentMap[WECHAT_FRAGMENT_TAG] as WechatFragment).jumpToListTop()
+                4 -> (fragmentMap[PROJECT_FRAGMENT_TAG] as ProjectFragment).jumpToListTop()
             }
         }
     }
@@ -130,46 +154,45 @@ class MainActivity : AppCompatActivity() {
     private fun loadFragment(index: Int) {
         when (index) {
             0 -> {
-                if (mHomeFragment == null) {
-                    mHomeFragment = HomeFragment.newInstance()
+                if (homeFragment == null) {
+                    homeFragment = HomeFragment.newInstance()
                 }
-                addAndShowFragment(mHomeFragment)
+                addAndShowFragment(requireNotNull(homeFragment), HOME_FRAGMENT_TAG)
             }
             1 -> {
-                if (mKnowledgeFragment == null) {
-                    mKnowledgeFragment = KnowledgeSystemFragment.newInstance()
+                if (knowledgeFragment == null) {
+                    knowledgeFragment = KnowledgeSystemFragment.newInstance()
                 }
-                addAndShowFragment(mKnowledgeFragment)
+                addAndShowFragment(requireNotNull(knowledgeFragment), KNOWLEDGE_FRAGMENT_TAG)
             }
             2 -> {
-                if (mWechatFragment == null) {
-                    mWechatFragment = WechatFragment.newInstance()
+                if (wechatFragment == null) {
+                    wechatFragment = WechatFragment.newInstance()
                 }
-                addAndShowFragment(mWechatFragment)
+                addAndShowFragment(requireNotNull(wechatFragment), WECHAT_FRAGMENT_TAG)
             }
             3 -> {
-                if (mNavFragment == null) {
-                    mNavFragment = NavFragment.newInstance()
+                if (navFragment == null) {
+                    navFragment = NavFragment.newInstance()
                 }
-                addAndShowFragment(mNavFragment)
+                addAndShowFragment(requireNotNull(navFragment), NAV_FRAGMENT_TAG)
             }
             4 -> {
-                if (mProjectFragment == null) {
-                    mProjectFragment = ProjectFragment.newInstance()
+                if (projectFragment == null) {
+                    projectFragment = ProjectFragment.newInstance()
                 }
-                addAndShowFragment(mProjectFragment)
+                addAndShowFragment(requireNotNull(projectFragment), PROJECT_FRAGMENT_TAG)
             }
             else -> throw IllegalArgumentException("Index [$index] is not support")
         }
     }
 
-    private fun addAndShowFragment(fragment: Fragment?) {
-        if (fragment == null) return
+    private fun addAndShowFragment(fragment: Fragment, tag: String) {
         if (!fragment.isAdded) {
-            supportFragmentManager.beginTransaction().add(R.id.main_container, fragment).commit()
-            mFragmentList.add(fragment)
+            supportFragmentManager.beginTransaction().add(R.id.main_container, fragment, tag).commit()
+            fragmentMap[tag] = fragment
         }
-        for (frag in mFragmentList) {
+        for (frag in fragmentMap.values) {
             if (frag !== fragment) {
                 // 先隐藏其他 Fragment
                 supportFragmentManager.beginTransaction().hide(frag).commit()
@@ -216,5 +239,10 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         private const val DRAWER_FRAGMENT_TAG = "main_drawer_fragment_tag"
+        private const val HOME_FRAGMENT_TAG = "main_home_fragment_tag"
+        private const val KNOWLEDGE_FRAGMENT_TAG = "main_knowledge_fragment_tag"
+        private const val WECHAT_FRAGMENT_TAG = "main_wechat_fragment_tag"
+        private const val NAV_FRAGMENT_TAG = "main_nav_fragment_tag"
+        private const val PROJECT_FRAGMENT_TAG = "main_project_fragment_tag"
     }
 }
