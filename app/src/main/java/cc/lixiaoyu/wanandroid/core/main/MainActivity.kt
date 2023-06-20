@@ -47,29 +47,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        savedInstanceState?.let {
-            homeFragment = supportFragmentManager.findFragmentByTag(HOME_FRAGMENT_TAG)
-            homeFragment?.let {
-                fragmentMap.put(HOME_FRAGMENT_TAG, it)
-            }
-            knowledgeFragment = supportFragmentManager.findFragmentByTag(KNOWLEDGE_FRAGMENT_TAG)
-            knowledgeFragment?.let {
-                fragmentMap.put(KNOWLEDGE_FRAGMENT_TAG, it)
-            }
-            wechatFragment = supportFragmentManager.findFragmentByTag(WECHAT_FRAGMENT_TAG)
-            wechatFragment?.let {
-                fragmentMap.put(WECHAT_FRAGMENT_TAG, it)
-            }
-            navFragment = supportFragmentManager.findFragmentByTag(NAV_FRAGMENT_TAG)
-            navFragment?.let {
-                fragmentMap.put(NAV_FRAGMENT_TAG, it)
-            }
-            projectFragment = supportFragmentManager.findFragmentByTag(PROJECT_FRAGMENT_TAG)
-            projectFragment?.let {
-                fragmentMap.put(PROJECT_FRAGMENT_TAG, it)
-            }
-            drawerFragment = supportFragmentManager.findFragmentByTag(DRAWER_FRAGMENT_TAG)
-        }
         mainVM = ViewModelProvider(this)[MainViewModel::class.java]
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -154,30 +131,35 @@ class MainActivity : AppCompatActivity() {
     private fun loadFragment(index: Int) {
         when (index) {
             0 -> {
+                homeFragment = supportFragmentManager.findFragmentByTag(HOME_FRAGMENT_TAG)
                 if (homeFragment == null) {
                     homeFragment = HomeFragment.newInstance()
                 }
                 addAndShowFragment(requireNotNull(homeFragment), HOME_FRAGMENT_TAG)
             }
             1 -> {
+                knowledgeFragment = supportFragmentManager.findFragmentByTag(KNOWLEDGE_FRAGMENT_TAG)
                 if (knowledgeFragment == null) {
                     knowledgeFragment = KnowledgeSystemFragment.newInstance()
                 }
                 addAndShowFragment(requireNotNull(knowledgeFragment), KNOWLEDGE_FRAGMENT_TAG)
             }
             2 -> {
+                wechatFragment = supportFragmentManager.findFragmentByTag(WECHAT_FRAGMENT_TAG)
                 if (wechatFragment == null) {
                     wechatFragment = WechatFragment.newInstance()
                 }
                 addAndShowFragment(requireNotNull(wechatFragment), WECHAT_FRAGMENT_TAG)
             }
             3 -> {
+                navFragment = supportFragmentManager.findFragmentByTag(NAV_FRAGMENT_TAG)
                 if (navFragment == null) {
                     navFragment = NavFragment.newInstance()
                 }
                 addAndShowFragment(requireNotNull(navFragment), NAV_FRAGMENT_TAG)
             }
             4 -> {
+                projectFragment = supportFragmentManager.findFragmentByTag(PROJECT_FRAGMENT_TAG)
                 if (projectFragment == null) {
                     projectFragment = ProjectFragment.newInstance()
                 }
@@ -188,9 +170,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun addAndShowFragment(fragment: Fragment, tag: String) {
+        fragmentMap[tag] = fragment
         if (!fragment.isAdded) {
             supportFragmentManager.beginTransaction().add(R.id.main_container, fragment, tag).commit()
-            fragmentMap[tag] = fragment
         }
         for (frag in fragmentMap.values) {
             if (frag !== fragment) {
@@ -212,15 +194,21 @@ class MainActivity : AppCompatActivity() {
         binding.mainDrawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
+        // 尝试先从 FragmentManager 中获取 Fragment 对象
+        // 在屏幕旋转等场景下，Activity 销毁重建后，会保留 Fragment 实例
+        drawerFragment = supportFragmentManager.findFragmentByTag(DRAWER_FRAGMENT_TAG)
         if (drawerFragment == null) {
             drawerFragment = DrawerFragment()
         }
-        if (supportFragmentManager.findFragmentByTag(DRAWER_FRAGMENT_TAG) != null) {
-            return
+        drawerFragment?.let {
+            val transition = supportFragmentManager.beginTransaction()
+            if (it.isAdded) {
+                transition.show(it)
+            } else {
+                transition.add(R.id.drawer_container, it, DRAWER_FRAGMENT_TAG)
+            }
+            transition.commitAllowingStateLoss()
         }
-        supportFragmentManager.beginTransaction()
-            .add(R.id.drawer_container, requireNotNull(drawerFragment), DRAWER_FRAGMENT_TAG)
-            .commitAllowingStateLoss()
     }
 
 
