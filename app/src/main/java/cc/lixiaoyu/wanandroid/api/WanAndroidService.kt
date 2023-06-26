@@ -75,7 +75,7 @@ interface WanAndroidService {
      * @return
      */
     @GET("navi/json")
-    fun getNavData(): Observable<WanAndroidResponse<List<Nav?>?>?>?
+    fun getNavData(): Observable<WanAndroidResponse<List<Nav>>>
 
     /**
      * 获取搜索热词
