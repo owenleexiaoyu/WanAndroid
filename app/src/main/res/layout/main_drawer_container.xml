@@ -31,124 +31,46 @@
                 android:textSize="18sp"
                 android:layout_marginBottom="20dp"
                 android:layout_marginTop="20dp"/>
-
         </LinearLayout>
-        <LinearLayout
-            android:id="@+id/ll_collections"
+        <life.lixiaoyu.flipped.uikit.cell.FlippedCellItemView
+            android:id="@+id/item_collection"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:paddingTop="8dp"
-            android:padding="8dp"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
-            android:gravity="center_vertical"
+            android:layout_height="wrap_content"
+            app:start_text="@string/my_collections"
+            app:flipped_start_icon="@drawable/ic_favorite_full"
             android:background="@drawable/ripple_item_select"
-            >
-            <ImageView
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:layout_marginEnd="12dp"
-                android:src="@drawable/ic_favorite_full" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/my_collections"
-                android:textSize="16sp"
-                />
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/ll_todos"
+            />
+        <life.lixiaoyu.flipped.uikit.cell.FlippedCellItemView
+            android:id="@+id/item_todos"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:paddingTop="8dp"
-            android:padding="8dp"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
-            android:gravity="center_vertical"
+            android:layout_height="wrap_content"
+            app:start_text="@string/todo_list"
+            app:flipped_start_icon="@drawable/ic_todo_checklist"
             android:background="@drawable/ripple_item_select"
-            >
-            <ImageView
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:layout_marginEnd="12dp"
-                android:src="@drawable/ic_todo_checklist" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/todo_list"
-                android:textSize="16sp"
-                />
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/ll_theme"
+            />
+        <life.lixiaoyu.flipped.uikit.cell.FlippedCellItemView
+            android:id="@+id/item_theme"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:paddingTop="8dp"
-            android:padding="8dp"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
-            android:gravity="center_vertical"
+            android:layout_height="wrap_content"
+            app:start_text="@string/dark_mode"
+            app:flipped_start_icon="@drawable/ic_dark_mode"
             android:background="@drawable/ripple_item_select"
-            >
-            <ImageView
-                android:id="@+id/img_theme_icon"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:layout_marginEnd="12dp"
-                android:src="@drawable/ic_dark_mode" />
-            <TextView
-                android:id="@+id/img_theme_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/dark_mode"
-                android:textSize="16sp"
-                />
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/ll_about_us"
+            />
+        <life.lixiaoyu.flipped.uikit.cell.FlippedCellItemView
+            android:id="@+id/item_about_us"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:paddingTop="8dp"
-            android:padding="8dp"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
-            android:gravity="center_vertical"
+            android:layout_height="wrap_content"
+            app:start_text="@string/about_us"
+            app:flipped_start_icon="@drawable/ic_info"
             android:background="@drawable/ripple_item_select"
-            >
-            <ImageView
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:layout_marginEnd="12dp"
-                android:src="@drawable/ic_info" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/about_us"
-                android:textSize="16sp"
-                />
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/ll_logout"
+            />
+        <life.lixiaoyu.flipped.uikit.cell.FlippedCellItemView
+            android:id="@+id/item_logout"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:paddingTop="8dp"
-            android:padding="8dp"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
-            android:gravity="center_vertical"
+            android:layout_height="wrap_content"
+            app:start_text="@string/logout"
+            app:flipped_start_icon="@drawable/ic_logout"
             android:background="@drawable/ripple_item_select"
-            >
-            <ImageView
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:layout_marginEnd="12dp"
-                android:src="@drawable/ic_logout" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/logout"
-                android:textSize="16sp"
-                />
-        </LinearLayout>
+            />
     </LinearLayout>
 </ScrollView>

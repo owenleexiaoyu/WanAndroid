@@ -39,7 +39,7 @@ class DrawerFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.llCollections.setOnClickListener {
+        binding.itemCollection.setOnClickListener {
             if (isLogin) {
                 //登录后进入收藏界面
                 startActivity(Intent(activity, CollectionActivity::class.java))
@@ -48,7 +48,7 @@ class DrawerFragment: Fragment() {
                 startActivity(Intent(activity, LoginActivity::class.java))
             }
         }
-        binding.llTodos.setOnClickListener {
+        binding.itemTodos.setOnClickListener {
             if (isLogin) {
                 //登录后进入TODO界面
                 startActivity(Intent(activity, TodoActivity::class.java))
@@ -57,23 +57,23 @@ class DrawerFragment: Fragment() {
                 startActivity(Intent(activity, LoginActivity::class.java))
             }
         }
-        binding.llTheme.setOnClickListener {
+        binding.itemTheme.setOnClickListener {
             if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             } else {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
             }
         }
-        binding.llAboutUs.setOnClickListener {
+        binding.itemAboutUs.setOnClickListener {
             startActivity(Intent(activity, AboutActivity::class.java))
         }
         if (isLogin) {
-            binding.llLogout.visibility = View.VISIBLE
-            binding.llLogout.setOnClickListener {
+            binding.itemLogout.visibility = View.VISIBLE
+            binding.itemLogout.setOnClickListener {
                 logout()
             }
         } else {
-            binding.llLogout.visibility = View.GONE
+            binding.itemLogout.visibility = View.GONE
         }
 
     }
