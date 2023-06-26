@@ -54,6 +54,7 @@ public class WechatDataFragment extends MVPBasePageFragment<WechatDataContract.P
         if (bundle != null) {
             mTitle = (WechatTitle) bundle.getSerializable(ARGUMENTS_KEY);
         }
+        mPresenter.getWechatArticlesById(mTitle.getId());
     }
 
     @Override
@@ -114,12 +115,6 @@ public class WechatDataFragment extends MVPBasePageFragment<WechatDataContract.P
     @Override
     protected int attachLayout() {
         return R.layout.fragment_wechat_data;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mPresenter.getWechatArticlesById(mTitle.getId());
     }
 
     @Override

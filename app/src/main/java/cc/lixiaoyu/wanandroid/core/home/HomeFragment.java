@@ -2,9 +2,11 @@ package cc.lixiaoyu.wanandroid.core.home;
 
 import android.content.Intent;
 
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -50,15 +52,8 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.Presenter> implem
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        mPresenter.start();
-    }
-
-
-    @Override
     protected void initData() {
-
+        mPresenter.start();
     }
 
     @Override

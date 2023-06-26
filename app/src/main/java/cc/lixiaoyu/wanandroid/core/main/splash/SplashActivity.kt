@@ -1,10 +1,11 @@
-package cc.lixiaoyu.wanandroid.core.main
+package cc.lixiaoyu.wanandroid.core.main.splash
 
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import cc.lixiaoyu.wanandroid.R
+import cc.lixiaoyu.wanandroid.core.main.MainActivity
 import kotlinx.coroutines.*
 
 @SuppressLint("CustomSplashScreen")
