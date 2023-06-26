@@ -1,8 +1,5 @@
 package cc.lixiaoyu.wanandroid.api
 
-import cc.lixiaoyu.wanandroid.entity.Integral
-import cc.lixiaoyu.wanandroid.entity.IntegralRecord
-import cc.lixiaoyu.wanandroid.entity.PageData
 import cc.lixiaoyu.wanandroid.core.search.WebSite
 import cc.lixiaoyu.wanandroid.core.todo.TodoEntity
 import cc.lixiaoyu.wanandroid.core.todo.TodoEntity.TodoItem
@@ -263,22 +260,4 @@ interface WanAndroidService {
      */
     @POST("lg/todo/delete/{id}/json")
     fun deleteTodoItem(@Path("id") id: Int): Observable<WanAndroidResponse<String?>?>?
-
-    /**
-     * 获取个人积分，需要登录后访问
-     * https://www.wanandroid.com/lg/coin/userinfo/json
-     *
-     */
-    @GET("lg/coin/userinfo/json")
-    suspend fun getMyIntegralInfo():WanAndroidResponse<Integral>
-
-    /**
-     * 获取个人积分获取列表，需要登录后访问
-     * https://www.wanandroid.com/lg/coin/list/1/json
-     *
-     */
-    @GET("lg/coin/list/{page}/json")
-    suspend fun getMyIntegralRecord(
-            @Path("page") page: Int
-    ): WanAndroidResponse<PageData<IntegralRecord>>
 }

@@ -12,7 +12,7 @@ import cc.lixiaoyu.wanandroid.R
 import cc.lixiaoyu.wanandroid.core.detail.ArticleDetailActivity
 import cc.lixiaoyu.wanandroid.databinding.FragmentNavBinding
 import cc.lixiaoyu.wanandroid.entity.Nav
-import cc.lixiaoyu.wanandroid.entity.Nav.NavItem
+import cc.lixiaoyu.wanandroid.entity.NavItem
 import com.zhy.view.flowlayout.FlowLayout
 import com.zhy.view.flowlayout.TagAdapter
 
@@ -44,7 +44,7 @@ class NavFragment : Fragment() {
             layoutManager = LinearLayoutManager(activity)
         }
         binding.fnavFlowlayout.apply {
-            adapter = object : TagAdapter<Nav.NavItem>(navItemList) {
+            adapter = object : TagAdapter<NavItem>(navItemList) {
                 override fun getView(parent: FlowLayout?, position: Int, t: NavItem?): View? {
                     val navItemTitle: TextView? = LayoutInflater.from(activity)
                         .inflate(R.layout.layout_nav_item, parent, false) as? TextView
