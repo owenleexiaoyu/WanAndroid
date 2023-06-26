@@ -54,12 +54,11 @@ public class ProjectDataFragment extends MVPBasePageFragment<ProjectDataContract
         if (bundle != null) {
             mTitle = (ProjectTitle) bundle.getSerializable(ARGUMENTS_KEY);
         }
+        mPresenter.getProjectArticlesByCid(mTitle.getId()+"");
     }
 
     @Override
-    protected void initData() {
-
-    }
+    protected void initData() {}
 
     @Override
     protected void initView(View view) {
@@ -114,12 +113,6 @@ public class ProjectDataFragment extends MVPBasePageFragment<ProjectDataContract
     @Override
     protected int attachLayout() {
         return R.layout.fragment_project_data;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mPresenter.getProjectArticlesByCid(mTitle.getId()+"");
     }
 
     @Override
