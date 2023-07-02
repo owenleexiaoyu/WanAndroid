@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import cc.lixiaoyu.wanandroid.R
 import cc.lixiaoyu.wanandroid.core.detail.ArticleDetailActivity
 import cc.lixiaoyu.wanandroid.databinding.FragmentNavBinding
-import cc.lixiaoyu.wanandroid.entity.Nav
 import cc.lixiaoyu.wanandroid.entity.NavItem
 import com.zhy.view.flowlayout.FlowLayout
 import com.zhy.view.flowlayout.TagAdapter
@@ -61,13 +60,15 @@ class NavFragment : Fragment() {
     }
 
     private fun subscribeData() {
-        navVM.navList.observe(viewLifecycleOwner) {
+        navVM.navTitleList.observe(viewLifecycleOwner) {
             mAdapter.setNewData(it)
-            refreshFlowLayout(it[navVM.currentPosition.value ?: 0].items)
         }
-        navVM.currentPosition.observe(viewLifecycleOwner) {
+        navVM.getCurrentPosition().observe(viewLifecycleOwner) {
             mAdapter.currentItem = it
-            refreshFlowLayout(navVM.navList.value?.get(it)?.items ?: emptyList())
+        }
+        navVM.currentNavItemList.observe(viewLifecycleOwner) {
+
+            refreshFlowLayout(it)
         }
     }
 
