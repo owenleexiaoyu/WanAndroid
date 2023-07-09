@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <network-security-config>
+    <!-- 配置可以明文传输，支持 http-->
+    <base-config
+        cleartextTrafficPermitted="true">
+    </base-config>
     <!-- 配置 debug 模式下，信任用户证书   -->
     <debug-overrides>
         <trust-anchors>

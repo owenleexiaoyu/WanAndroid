@@ -9,10 +9,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 
+import android.net.Uri;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
@@ -119,6 +121,16 @@ public class ArticleDetailActivity extends MVPBaseSwipeBackActivity<ArticleDetai
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
             hideLoading();
+        }
+
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+            Uri uri = request.getUrl();
+            if ("http".equals(uri.getScheme()) || "https".equals(uri.getScheme())) {
+                return false;
+            } else {
+                return true;
+            }
         }
     }
 
