@@ -24,6 +24,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import cc.lixiaoyu.wanandroid.R;
 import cc.lixiaoyu.wanandroid.base.mvp.MVPBaseSwipeBackActivity;
+import cc.lixiaoyu.wanandroid.core.detail.more.DetailMoreSheet;
 import cc.lixiaoyu.wanandroid.core.login.LoginActivity;
 import cc.lixiaoyu.wanandroid.util.ToastUtil;
 
@@ -143,12 +144,11 @@ public class ArticleDetailActivity extends MVPBaseSwipeBackActivity<ArticleDetai
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_detail_collect:
-                tryCollectOrUnCollectArticle();
+            case R.id.menu_detail_more: {
+                DetailMoreSheet sheet = DetailMoreSheet.Companion.newInstance(mDetailParam);
+                sheet.show(getSupportFragmentManager(), "detail_more_sheet");
                 break;
-            case R.id.menu_detail_share:
-                shareArticle(mDetailParam);
-                break;
+            }
             case android.R.id.home:
                 finish();
                 break;
@@ -173,15 +173,7 @@ public class ArticleDetailActivity extends MVPBaseSwipeBackActivity<ArticleDetai
         }
     }
 
-    private void shareArticle(DetailParam mDetailParam) {
-        String shareMsg = getString(R.string.share_hint) + mDetailParam.getTitle() +
-                "（" + mDetailParam.getLink() + "）";
-        Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_SEND);
-        intent.putExtra(Intent.EXTRA_TEXT, shareMsg);
-        intent.setType("text/plain");
-        startActivity(intent);
-    }
+
 
     /**
      * 从其他Activity跳转到本Activity，代替startActivity

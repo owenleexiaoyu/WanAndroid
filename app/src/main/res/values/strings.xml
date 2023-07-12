@@ -3,6 +3,7 @@
     <string name="search">搜索</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="share">分享</string>
     <string name="share_hint">这篇文章很不错，快打开看看吧：</string>
     <string name="collect_success">收藏成功</string>
     <string name="collect_fail">收藏失败</string>
@@ -53,5 +54,9 @@
     <string name="logout_confirm_confirm">确定</string>
     <string name="logout_confirm_cancel">取消</string>
     <string name="toast_logout_success">退出登录成功</string>
+    <string name="collect">收藏</string>
+    <string name="open_in_browser">浏览器打开</string>
+    <string name="refresh">刷新</string>
+    <string name="more">更多</string>
 
 </resources>
