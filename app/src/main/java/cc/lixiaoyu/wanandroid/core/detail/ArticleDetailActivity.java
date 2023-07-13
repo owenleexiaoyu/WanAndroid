@@ -8,8 +8,10 @@ import android.graphics.Bitmap;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 
 import android.net.Uri;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +22,8 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+
+import com.google.android.material.progressindicator.LinearProgressIndicator;
 
 import butterknife.BindView;
 import cc.lixiaoyu.wanandroid.R;
@@ -43,7 +47,7 @@ public class ArticleDetailActivity extends MVPBaseSwipeBackActivity<ArticleDetai
     @BindView(R.id.detail_toolbar_title)
     TextView mTvTitle;
     @BindView(R.id.detail_progressbar)
-    ProgressBar mProgressBar;
+    LinearProgressIndicator mProgressBar;
 
     private DetailParam mDetailParam;
 
@@ -62,12 +66,14 @@ public class ArticleDetailActivity extends MVPBaseSwipeBackActivity<ArticleDetai
     protected void initView() {
         mTvTitle.setText(mDetailParam.getTitle());
         mTvTitle.setSelected(true);
+        mProgressBar.setMax(100);
+        mProgressBar.setIndicatorColor(ContextCompat.getColor(this, R.color.Accent));
         setSupportActionBar(mToolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
         mWebView.getSettings().setJavaScriptEnabled(true);
-        mWebView.setWebChromeClient(new WebChromeClient());
+        mWebView.setWebChromeClient(new MyWebChromeClient());
         mWebView.setWebViewClient(new MyWebViewClient());
         mWebView.loadUrl(mDetailParam.getLink());
     }
@@ -106,6 +112,17 @@ public class ArticleDetailActivity extends MVPBaseSwipeBackActivity<ArticleDetai
     @Override
     protected ArticleDetailContract.Presenter createPresenter() {
         return new ArticleDetailPresenter();
+    }
+
+    class MyWebChromeClient extends WebChromeClient {
+        @Override
+        public void onProgressChanged(WebView view, int newProgress) {
+            super.onProgressChanged(view, newProgress);
+            Log.d("WANANDROID", "newProgress = " + newProgress);
+            if (mProgressBar != null) {
+                mProgressBar.setProgressCompat(newProgress, true);
+            }
+        }
     }
 
     /**
