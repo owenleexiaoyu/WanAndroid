@@ -58,5 +58,10 @@
     <string name="open_in_browser">浏览器打开</string>
     <string name="refresh">刷新</string>
     <string name="more">更多</string>
+    <string name="login_failed">登录失败</string>
+    <string name="login_success">登录成功！</string>
+    <string name="signup_success">注册成功！</string>
+    <string name="signup_failed">注册失败</string>
+    <string name="logout_failed">退出登录失败</string>
 
 </resources>

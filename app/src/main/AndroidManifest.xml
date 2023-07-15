@@ -32,7 +32,7 @@
         <activity android:name=".core.detail.ArticleDetailActivity"/>
         <activity android:name=".core.subclass.SubClassActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".core.login.LoginActivity"/>
+        <activity android:name=".core.account.ui.LoginActivity"/>
         <activity android:name=".core.search.SearchActivity"/>
         <activity android:name=".core.search.result.SearchResultActivity"/>
         <activity android:name=".core.about.AboutActivity" />

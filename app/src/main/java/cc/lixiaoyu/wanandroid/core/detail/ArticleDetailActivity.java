@@ -19,7 +19,6 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 
@@ -29,7 +28,7 @@ import butterknife.BindView;
 import cc.lixiaoyu.wanandroid.R;
 import cc.lixiaoyu.wanandroid.base.mvp.MVPBaseSwipeBackActivity;
 import cc.lixiaoyu.wanandroid.core.detail.more.DetailMoreSheet;
-import cc.lixiaoyu.wanandroid.core.login.LoginActivity;
+import cc.lixiaoyu.wanandroid.core.account.ui.LoginActivity;
 import cc.lixiaoyu.wanandroid.util.ToastUtil;
 
 /**

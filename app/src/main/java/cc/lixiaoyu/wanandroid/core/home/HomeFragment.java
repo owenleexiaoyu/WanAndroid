@@ -2,11 +2,9 @@ package cc.lixiaoyu.wanandroid.core.home;
 
 import android.content.Intent;
 
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -27,7 +25,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import cc.lixiaoyu.wanandroid.base.mvp.MVPBaseFragment;
-import cc.lixiaoyu.wanandroid.core.login.LoginActivity;
+import cc.lixiaoyu.wanandroid.core.account.ui.LoginActivity;
 import cc.lixiaoyu.wanandroid.entity.Article;
 import cc.lixiaoyu.wanandroid.util.GlideImageLoader;
 import cc.lixiaoyu.wanandroid.R;

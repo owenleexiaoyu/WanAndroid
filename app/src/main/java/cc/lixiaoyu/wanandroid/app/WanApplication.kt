@@ -1,10 +1,15 @@
 package cc.lixiaoyu.wanandroid.app
 
+import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
+import android.util.Log
 import androidx.multidex.MultiDex
 import cc.lixiaoyu.wanandroid.BuildConfig
+import cc.lixiaoyu.wanandroid.core.account.AccountManager
 import com.tencent.bugly.crashreport.CrashReport
+import io.reactivex.Observable
+import io.reactivex.schedulers.Schedulers
 import org.litepal.LitePal
 
 class WanApplication : Application() {
@@ -18,6 +23,13 @@ class WanApplication : Application() {
         globalContext = applicationContext
         initLitepal()
         initBugly()
+        initAccount()
+    }
+
+    @SuppressLint("CheckResult")
+    private fun initAccount() {
+        val isLogin = AccountManager.isLogin()
+        Log.d("OWEN", "initAccount, isLogin = $isLogin")
     }
 
     /**

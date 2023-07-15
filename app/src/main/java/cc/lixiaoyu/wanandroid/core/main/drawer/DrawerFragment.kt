@@ -10,23 +10,18 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import cc.lixiaoyu.wanandroid.R
 import cc.lixiaoyu.wanandroid.core.about.AboutActivity
+import cc.lixiaoyu.wanandroid.core.account.AccountManager
+import cc.lixiaoyu.wanandroid.core.account.LogoutCallback
 import cc.lixiaoyu.wanandroid.core.collection.CollectionActivity
-import cc.lixiaoyu.wanandroid.core.login.LoginActivity
-import cc.lixiaoyu.wanandroid.core.login.event.LoginEvent
+import cc.lixiaoyu.wanandroid.core.account.ui.LoginActivity
 import cc.lixiaoyu.wanandroid.core.todo.TodoActivity
 import cc.lixiaoyu.wanandroid.databinding.MainDrawerContainerBinding
-import cc.lixiaoyu.wanandroid.util.RxBus
+import cc.lixiaoyu.wanandroid.entity.User
 import cc.lixiaoyu.wanandroid.util.ToastUtil
-import cc.lixiaoyu.wanandroid.util.network.RetrofitManager
-import cc.lixiaoyu.wanandroid.util.storage.DataManager
 
 class DrawerFragment: Fragment() {
 
     private lateinit var binding: MainDrawerContainerBinding
-
-    private var isLogin = true
-
-    private val dataManager by lazy { DataManager() }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,8 +34,14 @@ class DrawerFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        if (!AccountManager.isLogin()) {
+            binding.tvUsername.setOnClickListener {
+                //未登录则进入登录界面
+                startActivity(Intent(activity, LoginActivity::class.java))
+            }
+        }
         binding.itemCollection.setOnClickListener {
-            if (isLogin) {
+            if (AccountManager.isLogin()) {
                 //登录后进入收藏界面
                 startActivity(Intent(activity, CollectionActivity::class.java))
             } else {
@@ -49,7 +50,7 @@ class DrawerFragment: Fragment() {
             }
         }
         binding.itemTodos.setOnClickListener {
-            if (isLogin) {
+            if (AccountManager.isLogin()) {
                 //登录后进入TODO界面
                 startActivity(Intent(activity, TodoActivity::class.java))
             } else {
@@ -67,15 +68,21 @@ class DrawerFragment: Fragment() {
         binding.itemAboutUs.setOnClickListener {
             startActivity(Intent(activity, AboutActivity::class.java))
         }
-        if (isLogin) {
-            binding.itemLogout.visibility = View.VISIBLE
+        if (AccountManager.isLogin()) {
             binding.itemLogout.setOnClickListener {
                 logout()
             }
-        } else {
-            binding.itemLogout.visibility = View.GONE
         }
-
+        // 监听 user 信息的变化
+        AccountManager.userLiveData.observe(viewLifecycleOwner) { user: User? ->
+            if (user == null) {
+                binding.tvUsername.text = getString(R.string.login)
+                binding.itemLogout.visibility = View.GONE
+            } else {
+                binding.tvUsername.text = user.username ?: ""
+                binding.itemLogout.visibility = View.VISIBLE
+            }
+        }
     }
 
     private fun logout() {
@@ -90,12 +97,14 @@ class DrawerFragment: Fragment() {
     }
 
     private fun realLogout() {
-        val service = RetrofitManager.getInstance().wanAndroidService
-        service.logout()
-        dataManager.loginAccount = ""
-        dataManager.loginPassword = ""
-        dataManager.loginState = false
-        RxBus.getInstance().post(LoginEvent(false))
-        ToastUtil.showToast(getString(R.string.toast_logout_success))
+        AccountManager.logout(object: LogoutCallback {
+            override fun onSuccess() {
+                ToastUtil.showToast(getString(R.string.toast_logout_success))
+            }
+
+            override fun onFail(t: Throwable) {
+                ToastUtil.showToast(getString(R.string.logout_failed))
+            }
+        })
     }
 }

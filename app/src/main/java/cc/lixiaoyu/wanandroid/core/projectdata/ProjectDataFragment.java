@@ -24,7 +24,7 @@ import cc.lixiaoyu.wanandroid.base.mvp.MVPBasePageFragment;
 import cc.lixiaoyu.wanandroid.entity.Article;
 import cc.lixiaoyu.wanandroid.entity.ProjectTitle;
 import cc.lixiaoyu.wanandroid.core.detail.ArticleDetailActivity;
-import cc.lixiaoyu.wanandroid.core.login.LoginActivity;
+import cc.lixiaoyu.wanandroid.core.account.ui.LoginActivity;
 import cc.lixiaoyu.wanandroid.util.ToastUtil;
 
 public class ProjectDataFragment extends MVPBasePageFragment<ProjectDataContract.Presenter>
