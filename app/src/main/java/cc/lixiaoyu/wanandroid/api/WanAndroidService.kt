@@ -106,7 +106,7 @@ interface WanAndroidService {
                       @Field("k") k: String?): Observable<WanAndroidResponse<ArticlePage?>?>?
 
     /**
-     * 登录
+     * 用户登录
      * @param username  用户名
      * @param password  密码
      * http://www.wanandroid.com/user/login
@@ -115,11 +115,13 @@ interface WanAndroidService {
      */
     @POST("user/login")
     @FormUrlEncoded
-    fun login(@Field("username") username: String?,
-              @Field("password") password: String?): Observable<WanAndroidResponse<User?>?>?
+    fun login(
+        @Field("username") username: String,
+        @Field("password") password: String
+    ): Observable<WanAndroidResponse<User>>
 
     /**
-     * 注册
+     * 用户注册
      * @param username      用户名
      * @param password      密码
      * @param rePassword    再次输入密码
@@ -129,19 +131,21 @@ interface WanAndroidService {
      */
     @POST("user/register")
     @FormUrlEncoded
-    fun register(@Field("username") username: String?,
-                 @Field("password") password: String?,
-                 @Field("repassword") rePassword: String?): Observable<WanAndroidResponse<User?>?>?
+    fun register(
+        @Field("username") username: String,
+        @Field("password") password: String,
+        @Field("repassword") rePassword: String
+    ): Observable<WanAndroidResponse<User>>
 
     /**
-     * 退出登录
+     * 用户退出登录
      *
      * http://www.wanandroid.com/user/logout/json
      *
      * @return
      */
     @GET("user/logout/json")
-    fun logout(): Observable<WanAndroidResponse<String?>?>?
+    fun logout(): Observable<WanAndroidResponse<String>>
 
     /**
      * 获取收藏的文章列表

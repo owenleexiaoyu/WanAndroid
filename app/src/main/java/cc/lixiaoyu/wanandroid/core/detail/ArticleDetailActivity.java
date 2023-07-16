@@ -8,21 +8,27 @@ import android.graphics.Bitmap;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 
+import android.net.Uri;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
+
+import com.google.android.material.progressindicator.LinearProgressIndicator;
 
 import butterknife.BindView;
 import cc.lixiaoyu.wanandroid.R;
 import cc.lixiaoyu.wanandroid.base.mvp.MVPBaseSwipeBackActivity;
-import cc.lixiaoyu.wanandroid.core.login.LoginActivity;
+import cc.lixiaoyu.wanandroid.core.detail.more.DetailMoreSheet;
+import cc.lixiaoyu.wanandroid.core.account.ui.LoginActivity;
 import cc.lixiaoyu.wanandroid.util.ToastUtil;
 
 /**
@@ -40,7 +46,7 @@ public class ArticleDetailActivity extends MVPBaseSwipeBackActivity<ArticleDetai
     @BindView(R.id.detail_toolbar_title)
     TextView mTvTitle;
     @BindView(R.id.detail_progressbar)
-    ProgressBar mProgressBar;
+    LinearProgressIndicator mProgressBar;
 
     private DetailParam mDetailParam;
 
@@ -59,12 +65,14 @@ public class ArticleDetailActivity extends MVPBaseSwipeBackActivity<ArticleDetai
     protected void initView() {
         mTvTitle.setText(mDetailParam.getTitle());
         mTvTitle.setSelected(true);
+        mProgressBar.setMax(100);
+        mProgressBar.setIndicatorColor(ContextCompat.getColor(this, R.color.Accent));
         setSupportActionBar(mToolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
         mWebView.getSettings().setJavaScriptEnabled(true);
-        mWebView.setWebChromeClient(new WebChromeClient());
+        mWebView.setWebChromeClient(new MyWebChromeClient());
         mWebView.setWebViewClient(new MyWebViewClient());
         mWebView.loadUrl(mDetailParam.getLink());
     }
@@ -105,6 +113,17 @@ public class ArticleDetailActivity extends MVPBaseSwipeBackActivity<ArticleDetai
         return new ArticleDetailPresenter();
     }
 
+    class MyWebChromeClient extends WebChromeClient {
+        @Override
+        public void onProgressChanged(WebView view, int newProgress) {
+            super.onProgressChanged(view, newProgress);
+            Log.d("WANANDROID", "newProgress = " + newProgress);
+            if (mProgressBar != null) {
+                mProgressBar.setProgressCompat(newProgress, true);
+            }
+        }
+    }
+
     /**
      * 自定义 WebViewClient，在网页开始加载时显示进度条，加载完成后隐藏进度条
      */
@@ -120,6 +139,16 @@ public class ArticleDetailActivity extends MVPBaseSwipeBackActivity<ArticleDetai
             super.onPageFinished(view, url);
             hideLoading();
         }
+
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+            Uri uri = request.getUrl();
+            if ("http".equals(uri.getScheme()) || "https".equals(uri.getScheme())) {
+                return false;
+            } else {
+                return true;
+            }
+        }
     }
 
     @Override
@@ -131,12 +160,11 @@ public class ArticleDetailActivity extends MVPBaseSwipeBackActivity<ArticleDetai
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_detail_collect:
-                tryCollectOrUnCollectArticle();
+            case R.id.menu_detail_more: {
+                DetailMoreSheet sheet = DetailMoreSheet.Companion.newInstance(mDetailParam);
+                sheet.show(getSupportFragmentManager(), "detail_more_sheet");
                 break;
-            case R.id.menu_detail_share:
-                shareArticle(mDetailParam);
-                break;
+            }
             case android.R.id.home:
                 finish();
                 break;
@@ -161,15 +189,7 @@ public class ArticleDetailActivity extends MVPBaseSwipeBackActivity<ArticleDetai
         }
     }
 
-    private void shareArticle(DetailParam mDetailParam) {
-        String shareMsg = getString(R.string.share_hint) + mDetailParam.getTitle() +
-                "（" + mDetailParam.getLink() + "）";
-        Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_SEND);
-        intent.putExtra(Intent.EXTRA_TEXT, shareMsg);
-        intent.setType("text/plain");
-        startActivity(intent);
-    }
+
 
     /**
      * 从其他Activity跳转到本Activity，代替startActivity

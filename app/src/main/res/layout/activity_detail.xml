@@ -30,18 +30,23 @@
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <WebView
-        android:id="@+id/detail_webview"
+
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <ProgressBar
-        android:id="@+id/detail_progressbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        style="@style/Widget.AppCompat.ProgressBar"
-        android:visibility="gone" />
+        <WebView
+            android:id="@+id/detail_webview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+             />
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/detail_progressbar"
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:visibility="gone" />
+    </FrameLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

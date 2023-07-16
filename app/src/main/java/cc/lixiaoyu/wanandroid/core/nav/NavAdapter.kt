@@ -10,8 +10,8 @@ import cc.lixiaoyu.wanandroid.entity.Nav
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 
-class NavAdapter(layoutResId: Int, data: List<Nav>) :
-    BaseQuickAdapter<Nav, NavAdapter.ViewHolder>(layoutResId, data) {
+class NavAdapter(layoutResId: Int, data: List<String>) :
+    BaseQuickAdapter<String, NavAdapter.ViewHolder>(layoutResId, data) {
 
     var currentItem = 0
         set(value) {
@@ -21,9 +21,9 @@ class NavAdapter(layoutResId: Int, data: List<Nav>) :
             notifyItemChanged(value)
         }
 
-    override fun convert(holder: ViewHolder, item: Nav) {
+    override fun convert(holder: ViewHolder, item: String) {
         val ctx = holder.itemView.context
-        holder.tvTitle.text = item.name
+        holder.tvTitle.text = item
         if (item === data[currentItem]) {
             holder.tvTitle.setTextColor(ContextCompat.getColor(ctx, R.color.Accent))
         } else {
