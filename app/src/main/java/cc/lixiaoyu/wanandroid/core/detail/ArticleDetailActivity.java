@@ -11,6 +11,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
 import android.net.Uri;
+import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -63,7 +64,7 @@ public class ArticleDetailActivity extends MVPBaseSwipeBackActivity<ArticleDetai
     @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void initView() {
-        mTvTitle.setText(mDetailParam.getTitle());
+        mTvTitle.setText(Html.fromHtml(mDetailParam.getTitle()));
         mTvTitle.setSelected(true);
         mProgressBar.setMax(100);
         mProgressBar.setIndicatorColor(ContextCompat.getColor(this, R.color.Accent));

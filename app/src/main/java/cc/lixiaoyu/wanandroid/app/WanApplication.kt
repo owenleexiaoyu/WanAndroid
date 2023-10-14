@@ -4,9 +4,11 @@ import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
 import android.util.Log
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.multidex.MultiDex
 import cc.lixiaoyu.wanandroid.BuildConfig
 import cc.lixiaoyu.wanandroid.core.account.AccountManager
+import cc.lixiaoyu.wanandroid.util.storage.SPUtil
 import com.tencent.bugly.crashreport.CrashReport
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
@@ -24,6 +26,7 @@ class WanApplication : Application() {
         initLitepal()
         initBugly()
         initAccount()
+        initTheme()
     }
 
     @SuppressLint("CheckResult")
@@ -44,6 +47,14 @@ class WanApplication : Application() {
      */
     private fun initLitepal() {
         LitePal.initialize(this)
+    }
+
+    private fun initTheme() {
+        if (SPUtil.getData("dark_mode", 0) == 0) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        }
     }
 
     companion object {

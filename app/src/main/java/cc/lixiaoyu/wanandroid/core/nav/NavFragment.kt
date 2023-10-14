@@ -67,7 +67,6 @@ class NavFragment : Fragment() {
             mAdapter.currentItem = it
         }
         navVM.currentNavItemList.observe(viewLifecycleOwner) {
-
             refreshFlowLayout(it)
         }
     }

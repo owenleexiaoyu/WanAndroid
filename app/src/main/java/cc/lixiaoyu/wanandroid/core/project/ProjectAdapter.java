@@ -1,5 +1,7 @@
 package cc.lixiaoyu.wanandroid.core.project;
 
+import android.text.Html;
+
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -35,7 +37,7 @@ public class ProjectAdapter extends FragmentPagerAdapter {
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        return mDataList.get(position).getName();
+        return Html.fromHtml(mDataList.get(position).getName());
     }
 
     public void jumpToListTop(int index) {

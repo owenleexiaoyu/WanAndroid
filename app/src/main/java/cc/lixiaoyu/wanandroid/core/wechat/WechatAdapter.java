@@ -1,5 +1,7 @@
 package cc.lixiaoyu.wanandroid.core.wechat;
 
+import android.text.Html;
+
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -8,7 +10,6 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-import cc.lixiaoyu.wanandroid.core.wechat.WechatDataFragment;
 import cc.lixiaoyu.wanandroid.entity.WechatTitle;
 
 public class WechatAdapter extends FragmentPagerAdapter {
@@ -35,7 +36,7 @@ public class WechatAdapter extends FragmentPagerAdapter {
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        return mDataList.get(position).getName();
+        return Html.fromHtml(mDataList.get(position).getName());
     }
 
     public void jumpToListTop(int index) {

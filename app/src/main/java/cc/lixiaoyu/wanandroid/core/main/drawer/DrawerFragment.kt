@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import cc.lixiaoyu.wanandroid.R
 import cc.lixiaoyu.wanandroid.core.about.AboutActivity
@@ -18,6 +19,7 @@ import cc.lixiaoyu.wanandroid.core.todo.TodoActivity
 import cc.lixiaoyu.wanandroid.databinding.MainDrawerContainerBinding
 import cc.lixiaoyu.wanandroid.entity.User
 import cc.lixiaoyu.wanandroid.util.ToastUtil
+import cc.lixiaoyu.wanandroid.util.storage.SPUtil
 
 class DrawerFragment: Fragment() {
 
@@ -58,11 +60,22 @@ class DrawerFragment: Fragment() {
                 startActivity(Intent(activity, LoginActivity::class.java))
             }
         }
-        binding.itemTheme.setOnClickListener {
-            if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        binding.itemTheme.apply {
+            if (SPUtil.getData("dark_mode", 0) == 0) {
+                setStartIcon(ContextCompat.getDrawable(context, R.drawable.ic_dark_mode))
+                setTitleText(getString(R.string.dark_mode))
             } else {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                setStartIcon(ContextCompat.getDrawable(context, R.drawable.ic_light_mode))
+                setTitleText(getString(R.string.light_mode))
+            }
+            setOnClickListener {
+                if (SPUtil.getData("dark_mode", 0) == 0) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                    SPUtil.saveData("dark_mode", 1)
+                } else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                    SPUtil.saveData("dark_mode", 0)
+                }
             }
         }
         binding.itemAboutUs.setOnClickListener {

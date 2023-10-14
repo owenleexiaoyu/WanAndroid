@@ -1,10 +1,9 @@
 package cc.lixiaoyu.wanandroid.core.search.result;
 
-import android.graphics.Color;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 
-import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
@@ -39,7 +38,8 @@ public class SearchResultAdapter extends BaseQuickAdapter<Article, SearchResultA
         title = title.replace("</em>","");
         SpannableString ss = new SpannableString(title);
         if(start >=0 && end >start && end <= title.length()){
-            ss.setSpan(new ForegroundColorSpan(Color.RED), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            ss.setSpan(new ForegroundColorSpan(ContextCompat.getColor(holder.itemView.getContext(), R.color.ConstHighlight)),
+                    start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
         holder.tvTitle.setText(ss);
     }
