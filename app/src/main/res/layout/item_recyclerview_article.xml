@@ -92,7 +92,7 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:src="@drawable/ic_favorite_border"
-            android:tint="@color/Primary"
+            app:tint="@color/ConstBrand"
             app:layout_constraintBottom_toBottomOf="@id/item_article_chapter"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="10dp"/>

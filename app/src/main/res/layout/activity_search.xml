@@ -14,6 +14,8 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:layout_scrollFlags="scroll|enterAlways|snap"
+            app:titleTextColor="@color/TextPrimary"
+            app:navigationIcon="@drawable/ic_arrow_back"
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
             <LinearLayout
@@ -27,7 +29,9 @@
                     android:id="@+id/search_et_wordinput"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:hint="@string/search_input_hint"
+                    android:textColorHint="@color/TextSecondary" />
 
                 <Button
                     android:id="@+id/search_btn_search"

@@ -14,6 +14,8 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:layout_scrollFlags="scroll|enterAlways|snap"
+            app:titleTextColor="@color/TextPrimary"
+            app:navigationIcon="@drawable/ic_arrow_back"
             app:popupTheme="@style/AppTheme.PopupOverlay"/>
 
         <com.google.android.material.tabs.TabLayout
@@ -21,11 +23,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:tabGravity="center"
-            app:tabIndicatorColor="@color/TextReversePrimary"
+            app:tabIndicatorColor="@color/TextPrimary"
             app:tabIndicatorHeight="2dp"
             app:tabMode="scrollable"
-            app:tabSelectedTextColor="@color/TextReversePrimary"
-            app:tabTextColor="@color/TextReverseSecondary"/>
+            app:tabSelectedTextColor="@color/TextPrimary"
+            app:tabTextColor="@color/TextSecondary"/>
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.viewpager.widget.ViewPager

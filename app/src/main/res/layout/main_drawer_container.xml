@@ -13,7 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:background="@color/Primary"
+            android:background="@color/BGPrimary"
             android:orientation="vertical">
 
             <ImageView
@@ -40,7 +40,7 @@
             app:flipped_start_icon="@drawable/ic_favorite_full"
             app:flipped_title_color="@color/TextPrimary"
             app:flipped_start_icon_tint_color="@color/TextPrimary"
-            app:flipped_divider_color="@color/TextSecondary"
+            app:flipped_divider_color="@color/LinePrimary"
             android:background="@drawable/ripple_item_select"
             />
         <life.lixiaoyu.flipped.uikit.cell.FlippedCellItemView
@@ -51,7 +51,7 @@
             app:flipped_start_icon="@drawable/ic_todo_checklist"
             app:flipped_title_color="@color/TextPrimary"
             app:flipped_start_icon_tint_color="@color/TextPrimary"
-            app:flipped_divider_color="@color/TextSecondary"
+            app:flipped_divider_color="@color/LinePrimary"
             android:background="@drawable/ripple_item_select"
             />
         <life.lixiaoyu.flipped.uikit.cell.FlippedCellItemView
@@ -62,7 +62,7 @@
             app:flipped_start_icon="@drawable/ic_dark_mode"
             app:flipped_title_color="@color/TextPrimary"
             app:flipped_start_icon_tint_color="@color/TextPrimary"
-            app:flipped_divider_color="@color/TextSecondary"
+            app:flipped_divider_color="@color/LinePrimary"
             android:background="@drawable/ripple_item_select"
             />
         <life.lixiaoyu.flipped.uikit.cell.FlippedCellItemView
@@ -73,7 +73,7 @@
             app:flipped_start_icon="@drawable/ic_info"
             app:flipped_title_color="@color/TextPrimary"
             app:flipped_start_icon_tint_color="@color/TextPrimary"
-            app:flipped_divider_color="@color/TextSecondary"
+            app:flipped_divider_color="@color/LinePrimary"
             android:background="@drawable/ripple_item_select"
             />
         <life.lixiaoyu.flipped.uikit.cell.FlippedCellItemView
@@ -84,7 +84,7 @@
             app:flipped_start_icon="@drawable/ic_logout"
             app:flipped_title_color="@color/TextPrimary"
             app:flipped_start_icon_tint_color="@color/TextPrimary"
-            app:flipped_divider_color="@color/TextSecondary"
+            app:flipped_divider_color="@color/LinePrimary"
             android:background="@drawable/ripple_item_select"
             />
     </LinearLayout>

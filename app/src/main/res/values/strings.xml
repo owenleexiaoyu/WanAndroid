@@ -64,5 +64,6 @@
     <string name="signup_success">注册成功！</string>
     <string name="signup_failed">注册失败</string>
     <string name="logout_failed">退出登录失败</string>
+    <string name="search_input_hint">输入关键字进行搜索</string>
 
 </resources>

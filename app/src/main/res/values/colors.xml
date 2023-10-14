@@ -20,9 +20,7 @@
 <!--    <color name="dark_green">#2AB27F</color>-->
 <!--    <color name="little_green">#F7FFFD</color>-->
 
-    <!--    深绿色的主色  -->
-    <color name="Primary">#009688</color>
-    <color name="Secondary">#F7FFFD</color>
+    <color name="Primary">#FFFFFF</color>
     <color name="Accent">#2C90E5</color>
     <color name="AccentSecondary">#F3F9FF</color>
     <color name="ConstBrand">#009688</color>

@@ -12,11 +12,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:tabGravity="center"
-        app:tabIndicatorColor="@color/TextReversePrimary"
+        app:tabIndicatorColor="@color/TextPrimary"
         app:tabIndicatorHeight="2dp"
         app:tabMode="scrollable"
-        app:tabSelectedTextColor="@color/TextReversePrimary"
-        app:tabTextColor="@color/TextReverseSecondary" />
+        app:tabSelectedTextColor="@color/TextPrimary"
+        app:tabTextColor="@color/TextSecondary" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/fwechat_viewpager"

@@ -192,7 +192,6 @@ class MainActivity : AppCompatActivity() {
             R.string.navigation_drawer_open, R.string.navigation_drawer_close
         )
         binding.mainDrawerLayout.addDrawerListener(toggle)
-        toggle.syncState()
 
         // 尝试先从 FragmentManager 中获取 Fragment 对象
         // 在屏幕旋转等场景下，Activity 销毁重建后，会保留 Fragment 实例
