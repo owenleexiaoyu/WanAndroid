@@ -52,7 +52,7 @@ class NavFragment : Fragment() {
                 }
             }
             setOnTagClickListener { _, position, _ ->
-                ArticleDetailActivity.actionStart(activity, navItemList[position].toDetailParam())
+                ArticleDetailActivity.actionStart(context, navItemList[position].toDetailParam())
                 true
             }
         }

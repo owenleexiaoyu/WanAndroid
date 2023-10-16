@@ -60,7 +60,7 @@ public class WebSite {
     }
 
     public DetailParam toDetailParam() {
-        return new DetailParam(id, name, link, DetailParam.DetailType.WEBPAGE);
+        return new DetailParam(id, name, link, DetailParam.DetailType.WEBPAGE, false);
     }
 }
 

@@ -224,6 +224,6 @@ public class Article implements Serializable {
     }
 
     public DetailParam toDetailParam() {
-        return new DetailParam(id, title, link, DetailParam.DetailType.ARTICLE);
+        return new DetailParam(id, title, link, DetailParam.DetailType.ARTICLE, collect);
     }
 }

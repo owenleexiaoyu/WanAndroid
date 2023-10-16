@@ -9,16 +9,19 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import cc.lixiaoyu.wanandroid.R
+import cc.lixiaoyu.wanandroid.app.WanApplication
+import cc.lixiaoyu.wanandroid.core.collection.CollectAbility
 import cc.lixiaoyu.wanandroid.core.detail.DetailParam
-import cc.lixiaoyu.wanandroid.core.detail.DetailViewModel
+import cc.lixiaoyu.wanandroid.core.detail.ReloadArticleDetailEvent
 import cc.lixiaoyu.wanandroid.core.detail.ShareUtils
+import cc.lixiaoyu.wanandroid.util.AppConst
 import cc.lixiaoyu.wanandroid.util.MarginItemDecoration
+import cc.lixiaoyu.wanandroid.util.RxBus
+import cc.lixiaoyu.wanandroid.util.ToastUtil
 import cc.lixiaoyu.wanandroid.util.px
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class DetailMoreSheet: BottomSheetDialogFragment() {
-
-    private lateinit var detailViewModel: DetailViewModel
 
     private lateinit var horizontalList: RecyclerView
     private lateinit var btnCancel: Button
@@ -40,7 +43,6 @@ class DetailMoreSheet: BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        detailViewModel = ViewModelProvider(requireActivity())[DetailViewModel::class.java]
 
         horizontalList = view.findViewById(R.id.detail_more_horizontal_list)
         val adapter = DetailMoreAdapter(buildDetailMoreItemList())
@@ -56,15 +58,9 @@ class DetailMoreSheet: BottomSheetDialogFragment() {
     }
 
     private fun buildDetailMoreItemList(): List<DetailMoreItem> {
-        return listOf(
-            DetailMoreItem(
-                title = getString(R.string.collect),
-                icon = R.drawable.ic_favorite_full,
-                onClick = {
-                    dismiss()
-                    detailViewModel.collectArticle()
-                }
-            ),
+        val list = mutableListOf<DetailMoreItem>()
+        tryAddCollectItem(list)
+        return list + listOf(
             DetailMoreItem(
                 title = getString(R.string.open_in_browser),
                 icon = R.drawable.ic_browser_24dp,
@@ -94,10 +90,41 @@ class DetailMoreSheet: BottomSheetDialogFragment() {
                 icon = R.drawable.ic_refresh_32dp,
                 onClick = {
                     dismiss()
-                    detailViewModel.refresh()
+                    RxBus.getInstance().post(ReloadArticleDetailEvent())
                 }
             ),
         )
+    }
+
+    private fun tryAddCollectItem(list: MutableList<DetailMoreItem>) {
+        if (detailParam?.articleId != null && detailParam?.isCollectable == true) {
+            val title = if (detailParam?.isCollected == true) getString(R.string.uncollect)
+                else getString(R.string.collect)
+            val icon = if (detailParam?.isCollected == true) R.drawable.ic_favorite_border else
+                R.drawable.ic_favorite_full
+            list.add(
+                DetailMoreItem(
+                    title = title,
+                    icon = icon,
+                    onClick = {
+                        dismiss()
+                        if (detailParam?.isCollected == true) {
+                            CollectAbility.unCollectArticle(requireContext(), detailParam!!.articleId) { success ->
+                                val toastText = if (success) WanApplication.globalContext?.getString(R.string.uncollect_success)
+                                    else WanApplication.globalContext?.getString(R.string.uncollect_fail) ?: return@unCollectArticle
+                                ToastUtil.showToast(toastText)
+                            }
+                        } else {
+                            CollectAbility.collectArticle(requireContext(), detailParam!!.articleId) { success ->
+                                val toastText = if (success) WanApplication.globalContext?.getString(R.string.collect_success)
+                                    else WanApplication.globalContext?.getString(R.string.collect_fail) ?: return@collectArticle
+                                ToastUtil.showToast(toastText)
+                            }
+                        }
+                    }
+                )
+            )
+        }
     }
 
     companion object {

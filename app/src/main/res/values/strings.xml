@@ -56,6 +56,7 @@
     <string name="logout_confirm_cancel">取消</string>
     <string name="toast_logout_success">退出登录成功</string>
     <string name="collect">收藏</string>
+    <string name="uncollect">取消收藏</string>
     <string name="open_in_browser">浏览器打开</string>
     <string name="refresh">刷新</string>
     <string name="more">更多</string>

@@ -75,7 +75,7 @@ dependencies {
     implementation 'com.tencent.bugly:crashreport:latest.release'
 
     // CodeLocator
-    implementation "com.bytedance.tools.codelocator:codelocator-core:2.0.0"
+//    implementation "com.bytedance.tools.codelocator:codelocator-core:2.0.0"
 
     testImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test:runner:1.2.0'

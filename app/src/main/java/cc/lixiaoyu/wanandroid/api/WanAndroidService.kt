@@ -164,7 +164,7 @@ interface WanAndroidService {
      * @return
      */
     @POST("lg/collect/{articleId}/json")
-    fun collectArticle(@Path("articleId") articleId: Int): Observable<WanAndroidResponse<String?>?>?
+    fun collectArticle(@Path("articleId") articleId: Int): Observable<WanAndroidResponse<String>>
 
     /**
      * 从收藏界面中取消收藏文章
@@ -186,7 +186,7 @@ interface WanAndroidService {
      * @return
      */
     @POST("lg/uncollect_originId/{id}/json")
-    fun unCollectArticleFromArticleList(@Path("id") articleId: Int): Observable<WanAndroidResponse<String?>?>?
+    fun unCollectArticleFromArticleList(@Path("id") articleId: Int): Observable<WanAndroidResponse<String>>
 
     /**
      * 获取公众号列表
