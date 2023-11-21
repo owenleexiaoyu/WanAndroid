@@ -1,8 +1,8 @@
 package cc.lixiaoyu.wanandroid.api
 
 import cc.lixiaoyu.wanandroid.core.search.WebSite
-import cc.lixiaoyu.wanandroid.core.todo.TodoEntity
-import cc.lixiaoyu.wanandroid.core.todo.TodoEntity.TodoItem
+import cc.lixiaoyu.wanandroid.core.todo.model.TodoEntity
+import cc.lixiaoyu.wanandroid.core.todo.model.TodoEntity.TodoItem
 import cc.lixiaoyu.wanandroid.entity.*
 import io.reactivex.Observable
 import retrofit2.http.*
@@ -214,7 +214,10 @@ interface WanAndroidService {
      * @return
      */
     @GET("lg/todo/list/{type}/json")
-    fun getTodoListByType(@Path("type") type: Int): Observable<WanAndroidResponse<TodoEntity?>?>?
+    fun getTodoListByTypeOld(@Path("type") type: Int): Observable<WanAndroidResponse<TodoEntity?>?>?
+
+    @GET("lg/todo/list/{type}/json")
+    suspend fun getTodoListByType(@Path("type") type: Int): WanResponse<TodoEntity>
 
     /**
      * 新增一个todo
@@ -229,10 +232,19 @@ interface WanAndroidService {
      */
     @POST("lg/todo/add/json")
     @FormUrlEncoded
-    fun addTodoItem(@Field("title") title: String?,
+    fun addTodoItemOld(@Field("title") title: String?,
                     @Field("content") content: String?,
                     @Field("date") date: String?,
                     @Field("type") type: Int): Observable<WanAndroidResponse<TodoItem?>?>?
+
+    @POST("lg/todo/add/json")
+    @FormUrlEncoded
+    suspend fun addTodoItem(
+        @Field("title") title: String?,
+        @Field("content") content: String?,
+        @Field("date") date: String?,
+        @Field("type") type: Int
+    ): WanResponse<TodoItem>
 
     /**
      * 更新TodoItem的内容
@@ -248,12 +260,35 @@ interface WanAndroidService {
      */
     @POST("lg/todo/update/{id}/json")
     @FormUrlEncoded
-    fun updateTodoItem(@Path("id") id: Int,
+    fun updateTodoItemOld(@Path("id") id: Int,
                        @Field("title") title: String?,
                        @Field("content") content: String?,
                        @Field("date") date: String?,
                        @Field("type") type: Int,
                        @Field("status") status: Int): Observable<WanAndroidResponse<TodoItem?>?>?
+
+    /**
+     * 更新TodoItem的内容
+     * https://www.wanandroid.com/lg/todo/update/83/json
+     *
+     * @param id
+     * @param title
+     * @param content
+     * @param date
+     * @param type
+     * @param status  0为未完成，1为完成
+     * @return
+     */
+    @POST("lg/todo/update/{id}/json")
+    @FormUrlEncoded
+    suspend fun updateTodoItem(
+        @Path("id") id: Int,
+        @Field("title") title: String?,
+        @Field("content") content: String?,
+        @Field("date") date: String?,
+        @Field("type") type: Int,
+        @Field("status") status: Int
+    ): WanResponse<TodoItem>
 
     /**
      * 删除一条todoitem
@@ -263,5 +298,15 @@ interface WanAndroidService {
      * @return
      */
     @POST("lg/todo/delete/{id}/json")
-    fun deleteTodoItem(@Path("id") id: Int): Observable<WanAndroidResponse<String?>?>?
+    fun deleteTodoItemOld(@Path("id") id: Int): Observable<WanAndroidResponse<String?>?>?
+
+    /**
+     * 删除一条todoitem
+     * https://www.wanandroid.com/lg/todo/delete/83/json
+     *
+     * @param id
+     * @return
+     */
+    @POST("lg/todo/delete/{id}/json")
+    suspend fun deleteTodoItem(@Path("id") id: Int): WanResponse<String>
 }

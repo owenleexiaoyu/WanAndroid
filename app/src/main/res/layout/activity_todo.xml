@@ -32,9 +32,9 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:paddingBottom="10dp"
-            android:id="@+id/todo_category_group">
+            android:id="@+id/todo_type_group">
             <RadioButton
-                android:id="@+id/todo_category_default"
+                android:id="@+id/todo_type_default"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/todo_category_default"
@@ -48,7 +48,7 @@
                 android:layout_marginEnd="10dp"
                 android:checked="true"/>
             <RadioButton
-                android:id="@+id/todo_category_work"
+                android:id="@+id/todo_type_work"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/todo_category_work"
@@ -61,7 +61,7 @@
                 android:textColor="@color/Accent"
                 android:layout_marginEnd="10dp"/>
             <RadioButton
-                android:id="@+id/todo_category_learn"
+                android:id="@+id/todo_type_learn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/todo_category_learn"
@@ -74,7 +74,7 @@
                 android:textColor="@color/Accent"
                 android:layout_marginEnd="10dp"/>
             <RadioButton
-                android:id="@+id/todo_category_life"
+                android:id="@+id/todo_type_life"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/todo_category_life"
@@ -88,7 +88,7 @@
                 android:layout_marginEnd="10dp"/>
         </RadioGroup>
 
-        <androidx.viewpager.widget.ViewPager
+        <androidx.viewpager2.widget.ViewPager2
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/todo_viewpager" />

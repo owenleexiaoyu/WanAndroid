@@ -11,7 +11,7 @@
     <string name="uncollect_fail">取消收藏失败</string>
     <string name="about_us">关于我们</string>
     <string name="logout">退出登录</string>
-    <string name="todo_tool">TODO工具</string>
+    <string name="todo_tool">TODO 工具</string>
     <string name="my_collections">我的收藏</string>
     <string name="settings">设置</string>
     <string name="home_page">首页</string>
@@ -66,5 +66,6 @@
     <string name="signup_failed">注册失败</string>
     <string name="logout_failed">退出登录失败</string>
     <string name="search_input_hint">输入关键字进行搜索</string>
+    <string name="confirm">确认</string>
 
 </resources>

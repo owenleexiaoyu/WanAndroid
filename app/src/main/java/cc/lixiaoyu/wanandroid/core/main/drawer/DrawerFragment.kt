@@ -15,7 +15,7 @@ import cc.lixiaoyu.wanandroid.core.account.AccountManager
 import cc.lixiaoyu.wanandroid.core.account.LogoutCallback
 import cc.lixiaoyu.wanandroid.core.collection.CollectionActivity
 import cc.lixiaoyu.wanandroid.core.account.ui.LoginActivity
-import cc.lixiaoyu.wanandroid.core.todo.TodoActivity
+import cc.lixiaoyu.wanandroid.core.todo.ui.TodoActivity
 import cc.lixiaoyu.wanandroid.databinding.MainDrawerContainerBinding
 import cc.lixiaoyu.wanandroid.entity.User
 import cc.lixiaoyu.wanandroid.util.ToastUtil
