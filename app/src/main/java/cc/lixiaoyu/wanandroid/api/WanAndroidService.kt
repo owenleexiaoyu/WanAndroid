@@ -1,6 +1,7 @@
 package cc.lixiaoyu.wanandroid.api
 
-import cc.lixiaoyu.wanandroid.core.search.WebSite
+import cc.lixiaoyu.wanandroid.core.search.model.HotKey
+import cc.lixiaoyu.wanandroid.core.search.model.WebSite
 import cc.lixiaoyu.wanandroid.core.todo.model.TodoEntity
 import cc.lixiaoyu.wanandroid.core.todo.model.TodoEntity.TodoItem
 import cc.lixiaoyu.wanandroid.entity.*
@@ -81,7 +82,7 @@ interface WanAndroidService {
      * @return
      */
     @GET("hotkey/json")
-    fun getHotKey(): Observable<WanAndroidResponse<List<HotKey?>?>?>?
+    suspend fun getHotKeyList(): WanResponse<List<HotKey>>
 
     /**
      * 获取常用网站
@@ -90,8 +91,7 @@ interface WanAndroidService {
      * @return
      */
     @GET("friend/json")
-    fun getCommonSite(): Observable<WanAndroidResponse<List<WebSite?>?>?>?
-
+    suspend fun getCommonSiteList(): WanResponse<List<WebSite>>
     /**
      * 通过关键词进行搜索
      * https://www.wanandroid.com/article/query/0/json

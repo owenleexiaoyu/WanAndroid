@@ -4,8 +4,8 @@ import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.map
 import cc.lixiaoyu.wanandroid.BuildConfig
 import cc.lixiaoyu.wanandroid.api.WanAndroidService
 import cc.lixiaoyu.wanandroid.entity.Nav
@@ -41,7 +41,7 @@ class NavViewModel : ViewModel() {
     /**
      * 将 [_navList] 中每个 Nav 的 name 取出组成一个 List 并包装成 LiveData 供界面订阅，去除冗余信息
      */
-    val navTitleList: LiveData<List<String>> = Transformations.map(_navList) { navList ->
+    val navTitleList: LiveData<List<String>> = _navList.map { navList ->
         navList.map { it.name }.toList()
     }
 
