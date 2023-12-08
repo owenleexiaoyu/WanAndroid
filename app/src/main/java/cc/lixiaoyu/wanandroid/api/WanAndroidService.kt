@@ -102,8 +102,9 @@ interface WanAndroidService {
      */
     @POST("article/query/{page}/json")
     @FormUrlEncoded
-    fun searchArticle(@Path("page") page: Int,
-                      @Field("k") k: String?): Observable<WanAndroidResponse<ArticlePage?>?>?
+    suspend fun searchArticle(
+        @Path("page") page: Int,
+        @Field("k") k: String): WanResponse<ArticlePage>
 
     /**
      * 用户登录
