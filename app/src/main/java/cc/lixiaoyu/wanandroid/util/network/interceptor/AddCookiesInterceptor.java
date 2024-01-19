@@ -14,7 +14,7 @@ import okhttp3.Response;
 public class AddCookiesInterceptor implements Interceptor {
     private static final String COOKIE_PREF = "cookies_prefs";
     private static final String COOKIE_KEY = "cookies_key";
-    private Context mContext = WanApplication.Companion.getGlobalContext();
+    private final Context mContext = WanApplication.Companion.getGlobalContext();
     private SharedPreferences sp;
     @Override
     public Response intercept(Chain chain) throws IOException {

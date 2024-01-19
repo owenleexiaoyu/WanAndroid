@@ -8,7 +8,7 @@ import cc.lixiaoyu.wanandroid.util.network.RetrofitManager;
 import io.reactivex.Observable;
 
 public class CollectionModel implements CollectionContract.Model {
-    private WanAndroidService mService;
+    private final WanAndroidService mService;
 
     public CollectionModel(){
         mService = RetrofitManager.getInstance().getWanAndroidService();

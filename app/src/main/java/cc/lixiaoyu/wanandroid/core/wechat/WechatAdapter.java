@@ -13,8 +13,8 @@ import java.util.List;
 import cc.lixiaoyu.wanandroid.entity.WechatTitle;
 
 public class WechatAdapter extends FragmentPagerAdapter {
-    private List<WechatTitle> mDataList;
-    private List<Fragment> mFragmentList;
+    private final List<WechatTitle> mDataList;
+    private final List<Fragment> mFragmentList;
     public WechatAdapter(FragmentManager fm, List<WechatTitle> dataList) {
         super(fm);
         this.mDataList = dataList;

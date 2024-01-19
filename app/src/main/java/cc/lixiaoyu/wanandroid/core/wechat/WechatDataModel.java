@@ -8,7 +8,7 @@ import cc.lixiaoyu.wanandroid.util.network.RetrofitManager;
 import io.reactivex.Observable;
 
 public class WechatDataModel implements WechatDataContract.Model {
-    private WanAndroidService mService;
+    private final WanAndroidService mService;
     public WechatDataModel(){
         mService = RetrofitManager.getInstance().getWanAndroidService();
     }

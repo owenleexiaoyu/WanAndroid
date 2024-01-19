@@ -7,7 +7,7 @@ import io.reactivex.functions.Consumer;
 
 public class CollectionPresenter extends CollectionContract.Presenter {
 
-    private CollectionContract.Model mModel;
+    private final CollectionContract.Model mModel;
     //当前的页数，从0开始
     private int mCurrentPage = 0;
 

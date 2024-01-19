@@ -14,7 +14,7 @@ import io.reactivex.Observable;
 
 public class HomeModel implements HomeContract.Model{
 
-    private WanAndroidService mService;
+    private final WanAndroidService mService;
 
     public HomeModel(){
         mService = RetrofitManager.getInstance().getWanAndroidService();

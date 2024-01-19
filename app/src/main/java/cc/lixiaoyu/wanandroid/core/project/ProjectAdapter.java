@@ -14,8 +14,8 @@ import cc.lixiaoyu.wanandroid.entity.ProjectTitle;
 import cc.lixiaoyu.wanandroid.core.projectdata.ProjectDataFragment;
 
 public class ProjectAdapter extends FragmentPagerAdapter {
-    private List<ProjectTitle> mDataList;
-    private List<Fragment> mFragmentList;
+    private final List<ProjectTitle> mDataList;
+    private final List<Fragment> mFragmentList;
     public ProjectAdapter(FragmentManager fm, List<ProjectTitle> dataList) {
         super(fm);
         this.mDataList = dataList;

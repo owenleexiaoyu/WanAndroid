@@ -26,6 +26,7 @@ import cc.lixiaoyu.wanandroid.entity.WechatTitle;
 import cc.lixiaoyu.wanandroid.core.detail.ArticleDetailActivity;
 import cc.lixiaoyu.wanandroid.core.account.ui.LoginActivity;
 import cc.lixiaoyu.wanandroid.util.ToastUtil;
+import cc.lixiaoyu.wanandroid.util.storage.DataManager;
 
 public class WechatDataFragment extends MVPBasePageFragment<WechatDataContract.Presenter>
         implements WechatDataContract.View{
@@ -79,7 +80,7 @@ public class WechatDataFragment extends MVPBasePageFragment<WechatDataContract.P
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 //点击收藏按钮
                 //判断是否用户登陆
-                if(!mPresenter.getDataManager().getLoginState()){
+                if(!DataManager.getLoginState()){
                     //未登录，前往登陆页面进行登陆操作
                     getActivity().startActivity(new Intent(getActivity(), LoginActivity.class));
                 }else{

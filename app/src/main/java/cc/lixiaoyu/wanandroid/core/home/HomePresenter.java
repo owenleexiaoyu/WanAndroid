@@ -11,7 +11,7 @@ import cc.lixiaoyu.wanandroid.util.ToastUtil;
 
 public class HomePresenter extends HomeContract.Presenter {
 
-    private HomeModel homeModel;
+    private final HomeModel homeModel;
 
     private int mCurrentPage = 0;
 

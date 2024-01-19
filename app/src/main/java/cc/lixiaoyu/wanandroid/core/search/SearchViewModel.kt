@@ -15,7 +15,6 @@ import kotlinx.coroutines.launch
 class SearchViewModel : ViewModel() {
 
     private val apiService: WanAndroidService by lazy { RetrofitManager.getInstance().wanAndroidService }
-    private val dataManager: DataManager by lazy { DataManager() }
 
     private val _hotKeyList: MutableStateFlow<List<HotKey>> = MutableStateFlow(
         emptyList()
@@ -56,13 +55,13 @@ class SearchViewModel : ViewModel() {
 
     private fun getSearchHistoryList() {
         viewModelScope.launch {
-            val historyList = dataManager.loadAllHistoryData()
+            val historyList = DataManager.loadAllHistoryData()
             _searchHistoryList.value = historyList
         }
     }
 
     fun searchKeyword(keyword: String) {
-        dataManager.addHistoryData(keyword)
+        DataManager.addHistoryData(keyword)
         _searchHistoryList.value = _searchHistoryList.value.toMutableList().apply {
             add(keyword)
         }
@@ -70,7 +69,7 @@ class SearchViewModel : ViewModel() {
 
     fun clearSearchHistory() {
         viewModelScope.launch {
-            dataManager.clearAllHistoryData()
+            DataManager.clearAllHistoryData()
             _searchHistoryList.value = emptyList()
         }
     }

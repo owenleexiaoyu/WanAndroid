@@ -19,7 +19,7 @@ import cc.lixiaoyu.wanandroid.core.todo.ui.TodoActivity
 import cc.lixiaoyu.wanandroid.databinding.MainDrawerContainerBinding
 import cc.lixiaoyu.wanandroid.entity.User
 import cc.lixiaoyu.wanandroid.util.ToastUtil
-import cc.lixiaoyu.wanandroid.util.storage.SPUtil
+import cc.lixiaoyu.wanandroid.util.storage.DataManager
 
 class DrawerFragment: Fragment() {
 
@@ -61,20 +61,20 @@ class DrawerFragment: Fragment() {
             }
         }
         binding.itemTheme.apply {
-            if (SPUtil.getData("dark_mode", 0) == 0) {
-                setStartIcon(ContextCompat.getDrawable(context, R.drawable.ic_dark_mode))
-                setTitleText(getString(R.string.dark_mode))
-            } else {
+            if (DataManager.isDarkMode) {
                 setStartIcon(ContextCompat.getDrawable(context, R.drawable.ic_light_mode))
                 setTitleText(getString(R.string.light_mode))
+            } else {
+                setStartIcon(ContextCompat.getDrawable(context, R.drawable.ic_dark_mode))
+                setTitleText(getString(R.string.dark_mode))
             }
             setOnClickListener {
-                if (SPUtil.getData("dark_mode", 0) == 0) {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                    SPUtil.saveData("dark_mode", 1)
+                if (DataManager.isDarkMode) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                    DataManager.isDarkMode = false
                 } else {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                    SPUtil.saveData("dark_mode", 0)
+                    DataManager.isDarkMode = true
                 }
             }
         }

@@ -8,7 +8,7 @@ import io.reactivex.functions.Consumer;
 
 public class WechatDataPresenter extends WechatDataContract.Presenter {
 
-    private WechatDataContract.Model mModel;
+    private final WechatDataContract.Model mModel;
 
     //加载的当前页,默认为1
     private int mCurrentPage = 1;

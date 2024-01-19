@@ -14,8 +14,6 @@ public abstract class BasePresenter<V extends BaseView> {
 
     protected Reference<V> mViewRef;//View 接口类型的弱引用
     protected CompositeDisposable mCompositeDisposable;
-    protected DataManager mDataManager = new DataManager();  //数据管理者
-
     public void attachView(V view){
         mViewRef = new WeakReference<>(view);
     }
@@ -46,9 +44,4 @@ public abstract class BasePresenter<V extends BaseView> {
     }
 
     public abstract  void start();
-
-
-    public DataManager getDataManager(){
-        return mDataManager;
-    }
 }

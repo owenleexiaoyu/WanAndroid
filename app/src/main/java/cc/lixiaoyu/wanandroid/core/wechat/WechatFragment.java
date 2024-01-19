@@ -15,12 +15,13 @@ import cc.lixiaoyu.wanandroid.R;
 import cc.lixiaoyu.wanandroid.api.WanAndroidService;
 import cc.lixiaoyu.wanandroid.base.BaseFragment;
 import cc.lixiaoyu.wanandroid.entity.WechatTitle;
+import cc.lixiaoyu.wanandroid.util.behavior.IJumpToTop;
 import cc.lixiaoyu.wanandroid.util.network.RetrofitManager;
 import cc.lixiaoyu.wanandroid.util.ToastUtil;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class WechatFragment extends BaseFragment {
+public class WechatFragment extends BaseFragment implements IJumpToTop {
 
     @BindView(R.id.fwechat_tablayout)
     TabLayout mTabLayout;
@@ -83,6 +84,7 @@ public class WechatFragment extends BaseFragment {
     /**
      * 回到列表顶部
      */
+    @Override
     public void jumpToListTop() {
         //将置顶功能进一步交给Adapter实现
         mAdapter.jumpToListTop(mCurrentChildFragmentIndex);

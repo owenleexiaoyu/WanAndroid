@@ -1,5 +1,6 @@
 package cc.lixiaoyu.wanandroid.api
 
+import cc.lixiaoyu.wanandroid.core.knowledgemap.model.KnowledgeNode
 import cc.lixiaoyu.wanandroid.core.search.model.HotKey
 import cc.lixiaoyu.wanandroid.core.search.model.WebSite
 import cc.lixiaoyu.wanandroid.core.todo.model.TodoEntity
@@ -31,6 +32,20 @@ interface WanAndroidService {
                        @Query("cid") cid: String?): Observable<WanAndroidResponse<ArticlePage?>?>?
 
     /**
+     * 获取文章列表
+     * http://www.wanandroid.com/article/list/1/json?cid=60
+     *
+     * @param page   页码
+     * @param cid    文章所属的二级分类，为空时获取所有的文章
+     * @return
+     */
+    @GET("article/list/{page}/json")
+    suspend fun getArticleListByCid(
+        @Path("page") page: Int,
+        @Query("cid") cid: String
+    ): WanResponse<ArticlePageData>
+
+    /**
      * 获取置顶文章
      * https://www.wanandroid.com/article/top/json
      *
@@ -46,7 +61,7 @@ interface WanAndroidService {
      * @return
      */
     @GET("tree/json")
-    fun getKnowledgeTreeData(): Observable<WanAndroidResponse<List<PrimaryClass?>?>?>?
+    suspend fun getKnowledgeMap(): WanResponse<List<KnowledgeNode>>
 
     /**
      * 获取项目分类信息

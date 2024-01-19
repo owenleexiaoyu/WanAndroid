@@ -14,12 +14,13 @@ import butterknife.BindView;
 import cc.lixiaoyu.wanandroid.R;
 import cc.lixiaoyu.wanandroid.base.BaseFragment;
 import cc.lixiaoyu.wanandroid.entity.ProjectTitle;
+import cc.lixiaoyu.wanandroid.util.behavior.IJumpToTop;
 import cc.lixiaoyu.wanandroid.util.network.RetrofitManager;
 import cc.lixiaoyu.wanandroid.util.ToastUtil;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class ProjectFragment extends BaseFragment {
+public class ProjectFragment extends BaseFragment implements IJumpToTop {
 
     @BindView(R.id.fproject_tablayout)
     TabLayout mTabLayout;
@@ -85,6 +86,7 @@ public class ProjectFragment extends BaseFragment {
     /**
      * 回到列表顶部
      */
+    @Override
     public void jumpToListTop() {
         //将置顶功能进一步交给Adapter实现
         mAdapter.jumpToListTop(mCurrentChildFragmentIndex);

@@ -8,7 +8,7 @@ import io.reactivex.functions.Consumer;
 
 public class ProjectDataPresenter extends ProjectDataContract.Presenter {
 
-    private ProjectDataContract.Model mModel;
+    private final ProjectDataContract.Model mModel;
 
     //加载的当前页,默认为1
     private int mCurrentPage = 1;

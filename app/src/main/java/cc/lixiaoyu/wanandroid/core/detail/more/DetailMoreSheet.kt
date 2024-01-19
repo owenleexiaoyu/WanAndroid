@@ -90,7 +90,7 @@ class DetailMoreSheet: BottomSheetDialogFragment() {
                 icon = R.drawable.ic_refresh_32dp,
                 onClick = {
                     dismiss()
-                    RxBus.getInstance().post(ReloadArticleDetailEvent())
+                    RxBus.instance.post(ReloadArticleDetailEvent())
                 }
             ),
         )
@@ -112,13 +112,13 @@ class DetailMoreSheet: BottomSheetDialogFragment() {
                             CollectAbility.unCollectArticle(requireContext(), detailParam!!.articleId) { success ->
                                 val toastText = if (success) WanApplication.globalContext?.getString(R.string.uncollect_success)
                                     else WanApplication.globalContext?.getString(R.string.uncollect_fail) ?: return@unCollectArticle
-                                ToastUtil.showToast(toastText)
+                                ToastUtil.showToast(toastText!!)
                             }
                         } else {
                             CollectAbility.collectArticle(requireContext(), detailParam!!.articleId) { success ->
                                 val toastText = if (success) WanApplication.globalContext?.getString(R.string.collect_success)
                                     else WanApplication.globalContext?.getString(R.string.collect_fail) ?: return@collectArticle
-                                ToastUtil.showToast(toastText)
+                                ToastUtil.showToast(toastText!!)
                             }
                         }
                     }

@@ -16,7 +16,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class BaseModelFactory {
 
-    private static ResponseTransformer transformer = new ResponseTransformer();
+    private static final ResponseTransformer transformer = new ResponseTransformer();
 
     /**
      * 将Observable<WanAdnroidResult<T>>转化Observable<T>,并处理BaseResponse

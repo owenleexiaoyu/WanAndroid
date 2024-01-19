@@ -29,7 +29,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".core.detail.ArticleDetailActivity"/>
-        <activity android:name=".core.subclass.SubClassActivity"
+        <activity android:name=".core.knowledgemap.node.KnowledgeNodeContainerActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".core.account.ui.LoginActivity"/>
         <activity android:name=".core.search.SearchActivity"/>

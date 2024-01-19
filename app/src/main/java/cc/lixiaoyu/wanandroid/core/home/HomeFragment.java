@@ -33,8 +33,10 @@ import cc.lixiaoyu.wanandroid.adapter.ArticleAdapter;
 import cc.lixiaoyu.wanandroid.entity.Banner;
 import cc.lixiaoyu.wanandroid.core.detail.ArticleDetailActivity;
 import cc.lixiaoyu.wanandroid.util.ToastUtil;
+import cc.lixiaoyu.wanandroid.util.behavior.IJumpToTop;
+import cc.lixiaoyu.wanandroid.util.storage.DataManager;
 
-public class HomeFragment extends MVPBaseFragment<HomeContract.Presenter> implements HomeContract.View {
+public class HomeFragment extends MVPBaseFragment<HomeContract.Presenter> implements HomeContract.View, IJumpToTop {
     private static final String TAG = "HomeFragment";
 
     @BindView(R.id.fhome_smart_refresh)
@@ -72,7 +74,7 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.Presenter> implem
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
 //                ToastUtil.showToast("点击了收藏按钮");
                 //判断是否用户登陆
-                if (!mPresenter.getDataManager().getLoginState()) {
+                if (!DataManager.getLoginState()) {
                     //未登录，前往登陆页面进行登陆操作
                     getActivity().startActivity(new Intent(getActivity(), LoginActivity.class));
                 } else {
@@ -210,6 +212,7 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.Presenter> implem
     /**
      * 回到列表的顶部
      */
+    @Override
     public void jumpToListTop() {
         mRecyclerView.smoothScrollToPosition(0);
     }

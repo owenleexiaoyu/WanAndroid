@@ -13,7 +13,6 @@ import cc.lixiaoyu.wanandroid.util.storage.DataManager
 
 object AccountManager {
 
-    private val dataManager = DataManager()
     private val service = RetrofitManager.getInstance().wanAndroidService
 
     private val _userLiveData: MutableLiveData<User?> = MutableLiveData()
@@ -25,11 +24,11 @@ object AccountManager {
 
     // 从 SP 中读取 User 信息
     private fun loadUserFromSp() {
-        val loginAccount = dataManager.loginAccount
+        val loginAccount = DataManager.loginAccount
         val user = if (!loginAccount.isNullOrEmpty()) {
             User().apply {
                 username = loginAccount
-                password = dataManager.loginPassword
+                password = DataManager.loginPassword
             }
         } else {
             null
@@ -38,7 +37,7 @@ object AccountManager {
     }
 
     private fun updateUser(user: User?) {
-        dataManager.loginAccount = user?.username ?: ""
+        DataManager.loginAccount = user?.username ?: ""
         if (Looper.getMainLooper() == Looper.myLooper()) {
             _userLiveData.value = user
         } else {
@@ -60,7 +59,7 @@ object AccountManager {
                 val me = result.get()
                 updateUser(me)
                 callback?.onSuccess(me)
-                RxBus.getInstance().post(LoginEvent(true))
+                RxBus.instance.post(LoginEvent(true))
             }) { t: Throwable ->
                 callback?.onFail(t)
                 t.printStackTrace()
@@ -78,7 +77,7 @@ object AccountManager {
                 val me = result.get()
                 updateUser(me)
                 callback?.onSuccess(me)
-                RxBus.getInstance().post(LoginEvent(true))
+                RxBus.instance.post(LoginEvent(true))
             }) { t: Throwable ->
                 callback?.onFail(t)
                 t.printStackTrace()
@@ -91,7 +90,7 @@ object AccountManager {
             .subscribe({
                 updateUser(null)
                 callback?.onSuccess()
-                RxBus.getInstance().post(LoginEvent(false))
+                RxBus.instance.post(LoginEvent(false))
             }, { t: Throwable ->
                 callback?.onFail(t)
                 t.printStackTrace()

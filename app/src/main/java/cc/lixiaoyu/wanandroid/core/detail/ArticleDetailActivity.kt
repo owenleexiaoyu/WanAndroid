@@ -42,7 +42,7 @@ class ArticleDetailActivity : AppCompatActivity() {
     }
 
     private fun subscribeReloadEvent() {
-        dispose = RxBus.getInstance().toFlowable(ReloadArticleDetailEvent::class.java)
+        dispose = RxBus.instance.toFlowable(ReloadArticleDetailEvent::class.java)
             .subscribeOn(AndroidSchedulers.mainThread())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
