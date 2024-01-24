@@ -1,6 +1,7 @@
 package cc.lixiaoyu.wanandroid.api
 
 import cc.lixiaoyu.wanandroid.core.knowledgemap.model.KnowledgeNode
+import cc.lixiaoyu.wanandroid.core.project.model.Project
 import cc.lixiaoyu.wanandroid.core.search.model.HotKey
 import cc.lixiaoyu.wanandroid.core.search.model.WebSite
 import cc.lixiaoyu.wanandroid.core.todo.model.TodoEntity
@@ -70,7 +71,7 @@ interface WanAndroidService {
      * @return
      */
     @GET("project/tree/json")
-    fun getProjectsData(): Observable<WanAndroidResponse<List<ProjectTitle?>?>?>?
+    suspend fun getProjectList(): WanResponse<List<Project>>
 
     /**
      * 获取项目分类中的项目列表数据

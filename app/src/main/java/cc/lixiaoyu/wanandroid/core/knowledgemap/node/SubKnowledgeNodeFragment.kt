@@ -18,7 +18,6 @@ import cc.lixiaoyu.wanandroid.core.account.ui.LoginActivity
 import cc.lixiaoyu.wanandroid.core.detail.ArticleDetailActivity.Companion.actionStart
 import cc.lixiaoyu.wanandroid.core.knowledgemap.model.SubKnowledgeNode
 import cc.lixiaoyu.wanandroid.databinding.FragmentSubKnowledgenodeArticleBinding
-import cc.lixiaoyu.wanandroid.entity.Article
 import cc.lixiaoyu.wanandroid.util.behavior.IJumpToTop
 import cc.lixiaoyu.wanandroid.util.storage.DataManager
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -29,9 +28,9 @@ import kotlinx.coroutines.launch
 
 class SubKnowledgeNodeFragment : Fragment(), IJumpToTop {
 
-    private var _binding: FragmentSubKnowledgenodeArticleBinding? = null
     private lateinit var viewModel: SubKnowledgeNodeViewModel
 
+    private var _binding: FragmentSubKnowledgenodeArticleBinding? = null
     private val binding
         get() = _binding!!
 
@@ -74,7 +73,7 @@ class SubKnowledgeNodeFragment : Fragment(), IJumpToTop {
         articleAdapter!!.onItemClickListener =
             BaseQuickAdapter.OnItemClickListener { adapter: BaseQuickAdapter<*, *>?, view1: View?, position: Int ->
                 val article = articleAdapter!!.data[position]
-                openArticleDetail(article)
+                actionStart(requireActivity(), article.toDetailParam())
             }
         articleAdapter!!.onItemChildClickListener =
             BaseQuickAdapter.OnItemChildClickListener { adapter: BaseQuickAdapter<*, *>?, view12: View?, position: Int ->
@@ -115,41 +114,6 @@ class SubKnowledgeNodeFragment : Fragment(), IJumpToTop {
             }
         }
     }
-
-
-    private fun openArticleDetail(article: Article) {
-        actionStart(requireActivity(), article.toDetailParam())
-    }
-
-//    override fun showCollectArticle(success: Boolean, position: Int) {
-//        if (success) {
-//            ToastUtil.showToast("收藏文章成功")
-//            mAdapter!!.data[position].isCollect = true
-//            mAdapter!!.notifyDataSetChanged()
-//        } else {
-//            ToastUtil.showToast("收藏文章失败")
-//        }
-//    }
-//
-//    override fun showCancelCollectArticle(success: Boolean, position: Int) {
-//        if (success) {
-//            ToastUtil.showToast("取消收藏文章成功")
-//            mAdapter!!.data[position].isCollect = false
-//            mAdapter!!.notifyDataSetChanged()
-//        } else {
-//            ToastUtil.showToast("取消收藏文章失败")
-//        }
-//    }
-
-//    override fun showLoadMoreArticleByCid(articles: List<Article>, success: Boolean) {
-//        //如果成功
-//        if (success) {
-//            mAdapter!!.addData(articles)
-//            mRefreshLayout!!.finishLoadMore()
-//        } else {
-//            mRefreshLayout!!.finishLoadMore(false)
-//        }
-//    }
 
     /**
      * 回到列表顶部

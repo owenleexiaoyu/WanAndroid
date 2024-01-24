@@ -18,7 +18,7 @@ class KnowledgeNodeContainerActivity : AppCompatActivity() {
     private var knowledgeNode: KnowledgeNode? = null
     private var dataList: List<SubKnowledgeNode> = emptyList()
 
-    private var mAdapter: SubKnowledgeNodePageAdapter? = null
+    private var mAdapter: SubKnowledgeNodePagerAdapter? = null
     //当前加载的Fragment的序号
     private var mCurrentFragmentIndex = 0
 
@@ -49,7 +49,7 @@ class KnowledgeNodeContainerActivity : AppCompatActivity() {
             setDisplayHomeAsUpEnabled(true)
             setHomeButtonEnabled(true)
         }
-        mAdapter = SubKnowledgeNodePageAdapter(this, dataList)
+        mAdapter = SubKnowledgeNodePagerAdapter(this, dataList)
         binding.viewpager.adapter = mAdapter
         binding.viewpager.registerOnPageChangeCallback(object : OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {

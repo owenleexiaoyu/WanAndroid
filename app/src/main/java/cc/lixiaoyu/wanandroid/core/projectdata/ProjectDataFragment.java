@@ -22,7 +22,7 @@ import butterknife.BindView;
 import cc.lixiaoyu.wanandroid.R;
 import cc.lixiaoyu.wanandroid.base.mvp.MVPBasePageFragment;
 import cc.lixiaoyu.wanandroid.entity.Article;
-import cc.lixiaoyu.wanandroid.entity.ProjectTitle;
+import cc.lixiaoyu.wanandroid.core.project.model.Project;
 import cc.lixiaoyu.wanandroid.core.detail.ArticleDetailActivity;
 import cc.lixiaoyu.wanandroid.core.account.ui.LoginActivity;
 import cc.lixiaoyu.wanandroid.util.ToastUtil;
@@ -37,10 +37,10 @@ public class ProjectDataFragment extends MVPBasePageFragment<ProjectDataContract
     @BindView(R.id.fproject_data_recyclerview)
     RecyclerView mRecyclerView;
 
-    private ProjectTitle mTitle = null;
+    private Project mTitle = null;
     private ProjectDataAdapter mAdapter;
 
-    public static ProjectDataFragment newInstance(ProjectTitle title){
+    public static ProjectDataFragment newInstance(Project title){
         Bundle bundle = new Bundle();
         bundle.putSerializable(ARGUMENTS_KEY, title);
         ProjectDataFragment fragment = new ProjectDataFragment();
@@ -53,7 +53,7 @@ public class ProjectDataFragment extends MVPBasePageFragment<ProjectDataContract
         super.onCreate(savedInstanceState);
         Bundle bundle = getArguments();
         if (bundle != null) {
-            mTitle = (ProjectTitle) bundle.getSerializable(ARGUMENTS_KEY);
+            mTitle = (Project) bundle.getSerializable(ARGUMENTS_KEY);
         }
         mPresenter.getProjectArticlesByCid(mTitle.getId()+"");
     }

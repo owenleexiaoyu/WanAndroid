@@ -6,7 +6,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import cc.lixiaoyu.wanandroid.core.knowledgemap.model.SubKnowledgeNode
 import cc.lixiaoyu.wanandroid.util.behavior.IJumpToTop
 
-class SubKnowledgeNodePageAdapter(
+class SubKnowledgeNodePagerAdapter(
     fragmentActivity: FragmentActivity,
     private val subKnowledgeNodeList: List<SubKnowledgeNode>
 ) : FragmentStateAdapter(fragmentActivity) {
