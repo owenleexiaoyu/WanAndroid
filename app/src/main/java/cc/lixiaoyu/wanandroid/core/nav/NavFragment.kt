@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import cc.lixiaoyu.wanandroid.R
 import cc.lixiaoyu.wanandroid.core.detail.ArticleDetailActivity
 import cc.lixiaoyu.wanandroid.databinding.FragmentNavBinding
-import cc.lixiaoyu.wanandroid.entity.NavItem
 import com.zhy.view.flowlayout.FlowLayout
 import com.zhy.view.flowlayout.TagAdapter
 

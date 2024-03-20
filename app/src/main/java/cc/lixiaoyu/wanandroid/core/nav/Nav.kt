@@ -1,4 +1,4 @@
-package cc.lixiaoyu.wanandroid.entity
+package cc.lixiaoyu.wanandroid.core.nav
 
 import cc.lixiaoyu.wanandroid.core.detail.DetailParam
 import com.google.gson.annotations.SerializedName

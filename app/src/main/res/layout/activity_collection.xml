@@ -13,6 +13,8 @@
             android:id="@+id/collection_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="@drawable/ic_arrow_back"
+            app:titleTextColor="@color/TextPrimary"
             app:layout_scrollFlags="enterAlways|snap|scroll"
             app:popupTheme="@style/AppTheme.PopupOverlay">
         </androidx.appcompat.widget.Toolbar>

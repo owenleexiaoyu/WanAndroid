@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import cc.lixiaoyu.wanandroid.core.todo.model.TodoEntity.TodoItem
 import cc.lixiaoyu.wanandroid.databinding.ItemRecyclerviewTodoDoneBinding
-import com.chad.library.adapter.base.BaseViewHolder
 
 class TodoFinishedAdapter :
     RecyclerView.Adapter<TodoFinishedAdapter.ViewHolder>() {
@@ -49,7 +48,7 @@ class TodoFinishedAdapter :
         notifyDataSetChanged()
     }
 
-    inner class ViewHolder(val binding: ItemRecyclerviewTodoDoneBinding) : BaseViewHolder(binding.root) {
+    inner class ViewHolder(val binding: ItemRecyclerviewTodoDoneBinding) : RecyclerView.ViewHolder(binding.root) {
         init {
             binding.itemDoneBtnUnfinish.setOnClickListener {
                 this@TodoFinishedAdapter.itemClickListener?.onUnFinish(data[adapterPosition], adapterPosition)

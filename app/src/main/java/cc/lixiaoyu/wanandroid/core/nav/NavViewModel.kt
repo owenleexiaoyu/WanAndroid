@@ -8,8 +8,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import cc.lixiaoyu.wanandroid.BuildConfig
 import cc.lixiaoyu.wanandroid.api.WanAndroidService
-import cc.lixiaoyu.wanandroid.entity.Nav
-import cc.lixiaoyu.wanandroid.entity.NavItem
 import cc.lixiaoyu.wanandroid.util.ToastUtil
 import cc.lixiaoyu.wanandroid.util.network.BaseModelFactory
 import cc.lixiaoyu.wanandroid.util.network.RetrofitManager

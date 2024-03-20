@@ -1,6 +1,7 @@
 package cc.lixiaoyu.wanandroid.api
 
 import cc.lixiaoyu.wanandroid.core.knowledgemap.model.KnowledgeNode
+import cc.lixiaoyu.wanandroid.core.nav.Nav
 import cc.lixiaoyu.wanandroid.core.project.model.Project
 import cc.lixiaoyu.wanandroid.core.search.model.HotKey
 import cc.lixiaoyu.wanandroid.core.search.model.WebSite
@@ -171,7 +172,7 @@ interface WanAndroidService {
      * @return
      */
     @GET("lg/collect/list/{page}/json")
-    fun getCollectionArticleList(@Path("page") page: Int): Observable<WanAndroidResponse<CollectionPage?>?>?
+    suspend fun getCollectionArticleListNew(@Path("page") page: Int): WanResponse<ArticlePageData>
 
     /**
      * 收藏文章
@@ -182,6 +183,9 @@ interface WanAndroidService {
      */
     @POST("lg/collect/{articleId}/json")
     fun collectArticle(@Path("articleId") articleId: Int): Observable<WanAndroidResponse<String>>
+
+    @POST("lg/collect/{articleId}/json")
+    suspend fun collectArticleNew(@Path("articleId") articleId: Int): WanResponse<String>
 
     /**
      * 从收藏界面中取消收藏文章
@@ -194,6 +198,13 @@ interface WanAndroidService {
     @FormUrlEncoded
     fun unCollectArticleFromCollectionPage(@Path("id") articleId: Int,
                                            @Field("originId") originId: Int): Observable<WanAndroidResponse<String?>?>?
+
+    @POST("lg/uncollect/{id}/json")
+    @FormUrlEncoded
+    suspend fun unCollectArticleFromCollectionPageNew(
+        @Path("id") articleId: Int,
+        @Field("originId") originId: Int
+    ): WanResponse<String>
 
     /**
      * 从文章列表中取消收藏文章

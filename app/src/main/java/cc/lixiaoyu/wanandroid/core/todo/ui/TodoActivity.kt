@@ -14,7 +14,7 @@ import cc.lixiaoyu.wanandroid.core.todo.adapter.TodoPagerAdapter
 import cc.lixiaoyu.wanandroid.core.todo.vm.TodoViewModel
 import cc.lixiaoyu.wanandroid.databinding.ActivityTodoBinding
 
-class TodoActivity : AppCompatActivity() {
+class  TodoActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityTodoBinding
     private lateinit var viewModel: TodoViewModel
