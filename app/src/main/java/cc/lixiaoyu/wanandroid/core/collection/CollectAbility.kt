@@ -8,7 +8,7 @@ import io.reactivex.schedulers.Schedulers
 
 object CollectAbility {
 
-    private val apiService = RetrofitManager.getInstance().wanAndroidService
+    private val apiService = RetrofitManager.wanAndroidService
 
     @SuppressLint("CheckResult")
     fun collectArticle(context: Context?, articleId: Int, onCollectResult: (success: Boolean) -> Unit) {

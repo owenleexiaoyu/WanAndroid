@@ -15,7 +15,7 @@ import cc.lixiaoyu.wanandroid.util.network.RetrofitManager
 class NavViewModel : ViewModel() {
 
     private val wanAndroidService: WanAndroidService by lazy {
-        RetrofitManager.getInstance().wanAndroidService
+        RetrofitManager.wanAndroidService
     }
 
     /**

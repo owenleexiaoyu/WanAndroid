@@ -17,7 +17,7 @@ public class HomeModel implements HomeContract.Model{
     private final WanAndroidService mService;
 
     public HomeModel(){
-        mService = RetrofitManager.getInstance().getWanAndroidService();
+        mService = RetrofitManager.INSTANCE.getWanAndroidService();
     }
 
     @Override

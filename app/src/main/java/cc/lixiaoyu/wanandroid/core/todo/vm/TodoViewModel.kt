@@ -14,7 +14,7 @@ import java.lang.IllegalStateException
 
 class TodoViewModel: ViewModel() {
 
-    private val apiService: WanAndroidService = RetrofitManager.getInstance().wanAndroidService
+    private val apiService: WanAndroidService = RetrofitManager.wanAndroidService
 
     private val _typeIndex: MutableLiveData<Int> = MutableLiveData(0)
     val typeIndex: LiveData<Int> = _typeIndex

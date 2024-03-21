@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 
 class CollectionViewModel: ViewModel() {
 
-    private val apiService: WanAndroidService by lazy { RetrofitManager.getInstance().wanAndroidService }
+    private val apiService: WanAndroidService by lazy { RetrofitManager.wanAndroidService }
 
     private var currentPage = 0
 

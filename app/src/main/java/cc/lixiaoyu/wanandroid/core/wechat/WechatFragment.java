@@ -40,7 +40,7 @@ public class WechatFragment extends BaseFragment implements IJumpToTop {
 
     @Override
     protected void initData() {
-        mService = RetrofitManager.getInstance().getWanAndroidService();
+        mService = RetrofitManager.INSTANCE.getWanAndroidService();
         mDataList = new ArrayList<>();
     }
 

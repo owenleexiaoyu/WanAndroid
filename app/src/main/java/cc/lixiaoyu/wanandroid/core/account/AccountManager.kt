@@ -13,7 +13,7 @@ import cc.lixiaoyu.wanandroid.util.storage.DataManager
 
 object AccountManager {
 
-    private val service = RetrofitManager.getInstance().wanAndroidService
+    private val service = RetrofitManager.wanAndroidService
 
     private val _userLiveData: MutableLiveData<User?> = MutableLiveData()
     var userLiveData: LiveData<User?> = _userLiveData

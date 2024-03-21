@@ -10,7 +10,7 @@ import io.reactivex.Observable;
 public class WechatDataModel implements WechatDataContract.Model {
     private final WanAndroidService mService;
     public WechatDataModel(){
-        mService = RetrofitManager.getInstance().getWanAndroidService();
+        mService = RetrofitManager.INSTANCE.getWanAndroidService();
     }
 
     @Override

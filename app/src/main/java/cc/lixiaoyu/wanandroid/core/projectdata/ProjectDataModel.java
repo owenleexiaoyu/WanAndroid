@@ -10,7 +10,7 @@ import io.reactivex.Observable;
 public class ProjectDataModel implements ProjectDataContract.Model {
     private final WanAndroidService mService;
     public ProjectDataModel(){
-        mService = RetrofitManager.getInstance().getWanAndroidService();
+        mService = RetrofitManager.INSTANCE.getWanAndroidService();
     }
 
     @Override

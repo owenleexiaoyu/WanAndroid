@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 class KnowledgeMapViewModel: ViewModel() {
 
     private val apiService: WanAndroidService by lazy {
-        RetrofitManager.getInstance().wanAndroidService
+        RetrofitManager.wanAndroidService
     }
 
     private val _knowledgeNodeList: MutableStateFlow<List<KnowledgeNode>> = MutableStateFlow(

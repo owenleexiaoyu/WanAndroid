@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 class SearchResultViewModel(val keyword: String): ViewModel() {
     // 分页页码
     private var currentPage: Int = 0
-    private val apiService: WanAndroidService = RetrofitManager.getInstance().wanAndroidService
+    private val apiService: WanAndroidService = RetrofitManager.wanAndroidService
 
     private val _searchResultList: MutableStateFlow<List<Article>> = MutableStateFlow(
         emptyList()

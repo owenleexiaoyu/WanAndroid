@@ -27,7 +27,7 @@ class ProjectFragment : Fragment(), IJumpToTop {
     //当前加载的子fragment的序号
     private var currentChildFragmentIndex = 0
 
-    private val apiService = RetrofitManager.getInstance().wanAndroidService
+    private val apiService = RetrofitManager.wanAndroidService
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 
 class SubKnowledgeNodeViewModel(private val cid: String) : ViewModel() {
 
-    private val apiService = RetrofitManager.getInstance().wanAndroidService
+    private val apiService = RetrofitManager.wanAndroidService
 
     private val _articleList: MutableStateFlow<List<Article>> = MutableStateFlow(emptyList())
     val articleList: StateFlow<List<Article>> = _articleList

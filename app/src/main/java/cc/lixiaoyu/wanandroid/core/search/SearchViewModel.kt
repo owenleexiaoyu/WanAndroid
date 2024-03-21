@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 
 class SearchViewModel : ViewModel() {
 
-    private val apiService: WanAndroidService by lazy { RetrofitManager.getInstance().wanAndroidService }
+    private val apiService: WanAndroidService by lazy { RetrofitManager.wanAndroidService }
 
     private val _hotKeyList: MutableStateFlow<List<HotKey>> = MutableStateFlow(
         emptyList()
