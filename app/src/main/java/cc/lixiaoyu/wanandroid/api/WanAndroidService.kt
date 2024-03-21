@@ -81,8 +81,10 @@ interface WanAndroidService {
      * @return
      */
     @GET("project/list/{page}/json")
-    fun getProjectArticlesByCid(@Path("page") page: Int,
-                                @Query("cid") cid: String?): Observable<WanAndroidResponse<ProjectPage?>?>?
+    suspend fun getProjectArticlesByCidNew(
+        @Path("page") page: Int,
+        @Query("cid") cid: String?
+    ): WanResponse<ArticlePageData>
 
     /**
      * 获取导航数据
