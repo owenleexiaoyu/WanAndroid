@@ -1,6 +1,5 @@
 package cc.lixiaoyu.wanandroid.core.search.result
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -32,7 +31,7 @@ class SearchResultViewModel(val keyword: String): ViewModel() {
         viewModelScope.launch {
             try {
                 val pageData = apiService.searchArticle(currentPage, keyword).data
-                _searchResultList.value = pageData?.articleList ?: emptyList()
+                _searchResultList.value = pageData?.dataList ?: emptyList()
             } catch (t: Throwable) {
                 t.printStackTrace()
                 ToastUtil.showToast("出错了，请稍后再试~")
@@ -45,7 +44,7 @@ class SearchResultViewModel(val keyword: String): ViewModel() {
         viewModelScope.launch {
             try {
                 val pageData = apiService.searchArticle(currentPage, keyword).data
-                val articleList = pageData?.articleList ?: emptyList()
+                val articleList = pageData?.dataList ?: emptyList()
                 if (articleList.isNotEmpty()) {
                     val newList = _searchResultList.value.toMutableList().apply {
                         addAll(articleList)

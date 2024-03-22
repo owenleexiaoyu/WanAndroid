@@ -6,15 +6,16 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
+import androidx.lifecycle.viewModelScope
 import cc.lixiaoyu.wanandroid.BuildConfig
 import cc.lixiaoyu.wanandroid.api.WanAndroidService
 import cc.lixiaoyu.wanandroid.util.ToastUtil
-import cc.lixiaoyu.wanandroid.util.network.BaseModelFactory
 import cc.lixiaoyu.wanandroid.util.network.RetrofitManager
+import kotlinx.coroutines.launch
 
 class NavViewModel : ViewModel() {
 
-    private val wanAndroidService: WanAndroidService by lazy {
+    private val apiService: WanAndroidService by lazy {
         RetrofitManager.wanAndroidService
     }
 
@@ -75,16 +76,16 @@ class NavViewModel : ViewModel() {
 
     @SuppressLint("CheckResult")
     private fun fetchNavData() {
-        BaseModelFactory.compose(wanAndroidService.getNavData())
-            .subscribe(
-                { result ->
-                    _navList.value = result.get()
-                },
-                { t ->
-                    ToastUtil.showToast("请求出错")
-                    if (BuildConfig.DEBUG) {
-                        t.printStackTrace()
-                    }
-                })
+        viewModelScope.launch {
+            try {
+                val navList = apiService.getNavDataNew().data ?: return@launch
+                _navList.value = navList
+            } catch (t: Throwable) {
+                ToastUtil.showToast("请求出错")
+                if (BuildConfig.DEBUG) {
+                    t.printStackTrace()
+                }
+            }
+        }
     }
 }

@@ -19,7 +19,7 @@ interface WanAndroidService {
      * @return
      */
     @GET("banner/json")
-    fun getBannerData(): Observable<WanAndroidResponse<List<Banner?>?>?>?
+    suspend fun getBannerDataNew(): WanResponse<List<Banner>>
 
     /**
      * 获取文章列表
@@ -30,8 +30,10 @@ interface WanAndroidService {
      * @return
      */
     @GET("article/list/{page}/json")
-    fun getArticleList(@Path("page") page: Int,
-                       @Query("cid") cid: String?): Observable<WanAndroidResponse<ArticlePage?>?>?
+    suspend fun getArticleListNew(
+        @Path("page") page: Int,
+        @Query("cid") cid: String?
+    ): WanResponse<ArticlePageData>
 
     /**
      * 获取文章列表
@@ -54,7 +56,7 @@ interface WanAndroidService {
      * @return
      */
     @GET("article/top/json")
-    fun getTopArticles(): Observable<WanAndroidResponse<List<Article?>?>?>?
+    suspend fun getTopArticlesNew(): WanResponse<List<Article>>
 
     /**
      * 获取知识体系数据
@@ -92,7 +94,7 @@ interface WanAndroidService {
      * @return
      */
     @GET("navi/json")
-    fun getNavData(): Observable<WanAndroidResponse<List<Nav>>>
+    suspend fun getNavDataNew(): WanResponse<List<Nav>>
 
     /**
      * 获取搜索热词
@@ -123,7 +125,7 @@ interface WanAndroidService {
     @FormUrlEncoded
     suspend fun searchArticle(
         @Path("page") page: Int,
-        @Field("k") k: String): WanResponse<ArticlePage>
+        @Field("k") k: String): WanResponse<ArticlePageData>
 
     /**
      * 用户登录
@@ -138,7 +140,7 @@ interface WanAndroidService {
     fun login(
         @Field("username") username: String,
         @Field("password") password: String
-    ): Observable<WanAndroidResponse<User>>
+    ): Observable<WanResponse<User>>
 
     /**
      * 用户注册
@@ -155,7 +157,7 @@ interface WanAndroidService {
         @Field("username") username: String,
         @Field("password") password: String,
         @Field("repassword") rePassword: String
-    ): Observable<WanAndroidResponse<User>>
+    ): Observable<WanResponse<User>>
 
     /**
      * 用户退出登录
@@ -165,7 +167,7 @@ interface WanAndroidService {
      * @return
      */
     @GET("user/logout/json")
-    fun logout(): Observable<WanAndroidResponse<String>>
+    fun logout(): Observable<WanResponse<String>>
 
     /**
      * 获取收藏的文章列表
@@ -184,7 +186,7 @@ interface WanAndroidService {
      * @return
      */
     @POST("lg/collect/{articleId}/json")
-    fun collectArticle(@Path("articleId") articleId: Int): Observable<WanAndroidResponse<String>>
+    fun collectArticle(@Path("articleId") articleId: Int): Observable<WanResponse<String>>
 
     @POST("lg/collect/{articleId}/json")
     suspend fun collectArticleNew(@Path("articleId") articleId: Int): WanResponse<String>
@@ -199,7 +201,7 @@ interface WanAndroidService {
     @POST("lg/uncollect/{id}/json")
     @FormUrlEncoded
     fun unCollectArticleFromCollectionPage(@Path("id") articleId: Int,
-                                           @Field("originId") originId: Int): Observable<WanAndroidResponse<String?>?>?
+                                           @Field("originId") originId: Int): Observable<WanResponse<String?>?>?
 
     @POST("lg/uncollect/{id}/json")
     @FormUrlEncoded
@@ -216,7 +218,7 @@ interface WanAndroidService {
      * @return
      */
     @POST("lg/uncollect_originId/{id}/json")
-    fun unCollectArticleFromArticleList(@Path("id") articleId: Int): Observable<WanAndroidResponse<String>>
+    fun unCollectArticleFromArticleList(@Path("id") articleId: Int): Observable<WanResponse<String>>
 
     /**
      * 获取公众号列表
@@ -225,7 +227,7 @@ interface WanAndroidService {
      * @return
      */
     @GET("wxarticle/chapters/json")
-    fun getWetchatPublicTitles(): Observable<WanAndroidResponse<List<WechatTitle?>?>?>?
+    fun getWetchatPublicTitles(): Observable<WanResponse<List<WechatTitle?>?>?>?
 
     /**
      * 获取某个公众号下的文章
@@ -235,7 +237,7 @@ interface WanAndroidService {
      */
     @GET("wxarticle/list/{id}/{page}/json")
     fun getWechatPublicArticlesById(@Path("id") id: Int,
-                                    @Path("page") page: Int): Observable<WanAndroidResponse<WechatPage?>?>?
+                                    @Path("page") page: Int): Observable<WanResponse<WechatPage?>?>?
 
     /**
      * 根据type来获取todo清单
@@ -243,9 +245,6 @@ interface WanAndroidService {
      * https://wanandroid.com/lg/todo/list/0/json
      * @return
      */
-    @GET("lg/todo/list/{type}/json")
-    fun getTodoListByTypeOld(@Path("type") type: Int): Observable<WanAndroidResponse<TodoEntity?>?>?
-
     @GET("lg/todo/list/{type}/json")
     suspend fun getTodoListByType(@Path("type") type: Int): WanResponse<TodoEntity>
 
@@ -260,13 +259,6 @@ interface WanAndroidService {
      * @param type
      * @return
      */
-    @POST("lg/todo/add/json")
-    @FormUrlEncoded
-    fun addTodoItemOld(@Field("title") title: String?,
-                    @Field("content") content: String?,
-                    @Field("date") date: String?,
-                    @Field("type") type: Int): Observable<WanAndroidResponse<TodoItem?>?>?
-
     @POST("lg/todo/add/json")
     @FormUrlEncoded
     suspend fun addTodoItem(
@@ -290,27 +282,6 @@ interface WanAndroidService {
      */
     @POST("lg/todo/update/{id}/json")
     @FormUrlEncoded
-    fun updateTodoItemOld(@Path("id") id: Int,
-                       @Field("title") title: String?,
-                       @Field("content") content: String?,
-                       @Field("date") date: String?,
-                       @Field("type") type: Int,
-                       @Field("status") status: Int): Observable<WanAndroidResponse<TodoItem?>?>?
-
-    /**
-     * 更新TodoItem的内容
-     * https://www.wanandroid.com/lg/todo/update/83/json
-     *
-     * @param id
-     * @param title
-     * @param content
-     * @param date
-     * @param type
-     * @param status  0为未完成，1为完成
-     * @return
-     */
-    @POST("lg/todo/update/{id}/json")
-    @FormUrlEncoded
     suspend fun updateTodoItem(
         @Path("id") id: Int,
         @Field("title") title: String?,
@@ -319,16 +290,6 @@ interface WanAndroidService {
         @Field("type") type: Int,
         @Field("status") status: Int
     ): WanResponse<TodoItem>
-
-    /**
-     * 删除一条todoitem
-     * https://www.wanandroid.com/lg/todo/delete/83/json
-     *
-     * @param id
-     * @return
-     */
-    @POST("lg/todo/delete/{id}/json")
-    fun deleteTodoItemOld(@Path("id") id: Int): Observable<WanAndroidResponse<String?>?>?
 
     /**
      * 删除一条todoitem

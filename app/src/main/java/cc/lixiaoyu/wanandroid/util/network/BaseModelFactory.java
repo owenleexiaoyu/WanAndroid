@@ -2,8 +2,8 @@ package cc.lixiaoyu.wanandroid.util.network;
 
 import java.util.concurrent.TimeUnit;
 
-import cc.lixiaoyu.wanandroid.entity.WanAndroidResponse;
 import cc.lixiaoyu.wanandroid.entity.Optional;
+import cc.lixiaoyu.wanandroid.entity.WanResponse;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -26,7 +26,7 @@ public class BaseModelFactory {
      * @return
      */
     @SuppressWarnings("unchecked")
-    public static <T> Observable<Optional<T>> compose(Observable<WanAndroidResponse<T>> observable) {
+    public static <T> Observable<Optional<T>> compose(Observable<WanResponse<T>> observable) {
         return observable.compose(transformer);
     }
 
@@ -36,20 +36,20 @@ public class BaseModelFactory {
      * @param <T>
      */
     private static class ResponseTransformer<T> implements
-            ObservableTransformer<WanAndroidResponse<T>, Optional<T>> {
+            ObservableTransformer<WanResponse<T>, Optional<T>> {
 
         @Override
-        public ObservableSource<Optional<T>> apply(Observable<WanAndroidResponse<T>> upstream) {
+        public ObservableSource<Optional<T>> apply(Observable<WanResponse<T>> upstream) {
             return upstream.subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .unsubscribeOn(Schedulers.io())
                     .timeout(5, TimeUnit.SECONDS)
                     .retry(5)
-                    .flatMap(new Function<WanAndroidResponse<T>, ObservableSource<Optional<T>>>() {
+                    .flatMap(new Function<WanResponse<T>, ObservableSource<Optional<T>>>() {
                         @Override
-                        public ObservableSource<Optional<T>> apply(WanAndroidResponse<T> result) throws Exception {
+                        public ObservableSource<Optional<T>> apply(WanResponse<T> result) throws Exception {
                             if (result.isSuccess()) {
-                                return createHttpData(result.transform());
+                                return createHttpData(new Optional<T>(result.getData()));
                             } else {
                                 return Observable.error(new APIException(result.getErrorCode(),
                                         result.getErrorMsg()));
@@ -79,7 +79,7 @@ public class BaseModelFactory {
          * @param result 请求结果
          * @return 过滤处理, 返回只有data数据的Observable
          */
-        private Observable<T> flatResponse(final WanAndroidResponse<T> result) {
+        private Observable<T> flatResponse(final WanResponse<T> result) {
             return Observable.create(new ObservableOnSubscribe<T>() {
                 @Override
                 public void subscribe(ObservableEmitter<T> emitter) throws Exception {

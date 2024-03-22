@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<com.youth.banner.Banner
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fhome_banner"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <com.youth.banner.Banner
-        android:id="@+id/fhome_banner"
-        android:layout_width="match_parent"
-        android:layout_height="200dp" />
-</LinearLayout>
+    android:layout_height="200dp" />
