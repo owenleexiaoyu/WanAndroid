@@ -138,10 +138,10 @@ interface WanAndroidService {
      */
     @POST("user/login")
     @FormUrlEncoded
-    fun login(
+    suspend fun login(
         @Field("username") username: String,
         @Field("password") password: String
-    ): Observable<WanResponse<User>>
+    ): WanResponse<User>
 
     /**
      * 用户注册
@@ -154,11 +154,11 @@ interface WanAndroidService {
      */
     @POST("user/register")
     @FormUrlEncoded
-    fun register(
+    suspend fun register(
         @Field("username") username: String,
         @Field("password") password: String,
         @Field("repassword") rePassword: String
-    ): Observable<WanResponse<User>>
+    ): WanResponse<User>
 
     /**
      * 用户退出登录
@@ -168,7 +168,7 @@ interface WanAndroidService {
      * @return
      */
     @GET("user/logout/json")
-    fun logout(): Observable<WanResponse<String>>
+    suspend fun logout(): WanResponse<String>
 
     /**
      * 获取收藏的文章列表
