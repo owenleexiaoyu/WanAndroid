@@ -6,8 +6,6 @@ import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import butterknife.BindView
-import butterknife.ButterKnife
 import cc.lixiaoyu.wanandroid.R
 import cc.lixiaoyu.wanandroid.entity.Article
 import com.chad.library.adapter.base.BaseQuickAdapter

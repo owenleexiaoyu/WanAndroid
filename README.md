@@ -17,7 +17,6 @@
 
 ### 用到的第三方优秀框架
 
-- ButterKnife
 - OkHttp3
 - Retrofit2
 - RxJava

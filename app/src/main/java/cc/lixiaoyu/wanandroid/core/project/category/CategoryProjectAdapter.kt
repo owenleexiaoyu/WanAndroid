@@ -1,23 +1,17 @@
 package cc.lixiaoyu.wanandroid.core.project.category
 
 import android.text.Html
-import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import butterknife.BindView
-import butterknife.ButterKnife
 import cc.lixiaoyu.wanandroid.R
 import cc.lixiaoyu.wanandroid.core.detail.ArticleDetailActivity
 import cc.lixiaoyu.wanandroid.databinding.ItemRecyclerviewProjectDataBinding
 import cc.lixiaoyu.wanandroid.entity.Article
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 
 class CategoryProjectAdapter(private val viewModel: CategoryProjectViewModel) : RecyclerView.Adapter<CategoryProjectAdapter.ViewHolder>() {
