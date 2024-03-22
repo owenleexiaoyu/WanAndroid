@@ -17,7 +17,7 @@ import cc.lixiaoyu.wanandroid.core.nav.NavFragment
 import cc.lixiaoyu.wanandroid.core.project.ProjectFragment
 import cc.lixiaoyu.wanandroid.core.search.SearchActivity
 import cc.lixiaoyu.wanandroid.core.knowledgemap.KnowledgeMapFragment
-import cc.lixiaoyu.wanandroid.core.wechat.WechatFragment
+import cc.lixiaoyu.wanandroid.core.wechat.WeChatFragment
 import cc.lixiaoyu.wanandroid.databinding.ActivityMainBinding
 import cc.lixiaoyu.wanandroid.util.behavior.IJumpToTop
 import com.ashokvarma.bottomnavigation.BottomNavigationBar
@@ -147,7 +147,7 @@ class MainActivity : AppCompatActivity() {
             2 -> {
                 wechatFragment = supportFragmentManager.findFragmentByTag(WECHAT_FRAGMENT_TAG)
                 if (wechatFragment == null) {
-                    wechatFragment = WechatFragment.newInstance()
+                    wechatFragment = WeChatFragment.newInstance()
                 }
                 addAndShowFragment(requireNotNull(wechatFragment), WECHAT_FRAGMENT_TAG)
             }

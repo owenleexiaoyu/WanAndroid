@@ -24,7 +24,6 @@ class CategoryProjectFragment : Fragment() {
     private lateinit var viewModel: CategoryProjectViewModel
     private lateinit var dataAdapter: CategoryProjectAdapter
 
-    private var project: Project? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -101,34 +100,6 @@ class CategoryProjectFragment : Fragment() {
             }
         }
     }
-
-
-//    override fun showCollectArticle(success: Boolean, position: Int) {
-//        if (success) {
-//            showToast("收藏文章成功")
-//            mAdapter!!.data[position].isCollect = true
-//            mAdapter!!.notifyDataSetChanged()
-//        } else {
-//            showToast("收藏文章失败")
-//        }
-//    }
-//
-//    override fun showCancelCollectArticle(success: Boolean, position: Int) {
-//        if (success) {
-//            showToast("取消收藏文章成功")
-//            mAdapter!!.data[position].isCollect = false
-//            mAdapter!!.notifyDataSetChanged()
-//        } else {
-//            showToast("取消收藏文章失败")
-//        }
-//    }
-
-//    /**
-//     * 回到列表顶部
-//     */
-//    fun jumpToListTop() {
-//        mRecyclerView!!.smoothScrollToPosition(0)
-//    }
 
     companion object {
         private const val ARGUMENTS_KEY = "project_title"

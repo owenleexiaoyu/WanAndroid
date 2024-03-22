@@ -7,6 +7,7 @@ import cc.lixiaoyu.wanandroid.core.search.model.HotKey
 import cc.lixiaoyu.wanandroid.core.search.model.WebSite
 import cc.lixiaoyu.wanandroid.core.todo.model.TodoEntity
 import cc.lixiaoyu.wanandroid.core.todo.model.TodoEntity.TodoItem
+import cc.lixiaoyu.wanandroid.core.wechat.model.WeChatOfficialAccount
 import cc.lixiaoyu.wanandroid.entity.*
 import io.reactivex.Observable
 import retrofit2.http.*
@@ -227,7 +228,7 @@ interface WanAndroidService {
      * @return
      */
     @GET("wxarticle/chapters/json")
-    fun getWetchatPublicTitles(): Observable<WanResponse<List<WechatTitle?>?>?>?
+    suspend fun getWetChatOfficialAccountList(): WanResponse<List<WeChatOfficialAccount>>
 
     /**
      * 获取某个公众号下的文章
@@ -236,8 +237,10 @@ interface WanAndroidService {
      * @return
      */
     @GET("wxarticle/list/{id}/{page}/json")
-    fun getWechatPublicArticlesById(@Path("id") id: Int,
-                                    @Path("page") page: Int): Observable<WanResponse<WechatPage?>?>?
+    suspend fun getWechatPublicArticlesByIdNew(
+        @Path("id") id: String,
+        @Path("page") page: Int
+    ): WanResponse<ArticlePageData>
 
     /**
      * 根据type来获取todo清单
