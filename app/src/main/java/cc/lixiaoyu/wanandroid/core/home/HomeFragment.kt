@@ -15,7 +15,6 @@ import cc.lixiaoyu.wanandroid.adapter.ArticleAdapter
 import cc.lixiaoyu.wanandroid.core.detail.ArticleDetailActivity.Companion.actionStart
 import cc.lixiaoyu.wanandroid.databinding.FragmentHomeBinding
 import cc.lixiaoyu.wanandroid.util.GlideImageLoader
-import cc.lixiaoyu.wanandroid.util.ToastUtil.showToast
 import cc.lixiaoyu.wanandroid.util.behavior.IJumpToTop
 import com.scwang.smartrefresh.header.MaterialHeader
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter
@@ -140,8 +139,9 @@ class HomeFragment : Fragment(), IJumpToTop {
      * 初始化Banner控件相关属性
      */
     private fun initBanner() {
-        bannerView = LayoutInflater
-            .from(activity).inflate(R.layout.layout_banner, null) as? Banner
+        val bannerLayout = LayoutInflater
+            .from(activity).inflate(R.layout.layout_banner, null) as ViewGroup
+        bannerView = bannerLayout.findViewById(R.id.fhome_banner)
         bannerView?.apply {
             setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE)
             setImageLoader(GlideImageLoader())
@@ -150,6 +150,7 @@ class HomeFragment : Fragment(), IJumpToTop {
             isAutoPlay(true)
             setDelayTime(1500)
         }
+        bannerLayout.removeView(bannerView)
         mAdapter?.addHeaderView(bannerView)
     }
 
@@ -168,26 +169,6 @@ class HomeFragment : Fragment(), IJumpToTop {
                 actionStart(requireActivity(), banner.toDetailParam())
             }
             start()
-        }
-    }
-
-    fun showCollectArticle(success: Boolean, position: Int) {
-        if (success) {
-            showToast("收藏文章成功")
-            mAdapter!!.data[position].isCollect = true
-            mAdapter!!.notifyDataSetChanged()
-        } else {
-            showToast("收藏文章失败")
-        }
-    }
-
-    fun showCancelCollectArticle(success: Boolean, position: Int) {
-        if (success) {
-            showToast("取消收藏文章成功")
-            mAdapter!!.data[position].isCollect = false
-            mAdapter!!.notifyDataSetChanged()
-        } else {
-            showToast("取消收藏文章失败")
         }
     }
 
