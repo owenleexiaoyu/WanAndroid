@@ -17,7 +17,7 @@ class WeChatOfficialAccountViewModel(private val officialAccountId: String): Vie
 
     private val apiService: WanAndroidService by lazy { RetrofitManager.wanAndroidService }
 
-    private var currentPage = 1
+    private var currentPage = 0
 
     private val _articleList: MutableStateFlow<List<Article>> = MutableStateFlow(listOf())
     val articleList: StateFlow<List<Article>> = _articleList
@@ -33,7 +33,7 @@ class WeChatOfficialAccountViewModel(private val officialAccountId: String): Vie
     }
 
     fun refreshWeChatOfficialAccountArticleList() {
-        currentPage = 1
+        currentPage = 0
         getWeChatOfficialAccountArticleList(currentPage)
     }
 
@@ -43,7 +43,7 @@ class WeChatOfficialAccountViewModel(private val officialAccountId: String): Vie
     }
 
     private fun getWeChatOfficialAccountArticleList(page: Int) {
-        if (page == 1) {
+        if (page == 0) {
             _isRefreshing.value = true
         } else {
             _isLoadingMore.value = true
@@ -52,7 +52,7 @@ class WeChatOfficialAccountViewModel(private val officialAccountId: String): Vie
             try {
                 val pageData = apiService.getWechatPublicArticlesByIdNew(officialAccountId, currentPage).data ?: return@launch
                 if (pageData.dataList.isNotEmpty()) {
-                    if (page == 1) {
+                    if (page == 0) {
                         _articleList.value = pageData.dataList
                     } else {
                         val newList = _articleList.value.toMutableList().apply {

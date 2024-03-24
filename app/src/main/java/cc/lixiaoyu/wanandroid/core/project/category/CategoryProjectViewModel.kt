@@ -17,7 +17,7 @@ class CategoryProjectViewModel(private val projectId: String): ViewModel() {
 
     private val apiService: WanAndroidService by lazy { RetrofitManager.wanAndroidService }
 
-    private var currentPage = 1
+    private var currentPage = 0
 
     private val _articleList: MutableStateFlow<List<Article>> = MutableStateFlow(listOf())
     val articleList: StateFlow<List<Article>> = _articleList
@@ -29,8 +29,12 @@ class CategoryProjectViewModel(private val projectId: String): ViewModel() {
     val isLoadingMore = _isLoadingMore
 
 
+    init {
+        refreshCategoryProjectList()
+    }
+
     fun refreshCategoryProjectList() {
-        currentPage = 1
+        currentPage = 0
         getCategoryProjectList(currentPage)
     }
 
@@ -40,7 +44,7 @@ class CategoryProjectViewModel(private val projectId: String): ViewModel() {
     }
 
     private fun getCategoryProjectList(page: Int) {
-        if (page == 1) {
+        if (page == 0) {
             _isRefreshing.value = true
         } else {
             _isLoadingMore.value = true
@@ -49,7 +53,7 @@ class CategoryProjectViewModel(private val projectId: String): ViewModel() {
             try {
                 val pageData = apiService.getProjectArticlesByCidNew(currentPage, projectId).data ?: return@launch
                 if (pageData.dataList.isNotEmpty()) {
-                    if (page == 1) {
+                    if (page == 0) {
                         _articleList.value = pageData.dataList
                     } else {
                         val newList = _articleList.value.toMutableList().apply {
