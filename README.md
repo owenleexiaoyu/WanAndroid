@@ -13,22 +13,25 @@
 
 ### v1.0 版本：（2019-05-08）
 
-- 基本实现玩Android API中的功能：包括最新的TODO工具和公众号文章
+- 基本实现 WanAndroid API 中的功能：包括最新的 TODO 工具和公众号文章
+
+### v2.0 版本：（2025-01-19）
+- 使用 Kotlin 和 MVVM 重构整个项目，所有的类用 Kotlin 重写
 
 ### 用到的第三方优秀框架
 
-- OkHttp3
-- Retrofit2
-- RxJava
-- RxAndroid
-- Gson
-- Glide
-- ViewPagerHelper
-- Banner
-- SmartRefreshLayout
-- BaseRecyclerViewAdapterHelper
-- FlowLayout
-- PersistentCookieJar
+- [Kotlin Coroutines](https://github.com/Kotlin/kotlinx.coroutines)
+- [OkHttp](https://github.com/square/okhttp)
+- [Retrofit](https://github.com/square/retrofit)
+- [RxJava](https://github.com/ReactiveX/RxJava)
+- [RxAndroid](https://github.com/ReactiveX/RxAndroid)
+- [Gson](https://github.com/google/gson)
+- [Glide](https://github.com/bumptech/glide)
+- [Banner](https://github.com/youth5201314/banner)
+- [SmartRefreshLayout](https://github.com/scwang90/SmartRefreshLayout)
+- [BaseRecyclerViewAdapterHelper](https://github.com/CymChad/BaseRecyclerViewAdapterHelper)
+- [flexbox-layout](https://github.com/google/flexbox-layout)
+- [PersistentCookieJar](https://github.com/franmontiel/PersistentCookieJar)
 - BottomNavigationBar
 
 
