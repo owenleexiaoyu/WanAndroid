@@ -8,11 +8,10 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.multidex.MultiDex
 import cc.lixiaoyu.wanandroid.BuildConfig
 import cc.lixiaoyu.wanandroid.core.account.AccountManager
+import cc.lixiaoyu.wanandroid.util.storage.DataManager
+import cc.lixiaoyu.wanandroid.util.storage.SPHelper
 import cc.lixiaoyu.wanandroid.util.storage.SPUtil
 import com.tencent.bugly.crashreport.CrashReport
-import io.reactivex.Observable
-import io.reactivex.schedulers.Schedulers
-import org.litepal.LitePal
 
 class WanApplication : Application() {
     override fun attachBaseContext(base: Context) {
@@ -23,7 +22,6 @@ class WanApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         globalContext = applicationContext
-        initLitepal()
         initBugly()
         initAccount()
         initTheme()
@@ -42,18 +40,11 @@ class WanApplication : Application() {
         CrashReport.initCrashReport(this, "7e1141d5de", BuildConfig.DEBUG)
     }
 
-    /**
-     * 初始化Litepal数据库
-     */
-    private fun initLitepal() {
-        LitePal.initialize(this)
-    }
-
     private fun initTheme() {
-        if (SPUtil.getData("dark_mode", 0) == 0) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-        } else {
+        if (DataManager.isDarkMode) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         }
     }
 

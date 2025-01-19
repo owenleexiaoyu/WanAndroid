@@ -17,8 +17,8 @@ import cc.lixiaoyu.wanandroid.core.wechat.model.WeChatOfficialAccount
 import cc.lixiaoyu.wanandroid.databinding.FragmentWechatDataBinding
 import cc.lixiaoyu.wanandroid.entity.Article
 import cc.lixiaoyu.wanandroid.util.behavior.IJumpToTop
-import com.scwang.smartrefresh.header.MaterialHeader
-import com.scwang.smartrefresh.layout.footer.ClassicsFooter
+import com.scwang.smart.refresh.header.MaterialHeader
+import com.scwang.smart.refresh.footer.ClassicsFooter
 import kotlinx.coroutines.launch
 
 class WeChatOfficialAccountFragment : Fragment(), IJumpToTop {

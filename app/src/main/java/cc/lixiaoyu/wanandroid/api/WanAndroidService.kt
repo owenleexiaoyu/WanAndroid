@@ -1,5 +1,6 @@
 package cc.lixiaoyu.wanandroid.api
 
+import cc.lixiaoyu.wanandroid.core.home.banner.BannerModel
 import cc.lixiaoyu.wanandroid.core.knowledgemap.model.KnowledgeNode
 import cc.lixiaoyu.wanandroid.core.nav.Nav
 import cc.lixiaoyu.wanandroid.core.project.model.Project
@@ -20,7 +21,7 @@ interface WanAndroidService {
      * @return
      */
     @GET("banner/json")
-    suspend fun getBannerDataNew(): WanResponse<List<Banner>>
+    suspend fun getBannerDataNew(): WanResponse<List<BannerModel>>
 
     /**
      * 获取文章列表

@@ -1,22 +1,20 @@
 package cc.lixiaoyu.wanandroid.core.search
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.MenuItem
-import android.view.View
-import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import cc.lixiaoyu.wanandroid.R
+import cc.lixiaoyu.wanandroid.adapter.FlowTagAdapter
 import cc.lixiaoyu.wanandroid.core.detail.ArticleDetailActivity.Companion.actionStart
+import cc.lixiaoyu.wanandroid.core.search.model.HotKey
+import cc.lixiaoyu.wanandroid.core.search.model.WebSite
 import cc.lixiaoyu.wanandroid.core.search.result.SearchResultActivity
 import cc.lixiaoyu.wanandroid.databinding.ActivitySearchBinding
-import com.zhy.view.flowlayout.FlowLayout
-import com.zhy.view.flowlayout.TagAdapter
+import com.google.android.flexbox.FlexboxLayoutManager
 import kotlinx.coroutines.launch
 
 class SearchActivity : AppCompatActivity() {
@@ -56,37 +54,54 @@ class SearchActivity : AppCompatActivity() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.hotKeyList.collect {
-                    val hotKeyNameList = it.map { hotKey -> hotKey.name }.toList()
-                    binding.tfHotkeys.adapter = SearchTagAdapter(hotKeyNameList)
-                    binding.tfHotkeys.setOnTagClickListener { _, position, _ ->
-                        val hotKeyName = it[position].name
-                        viewModel.searchKeyword(hotKeyName)
-                        showSearchResult(hotKeyName)
-                        true
+                    val hotKeyAdapter = FlowTagAdapter<HotKey>().apply {
+                        setTitleConverter { data -> data.name }
+                        setOnTagClickListener { view, position, data ->
+                            val hotKeyName = data.name
+                            viewModel.searchKeyword(hotKeyName)
+                            showSearchResult(hotKeyName)
+                        }
                     }
+                    binding.tfHotkeys.apply {
+                        adapter = hotKeyAdapter
+                        layoutManager = FlexboxLayoutManager(this.context)
+                    }
+                    hotKeyAdapter.setData(it)
                 }
             }
         }
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.commonSiteList.collect {
-                    val siteNameList = it.map { site -> site.name }.toList()
-                    binding.tfCommonsite.adapter = SearchTagAdapter(siteNameList)
-                    binding.tfCommonsite.setOnTagClickListener { _, position, _ ->
-                        actionStart(this@SearchActivity, it[position].toDetailParam())
-                        true
+                    val siteNameAdapter = FlowTagAdapter<WebSite>().apply {
+                        setTitleConverter { data -> data.name }
+                        setOnTagClickListener { view, position, data ->
+                            actionStart(this@SearchActivity, data.toDetailParam())
+                        }
                     }
+                    binding.tfCommonsite.apply {
+                        adapter = siteNameAdapter
+                        layoutManager = FlexboxLayoutManager(this.context)
+                    }
+                    siteNameAdapter.setData(it)
                 }
             }
         }
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.searchHistoryList.collect {
-                    binding.tfHistory.adapter = SearchTagAdapter(it)
-                    binding.tfHistory.setOnTagClickListener { _, position, _ ->
-                        showSearchResult(it[position])
-                        true
+                    val searchHistoryAdapter = FlowTagAdapter<String>().apply {
+                        setTitleConverter { data -> data }
+                        setOnTagClickListener { view, position, data ->
+                            showSearchResult(data)
+                        }
                     }
+                    binding.tfHistory.apply {
+                        adapter = searchHistoryAdapter
+                        layoutManager = FlexboxLayoutManager(this.context)
+                    }
+
+                    searchHistoryAdapter.setData(it)
                 }
             }
         }
@@ -120,12 +135,4 @@ class SearchActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    class SearchTagAdapter(val list: List<String>) : TagAdapter<String>(list) {
-        override fun getView(parent: FlowLayout?, position: Int, t: String?): View {
-            val tv = LayoutInflater.from(parent?.context)
-                .inflate(R.layout.layout_nav_item, parent, false) as TextView
-            tv.text = t ?: ""
-            return tv
-        }
-    }
 }

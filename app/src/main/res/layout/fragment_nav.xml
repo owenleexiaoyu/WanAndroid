@@ -10,10 +10,11 @@
 
     </androidx.recyclerview.widget.RecyclerView>
 
-    <com.zhy.view.flowlayout.TagFlowLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/fnav_flow_layout_container"
         android:padding="5dp"
-        android:id="@+id/fnav_flowlayout"
         android:layout_width="0dp"
-        android:layout_weight="5"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_weight="5">
+    </androidx.recyclerview.widget.RecyclerView>
 </LinearLayout>

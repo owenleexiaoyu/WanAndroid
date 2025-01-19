@@ -55,21 +55,22 @@ class SearchViewModel : ViewModel() {
 
     private fun getSearchHistoryList() {
         viewModelScope.launch {
-            val historyList = DataManager.loadAllHistoryData()
+            val historyList = SearchHistoryStorage.loadAllHistoryData()
             _searchHistoryList.value = historyList
         }
     }
 
     fun searchKeyword(keyword: String) {
-        DataManager.addHistoryData(keyword)
-        _searchHistoryList.value = _searchHistoryList.value.toMutableList().apply {
-            add(keyword)
+        if (SearchHistoryStorage.addHistoryData(keyword)) { // 在磁盘中添加成功
+            _searchHistoryList.value = _searchHistoryList.value.toMutableList().apply {
+                add(keyword)
+            }
         }
     }
 
     fun clearSearchHistory() {
         viewModelScope.launch {
-            DataManager.clearAllHistoryData()
+            SearchHistoryStorage.clearAllHistoryData()
             _searchHistoryList.value = emptyList()
         }
     }

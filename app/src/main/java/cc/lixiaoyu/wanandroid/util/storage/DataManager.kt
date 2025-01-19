@@ -2,24 +2,7 @@ package cc.lixiaoyu.wanandroid.util.storage
 
 object DataManager {
 
-    private val dbHelper = DBHelper()
     private val spHelper = SPHelper()
-
-    fun addHistoryData(historyData: String?): Boolean {
-        return dbHelper.addHistoryData(historyData)
-    }
-
-    fun deleteHistoryData(historyData: String?) {
-        dbHelper.deleteHistoryData(historyData)
-    }
-
-    fun clearAllHistoryData() {
-        dbHelper.clearAllHistoryData()
-    }
-
-    fun loadAllHistoryData(): List<String> {
-        return dbHelper.loadAllHistoryData()
-    }
 
     var loginAccount: String?
         get() = spHelper.loginAccount

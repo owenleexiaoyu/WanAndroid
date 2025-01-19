@@ -12,8 +12,8 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import cc.lixiaoyu.wanandroid.core.project.model.Project
 import cc.lixiaoyu.wanandroid.databinding.FragmentProjectDataBinding
-import com.scwang.smartrefresh.header.MaterialHeader
-import com.scwang.smartrefresh.layout.footer.ClassicsFooter
+import com.scwang.smart.refresh.header.MaterialHeader
+import com.scwang.smart.refresh.footer.ClassicsFooter
 import kotlinx.coroutines.launch
 
 class CategoryProjectFragment : Fragment() {

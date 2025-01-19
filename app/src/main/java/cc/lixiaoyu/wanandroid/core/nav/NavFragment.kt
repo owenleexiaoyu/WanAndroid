@@ -4,23 +4,28 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import cc.lixiaoyu.wanandroid.R
+import cc.lixiaoyu.wanandroid.adapter.FlowTagAdapter
 import cc.lixiaoyu.wanandroid.core.detail.ArticleDetailActivity
 import cc.lixiaoyu.wanandroid.databinding.FragmentNavBinding
-import com.zhy.view.flowlayout.FlowLayout
-import com.zhy.view.flowlayout.TagAdapter
+import com.google.android.flexbox.FlexboxLayoutManager
 
 class NavFragment : Fragment() {
 
     private lateinit var binding: FragmentNavBinding
     private lateinit var navVM: NavViewModel
     private val mAdapter: NavAdapter by lazy { NavAdapter(R.layout.item_nav, listOf()) }
-
-    private var navItemList: MutableList<NavItem> = mutableListOf()
+    private val navItemAdapter: FlowTagAdapter<NavItem> by lazy {
+        FlowTagAdapter<NavItem>().apply {
+            setTitleConverter { it.title }
+            setOnTagClickListener { view, position, data ->
+                ArticleDetailActivity.actionStart(view.context, data.toDetailParam())
+            }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,19 +46,13 @@ class NavFragment : Fragment() {
             adapter = mAdapter
             layoutManager = LinearLayoutManager(activity)
         }
-        binding.fnavFlowlayout.apply {
-            adapter = object : TagAdapter<NavItem>(navItemList) {
-                override fun getView(parent: FlowLayout?, position: Int, t: NavItem?): View? {
-                    val navItemTitle: TextView? = LayoutInflater.from(activity)
-                        .inflate(R.layout.layout_nav_item, parent, false) as? TextView
-                    navItemTitle?.text = t?.title
-                    return navItemTitle
-                }
-            }
-            setOnTagClickListener { _, position, _ ->
-                ArticleDetailActivity.actionStart(context, navItemList[position].toDetailParam())
-                true
-            }
+        binding.fnavFlowLayoutContainer.apply {
+            adapter = navItemAdapter
+            layoutManager = FlexboxLayoutManager(this.context)
+//            setOnTagClickListener { _, position, _ ->
+//                ArticleDetailActivity.actionStart(context, navItemList[position].toDetailParam())
+//                true
+//            }
         }
         subscribeData()
     }
@@ -71,9 +70,7 @@ class NavFragment : Fragment() {
     }
 
     private fun refreshFlowLayout(newList: List<NavItem>) {
-        navItemList.clear()
-        navItemList.addAll(newList)
-        binding.fnavFlowlayout.onChanged()
+        navItemAdapter.setData(newList)
     }
 
     companion object {

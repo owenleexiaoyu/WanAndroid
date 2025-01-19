@@ -9,8 +9,8 @@ import cc.lixiaoyu.wanandroid.core.todo.model.TodoEntity
 import cc.lixiaoyu.wanandroid.core.todo.adapter.TodoFinishedAdapter
 import cc.lixiaoyu.wanandroid.core.todo.adapter.TodoFinishedItemClickListener
 import cc.lixiaoyu.wanandroid.databinding.LayoutTodoDoneBinding
-import com.scwang.smartrefresh.header.MaterialHeader
-import com.scwang.smartrefresh.layout.constant.RefreshState
+import com.scwang.smart.refresh.header.MaterialHeader
+import com.scwang.smart.refresh.layout.constant.RefreshState
 
 class TodoFinishedFragment: BaseTodoFragment() {
 

@@ -1,9 +1,9 @@
-package cc.lixiaoyu.wanandroid.entity
+package cc.lixiaoyu.wanandroid.core.home.banner
 
 import cc.lixiaoyu.wanandroid.core.detail.DetailParam
 import com.google.gson.annotations.SerializedName
 
-data class Banner(
+data class BannerModel(
     @SerializedName("id")
     val id: Int = 0,
     @SerializedName("title")

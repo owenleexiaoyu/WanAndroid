@@ -21,9 +21,9 @@ import cc.lixiaoyu.wanandroid.databinding.FragmentSubKnowledgenodeArticleBinding
 import cc.lixiaoyu.wanandroid.util.behavior.IJumpToTop
 import cc.lixiaoyu.wanandroid.util.storage.DataManager
 import com.chad.library.adapter.base.BaseQuickAdapter
-import com.scwang.smartrefresh.header.MaterialHeader
-import com.scwang.smartrefresh.layout.api.RefreshLayout
-import com.scwang.smartrefresh.layout.footer.ClassicsFooter
+import com.scwang.smart.refresh.header.MaterialHeader
+import com.scwang.smart.refresh.layout.api.RefreshLayout
+import com.scwang.smart.refresh.footer.ClassicsFooter
 import kotlinx.coroutines.launch
 
 class SubKnowledgeNodeFragment : Fragment(), IJumpToTop {

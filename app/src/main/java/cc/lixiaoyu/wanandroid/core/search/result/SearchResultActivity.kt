@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import cc.lixiaoyu.wanandroid.R
 import cc.lixiaoyu.wanandroid.core.detail.ArticleDetailActivity.Companion.actionStart
 import cc.lixiaoyu.wanandroid.databinding.ActivitySearchResultBinding
-import com.scwang.smartrefresh.header.MaterialHeader
-import com.scwang.smartrefresh.layout.footer.ClassicsFooter
+import com.scwang.smart.refresh.header.MaterialHeader
+import com.scwang.smart.refresh.footer.ClassicsFooter
 import kotlinx.coroutines.launch
 
 class SearchResultActivity : AppCompatActivity() {

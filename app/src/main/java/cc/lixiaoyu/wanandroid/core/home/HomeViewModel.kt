@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import cc.lixiaoyu.wanandroid.api.WanAndroidService
 import cc.lixiaoyu.wanandroid.core.collection.CollectAbility
 import cc.lixiaoyu.wanandroid.entity.Article
-import cc.lixiaoyu.wanandroid.entity.Banner
+import cc.lixiaoyu.wanandroid.core.home.banner.BannerModel
 import cc.lixiaoyu.wanandroid.util.ToastUtil
 import cc.lixiaoyu.wanandroid.util.network.RetrofitManager
 import kotlinx.coroutines.async
@@ -22,8 +22,8 @@ class HomeViewModel : ViewModel() {
     private val _articleList: MutableStateFlow<List<Article>> = MutableStateFlow(listOf())
     val articleList: StateFlow<List<Article>> = _articleList
 
-    private val _bannerList: MutableStateFlow<List<Banner>> = MutableStateFlow(listOf())
-    val bannerList: StateFlow<List<Banner>> = _bannerList
+    private val _bannerList: MutableStateFlow<List<BannerModel>> = MutableStateFlow(listOf())
+    val bannerList: StateFlow<List<BannerModel>> = _bannerList
 
     private val _isRefreshing: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val isRefreshing = _isRefreshing
