@@ -178,7 +178,7 @@ interface WanAndroidService {
      * @return
      */
     @GET("lg/collect/list/{page}/json")
-    suspend fun getCollectionArticleListNew(@Path("page") page: Int): WanResponse<ArticlePageData>
+    suspend fun getCollectionArticleList(@Path("page") page: Int): WanResponse<ArticlePageData>
 
     /**
      * 收藏文章

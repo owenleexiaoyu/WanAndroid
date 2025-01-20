@@ -4,19 +4,24 @@ import android.annotation.SuppressLint
 import android.os.Looper
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.map
 import cc.lixiaoyu.wanandroid.entity.User
 import cc.lixiaoyu.wanandroid.util.RxBus
 import cc.lixiaoyu.wanandroid.util.network.RetrofitManager
 import cc.lixiaoyu.wanandroid.util.storage.DataManager
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 
 object AccountManager {
 
     private val service = RetrofitManager.wanAndroidService
+    private val coroutineScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
     private val _userLiveData: MutableLiveData<User?> = MutableLiveData()
-    var userLiveData: LiveData<User?> = _userLiveData
+    var isLoginLiveData: LiveData<Boolean> = _userLiveData.map { it != null }
 
     init {
         loadUserFromSp()
@@ -45,7 +50,7 @@ object AccountManager {
         }
     }
 
-    fun isLogin(): Boolean = _userLiveData.value != null
+    fun isLogin(): Boolean = isLoginLiveData.value ?: false
 
     @SuppressLint("CheckResult")
     fun signUp(
@@ -54,7 +59,7 @@ object AccountManager {
         passwordConfirm: String,
         callback: LoginCallback? = null
     ) {
-        GlobalScope.launch {
+        coroutineScope.launch {
             try {
                 val me = service.register(userName, password, passwordConfirm).data ?: return@launch
                 updateUser(me)
@@ -73,7 +78,7 @@ object AccountManager {
         password: String,
         callback: LoginCallback? = null
     ) {
-        GlobalScope.launch {
+        coroutineScope.launch {
             try {
                 val me = service.login(userName, password).data ?: return@launch
                 updateUser(me)
@@ -88,7 +93,7 @@ object AccountManager {
 
     @SuppressLint("CheckResult")
     fun logout(callback: LogoutCallback? = null) {
-        GlobalScope.launch {
+        coroutineScope.launch {
             try {
                 val result = service.logout().data
                 updateUser(null)

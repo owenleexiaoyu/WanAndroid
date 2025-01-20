@@ -1,5 +1,6 @@
 package cc.lixiaoyu.wanandroid.core.project.category
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -72,7 +73,7 @@ class CategoryProjectViewModel(private val projectId: String): ViewModel() {
     }
 
 
-    fun collectArticleInArticleList(position: Int, articleId: Int) {
+    fun collectArticleInArticleList(context: Context, position: Int, articleId: Int) {
         CollectAbility.collectArticle(null, articleId) { success ->
             if (success) {
                 val article = _articleList.value[position]
@@ -85,7 +86,7 @@ class CategoryProjectViewModel(private val projectId: String): ViewModel() {
         }
     }
 
-    fun unCollectArticleInArticleList(position: Int, articleId: Int) {
+    fun unCollectArticleInArticleList(context: Context, position: Int, articleId: Int) {
         CollectAbility.unCollectArticle(null, articleId) { success ->
             if (success) {
                 val article = _articleList.value[position]

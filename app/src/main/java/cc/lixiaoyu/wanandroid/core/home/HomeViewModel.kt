@@ -1,5 +1,6 @@
 package cc.lixiaoyu.wanandroid.core.home
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import cc.lixiaoyu.wanandroid.api.WanAndroidService
@@ -100,9 +101,9 @@ class HomeViewModel : ViewModel() {
         return apiService.getArticleListNew(page, null).data?.dataList ?: emptyList()
     }
 
-    fun collectOrUnCollectArticle(position: Int, article: Article) {
+    fun collectOrUnCollectArticle(context: Context, position: Int, article: Article) {
         if (article.isCollect) {
-            CollectAbility.unCollectArticle(null, article.id) { success ->
+            CollectAbility.unCollectArticle(context, article.id) { success ->
                 if (success) {
                     article.isCollect = false
                     _articleList.value = _articleList.value
@@ -112,7 +113,7 @@ class HomeViewModel : ViewModel() {
                 }
             }
         } else {
-            CollectAbility.collectArticle(null, article.id) { success ->
+            CollectAbility.collectArticle(context, article.id) { success ->
                 if (success) {
                     article.isCollect = true
                     _articleList.value = _articleList.value

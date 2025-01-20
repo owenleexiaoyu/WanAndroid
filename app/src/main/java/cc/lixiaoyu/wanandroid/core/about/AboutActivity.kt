@@ -1,6 +1,7 @@
 package cc.lixiaoyu.wanandroid.core.about
 
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import cc.lixiaoyu.wanandroid.databinding.ActivityAboutBinding
 import cc.lixiaoyu.wanandroid.databinding.ActivityAboutBinding.*
@@ -30,4 +31,10 @@ class AboutActivity : AppCompatActivity() {
         }
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            finish()
+        }
+        return true
+    }
 }

@@ -44,9 +44,9 @@ class CategoryProjectAdapter(private val viewModel: CategoryProjectViewModel) : 
             binding.itemProjectCollect.setOnClickListener {
                 val article = data[adapterPosition]
                 if (article.isCollect) {
-                    viewModel.unCollectArticleInArticleList(adapterPosition, article.id)
+                    viewModel.unCollectArticleInArticleList(it.context, adapterPosition, article.id)
                 } else {
-                    viewModel.collectArticleInArticleList(adapterPosition, article.id)
+                    viewModel.collectArticleInArticleList(it.context, adapterPosition, article.id)
                 }
             }
         }

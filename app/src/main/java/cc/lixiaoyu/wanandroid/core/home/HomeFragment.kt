@@ -76,7 +76,7 @@ class HomeFragment : Fragment(), IJumpToTop {
             actionStart(requireActivity(), article.toDetailParam())
         }
         mAdapter!!.setOnItemChildClickListener { adapter, view, position ->
-            viewModel.collectOrUnCollectArticle(position, mAdapter!!.data[position])
+            viewModel.collectOrUnCollectArticle(view.context, position, mAdapter!!.data[position])
         }
 
         // 在RecyclerView中添加Banner的HeaderView

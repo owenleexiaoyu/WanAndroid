@@ -43,7 +43,7 @@ class CollectionViewModel: ViewModel() {
     private fun getCollectionArticleList(page: Int) {
         viewModelScope.launch {
             try {
-                val pageData = apiService.getCollectionArticleListNew(page).data ?: return@launch
+                val pageData = apiService.getCollectionArticleList(page).data ?: return@launch
                 if (pageData.dataList.isNotEmpty()) {
                    if (page == 0) {
                        _articleList.value = pageData.dataList
