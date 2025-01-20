@@ -8,9 +8,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.multidex.MultiDex
 import cc.lixiaoyu.wanandroid.BuildConfig
 import cc.lixiaoyu.wanandroid.core.account.AccountManager
-import cc.lixiaoyu.wanandroid.util.storage.DataManager
-import cc.lixiaoyu.wanandroid.util.storage.SPHelper
-import cc.lixiaoyu.wanandroid.util.storage.SPUtil
+import cc.lixiaoyu.wanandroid.core.theme.ThemeManager
 import com.tencent.bugly.crashreport.CrashReport
 
 class WanApplication : Application() {
@@ -41,7 +39,7 @@ class WanApplication : Application() {
     }
 
     private fun initTheme() {
-        if (DataManager.isDarkMode) {
+        if (ThemeManager.isDarkMode.value) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)

@@ -15,6 +15,7 @@ import cc.lixiaoyu.wanandroid.core.account.AccountManager
 import cc.lixiaoyu.wanandroid.core.account.LogoutCallback
 import cc.lixiaoyu.wanandroid.core.collection.CollectionActivity
 import cc.lixiaoyu.wanandroid.core.account.ui.LoginActivity
+import cc.lixiaoyu.wanandroid.core.theme.ThemeManager
 import cc.lixiaoyu.wanandroid.core.todo.ui.TodoActivity
 import cc.lixiaoyu.wanandroid.databinding.MainDrawerContainerBinding
 import cc.lixiaoyu.wanandroid.entity.User
@@ -61,7 +62,7 @@ class DrawerFragment: Fragment() {
             }
         }
         binding.itemTheme.apply {
-            if (DataManager.isDarkMode) {
+            if (ThemeManager.isDarkMode.value) {
                 setStartIcon(ContextCompat.getDrawable(context, R.drawable.ic_light_mode))
                 setTitleText(getString(R.string.light_mode))
             } else {
@@ -69,12 +70,12 @@ class DrawerFragment: Fragment() {
                 setTitleText(getString(R.string.dark_mode))
             }
             setOnClickListener {
-                if (DataManager.isDarkMode) {
+                if (ThemeManager.isDarkMode.value) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                    DataManager.isDarkMode = false
+                    ThemeManager.setDarkMode(false)
                 } else {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                    DataManager.isDarkMode = true
+                    ThemeManager.setDarkMode(true)
                 }
             }
         }

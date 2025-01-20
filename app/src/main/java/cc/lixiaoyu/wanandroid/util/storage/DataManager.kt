@@ -22,10 +22,4 @@ object DataManager {
         set(isLogin) {
             spHelper.loginState = isLogin
         }
-
-    var isDarkMode: Boolean
-        get() = spHelper.isDarkMode
-        set(nightMode) {
-            spHelper.isDarkMode = nightMode
-        }
 }

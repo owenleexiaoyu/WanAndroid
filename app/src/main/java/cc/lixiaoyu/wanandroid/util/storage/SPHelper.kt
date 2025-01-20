@@ -26,10 +26,4 @@ class SPHelper {
         set(isLogin) {
             saveData(AppConst.SP_KEY_LOGIN_STATE, isLogin)
         }
-
-    var isDarkMode: Boolean
-        get() = getData(AppConst.SP_KEY_DARK_MODE, false) as Boolean
-        set(nightMode) {
-            saveData(AppConst.SP_KEY_DARK_MODE, nightMode)
-        }
 }
