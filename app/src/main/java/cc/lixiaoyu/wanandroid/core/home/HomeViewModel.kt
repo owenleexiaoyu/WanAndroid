@@ -3,6 +3,7 @@ package cc.lixiaoyu.wanandroid.core.home
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import cc.lixiaoyu.wanandroid.R
 import cc.lixiaoyu.wanandroid.api.WanAndroidService
 import cc.lixiaoyu.wanandroid.core.collection.CollectAbility
 import cc.lixiaoyu.wanandroid.entity.Article
@@ -107,9 +108,9 @@ class HomeViewModel : ViewModel() {
                 if (success) {
                     article.isCollect = false
                     _articleList.value = _articleList.value
-                    ToastUtil.showToast("取消收藏成功")
+                    ToastUtil.showToast(context.getString(R.string.uncollect_success))
                 } else {
-                    ToastUtil.showToast("取消收藏失败")
+                    ToastUtil.showToast(context.getString(R.string.uncollect_fail))
                 }
             }
         } else {
@@ -117,9 +118,9 @@ class HomeViewModel : ViewModel() {
                 if (success) {
                     article.isCollect = true
                     _articleList.value = _articleList.value
-                    ToastUtil.showToast("收藏成功")
+                    ToastUtil.showToast(context.getString(R.string.collect_success))
                 } else {
-                    ToastUtil.showToast("收藏失败")
+                    ToastUtil.showToast(context.getString(R.string.uncollect_fail))
                 }
             }
         }

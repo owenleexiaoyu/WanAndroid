@@ -1,6 +1,5 @@
 package cc.lixiaoyu.wanandroid.core.knowledgemap.node
 
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,12 +13,10 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import cc.lixiaoyu.wanandroid.R
 import cc.lixiaoyu.wanandroid.adapter.ArticleAdapter
-import cc.lixiaoyu.wanandroid.core.account.ui.LoginActivity
 import cc.lixiaoyu.wanandroid.core.detail.ArticleDetailActivity.Companion.actionStart
 import cc.lixiaoyu.wanandroid.core.knowledgemap.model.SubKnowledgeNode
 import cc.lixiaoyu.wanandroid.databinding.FragmentSubKnowledgenodeArticleBinding
 import cc.lixiaoyu.wanandroid.util.behavior.IJumpToTop
-import cc.lixiaoyu.wanandroid.util.storage.DataManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.scwang.smart.refresh.header.MaterialHeader
 import com.scwang.smart.refresh.layout.api.RefreshLayout
@@ -76,21 +73,9 @@ class SubKnowledgeNodeFragment : Fragment(), IJumpToTop {
                 actionStart(requireActivity(), article.toDetailParam())
             }
         articleAdapter!!.onItemChildClickListener =
-            BaseQuickAdapter.OnItemChildClickListener { adapter: BaseQuickAdapter<*, *>?, view12: View?, position: Int ->
+            BaseQuickAdapter.OnItemChildClickListener { adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int ->
                 //点击收藏按钮
-                //判断是否用户登陆
-                if (DataManager.loginState) {
-                    //未登录，前往登陆页面进行登陆操作
-                    startActivity(Intent(activity, LoginActivity::class.java))
-                } else {
-                    //登陆后，可以进行文章的收藏与取消收藏操作
-                    //如果文章已经被收藏了，就取消收藏，如果没有收藏，就收藏
-                    if (articleAdapter!!.getItem(position)!!.isCollect) {
-                        // cancelCollectArticle(position, mAdapter!!.getItem(position))
-                    } else {
-                        // collectArticle(position, mAdapter!!.getItem(position))
-                    }
-                }
+                viewModel.collectOrUnCollectArticle(requireContext(), position, articleAdapter!!.data[position])
             }
         binding.articleList.apply {
             adapter = articleAdapter

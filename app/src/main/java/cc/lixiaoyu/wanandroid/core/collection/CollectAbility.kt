@@ -6,14 +6,15 @@ import android.content.Intent
 import cc.lixiaoyu.wanandroid.core.account.AccountManager
 import cc.lixiaoyu.wanandroid.core.account.ui.LoginActivity
 import cc.lixiaoyu.wanandroid.util.network.RetrofitManager
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 
 object CollectAbility {
 
     private val apiService = RetrofitManager.wanAndroidService
+    private val coroutineScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
     @SuppressLint("CheckResult")
     fun collectArticle(context: Context?, articleId: Int, onCollectResult: (success: Boolean) -> Unit) {
@@ -21,18 +22,18 @@ object CollectAbility {
             context?.startActivity(Intent(context, LoginActivity::class.java))
             return
         }
-        apiService.collectArticle(articleId)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                if (it.isSuccess()) {
+        coroutineScope.launch {
+            try {
+                val response = apiService.collectArticle(articleId)
+                if (response.isSuccess()) {
                     onCollectResult(true)
                 } else {
                     onCollectResult(false)
                 }
-            }, {
+            } catch (e: Throwable) {
                 onCollectResult(false)
-            })
+            }
+        }
     }
 
     @SuppressLint("CheckResult")
@@ -41,17 +42,17 @@ object CollectAbility {
             context?.startActivity(Intent(context, LoginActivity::class.java))
             return
         }
-        apiService.unCollectArticleFromArticleList(articleId)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                if (it.isSuccess()) {
+        coroutineScope.launch {
+            try {
+                val response = apiService.unCollectArticleFromArticleList(articleId)
+                if (response.isSuccess()) {
                     onCollectResult(true)
                 } else {
                     onCollectResult(false)
                 }
-            }, {
+            } catch (e: Throwable) {
                 onCollectResult(false)
-            })
+            }
+        }
     }
 }

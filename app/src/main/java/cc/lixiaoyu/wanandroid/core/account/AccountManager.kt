@@ -6,12 +6,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
 import cc.lixiaoyu.wanandroid.entity.User
+import cc.lixiaoyu.wanandroid.util.AppConst
 import cc.lixiaoyu.wanandroid.util.RxBus
 import cc.lixiaoyu.wanandroid.util.network.RetrofitManager
-import cc.lixiaoyu.wanandroid.util.storage.DataManager
+import cc.lixiaoyu.wanandroid.util.storage.SPUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 
@@ -21,7 +21,9 @@ object AccountManager {
     private val coroutineScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
     private val _userLiveData: MutableLiveData<User?> = MutableLiveData()
-    var isLoginLiveData: LiveData<Boolean> = _userLiveData.map { it != null }
+    var isLoginLiveData: LiveData<Boolean> = _userLiveData.map {
+        it != null && !it.username.isNullOrEmpty()
+    }
 
     init {
         loadUserFromSp()
@@ -29,11 +31,14 @@ object AccountManager {
 
     // 从 SP 中读取 User 信息
     private fun loadUserFromSp() {
-        val loginAccount = DataManager.loginAccount
+        val loginAccount = try {
+            SPUtil.getData(AppConst.SP_KEY_LOGIN_ACCOUNT, "") as? String
+        } catch (e: Throwable) {
+            null
+        }
         val user = if (!loginAccount.isNullOrEmpty()) {
             User().apply {
                 username = loginAccount
-                password = DataManager.loginPassword
             }
         } else {
             null
@@ -42,7 +47,7 @@ object AccountManager {
     }
 
     private fun updateUser(user: User?) {
-        DataManager.loginAccount = user?.username ?: ""
+        SPUtil.saveData(AppConst.SP_KEY_LOGIN_ACCOUNT, user?.username.orEmpty())
         if (Looper.getMainLooper() == Looper.myLooper()) {
             _userLiveData.value = user
         } else {
@@ -51,6 +56,8 @@ object AccountManager {
     }
 
     fun isLogin(): Boolean = isLoginLiveData.value ?: false
+
+    fun getCurUser(): User? = _userLiveData.value
 
     @SuppressLint("CheckResult")
     fun signUp(

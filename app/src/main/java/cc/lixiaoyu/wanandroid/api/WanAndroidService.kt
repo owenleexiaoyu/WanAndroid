@@ -10,7 +10,6 @@ import cc.lixiaoyu.wanandroid.core.todo.model.TodoEntity
 import cc.lixiaoyu.wanandroid.core.todo.model.TodoEntity.TodoItem
 import cc.lixiaoyu.wanandroid.core.wechat.model.WeChatOfficialAccount
 import cc.lixiaoyu.wanandroid.entity.*
-import io.reactivex.Observable
 import retrofit2.http.*
 
 interface WanAndroidService {
@@ -188,39 +187,18 @@ interface WanAndroidService {
      * @return
      */
     @POST("lg/collect/{articleId}/json")
-    fun collectArticle(@Path("articleId") articleId: Int): Observable<WanResponse<String>>
-
-    @POST("lg/collect/{articleId}/json")
-    suspend fun collectArticleNew(@Path("articleId") articleId: Int): WanResponse<String>
-
-    /**
-     * 从收藏界面中取消收藏文章
-     *
-     * https://www.wanandroid.com/lg/uncollect/2805/json
-     * @param articleId
-     * @return
-     */
-    @POST("lg/uncollect/{id}/json")
-    @FormUrlEncoded
-    fun unCollectArticleFromCollectionPage(@Path("id") articleId: Int,
-                                           @Field("originId") originId: Int): Observable<WanResponse<String?>?>?
-
-    @POST("lg/uncollect/{id}/json")
-    @FormUrlEncoded
-    suspend fun unCollectArticleFromCollectionPageNew(
-        @Path("id") articleId: Int,
-        @Field("originId") originId: Int
-    ): WanResponse<String>
+    suspend fun collectArticle(@Path("articleId") articleId: Int): WanResponse<String>
 
     /**
      * 从文章列表中取消收藏文章
+     * 使用 articleId，目前收藏页也使用这个接口，因为没有做主动收藏的功能，收藏页里的文章都是站内文章，都有 articleId
      *
      * https://www.wanandroid.com/lg/uncollect/2805/json
      * @param articleId
      * @return
      */
     @POST("lg/uncollect_originId/{id}/json")
-    fun unCollectArticleFromArticleList(@Path("id") articleId: Int): Observable<WanResponse<String>>
+    suspend fun unCollectArticleFromArticleList(@Path("id") articleId: Int): WanResponse<String>
 
     /**
      * 获取公众号列表

@@ -21,11 +21,8 @@ import cc.lixiaoyu.wanandroid.core.account.ui.LoginActivity
 import cc.lixiaoyu.wanandroid.core.theme.ThemeManager
 import cc.lixiaoyu.wanandroid.core.todo.ui.TodoActivity
 import cc.lixiaoyu.wanandroid.databinding.MainDrawerContainerBinding
-import cc.lixiaoyu.wanandroid.entity.User
 import cc.lixiaoyu.wanandroid.util.ToastUtil
-import cc.lixiaoyu.wanandroid.util.storage.DataManager
 import kotlinx.coroutines.launch
-import kotlin.math.log
 
 class DrawerFragment: Fragment() {
 
@@ -58,7 +55,7 @@ class DrawerFragment: Fragment() {
             }
         }
         AccountManager.isLoginLiveData.observe(viewLifecycleOwner) { login: Boolean ->
-            binding.tvUsername.text = if (login) DataManager.loginAccount else getString(R.string.login)
+            binding.tvUsername.text = if (login) AccountManager.getCurUser()?.username.orEmpty() else getString(R.string.login)
         }
     }
 

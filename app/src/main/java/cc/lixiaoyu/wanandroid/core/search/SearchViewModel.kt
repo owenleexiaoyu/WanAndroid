@@ -6,7 +6,6 @@ import cc.lixiaoyu.wanandroid.api.WanAndroidService
 import cc.lixiaoyu.wanandroid.core.search.model.HotKey
 import cc.lixiaoyu.wanandroid.core.search.model.WebSite
 import cc.lixiaoyu.wanandroid.util.network.RetrofitManager
-import cc.lixiaoyu.wanandroid.util.storage.DataManager
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

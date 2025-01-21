@@ -10,7 +10,5 @@ object AppConst {
      * SharedPreference的键
      */
     const val SP_KEY_LOGIN_ACCOUNT = "loginaccount"
-    const val SP_KEY_LOGIN_PASSWORD = "loginpassword"
-    const val SP_KEY_LOGIN_STATE = "loginstate"
     const val SP_KEY_DARK_MODE = "dark_mode"
 }

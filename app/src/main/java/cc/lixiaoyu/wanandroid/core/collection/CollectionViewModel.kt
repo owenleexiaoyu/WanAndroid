@@ -1,7 +1,9 @@
 package cc.lixiaoyu.wanandroid.core.collection
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import cc.lixiaoyu.wanandroid.R
 import cc.lixiaoyu.wanandroid.api.WanAndroidService
 import cc.lixiaoyu.wanandroid.entity.Article
 import cc.lixiaoyu.wanandroid.util.ToastUtil
@@ -63,29 +65,17 @@ class CollectionViewModel: ViewModel() {
         }
     }
 
-    fun unCollectArticle(position: Int, aid: Int) {
-        CollectAbility.unCollectArticle(null, aid) { success ->
+    fun unCollectArticle(context: Context, position: Int, aid: Int) {
+        CollectAbility.unCollectArticle(context, aid) { success ->
             if (success) {
                 val newList = _articleList.value.toMutableList().apply {
                     removeAt(position)
                 }
                 _articleList.value = newList
-                ToastUtil.showToast("取消收藏成功")
+                ToastUtil.showToast(context.getString(R.string.uncollect_success))
             } else {
-                ToastUtil.showToast("取消收藏失败")
+                ToastUtil.showToast(context.getString(R.string.uncollect_fail))
             }
         }
-//        viewModelScope.launch {
-//            try {
-//                apiService.unCollectArticleFromCollectionPageNew(aid, -1).data
-//                val newList = _articleList.value.toMutableList().apply {
-//                    removeAt(position)
-//                }
-//                _articleList.value = newList
-//                ToastUtil.showToast("取消收藏成功")
-//            } catch (t: Throwable) {
-//                ToastUtil.showToast("取消收藏失败")
-//            }
-//        }
     }
 }

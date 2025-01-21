@@ -41,7 +41,7 @@ class CollectionAdapter(private val viewModel: CollectionViewModel) :
             }
             binding.itemCollectionCollect.setOnClickListener {
                 val article = data[adapterPosition]
-                viewModel.unCollectArticle(adapterPosition, article.id)
+                viewModel.unCollectArticle(it.context, adapterPosition, article.id)
             }
         }
 

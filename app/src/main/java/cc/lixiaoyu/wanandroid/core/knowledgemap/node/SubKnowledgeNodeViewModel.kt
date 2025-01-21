@@ -1,10 +1,12 @@
 package cc.lixiaoyu.wanandroid.core.knowledgemap.node
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
-import cc.lixiaoyu.wanandroid.core.search.result.SearchResultViewModel
+import cc.lixiaoyu.wanandroid.R
+import cc.lixiaoyu.wanandroid.core.collection.CollectAbility
 import cc.lixiaoyu.wanandroid.entity.Article
 import cc.lixiaoyu.wanandroid.util.ToastUtil
 import cc.lixiaoyu.wanandroid.util.network.RetrofitManager
@@ -61,6 +63,30 @@ class SubKnowledgeNodeViewModel(private val cid: String) : ViewModel() {
                 ToastUtil.showToast("加载内容出错了~")
             } finally {
                 isLoadingMore = false
+            }
+        }
+    }
+
+    fun collectOrUnCollectArticle(context: Context, position: Int, article: Article) {
+        if (article.isCollect) {
+            CollectAbility.unCollectArticle(context, article.id) { success ->
+                if (success) {
+                    article.isCollect = false
+                    _articleList.value = _articleList.value
+                    ToastUtil.showToast(context.getString(R.string.uncollect_success))
+                } else {
+                    ToastUtil.showToast(context.getString(R.string.uncollect_fail))
+                }
+            }
+        } else {
+            CollectAbility.collectArticle(context, article.id) { success ->
+                if (success) {
+                    article.isCollect = true
+                    _articleList.value = _articleList.value
+                    ToastUtil.showToast(context.getString(R.string.collect_success))
+                } else {
+                    ToastUtil.showToast(context.getString(R.string.uncollect_fail))
+                }
             }
         }
     }
