@@ -98,6 +98,28 @@ class SubKnowledgeNodeFragment : Fragment(), IJumpToTop {
                 }
             }
         }
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.isRefreshing.collect { isRefreshing ->
+                    if (isRefreshing) {
+                        binding.refreshLayout.autoRefresh()
+                    } else {
+                        binding.refreshLayout.finishRefresh()
+                    }
+                }
+            }
+        }
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.isLoadingMore.collect { isLoadingMore ->
+                    if (isLoadingMore) {
+                        binding.refreshLayout.autoLoadMore()
+                    } else {
+                        binding.refreshLayout.finishLoadMore()
+                    }
+                }
+            }
+        }
     }
 
     /**

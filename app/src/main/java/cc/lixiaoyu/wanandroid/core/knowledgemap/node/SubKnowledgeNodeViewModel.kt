@@ -18,11 +18,17 @@ class SubKnowledgeNodeViewModel(private val cid: String) : ViewModel() {
 
     private val apiService = RetrofitManager.wanAndroidService
 
+    private var currentPage = 0
+
     private val _articleList: MutableStateFlow<List<Article>> = MutableStateFlow(emptyList())
     val articleList: StateFlow<List<Article>> = _articleList
 
-    private var currentPage = 0
-    private var isLoadingMore = false
+    private val _isRefreshing: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val isRefreshing: StateFlow<Boolean> = _isRefreshing
+
+    private val _isLoadingMore: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val isLoadingMore: StateFlow<Boolean> = _isLoadingMore
+
 
     init {
         refreshArticleListByCid()
@@ -30,6 +36,7 @@ class SubKnowledgeNodeViewModel(private val cid: String) : ViewModel() {
 
     fun refreshArticleListByCid() {
         currentPage = 0
+        _isRefreshing.value = true
         viewModelScope.launch {
             try {
                 val articlePage = apiService.getArticleListByCid(0, cid).data
@@ -40,13 +47,15 @@ class SubKnowledgeNodeViewModel(private val cid: String) : ViewModel() {
             } catch (e: Throwable) {
                 e.printStackTrace()
                 ToastUtil.showToast("加载内容出错了~")
+            } finally {
+                _isRefreshing.value = false
             }
         }
     }
 
     fun loadMoreArticleListByCid() {
-        if (isLoadingMore) return
-        isLoadingMore = true
+        if (_isLoadingMore.value) return
+        _isLoadingMore.value = true
         currentPage++
         viewModelScope.launch {
             try {
@@ -62,7 +71,7 @@ class SubKnowledgeNodeViewModel(private val cid: String) : ViewModel() {
                 e.printStackTrace()
                 ToastUtil.showToast("加载内容出错了~")
             } finally {
-                isLoadingMore = false
+                _isLoadingMore.value = false
             }
         }
     }

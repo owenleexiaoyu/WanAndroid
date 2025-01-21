@@ -177,18 +177,6 @@ class HomeFragment : Fragment(), IJumpToTop {
         binding.fhomeRecyclerview.smoothScrollToPosition(0)
     }
 
-//    override fun onStart() {
-//        super.onStart()
-//        //开始自动轮播
-//        bannerView?.startAutoPlay()
-//    }
-//
-//    override fun onStop() {
-//        super.onStop()
-//        //停止自动轮播
-//        bannerView?.stopAutoPlay()
-//    }
-
 
     companion object {
         private const val TAG = "HomeFragment"

@@ -24,10 +24,10 @@ class CategoryProjectViewModel(private val projectId: String): ViewModel() {
     val articleList: StateFlow<List<Article>> = _articleList
 
     private val _isRefreshing: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    val isRefreshing = _isRefreshing
+    val isRefreshing: StateFlow<Boolean> = _isRefreshing
 
     private val _isLoadingMore: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    val isLoadingMore = _isLoadingMore
+    val isLoadingMore: StateFlow<Boolean> = _isLoadingMore
 
 
     init {

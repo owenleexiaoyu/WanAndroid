@@ -28,10 +28,10 @@ class HomeViewModel : ViewModel() {
     val bannerList: StateFlow<List<BannerModel>> = _bannerList
 
     private val _isRefreshing: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    val isRefreshing = _isRefreshing
+    val isRefreshing: StateFlow<Boolean> = _isRefreshing
 
     private val _isLoadingMore: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    val isLoadingMore = _isLoadingMore
+    val isLoadingMore: StateFlow<Boolean> = _isLoadingMore
 
 
     init {
@@ -51,6 +51,7 @@ class HomeViewModel : ViewModel() {
     }
 
     fun refreshHomeArticleList() {
+        _isRefreshing.value = true
         viewModelScope.launch {
             val deferredGetTopArticleList = async {
                 getTopArticleList()
@@ -68,6 +69,8 @@ class HomeViewModel : ViewModel() {
                 _articleList.value = newList
             } catch (t: Throwable) {
                 ToastUtil.showToast("获取首页文章数据失败")
+            } finally {
+                _isRefreshing.value = false
             }
         }
     }
