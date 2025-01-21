@@ -3,10 +3,7 @@ package cc.lixiaoyu.wanandroid.core.nav
 import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import butterknife.BindView
-import butterknife.ButterKnife
 import cc.lixiaoyu.wanandroid.R
-import cc.lixiaoyu.wanandroid.entity.Nav
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 

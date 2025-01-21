@@ -11,7 +11,7 @@
     <string name="uncollect_fail">取消收藏失败</string>
     <string name="about_us">关于我们</string>
     <string name="logout">退出登录</string>
-    <string name="todo_tool">TODO工具</string>
+    <string name="todo_tool">TODO 工具</string>
     <string name="my_collections">我的收藏</string>
     <string name="settings">设置</string>
     <string name="home_page">首页</string>
@@ -47,6 +47,7 @@
     <string name="loading">正在加载中</string>
     <string name="app_name_v1">玩Android V1.0</string>
     <string name="go_top">回到顶部</string>
+    <string name="light_mode">浅色模式</string>
     <string name="dark_mode">深色模式</string>
     <string name="mine">我的</string>
     <string name="logout_confirm_title">提示</string>
@@ -55,6 +56,7 @@
     <string name="logout_confirm_cancel">取消</string>
     <string name="toast_logout_success">退出登录成功</string>
     <string name="collect">收藏</string>
+    <string name="uncollect">取消收藏</string>
     <string name="open_in_browser">浏览器打开</string>
     <string name="refresh">刷新</string>
     <string name="more">更多</string>
@@ -63,5 +65,7 @@
     <string name="signup_success">注册成功！</string>
     <string name="signup_failed">注册失败</string>
     <string name="logout_failed">退出登录失败</string>
-
+    <string name="search_input_hint">输入关键字进行搜索</string>
+    <string name="confirm">确认</string>
+    <string name="load_error">加载内容出错了~</string>
 </resources>

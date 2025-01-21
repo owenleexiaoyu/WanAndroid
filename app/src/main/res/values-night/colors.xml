@@ -6,11 +6,9 @@
 <!--    <color name="bgColorThird">#262626</color>-->
 
 
-    <!--    深绿色的主色  -->
     <color name="Primary">#121212</color>
-    <color name="Secondary">#F7FFFD</color>
     <color name="Accent">#2C90E5</color>
-    <color name="AccentSecondary">#F3F9FF</color>
+    <color name="AccentSecondary">#082F49</color>
     <color name="ConstBrand">#009688</color>
     <color name="ConstHighlight">#F5222D</color>
     <color name="TextPrimary">#E1E1E1</color>

@@ -15,7 +15,6 @@
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
         android:textColor="@color/Accent"
-        android:background="@color/AccentSecondary"
         tools:ignore="RtlSymmetry" />
     <View
         android:id="@+id/item_done_line"

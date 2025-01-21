@@ -2,7 +2,6 @@ package cc.lixiaoyu.wanandroid.core.main
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -17,9 +16,10 @@ import cc.lixiaoyu.wanandroid.core.main.drawer.DrawerFragment
 import cc.lixiaoyu.wanandroid.core.nav.NavFragment
 import cc.lixiaoyu.wanandroid.core.project.ProjectFragment
 import cc.lixiaoyu.wanandroid.core.search.SearchActivity
-import cc.lixiaoyu.wanandroid.core.tree.KnowledgeSystemFragment
-import cc.lixiaoyu.wanandroid.core.wechat.WechatFragment
+import cc.lixiaoyu.wanandroid.core.knowledgemap.KnowledgeMapFragment
+import cc.lixiaoyu.wanandroid.core.wechat.WeChatFragment
 import cc.lixiaoyu.wanandroid.databinding.ActivityMainBinding
+import cc.lixiaoyu.wanandroid.util.behavior.IJumpToTop
 import com.ashokvarma.bottomnavigation.BottomNavigationBar
 import com.ashokvarma.bottomnavigation.BottomNavigationItem
 
@@ -75,11 +75,11 @@ class MainActivity : AppCompatActivity() {
 
         //处理向上置顶按钮的事件
         binding.mainPage.mainBtnUp.setOnClickListener {
-            when (val index = mainVM.currentTabIndex.value ?: 0) {
-                0 -> (fragmentMap[HOME_FRAGMENT_TAG] as HomeFragment).jumpToListTop()
-                1 -> (fragmentMap[KNOWLEDGE_FRAGMENT_TAG] as KnowledgeSystemFragment).jumpToListTop()
-                2 -> (fragmentMap[WECHAT_FRAGMENT_TAG] as WechatFragment).jumpToListTop()
-                4 -> (fragmentMap[PROJECT_FRAGMENT_TAG] as ProjectFragment).jumpToListTop()
+            when (mainVM.currentTabIndex.value ?: 0) {
+                0 -> (fragmentMap[HOME_FRAGMENT_TAG] as? IJumpToTop)?.jumpToListTop()
+                1 -> (fragmentMap[KNOWLEDGE_FRAGMENT_TAG] as? IJumpToTop)?.jumpToListTop()
+                2 -> (fragmentMap[WECHAT_FRAGMENT_TAG] as? IJumpToTop)?.jumpToListTop()
+                4 -> (fragmentMap[PROJECT_FRAGMENT_TAG] as? IJumpToTop)?.jumpToListTop()
             }
         }
     }
@@ -140,14 +140,14 @@ class MainActivity : AppCompatActivity() {
             1 -> {
                 knowledgeFragment = supportFragmentManager.findFragmentByTag(KNOWLEDGE_FRAGMENT_TAG)
                 if (knowledgeFragment == null) {
-                    knowledgeFragment = KnowledgeSystemFragment.newInstance()
+                    knowledgeFragment = KnowledgeMapFragment.newInstance()
                 }
                 addAndShowFragment(requireNotNull(knowledgeFragment), KNOWLEDGE_FRAGMENT_TAG)
             }
             2 -> {
                 wechatFragment = supportFragmentManager.findFragmentByTag(WECHAT_FRAGMENT_TAG)
                 if (wechatFragment == null) {
-                    wechatFragment = WechatFragment.newInstance()
+                    wechatFragment = WeChatFragment.newInstance()
                 }
                 addAndShowFragment(requireNotNull(wechatFragment), WECHAT_FRAGMENT_TAG)
             }
@@ -192,7 +192,6 @@ class MainActivity : AppCompatActivity() {
             R.string.navigation_drawer_open, R.string.navigation_drawer_close
         )
         binding.mainDrawerLayout.addDrawerListener(toggle)
-        toggle.syncState()
 
         // 尝试先从 FragmentManager 中获取 Fragment 对象
         // 在屏幕旋转等场景下，Activity 销毁重建后，会保留 Fragment 实例

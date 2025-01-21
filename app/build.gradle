@@ -40,67 +40,46 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation "androidx.multidex:multidex:2.0.1"
     implementation 'com.google.android.material:material:1.1.0'
-
-    implementation 'com.jakewharton:butterknife:10.2.3'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
+    // 使用viewModelScope
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.2'
+    implementation 'androidx.lifecycle:lifecycle-livedata:2.6.2'
+    implementation "androidx.viewpager2:viewpager2:1.0.0"
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
     implementation 'com.google.code.gson:gson:2.8.6'
-    implementation 'com.github.LillteZheng:ViewPagerHelper:v0.8'
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
-    implementation 'com.youth.banner:banner:1.4.10'
-    implementation 'me.imid.swipebacklayout.lib:library:1.1.0'
 
-    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0'
-    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0'//没有使用特殊Header，可以不加这行
-    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.35'
-
-    implementation 'com.ashokvarma.android:bottom-navigation-bar:2.1.0'
-    implementation 'com.hyman:flowlayout-lib:1.1.2'
-
+    // kotlin 协程 https://github.com/Kotlin/kotlinx.coroutines
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0'
+    // https://github.com/franmontiel/PersistentCookieJar
     implementation 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
-    implementation 'org.litepal.android:java:3.0.0'
     implementation "io.reactivex.rxjava2:rxjava:2.2.6"
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
 
-    // kotlin 协程
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0'
+    // Custom UI component
+    // https://github.com/google/flexbox-layout
+    implementation 'com.google.android.flexbox:flexbox:3.0.0'
 
-    // 使用viewModelScope
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
+    implementation 'com.ashokvarma.android:bottom-navigation-bar:2.1.0'
+    // https://github.com/scwang90/SmartRefreshLayout
+    implementation 'io.github.scwang90:refresh-layout-kernel:3.0.0-alpha'
+    implementation  'io.github.scwang90:refresh-header-material:3.0.0-alpha'    //谷歌刷新头
+    implementation  'io.github.scwang90:refresh-footer-classics:3.0.0-alpha'    //经典加载
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.35'
+    // https://github.com/youth5201314/banner
+    implementation 'io.github.youth5201314:banner:2.2.3'
+
 
     implementation 'com.tencent.bugly:crashreport:latest.release'
 
     // CodeLocator
-    implementation "com.bytedance.tools.codelocator:codelocator-core:2.0.0"
+//    implementation "com.bytedance.tools.codelocator:codelocator-core:2.0.0"
 
     testImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-}
-
-// 解决 ButterKnife 不适配 JDK 17
-// https://stackoverflow.com/questions/65380359/lomboks-access-to-jdk-compilers-internal-packages-incompatible-with-java-16
-// enable internal JDK API access at runtime
-tasks.withType(JavaCompile).configureEach {
-    options.fork = true
-    options.forkOptions.jvmArgs += [
-            // essential for butterknife
-            '--add-opens=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED',
-
-            // if you need Glide or LomBok
-            // these may not be the exact list, but it works for me
-            '--add-opens=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED',
-            '--add-opens=jdk.compiler/com.sun.tools.javac.comp=ALL-UNNAMED',
-            '--add-opens=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED',
-            '--add-opens=jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED',
-            '--add-opens=jdk.compiler/com.sun.tools.javac.model=ALL-UNNAMED',
-            '--add-opens=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED',
-            '--add-opens=jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED',
-            '--add-opens=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED',
-            '--add-opens=jdk.compiler/com.sun.tools.javac.jvm=ALL-UNNAMED',
-    ]
 }

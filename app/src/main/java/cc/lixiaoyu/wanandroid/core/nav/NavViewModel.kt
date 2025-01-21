@@ -4,20 +4,19 @@ import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.map
+import androidx.lifecycle.viewModelScope
 import cc.lixiaoyu.wanandroid.BuildConfig
 import cc.lixiaoyu.wanandroid.api.WanAndroidService
-import cc.lixiaoyu.wanandroid.entity.Nav
-import cc.lixiaoyu.wanandroid.entity.NavItem
 import cc.lixiaoyu.wanandroid.util.ToastUtil
-import cc.lixiaoyu.wanandroid.util.network.BaseModelFactory
 import cc.lixiaoyu.wanandroid.util.network.RetrofitManager
+import kotlinx.coroutines.launch
 
 class NavViewModel : ViewModel() {
 
-    private val wanAndroidService: WanAndroidService by lazy {
-        RetrofitManager.getInstance().wanAndroidService
+    private val apiService: WanAndroidService by lazy {
+        RetrofitManager.wanAndroidService
     }
 
     /**
@@ -41,7 +40,7 @@ class NavViewModel : ViewModel() {
     /**
      * 将 [_navList] 中每个 Nav 的 name 取出组成一个 List 并包装成 LiveData 供界面订阅，去除冗余信息
      */
-    val navTitleList: LiveData<List<String>> = Transformations.map(_navList) { navList ->
+    val navTitleList: LiveData<List<String>> = _navList.map { navList ->
         navList.map { it.name }.toList()
     }
 
@@ -77,16 +76,16 @@ class NavViewModel : ViewModel() {
 
     @SuppressLint("CheckResult")
     private fun fetchNavData() {
-        BaseModelFactory.compose(wanAndroidService.getNavData())
-            .subscribe(
-                { result ->
-                    _navList.value = result.get()
-                },
-                { t ->
-                    ToastUtil.showToast("请求出错")
-                    if (BuildConfig.DEBUG) {
-                        t.printStackTrace()
-                    }
-                })
+        viewModelScope.launch {
+            try {
+                val navList = apiService.getNavDataNew().data ?: return@launch
+                _navList.value = navList
+            } catch (t: Throwable) {
+                ToastUtil.showToast("请求出错")
+                if (BuildConfig.DEBUG) {
+                    t.printStackTrace()
+                }
+            }
+        }
     }
 }

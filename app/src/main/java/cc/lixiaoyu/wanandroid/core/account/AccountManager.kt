@@ -2,30 +2,28 @@ package cc.lixiaoyu.wanandroid.core.account
 
 import android.annotation.SuppressLint
 import android.os.Looper
-import androidx.annotation.MainThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import cc.lixiaoyu.wanandroid.R
-import cc.lixiaoyu.wanandroid.app.WanApplication
-import cc.lixiaoyu.wanandroid.core.login.event.LoginEvent
-import cc.lixiaoyu.wanandroid.entity.Optional
+import androidx.lifecycle.map
 import cc.lixiaoyu.wanandroid.entity.User
-import cc.lixiaoyu.wanandroid.entity.WanAndroidResponse
 import cc.lixiaoyu.wanandroid.util.AppConst
 import cc.lixiaoyu.wanandroid.util.RxBus
-import cc.lixiaoyu.wanandroid.util.ToastUtil
-import cc.lixiaoyu.wanandroid.util.network.BaseModelFactory
 import cc.lixiaoyu.wanandroid.util.network.RetrofitManager
-import cc.lixiaoyu.wanandroid.util.storage.DataManager
+import cc.lixiaoyu.wanandroid.util.storage.SPUtil
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 
 object AccountManager {
 
-    private val dataManager = DataManager()
-    private val service = RetrofitManager.getInstance().wanAndroidService
+    private val service = RetrofitManager.wanAndroidService
+    private val coroutineScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
     private val _userLiveData: MutableLiveData<User?> = MutableLiveData()
-    var userLiveData: LiveData<User?> = _userLiveData
+    var isLoginLiveData: LiveData<Boolean> = _userLiveData.map {
+        it != null && !it.username.isNullOrEmpty()
+    }
 
     init {
         loadUserFromSp()
@@ -33,11 +31,14 @@ object AccountManager {
 
     // 从 SP 中读取 User 信息
     private fun loadUserFromSp() {
-        val loginAccount = dataManager.loginAccount
+        val loginAccount = try {
+            SPUtil.getData(AppConst.SP_KEY_LOGIN_ACCOUNT, "") as? String
+        } catch (e: Throwable) {
+            null
+        }
         val user = if (!loginAccount.isNullOrEmpty()) {
             User().apply {
                 username = loginAccount
-                password = dataManager.loginPassword
             }
         } else {
             null
@@ -46,7 +47,7 @@ object AccountManager {
     }
 
     private fun updateUser(user: User?) {
-        dataManager.loginAccount = user?.username ?: ""
+        SPUtil.saveData(AppConst.SP_KEY_LOGIN_ACCOUNT, user?.username.orEmpty())
         if (Looper.getMainLooper() == Looper.myLooper()) {
             _userLiveData.value = user
         } else {
@@ -54,7 +55,9 @@ object AccountManager {
         }
     }
 
-    fun isLogin(): Boolean = _userLiveData.value != null
+    fun isLogin(): Boolean = isLoginLiveData.value ?: false
+
+    fun getCurUser(): User? = _userLiveData.value
 
     @SuppressLint("CheckResult")
     fun signUp(
@@ -63,16 +66,17 @@ object AccountManager {
         passwordConfirm: String,
         callback: LoginCallback? = null
     ) {
-        BaseModelFactory.compose(service.register(userName, password, passwordConfirm))
-            .subscribe({ result: Optional<User> ->
-                val me = result.get()
+        coroutineScope.launch {
+            try {
+                val me = service.register(userName, password, passwordConfirm).data ?: return@launch
                 updateUser(me)
                 callback?.onSuccess(me)
-                RxBus.getInstance().post(LoginEvent(true))
-            }) { t: Throwable ->
+                RxBus.instance.post(LoginEvent(true))
+            } catch (t: Throwable) {
                 callback?.onFail(t)
                 t.printStackTrace()
             }
+        }
     }
 
     @SuppressLint("CheckResult")
@@ -81,28 +85,31 @@ object AccountManager {
         password: String,
         callback: LoginCallback? = null
     ) {
-        BaseModelFactory.compose(service.login(userName, password))
-            .subscribe({ result: Optional<User> ->
-                val me = result.get()
+        coroutineScope.launch {
+            try {
+                val me = service.login(userName, password).data ?: return@launch
                 updateUser(me)
                 callback?.onSuccess(me)
-                RxBus.getInstance().post(LoginEvent(true))
-            }) { t: Throwable ->
+                RxBus.instance.post(LoginEvent(true))
+            } catch (t: Throwable) {
                 callback?.onFail(t)
                 t.printStackTrace()
             }
+        }
     }
 
     @SuppressLint("CheckResult")
     fun logout(callback: LogoutCallback? = null) {
-        BaseModelFactory.compose(service.logout())
-            .subscribe({
+        coroutineScope.launch {
+            try {
+                val result = service.logout().data
                 updateUser(null)
                 callback?.onSuccess()
-                RxBus.getInstance().post(LoginEvent(false))
-            }, { t: Throwable ->
+                RxBus.instance.post(LoginEvent(false))
+            } catch (t: Throwable) {
                 callback?.onFail(t)
                 t.printStackTrace()
-            })
+            }
+        }
     }
 }

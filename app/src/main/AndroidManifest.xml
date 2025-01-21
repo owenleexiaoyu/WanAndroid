@@ -21,23 +21,22 @@
         <activity android:name=".core.main.MainActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:exported="true">
+        </activity>
+        <activity android:name=".core.main.splash.SplashActivity"  android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".core.main.splash.SplashActivity"  android:exported="true">
-
-        </activity>
         <activity android:name=".core.detail.ArticleDetailActivity"/>
-        <activity android:name=".core.subclass.SubClassActivity"
+        <activity android:name=".core.knowledgemap.node.KnowledgeNodeContainerActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".core.account.ui.LoginActivity"/>
         <activity android:name=".core.search.SearchActivity"/>
         <activity android:name=".core.search.result.SearchResultActivity"/>
         <activity android:name=".core.about.AboutActivity" />
         <activity android:name=".core.collection.CollectionActivity"/>
-        <activity android:name=".core.todo.TodoActivity"/>
+        <activity android:name=".core.todo.ui.TodoActivity"/>
     </application>
 
 </manifest>

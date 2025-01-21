@@ -13,12 +13,13 @@
             android:id="@+id/detail_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="@drawable/ic_arrow_back"
             app:layout_scrollFlags="enterAlways|snap|scroll"
             app:popupTheme="@style/AppTheme.PopupOverlay">
             <TextView
                 android:id="@+id/detail_toolbar_title"
                 android:textSize="18sp"
-                android:textColor="@color/TextReversePrimary"
+                android:textColor="@color/TextPrimary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="marquee"

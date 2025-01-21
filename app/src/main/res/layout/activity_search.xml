@@ -2,7 +2,8 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/BGPrimary">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -10,10 +11,12 @@
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/search_toolbar"
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:layout_scrollFlags="scroll|enterAlways|snap"
+            app:titleTextColor="@color/TextPrimary"
+            app:navigationIcon="@drawable/ic_arrow_back"
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
             <LinearLayout
@@ -24,13 +27,16 @@
                 android:focusableInTouchMode="true">
 
                 <EditText
-                    android:id="@+id/search_et_wordinput"
+                    android:id="@+id/word_input"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:hint="@string/search_input_hint"
+                    android:textColorHint="@color/TextSecondary"
+                    android:textColor="@color/TextPrimary" />
 
                 <Button
-                    android:id="@+id/search_btn_search"
+                    android:id="@+id/btn_search"
                     android:layout_width="60dp"
                     android:layout_height="30dp"
                     android:layout_marginLeft="20dp"
@@ -59,10 +65,10 @@
                 android:gravity="center_vertical"
                 android:padding="10dp">
 
-                <ImageView
+                <View
                     android:layout_width="5dp"
                     android:layout_height="20dp"
-                    android:src="@color/Accent" />
+                    android:background="@drawable/bg_search_session_icon" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -78,11 +84,11 @@
                     android:layout_height="20dp"
                     android:background="@drawable/ic_delete"
                     android:backgroundTint="@color/TextSecondary"
-                    android:id="@+id/search_btn_clearHistory"/>
+                    android:id="@+id/btn_clearHistory"/>
             </LinearLayout>
 
-            <com.zhy.view.flowlayout.TagFlowLayout
-                android:id="@+id/search_tf_history"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/tf_history"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dp" />
@@ -93,10 +99,10 @@
                 android:gravity="center_vertical"
                 android:padding="10dp">
 
-                <ImageView
+                <View
                     android:layout_width="5dp"
                     android:layout_height="20dp"
-                    android:src="@color/Accent" />
+                    android:background="@drawable/bg_search_session_icon" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -107,8 +113,8 @@
                     android:textColor="@color/TextPrimary" />
             </LinearLayout>
 
-            <com.zhy.view.flowlayout.TagFlowLayout
-                android:id="@+id/search_tf_hotkeys"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/tf_hotkeys"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dp" />
@@ -119,10 +125,10 @@
                 android:gravity="center_vertical"
                 android:padding="10dp">
 
-                <ImageView
+                <View
                     android:layout_width="5dp"
                     android:layout_height="20dp"
-                    android:src="@color/Accent" />
+                    android:background="@drawable/bg_search_session_icon" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -133,8 +139,8 @@
                     android:textColor="@color/TextPrimary" />
             </LinearLayout>
 
-            <com.zhy.view.flowlayout.TagFlowLayout
-                android:id="@+id/search_tf_commonsite"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/tf_commonsite"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dp"

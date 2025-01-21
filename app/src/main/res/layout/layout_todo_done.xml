@@ -19,14 +19,22 @@
             android:textColor="@color/TextReversePrimary"
             android:textSize="20sp" />
     </RelativeLayout>
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        android:id="@+id/ldone_smartrefreshlayout"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/ldone_recyclerview"
+        android:layout_height="match_parent">
+        <com.scwang.smart.refresh.layout.SmartRefreshLayout
+            android:id="@+id/ldone_smartrefreshlayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-        </androidx.recyclerview.widget.RecyclerView>
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/ldone_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+        <include
+            android:id="@+id/list_empty_view"
+            android:visibility="gone"
+            layout="@layout/layout_list_empty_view" />
+    </FrameLayout>
 </LinearLayout>

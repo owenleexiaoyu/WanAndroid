@@ -3,15 +3,30 @@
  */
 package cc.lixiaoyu.wanandroid.entity
 
+import com.google.gson.annotations.SerializedName
+
 /**
  * 分页加载的数据
  */
-class PageData<T> {
-    var curPage = 0
-    var datas: List<T> = emptyList()
-    var offset = 0
-    var over = false
-    var pageCount = 0
-    var size = 0
-    var total = 0
+open class PageData<T> {
+    @SerializedName("curPage")
+    val curPage = 0
+
+    @SerializedName("datas")
+    val dataList: List<T> = emptyList()
+
+    @SerializedName("offset")
+    val offset = 0
+
+    @SerializedName("over")
+    val over = false
+
+    @SerializedName("pageCount")
+    val pageCount = 0
+
+    @SerializedName("size")
+    val size = 0
+
+    @SerializedName("total")
+    val total = 0
 }
