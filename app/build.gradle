@@ -24,10 +24,17 @@ android {
         sourceCompatibility = 1.8
     }
 
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
     viewBinding {
         enabled = true
     }
     namespace 'cc.lixiaoyu.wanandroid'
+    buildFeatures {
+        buildConfig true
+    }
 }
 
 dependencies {
