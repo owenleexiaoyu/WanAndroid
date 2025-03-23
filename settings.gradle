@@ -1,3 +1,4 @@
 include ':app'
 //include ':flipped_uikit'
 //project(":flipped_uikit").projectDir = new File("../Flipped/flipped_uikit")
+include ':wankmp'

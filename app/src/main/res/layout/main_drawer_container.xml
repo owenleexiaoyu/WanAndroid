@@ -87,5 +87,14 @@
             app:flipped_divider_color="@color/LinePrimary"
             android:background="@drawable/ripple_item_select"
             />
+        <life.lixiaoyu.flipped.uikit.cell.FlippedCellItemView
+            android:id="@+id/item_kmp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:flipped_title_color="@color/TextPrimary"
+            app:flipped_start_icon_tint_color="@color/TextPrimary"
+            app:flipped_divider_color="@color/LinePrimary"
+            android:background="@drawable/ripple_item_select"
+            />
     </LinearLayout>
 </ScrollView>
