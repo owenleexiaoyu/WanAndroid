@@ -27,6 +27,7 @@ android {
     viewBinding {
         enabled = true
     }
+    namespace 'cc.lixiaoyu.wanandroid'
 }
 
 dependencies {
