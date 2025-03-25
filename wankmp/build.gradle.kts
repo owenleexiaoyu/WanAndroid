@@ -63,7 +63,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.20")
+                implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.22")
                 // Add KMP dependencies here
                 implementation("org.jetbrains.compose.runtime:runtime:1.6.0")
                 implementation("org.jetbrains.compose.foundation:foundation:1.6.0")

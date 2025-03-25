@@ -14,6 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import cc.lixiaoyu.wanandroid.R
 import cc.lixiaoyu.wanandroid.core.about.AboutActivity
+import cc.lixiaoyu.wanandroid.core.about.KMPActivity
 import cc.lixiaoyu.wanandroid.core.account.AccountManager
 import cc.lixiaoyu.wanandroid.core.account.LogoutCallback
 import cc.lixiaoyu.wanandroid.core.collection.CollectionActivity
@@ -148,6 +149,9 @@ class DrawerFragment: Fragment() {
     }
 
     private fun initKmpItem() {
-        binding.itemKmp.setTitleText("KMP Platform: ${Greeting().greet()}")
+        binding.itemKmp.setTitleText("KMP & Compose Multiplatform")
+        binding.itemKmp.setOnClickListener {
+            startActivity(Intent(activity, KMPActivity::class.java))
+        }
     }
 }
