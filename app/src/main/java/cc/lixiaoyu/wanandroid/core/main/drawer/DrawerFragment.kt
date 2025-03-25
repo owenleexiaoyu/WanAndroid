@@ -21,7 +21,7 @@ import cc.lixiaoyu.wanandroid.core.account.ui.LoginActivity
 import cc.lixiaoyu.wanandroid.core.theme.ThemeManager
 import cc.lixiaoyu.wanandroid.core.todo.ui.TodoActivity
 import cc.lixiaoyu.wanandroid.databinding.MainDrawerContainerBinding
-import cc.lixiaoyu.wanandroid.kmp.platform
+import cc.lixiaoyu.wanandroid.kmp.Greeting
 import cc.lixiaoyu.wanandroid.util.ToastUtil
 import kotlinx.coroutines.launch
 
@@ -148,6 +148,6 @@ class DrawerFragment: Fragment() {
     }
 
     private fun initKmpItem() {
-        binding.itemKmp.setTitleText("KMP Platform: ${platform()}")
+        binding.itemKmp.setTitleText("KMP Platform: ${Greeting().greet()}")
     }
 }

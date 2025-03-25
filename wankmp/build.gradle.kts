@@ -1,6 +1,8 @@
 plugins {
     id("org.jetbrains.kotlin.multiplatform")
     id("com.android.kotlin.multiplatform.library")
+    id("org.jetbrains.compose") version "1.6.0"
+//    id("org.jetbrains.kotlin.plugin.compose") version "1.9.20"
 }
 
 kotlin {
@@ -30,23 +32,26 @@ kotlin {
 // A step-by-step guide on how to include this library in an XCode
 // project can be found here:
 // https://developer.android.com/kotlin/multiplatform/migrate
-    val xcfName = "wankmpKit"
+    val xcfName = "WanKMPKit"
 
     iosX64 {
         binaries.framework {
             baseName = xcfName
+            isStatic = true
         }
     }
 
     iosArm64 {
         binaries.framework {
             baseName = xcfName
+            isStatic = true
         }
     }
 
     iosSimulatorArm64 {
         binaries.framework {
             baseName = xcfName
+            isStatic = true
         }
     }
 
@@ -60,6 +65,12 @@ kotlin {
             dependencies {
                 implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.20")
                 // Add KMP dependencies here
+                implementation("org.jetbrains.compose.runtime:runtime:1.6.0")
+                implementation("org.jetbrains.compose.foundation:foundation:1.6.0")
+                implementation("org.jetbrains.compose.material:material:1.6.0")
+                implementation("org.jetbrains.compose.ui:ui:1.6.0")
+                implementation("org.jetbrains.compose.components:components-ui-tooling-preview:1.6.0")
+                implementation("org.jetbrains.compose.components:components-resources:1.6.0")
             }
         }
 
