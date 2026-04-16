@@ -1,5 +1,6 @@
 package cc.lixiaoyu.wanandroid.core.main
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -13,7 +14,10 @@ import androidx.lifecycle.ViewModelProvider
 import cc.lixiaoyu.wanandroid.R
 import cc.lixiaoyu.wanandroid.core.home.HomeFragment
 import cc.lixiaoyu.wanandroid.core.main.drawer.DrawerFragment
-import cc.lixiaoyu.wanandroid.core.nav.NavFragment
+import cc.lixiaoyu.wanandroid.core.detail.ArticleDetailActivity
+import cc.lixiaoyu.wanandroid.core.detail.DetailParam
+import cc.lixiaoyu.wanandroid.kmp.nav.android.NavContainerFragment
+import cc.lixiaoyu.wanandroid.kmp.nav.android.NavWebDetailOpener
 import cc.lixiaoyu.wanandroid.core.project.ProjectFragment
 import cc.lixiaoyu.wanandroid.core.search.SearchActivity
 import cc.lixiaoyu.wanandroid.core.knowledgemap.KnowledgeMapFragment
@@ -23,7 +27,7 @@ import cc.lixiaoyu.wanandroid.util.behavior.IJumpToTop
 import com.ashokvarma.bottomnavigation.BottomNavigationBar
 import com.ashokvarma.bottomnavigation.BottomNavigationItem
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), NavWebDetailOpener {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var mainVM: MainViewModel
@@ -154,7 +158,7 @@ class MainActivity : AppCompatActivity() {
             3 -> {
                 navFragment = supportFragmentManager.findFragmentByTag(NAV_FRAGMENT_TAG)
                 if (navFragment == null) {
-                    navFragment = NavFragment.newInstance()
+                    navFragment = NavContainerFragment.newInstance()
                 }
                 addAndShowFragment(requireNotNull(navFragment), NAV_FRAGMENT_TAG)
             }
@@ -222,6 +226,11 @@ class MainActivity : AppCompatActivity() {
                 startActivity(Intent(this, SearchActivity::class.java))
         }
         return true
+    }
+
+    override fun openNavWebDetail(context: Context, title: String, url: String) {
+        val param = DetailParam(0, title, url, DetailParam.DetailType.WEBPAGE)
+        ArticleDetailActivity.actionStart(context, param)
     }
 
     companion object {
