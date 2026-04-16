@@ -1,6 +1,7 @@
 package cc.lixiaoyu.wanandroid.kmp.nav.mvi
 
 import cc.lixiaoyu.wanandroid.kmp.nav.domain.NavRepository
+import cc.lixiaoyu.wanandroid.kmp.nav.util.decodeHtmlEntities
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.channels.Channel
@@ -28,7 +29,12 @@ class NavStore(
             NavIntent.Retry -> load()
             is NavIntent.ClickItem -> {
                 storeScope.launch {
-                    effects.send(NavEffect.OpenUrl(title = intent.item.title, url = intent.item.link))
+                    effects.send(
+                        NavEffect.OpenUrl(
+                            title = intent.item.title.decodeHtmlEntities(),
+                            url = intent.item.link,
+                        ),
+                    )
                 }
             }
         }
