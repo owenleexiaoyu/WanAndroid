@@ -2,6 +2,7 @@ plugins {
     id("org.jetbrains.kotlin.multiplatform")
     id("com.android.kotlin.multiplatform.library")
     id("org.jetbrains.compose") version "1.6.0"
+    kotlin("plugin.serialization") version "1.9.22"
 //    id("org.jetbrains.kotlin.plugin.compose") version "1.9.20"
 }
 
@@ -27,7 +28,7 @@ kotlin {
 
 // For iOS targets, this is also where you should
 // configure native binary output. For more information, see:
-// https://kotlinlang.org/docs/multiplatform-build-native-binaries.html#build-xcframeworks
+// https://kotlinlang.org/docs/multiplatform-build-native-binaries.html#xcframeworks
 
 // A step-by-step guide on how to include this library in an XCode
 // project can be found here:
@@ -71,6 +72,13 @@ kotlin {
                 implementation("org.jetbrains.compose.ui:ui:1.6.0")
                 implementation("org.jetbrains.compose.components:components-ui-tooling-preview:1.6.0")
                 implementation("org.jetbrains.compose.components:components-resources:1.6.0")
+                // Ktor (Kotlin 1.9.x — Ktor 2.3 line)
+                val ktor = "2.3.12"
+                implementation("io.ktor:ktor-client-core:$ktor")
+                implementation("io.ktor:ktor-client-content-negotiation:$ktor")
+                implementation("io.ktor:ktor-serialization-kotlinx-json:$ktor")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
             }
         }
 
@@ -82,9 +90,7 @@ kotlin {
 
         androidMain {
             dependencies {
-                // Add Android-specific dependencies here. Note that this source set depends on
-                // commonMain by default and will correctly pull the Android artifacts of any KMP
-                // dependencies declared in commonMain.
+                implementation("io.ktor:ktor-client-okhttp:2.3.12")
             }
         }
 
@@ -98,11 +104,7 @@ kotlin {
 
         iosMain {
             dependencies {
-                // Add iOS-specific dependencies here. This a source set created by Kotlin Gradle
-                // Plugin (KGP) that each specific iOS target (e.g., iosX64) depends on as
-                // part of KMP’s default source set hierarchy. Note that this source set depends
-                // on common by default and will correctly pull the iOS artifacts of any
-                // KMP dependencies declared in commonMain.
+                implementation("io.ktor:ktor-client-darwin:2.3.12")
             }
         }
     }
