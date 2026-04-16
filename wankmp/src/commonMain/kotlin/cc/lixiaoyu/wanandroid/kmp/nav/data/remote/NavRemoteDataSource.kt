@@ -8,6 +8,7 @@ import io.ktor.client.request.get
 
 /**
  * Loads navigation categories from WanAndroid `navi/json`.
+ * 网络模拟请在 [HttpClient] 层使用 [io.ktor.client.engine.mock.MockEngine]（见 [cc.lixiaoyu.wanandroid.kmp.nav.testing.createNavHttpClient]），避免侵入此处业务逻辑。
  */
 class NavRemoteDataSource(
     private val client: HttpClient,

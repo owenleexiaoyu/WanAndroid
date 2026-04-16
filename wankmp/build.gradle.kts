@@ -75,6 +75,7 @@ kotlin {
                 // Ktor (Kotlin 1.9.x — Ktor 2.3 line)
                 val ktor = "2.3.12"
                 implementation("io.ktor:ktor-client-core:$ktor")
+                implementation("io.ktor:ktor-client-mock:$ktor")
                 implementation("io.ktor:ktor-client-content-negotiation:$ktor")
                 implementation("io.ktor:ktor-serialization-kotlinx-json:$ktor")
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")

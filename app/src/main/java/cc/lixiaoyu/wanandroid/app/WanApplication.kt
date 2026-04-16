@@ -35,7 +35,7 @@ class WanApplication : Application() {
      * 初始化 bugly
      */
     private fun initBugly() {
-        CrashReport.initCrashReport(this, "7e1141d5de", BuildConfig.DEBUG)
+//        CrashReport.initCrashReport(this, "7e1141d5de", BuildConfig.DEBUG)
     }
 
     private fun initTheme() {
