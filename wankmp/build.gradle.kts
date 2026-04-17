@@ -69,6 +69,7 @@ kotlin {
                 implementation("org.jetbrains.compose.runtime:runtime:1.6.0")
                 implementation("org.jetbrains.compose.foundation:foundation:1.6.0")
                 implementation("org.jetbrains.compose.material:material:1.6.0")
+                implementation("org.jetbrains.compose.material:material-icons-extended:1.6.0")
                 implementation("org.jetbrains.compose.ui:ui:1.6.0")
                 implementation("org.jetbrains.compose.components:components-ui-tooling-preview:1.6.0")
                 implementation("org.jetbrains.compose.components:components-resources:1.6.0")

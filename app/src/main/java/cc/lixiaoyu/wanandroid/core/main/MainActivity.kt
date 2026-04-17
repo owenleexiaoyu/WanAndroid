@@ -18,16 +18,19 @@ import cc.lixiaoyu.wanandroid.core.detail.ArticleDetailActivity
 import cc.lixiaoyu.wanandroid.core.detail.DetailParam
 import cc.lixiaoyu.wanandroid.kmp.nav.android.NavContainerFragment
 import cc.lixiaoyu.wanandroid.kmp.nav.android.NavWebDetailOpener
-import cc.lixiaoyu.wanandroid.core.project.ProjectFragment
+import cc.lixiaoyu.wanandroid.kmp.mine.android.MineActionHandler
+import cc.lixiaoyu.wanandroid.kmp.mine.android.MineContainerFragment
+import cc.lixiaoyu.wanandroid.kmp.mine.ui.MineAction
 import cc.lixiaoyu.wanandroid.core.search.SearchActivity
 import cc.lixiaoyu.wanandroid.core.knowledgemap.KnowledgeMapFragment
 import cc.lixiaoyu.wanandroid.core.wechat.WeChatFragment
 import cc.lixiaoyu.wanandroid.databinding.ActivityMainBinding
 import cc.lixiaoyu.wanandroid.util.behavior.IJumpToTop
+import cc.lixiaoyu.wanandroid.util.ToastUtil
 import com.ashokvarma.bottomnavigation.BottomNavigationBar
 import com.ashokvarma.bottomnavigation.BottomNavigationItem
 
-class MainActivity : AppCompatActivity(), NavWebDetailOpener {
+class MainActivity : AppCompatActivity(), NavWebDetailOpener, MineActionHandler {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var mainVM: MainViewModel
@@ -36,7 +39,7 @@ class MainActivity : AppCompatActivity(), NavWebDetailOpener {
     private var knowledgeFragment: Fragment? = null
     private var wechatFragment: Fragment? = null
     private var navFragment: Fragment? = null
-    private var projectFragment: Fragment? = null
+    private var mineFragment: Fragment? = null
     private val fragmentMap: MutableMap<String, Fragment> = mutableMapOf()
 
     private var drawerFragment: Fragment? = null
@@ -46,7 +49,7 @@ class MainActivity : AppCompatActivity(), NavWebDetailOpener {
         R.string.knowledge_system,
         R.string.wechat_blog,
         R.string.navigation,
-        R.string.project
+        R.string.mine
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,7 +66,7 @@ class MainActivity : AppCompatActivity(), NavWebDetailOpener {
             // 改变 ToolBar Title
             binding.mainPage.mainToolbar.title = getString(titleResIds[index])
             // 隐藏或显示回到顶部按钮
-            binding.mainPage.mainBtnUp.visibility = if (index == 3) View.GONE else View.VISIBLE
+            binding.mainPage.mainBtnUp.visibility = if (index == 3 || index == 4) View.GONE else View.VISIBLE
             // 切换 Fragment
             loadFragment(index)
         }
@@ -83,7 +86,7 @@ class MainActivity : AppCompatActivity(), NavWebDetailOpener {
                 0 -> (fragmentMap[HOME_FRAGMENT_TAG] as? IJumpToTop)?.jumpToListTop()
                 1 -> (fragmentMap[KNOWLEDGE_FRAGMENT_TAG] as? IJumpToTop)?.jumpToListTop()
                 2 -> (fragmentMap[WECHAT_FRAGMENT_TAG] as? IJumpToTop)?.jumpToListTop()
-                4 -> (fragmentMap[PROJECT_FRAGMENT_TAG] as? IJumpToTop)?.jumpToListTop()
+                4 -> Unit
             }
         }
     }
@@ -112,7 +115,7 @@ class MainActivity : AppCompatActivity(), NavWebDetailOpener {
                     .setActiveColor(ContextCompat.getColor(context, R.color.ConstBrand))
             )
             addItem(
-                BottomNavigationItem(R.drawable.ic_project, getString(titleResIds[4]))
+                BottomNavigationItem(R.drawable.ic_person_black_24dp, getString(titleResIds[4]))
                     .setActiveColor(ContextCompat.getColor(context, R.color.ConstBrand))
             )
             setFirstSelectedPosition(mainVM.currentTabIndex.value ?: 0)
@@ -163,11 +166,11 @@ class MainActivity : AppCompatActivity(), NavWebDetailOpener {
                 addAndShowFragment(requireNotNull(navFragment), NAV_FRAGMENT_TAG)
             }
             4 -> {
-                projectFragment = supportFragmentManager.findFragmentByTag(PROJECT_FRAGMENT_TAG)
-                if (projectFragment == null) {
-                    projectFragment = ProjectFragment.newInstance()
+                mineFragment = supportFragmentManager.findFragmentByTag(MINE_FRAGMENT_TAG)
+                if (mineFragment == null) {
+                    mineFragment = MineContainerFragment.newInstance()
                 }
-                addAndShowFragment(requireNotNull(projectFragment), PROJECT_FRAGMENT_TAG)
+                addAndShowFragment(requireNotNull(mineFragment), MINE_FRAGMENT_TAG)
             }
             else -> throw IllegalArgumentException("Index [$index] is not support")
         }
@@ -233,12 +236,27 @@ class MainActivity : AppCompatActivity(), NavWebDetailOpener {
         ArticleDetailActivity.actionStart(context, param)
     }
 
+    override fun onMineAction(fragment: Fragment, action: MineAction) {
+        val msg = when (action) {
+            MineAction.ClickProfile -> "点击：个人信息"
+            MineAction.ClickMyPoints -> "点击：我的积分"
+            MineAction.ClickPointsRank -> "点击：积分排行"
+            MineAction.ClickMyShare -> "点击：我的分享"
+            MineAction.ClickMyCollect -> "点击：我的收藏"
+            MineAction.ClickBrowseHistory -> "点击：浏览历史"
+            MineAction.ClickOpenSourceLicense -> "点击：开源许可"
+            MineAction.ClickAboutAuthor -> "点击：关于作者"
+            MineAction.ClickSystemSettings -> "点击：系统设置"
+        }
+        ToastUtil.showToast(msg)
+    }
+
     companion object {
         private const val DRAWER_FRAGMENT_TAG = "main_drawer_fragment_tag"
         private const val HOME_FRAGMENT_TAG = "main_home_fragment_tag"
         private const val KNOWLEDGE_FRAGMENT_TAG = "main_knowledge_fragment_tag"
         private const val WECHAT_FRAGMENT_TAG = "main_wechat_fragment_tag"
         private const val NAV_FRAGMENT_TAG = "main_nav_fragment_tag"
-        private const val PROJECT_FRAGMENT_TAG = "main_project_fragment_tag"
+        private const val MINE_FRAGMENT_TAG = "main_mine_fragment_tag"
     }
 }

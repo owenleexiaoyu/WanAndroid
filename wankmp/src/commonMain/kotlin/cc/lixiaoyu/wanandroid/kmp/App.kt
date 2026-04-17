@@ -14,12 +14,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import cc.lixiaoyu.wanandroid.kmp.mine.ui.MineAction
+import cc.lixiaoyu.wanandroid.kmp.mine.ui.MineScreen
+import cc.lixiaoyu.wanandroid.kmp.mine.ui.MineUser
 import cc.lixiaoyu.wanandroid.kmp.nav.data.remote.NavRemoteDataSource
 import cc.lixiaoyu.wanandroid.kmp.nav.domain.NavRepository
 import cc.lixiaoyu.wanandroid.kmp.nav.mvi.NavStore
@@ -51,6 +56,8 @@ fun App() {
         val store = remember(repository, scope) {
             NavStore(repository, scope)
         }
+
+        var page by remember { mutableStateOf("nav") }
 
         Column(Modifier.fillMaxSize()) {
             Column(
@@ -94,15 +101,52 @@ fun App() {
                 }
             }
 
-            NavScreen(
-                store = store,
+            FlowRow(
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
                 modifier = Modifier
-                    .weight(1f)
-                    .fillMaxWidth(),
-                onOpenUrl = { effect ->
-                    showShortToast("${effect.title}\n${effect.url}")
-                },
-            )
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
+            ) {
+                Button(onClick = { page = "nav" }) { Text("导航") }
+                Button(onClick = { page = "mine" }) { Text("我的") }
+            }
+
+            when (page) {
+                "mine" -> {
+                    MineScreen(
+                        user = MineUser(name = "小小的太太阳", id = "27165"),
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxWidth(),
+                        onAction = { action ->
+                            val label = when (action) {
+                                MineAction.ClickProfile -> "点击：个人信息"
+                                MineAction.ClickMyPoints -> "点击：我的积分"
+                                MineAction.ClickPointsRank -> "点击：积分排行"
+                                MineAction.ClickMyShare -> "点击：我的分享"
+                                MineAction.ClickMyCollect -> "点击：我的收藏"
+                                MineAction.ClickBrowseHistory -> "点击：浏览历史"
+                                MineAction.ClickOpenSourceLicense -> "点击：开源许可"
+                                MineAction.ClickAboutAuthor -> "点击：关于作者"
+                                MineAction.ClickSystemSettings -> "点击：系统设置"
+                            }
+                            showShortToast(label)
+                        },
+                    )
+                }
+                else -> {
+                    NavScreen(
+                        store = store,
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxWidth(),
+                        onOpenUrl = { effect ->
+                            showShortToast("${effect.title}\n${effect.url}")
+                        },
+                    )
+                }
+            }
         }
     }
 }
