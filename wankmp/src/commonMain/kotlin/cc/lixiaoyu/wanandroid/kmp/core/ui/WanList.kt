@@ -127,7 +127,7 @@ fun WanCenterListRow(
             .fillMaxWidth()
             .background(MaterialTheme.wanColors.surface)
             .clickable(onClick = onClick)
-            .heightIn(min = 64.dp),
+            .heightIn(min = 60.dp),
         contentAlignment = Alignment.Center,
     ) {
         Text(
