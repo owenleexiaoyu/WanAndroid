@@ -25,6 +25,11 @@ import androidx.compose.ui.unit.dp
 import cc.lixiaoyu.wanandroid.kmp.mine.ui.MineAction
 import cc.lixiaoyu.wanandroid.kmp.mine.ui.MineScreen
 import cc.lixiaoyu.wanandroid.kmp.mine.ui.MineUser
+import cc.lixiaoyu.wanandroid.kmp.discover.data.remote.DiscoverRemoteDataSource
+import cc.lixiaoyu.wanandroid.kmp.discover.domain.DiscoverRepository
+import cc.lixiaoyu.wanandroid.kmp.discover.mvi.DiscoverEffect
+import cc.lixiaoyu.wanandroid.kmp.discover.mvi.DiscoverStore
+import cc.lixiaoyu.wanandroid.kmp.discover.ui.DiscoverScreen
 import cc.lixiaoyu.wanandroid.kmp.nav.data.remote.NavRemoteDataSource
 import cc.lixiaoyu.wanandroid.kmp.nav.domain.NavRepository
 import cc.lixiaoyu.wanandroid.kmp.nav.mvi.NavStore
@@ -62,6 +67,12 @@ fun App() {
 
         val store = remember(repository, scope) {
             NavStore(repository, scope)
+        }
+        val discoverRepository = remember(client) {
+            DiscoverRepository(DiscoverRemoteDataSource(client))
+        }
+        val discoverStore = remember(discoverRepository, scope) {
+            DiscoverStore(discoverRepository, scope)
         }
 
         var page by remember { mutableStateOf("nav") }
@@ -116,11 +127,26 @@ fun App() {
                     .padding(horizontal = 16.dp, vertical = 8.dp),
             ) {
                 Button(onClick = { page = "nav" }) { Text("导航") }
+                Button(onClick = { page = "discover" }) { Text("发现") }
                 Button(onClick = { page = "mine" }) { Text("我的") }
                 Button(onClick = { page = "settings" }) { Text("设置") }
             }
 
             when (page) {
+                "discover" -> {
+                    DiscoverScreen(
+                        store = discoverStore,
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxWidth(),
+                        onOpenUrl = { effect: DiscoverEffect.OpenUrl ->
+                            showShortToast("${effect.title}\n${effect.url}")
+                        },
+                        onShowToast = { message ->
+                            showShortToast(message)
+                        },
+                    )
+                }
                 "settings" -> {
                     SettingsScreen(
                         themeController = themeController,

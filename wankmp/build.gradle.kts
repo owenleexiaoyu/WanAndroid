@@ -95,6 +95,7 @@ kotlin {
                 implementation("io.ktor:ktor-client-okhttp:2.3.12")
                 implementation("androidx.fragment:fragment-ktx:1.6.2")
                 implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
+                implementation("io.coil-kt:coil-compose:2.6.0")
             }
         }
 

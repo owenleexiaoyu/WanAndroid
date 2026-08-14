@@ -16,6 +16,8 @@ import cc.lixiaoyu.wanandroid.core.home.HomeFragment
 import cc.lixiaoyu.wanandroid.core.main.drawer.DrawerFragment
 import cc.lixiaoyu.wanandroid.core.detail.ArticleDetailActivity
 import cc.lixiaoyu.wanandroid.core.detail.DetailParam
+import cc.lixiaoyu.wanandroid.kmp.discover.android.DiscoverContainerFragment
+import cc.lixiaoyu.wanandroid.kmp.discover.android.DiscoverWebDetailOpener
 import cc.lixiaoyu.wanandroid.kmp.nav.android.NavContainerFragment
 import cc.lixiaoyu.wanandroid.kmp.nav.android.NavWebDetailOpener
 import cc.lixiaoyu.wanandroid.kmp.mine.android.MineActionHandler
@@ -24,21 +26,20 @@ import cc.lixiaoyu.wanandroid.kmp.mine.ui.MineAction
 import cc.lixiaoyu.wanandroid.core.search.SearchActivity
 import cc.lixiaoyu.wanandroid.core.knowledgemap.KnowledgeMapFragment
 import cc.lixiaoyu.wanandroid.core.settings.KmpSettingsActivity
-import cc.lixiaoyu.wanandroid.core.wechat.WeChatFragment
 import cc.lixiaoyu.wanandroid.databinding.ActivityMainBinding
 import cc.lixiaoyu.wanandroid.util.behavior.IJumpToTop
 import cc.lixiaoyu.wanandroid.util.ToastUtil
 import com.ashokvarma.bottomnavigation.BottomNavigationBar
 import com.ashokvarma.bottomnavigation.BottomNavigationItem
 
-class MainActivity : AppCompatActivity(), NavWebDetailOpener, MineActionHandler {
+class MainActivity : AppCompatActivity(), NavWebDetailOpener, DiscoverWebDetailOpener, MineActionHandler {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var mainVM: MainViewModel
 
     private var homeFragment: Fragment? = null
     private var knowledgeFragment: Fragment? = null
-    private var wechatFragment: Fragment? = null
+    private var discoverFragment: Fragment? = null
     private var navFragment: Fragment? = null
     private var mineFragment: Fragment? = null
     private val fragmentMap: MutableMap<String, Fragment> = mutableMapOf()
@@ -48,7 +49,7 @@ class MainActivity : AppCompatActivity(), NavWebDetailOpener, MineActionHandler 
     private val titleResIds = intArrayOf(
         R.string.home_page,
         R.string.knowledge_system,
-        R.string.wechat_blog,
+        R.string.discover,
         R.string.navigation,
         R.string.mine
     )
@@ -67,7 +68,7 @@ class MainActivity : AppCompatActivity(), NavWebDetailOpener, MineActionHandler 
             // 改变 ToolBar Title
             binding.mainPage.mainToolbar.title = getString(titleResIds[index])
             // 隐藏或显示回到顶部按钮
-            binding.mainPage.mainBtnUp.visibility = if (index == 3 || index == 4) View.GONE else View.VISIBLE
+            binding.mainPage.mainBtnUp.visibility = if (index == 2 || index == 3 || index == 4) View.GONE else View.VISIBLE
             // 切换 Fragment
             loadFragment(index)
         }
@@ -86,7 +87,7 @@ class MainActivity : AppCompatActivity(), NavWebDetailOpener, MineActionHandler 
             when (mainVM.currentTabIndex.value ?: 0) {
                 0 -> (fragmentMap[HOME_FRAGMENT_TAG] as? IJumpToTop)?.jumpToListTop()
                 1 -> (fragmentMap[KNOWLEDGE_FRAGMENT_TAG] as? IJumpToTop)?.jumpToListTop()
-                2 -> (fragmentMap[WECHAT_FRAGMENT_TAG] as? IJumpToTop)?.jumpToListTop()
+                2 -> Unit
                 4 -> Unit
             }
         }
@@ -108,7 +109,7 @@ class MainActivity : AppCompatActivity(), NavWebDetailOpener, MineActionHandler 
                     .setActiveColor(ContextCompat.getColor(context, R.color.ConstBrand))
             )
             addItem(
-                BottomNavigationItem(R.drawable.ic_wechat, getString(titleResIds[2]))
+                BottomNavigationItem(R.drawable.ic_project, getString(titleResIds[2]))
                     .setActiveColor(ContextCompat.getColor(context, R.color.ConstBrand))
             )
             addItem(
@@ -153,11 +154,11 @@ class MainActivity : AppCompatActivity(), NavWebDetailOpener, MineActionHandler 
                 addAndShowFragment(requireNotNull(knowledgeFragment), KNOWLEDGE_FRAGMENT_TAG)
             }
             2 -> {
-                wechatFragment = supportFragmentManager.findFragmentByTag(WECHAT_FRAGMENT_TAG)
-                if (wechatFragment == null) {
-                    wechatFragment = WeChatFragment.newInstance()
+                discoverFragment = supportFragmentManager.findFragmentByTag(DISCOVER_FRAGMENT_TAG)
+                if (discoverFragment == null) {
+                    discoverFragment = DiscoverContainerFragment.newInstance()
                 }
-                addAndShowFragment(requireNotNull(wechatFragment), WECHAT_FRAGMENT_TAG)
+                addAndShowFragment(requireNotNull(discoverFragment), DISCOVER_FRAGMENT_TAG)
             }
             3 -> {
                 navFragment = supportFragmentManager.findFragmentByTag(NAV_FRAGMENT_TAG)
@@ -237,6 +238,11 @@ class MainActivity : AppCompatActivity(), NavWebDetailOpener, MineActionHandler 
         ArticleDetailActivity.actionStart(context, param)
     }
 
+    override fun openDiscoverWebDetail(context: Context, title: String, url: String) {
+        val param = DetailParam(0, title, url, DetailParam.DetailType.WEBPAGE)
+        ArticleDetailActivity.actionStart(context, param)
+    }
+
     override fun onMineAction(fragment: Fragment, action: MineAction) {
         if (action == MineAction.ClickSystemSettings) {
             startActivity(Intent(this, KmpSettingsActivity::class.java))
@@ -261,7 +267,7 @@ class MainActivity : AppCompatActivity(), NavWebDetailOpener, MineActionHandler 
         private const val DRAWER_FRAGMENT_TAG = "main_drawer_fragment_tag"
         private const val HOME_FRAGMENT_TAG = "main_home_fragment_tag"
         private const val KNOWLEDGE_FRAGMENT_TAG = "main_knowledge_fragment_tag"
-        private const val WECHAT_FRAGMENT_TAG = "main_wechat_fragment_tag"
+        private const val DISCOVER_FRAGMENT_TAG = "main_discover_fragment_tag"
         private const val NAV_FRAGMENT_TAG = "main_nav_fragment_tag"
         private const val MINE_FRAGMENT_TAG = "main_mine_fragment_tag"
     }
