@@ -4,7 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.material.MaterialTheme
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
@@ -15,6 +16,8 @@ import cc.lixiaoyu.wanandroid.kmp.nav.data.remote.createNavigationHttpClient
 import cc.lixiaoyu.wanandroid.kmp.nav.domain.NavRepository
 import cc.lixiaoyu.wanandroid.kmp.nav.mvi.NavStore
 import cc.lixiaoyu.wanandroid.kmp.nav.ui.NavScreen
+import cc.lixiaoyu.wanandroid.kmp.theme.ThemeControllerRegistry
+import cc.lixiaoyu.wanandroid.kmp.theme.WanTheme
 import io.ktor.client.HttpClient
 
 /**
@@ -37,11 +40,13 @@ class NavContainerFragment : Fragment() {
         val client = createNavigationHttpClient().also { httpClient = it }
         val repository = NavRepository(NavRemoteDataSource(client))
         val store = NavStore(repository, lifecycleScope)
+        val themeController = ThemeControllerRegistry.controller
 
         return ComposeView(requireContext()).apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
-                MaterialTheme {
+                val isDarkMode by themeController.isDarkMode.collectAsState()
+                WanTheme(darkTheme = isDarkMode) {
                     NavScreen(
                         store = store,
                         showTopBar = false,

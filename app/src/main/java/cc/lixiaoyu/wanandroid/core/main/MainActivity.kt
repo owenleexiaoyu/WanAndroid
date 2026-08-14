@@ -23,6 +23,7 @@ import cc.lixiaoyu.wanandroid.kmp.mine.android.MineContainerFragment
 import cc.lixiaoyu.wanandroid.kmp.mine.ui.MineAction
 import cc.lixiaoyu.wanandroid.core.search.SearchActivity
 import cc.lixiaoyu.wanandroid.core.knowledgemap.KnowledgeMapFragment
+import cc.lixiaoyu.wanandroid.core.settings.KmpSettingsActivity
 import cc.lixiaoyu.wanandroid.core.wechat.WeChatFragment
 import cc.lixiaoyu.wanandroid.databinding.ActivityMainBinding
 import cc.lixiaoyu.wanandroid.util.behavior.IJumpToTop
@@ -237,6 +238,11 @@ class MainActivity : AppCompatActivity(), NavWebDetailOpener, MineActionHandler 
     }
 
     override fun onMineAction(fragment: Fragment, action: MineAction) {
+        if (action == MineAction.ClickSystemSettings) {
+            startActivity(Intent(this, KmpSettingsActivity::class.java))
+            return
+        }
+
         val msg = when (action) {
             MineAction.ClickProfile -> "点击：个人信息"
             MineAction.ClickMyPoints -> "点击：我的积分"
@@ -246,7 +252,7 @@ class MainActivity : AppCompatActivity(), NavWebDetailOpener, MineActionHandler 
             MineAction.ClickBrowseHistory -> "点击：浏览历史"
             MineAction.ClickOpenSourceLicense -> "点击：开源许可"
             MineAction.ClickAboutAuthor -> "点击：关于作者"
-            MineAction.ClickSystemSettings -> "点击：系统设置"
+            MineAction.ClickSystemSettings -> error("handled above")
         }
         ToastUtil.showToast(msg)
     }

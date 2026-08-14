@@ -8,7 +8,9 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.multidex.MultiDex
 import cc.lixiaoyu.wanandroid.BuildConfig
 import cc.lixiaoyu.wanandroid.core.account.AccountManager
+import cc.lixiaoyu.wanandroid.core.theme.AppThemeController
 import cc.lixiaoyu.wanandroid.core.theme.ThemeManager
+import cc.lixiaoyu.wanandroid.kmp.theme.ThemeControllerRegistry
 import com.tencent.bugly.crashreport.CrashReport
 
 class WanApplication : Application() {
@@ -22,6 +24,7 @@ class WanApplication : Application() {
         globalContext = applicationContext
         initBugly()
         initAccount()
+        initKmpTheme()
         initTheme()
     }
 
@@ -44,6 +47,10 @@ class WanApplication : Application() {
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         }
+    }
+
+    private fun initKmpTheme() {
+        ThemeControllerRegistry.install(AppThemeController)
     }
 
     companion object {

@@ -32,6 +32,10 @@ import cc.lixiaoyu.wanandroid.kmp.nav.testing.NavNetworkMock
 import cc.lixiaoyu.wanandroid.kmp.nav.testing.NavNetworkMockScenario
 import cc.lixiaoyu.wanandroid.kmp.nav.testing.createNavHttpClient
 import cc.lixiaoyu.wanandroid.kmp.nav.ui.NavScreen
+import cc.lixiaoyu.wanandroid.kmp.settings.ui.SettingsAction
+import cc.lixiaoyu.wanandroid.kmp.settings.ui.SettingsScreen
+import cc.lixiaoyu.wanandroid.kmp.theme.MemoryThemeController
+import cc.lixiaoyu.wanandroid.kmp.theme.WanTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 /**
@@ -41,7 +45,10 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Composable
 @Preview
 fun App() {
-    MaterialTheme {
+    val themeController = remember { MemoryThemeController() }
+    val isDarkMode by themeController.isDarkMode.collectAsState()
+
+    WanTheme(darkTheme = isDarkMode) {
         val scope = rememberCoroutineScope()
         val mockScenario by NavNetworkMock.scenario.collectAsState()
         val client = remember(mockScenario) { createNavHttpClient(mockScenario) }
@@ -110,9 +117,29 @@ fun App() {
             ) {
                 Button(onClick = { page = "nav" }) { Text("导航") }
                 Button(onClick = { page = "mine" }) { Text("我的") }
+                Button(onClick = { page = "settings" }) { Text("设置") }
             }
 
             when (page) {
+                "settings" -> {
+                    SettingsScreen(
+                        themeController = themeController,
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxWidth(),
+                        onBack = { page = "mine" },
+                        onItemClick = { action ->
+                            val label = when (action) {
+                                SettingsAction.FontSize -> "点击：字体大小"
+                                SettingsAction.ClearCache -> "点击：清除缓存"
+                                SettingsAction.CheckVersion -> "点击：检查版本"
+                                SettingsAction.AboutUs -> "点击：关于我们"
+                                SettingsAction.Logout -> "点击：退出登录"
+                            }
+                            showShortToast(label)
+                        },
+                    )
+                }
                 "mine" -> {
                     MineScreen(
                         user = MineUser(name = "小小的太太阳", id = "27165"),
@@ -120,6 +147,11 @@ fun App() {
                             .weight(1f)
                             .fillMaxWidth(),
                         onAction = { action ->
+                            if (action == MineAction.ClickSystemSettings) {
+                                page = "settings"
+                                return@MineScreen
+                            }
+
                             val label = when (action) {
                                 MineAction.ClickProfile -> "点击：个人信息"
                                 MineAction.ClickMyPoints -> "点击：我的积分"
@@ -129,7 +161,7 @@ fun App() {
                                 MineAction.ClickBrowseHistory -> "点击：浏览历史"
                                 MineAction.ClickOpenSourceLicense -> "点击：开源许可"
                                 MineAction.ClickAboutAuthor -> "点击：关于作者"
-                                MineAction.ClickSystemSettings -> "点击：系统设置"
+                                MineAction.ClickSystemSettings -> error("handled above")
                             }
                             showShortToast(label)
                         },

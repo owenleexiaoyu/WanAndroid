@@ -1,6 +1,5 @@
 package cc.lixiaoyu.wanandroid.kmp
 
-import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.window.ComposeUIViewController
 import cc.lixiaoyu.wanandroid.kmp.mine.ui.MineAction
@@ -11,6 +10,7 @@ import cc.lixiaoyu.wanandroid.kmp.nav.data.remote.createNavigationHttpClient
 import cc.lixiaoyu.wanandroid.kmp.nav.domain.NavRepository
 import cc.lixiaoyu.wanandroid.kmp.nav.mvi.NavStore
 import cc.lixiaoyu.wanandroid.kmp.nav.ui.NavScreen
+import cc.lixiaoyu.wanandroid.kmp.theme.WanTheme
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
 
@@ -34,7 +34,7 @@ fun NavViewController() = ComposeUIViewController {
         }
     }
 
-    MaterialTheme {
+    WanTheme(darkTheme = false) {
         NavScreen(
             store = store,
             showTopBar = true,
@@ -51,7 +51,7 @@ fun NavViewController() = ComposeUIViewController {
  * Swift/SwiftUI 侧通过 `MineViewControllerKt.MineViewController()` 调用。
  */
 fun MineViewController() = ComposeUIViewController {
-    MaterialTheme {
+    WanTheme(darkTheme = false) {
         MineScreen(
             user = MineUser(name = "小小的太太阳", id = "27165"),
             showTopBar = true,

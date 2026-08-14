@@ -6,12 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import cc.lixiaoyu.wanandroid.R
 import cc.lixiaoyu.wanandroid.core.about.AboutActivity
 import cc.lixiaoyu.wanandroid.core.about.KMPActivity
@@ -19,12 +14,9 @@ import cc.lixiaoyu.wanandroid.core.account.AccountManager
 import cc.lixiaoyu.wanandroid.core.account.LogoutCallback
 import cc.lixiaoyu.wanandroid.core.collection.CollectionActivity
 import cc.lixiaoyu.wanandroid.core.account.ui.LoginActivity
-import cc.lixiaoyu.wanandroid.core.theme.ThemeManager
 import cc.lixiaoyu.wanandroid.core.todo.ui.TodoActivity
 import cc.lixiaoyu.wanandroid.databinding.MainDrawerContainerBinding
-import cc.lixiaoyu.wanandroid.kmp.Greeting
 import cc.lixiaoyu.wanandroid.util.ToastUtil
-import kotlinx.coroutines.launch
 
 class DrawerFragment: Fragment() {
 
@@ -44,7 +36,6 @@ class DrawerFragment: Fragment() {
         initLoginItem()
         initCollectionItem()
         initTodoItem()
-        initThemeItem()
         initAboutItem()
         initLogoutItem()
         initKmpItem()
@@ -79,33 +70,6 @@ class DrawerFragment: Fragment() {
         }
         AccountManager.isLoginLiveData.observe(viewLifecycleOwner) { login: Boolean ->
             binding.itemTodos.visibility = if (login) View.VISIBLE else View.GONE
-        }
-    }
-
-    private fun initThemeItem() {
-        binding.itemTheme.setOnClickListener {
-            if (ThemeManager.isDarkMode.value) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                ThemeManager.setDarkMode(false)
-            } else {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                ThemeManager.setDarkMode(true)
-            }
-        }
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                ThemeManager.isDarkMode.collect { darkMode: Boolean ->
-                    binding.itemTheme.apply {
-                        if (darkMode) {
-                            setStartIcon(ContextCompat.getDrawable(context, R.drawable.ic_light_mode))
-                            setTitleText(getString(R.string.light_mode))
-                        } else {
-                            setStartIcon(ContextCompat.getDrawable(context, R.drawable.ic_dark_mode))
-                            setTitleText(getString(R.string.dark_mode))
-                        }
-                    }
-                }
-            }
         }
     }
 

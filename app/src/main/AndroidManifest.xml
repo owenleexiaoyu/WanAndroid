@@ -37,6 +37,7 @@
         <activity android:name=".core.collection.CollectionActivity"/>
         <activity android:name=".core.todo.ui.TodoActivity"/>
         <activity android:name=".core.about.KMPActivity"/>
+        <activity android:name=".core.settings.KmpSettingsActivity"/>
     </application>
 
 </manifest>

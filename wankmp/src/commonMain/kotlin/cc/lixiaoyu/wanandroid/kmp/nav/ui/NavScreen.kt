@@ -27,7 +27,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -38,6 +37,7 @@ import cc.lixiaoyu.wanandroid.kmp.nav.mvi.NavEffect
 import cc.lixiaoyu.wanandroid.kmp.nav.mvi.NavIntent
 import cc.lixiaoyu.wanandroid.kmp.nav.mvi.NavStore
 import cc.lixiaoyu.wanandroid.kmp.nav.util.decodeHtmlEntities
+import cc.lixiaoyu.wanandroid.kmp.theme.wanColors
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
@@ -80,12 +80,13 @@ fun NavScreen(
                             fontWeight = FontWeight.Medium,
                         )
                     },
-                    backgroundColor = Color.White,
+                    backgroundColor = MaterialTheme.wanColors.surface,
+                    contentColor = MaterialTheme.wanColors.textPrimary,
                     elevation = 1.dp,
                 )
             }
         },
-        backgroundColor = Color.White,
+        backgroundColor = MaterialTheme.wanColors.pageBackground,
     ) { innerPadding ->
         Box(
             Modifier
@@ -126,7 +127,7 @@ fun NavScreen(
                             .align(Alignment.Center)
                             .padding(24.dp),
                         style = MaterialTheme.typography.body2,
-                        color = Color.Gray,
+                        color = MaterialTheme.wanColors.textSecondary,
                     )
                 }
                 else -> {
@@ -160,7 +161,7 @@ private fun NavCategorySection(
         Text(
             text = category.name.decodeHtmlEntities(),
             style = MaterialTheme.typography.body2,
-            color = Color(0xFF888888),
+            color = MaterialTheme.wanColors.textSecondary,
             fontSize = 15.sp,
             modifier = Modifier.padding(bottom = 8.dp),
         )
@@ -186,14 +187,14 @@ private fun NavLinkChip(
         contentAlignment = Alignment.CenterStart,
         modifier = Modifier
             .clip(shape)
-            .background(color = Color(0xFFEEEEEE), shape = shape)
+            .background(color = MaterialTheme.wanColors.surface, shape = shape)
             .clickable(onClick = onClick),
     ) {
         Text(
             text = title,
             modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
             style = MaterialTheme.typography.body2,
-            color = Color(0xFF333333),
+            color = MaterialTheme.wanColors.textPrimary,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
         )

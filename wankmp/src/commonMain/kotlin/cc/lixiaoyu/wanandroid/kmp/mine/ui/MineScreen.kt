@@ -24,7 +24,6 @@ import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.HelpOutline
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Info
@@ -36,11 +35,13 @@ import androidx.compose.material.icons.filled.Verified
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import cc.lixiaoyu.wanandroid.kmp.core.ui.WanListRow
+import cc.lixiaoyu.wanandroid.kmp.theme.WanTheme
+import cc.lixiaoyu.wanandroid.kmp.theme.wanColors
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 data class MineUser(
@@ -85,12 +86,13 @@ fun MineScreen(
                             fontWeight = FontWeight.Medium,
                         )
                     },
-                    backgroundColor = Color.White,
+                    backgroundColor = MaterialTheme.wanColors.surface,
+                    contentColor = MaterialTheme.wanColors.textPrimary,
                     elevation = 1.dp,
                 )
             }
         },
-        backgroundColor = Color(0xFFF5F5F5),
+        backgroundColor = MaterialTheme.wanColors.pageBackground,
     ) { innerPadding ->
         LazyColumn(
             modifier = Modifier
@@ -128,7 +130,7 @@ private fun MineProfileCard(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color.White)
+            .background(MaterialTheme.wanColors.surface)
             .clickable(onClick = onClick),
     ) {
         Row(
@@ -140,14 +142,14 @@ private fun MineProfileCard(
             Box(
                 modifier = Modifier
                     .size(54.dp)
-                    .background(color = Color(0xFFE9E9E9), shape = CircleShape),
+                    .background(color = MaterialTheme.wanColors.pageBackground, shape = CircleShape),
                 contentAlignment = Alignment.Center,
             ) {
                 Icon(
                     imageVector = Icons.Filled.AccountCircle,
                     contentDescription = null,
                     modifier = Modifier.size(44.dp),
-                    tint = Color(0xFF9E9E9E),
+                    tint = MaterialTheme.wanColors.textSecondary,
                 )
             }
 
@@ -159,26 +161,20 @@ private fun MineProfileCard(
             ) {
                 Text(
                     text = user?.name ?: "点击登录",
-                    color = Color(0xFF222222),
+                    color = MaterialTheme.wanColors.textPrimary,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Medium,
                 )
                 Spacer(Modifier.height(4.dp))
                 Text(
                     text = if (user != null) "ID: ${user.id}" else "登录后查看 ID",
-                    color = Color(0xFF888888),
+                    color = MaterialTheme.wanColors.textSecondary,
                     fontSize = 13.sp,
                 )
             }
-
-            Icon(
-                imageVector = Icons.Filled.ChevronRight,
-                contentDescription = null,
-                tint = Color(0xFFB0B0B0),
-            )
         }
 
-        Divider(color = Color(0xFFEEEEEE), thickness = 1.dp)
+        Divider(color = MaterialTheme.wanColors.divider, thickness = 1.dp)
     }
 }
 
@@ -256,56 +252,21 @@ private fun MineMenuRow(
     showDivider: Boolean,
     onClick: () -> Unit,
 ) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(Color.White)
-            .clickable(onClick = onClick),
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 14.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Icon(
-                imageVector = icon,
-                contentDescription = null,
-                tint = Color(0xFF333333),
-            )
-            Text(
-                text = title,
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(start = 14.dp),
-                color = Color(0xFF222222),
-                fontSize = 15.sp,
-            )
-            Icon(
-                imageVector = Icons.Filled.ChevronRight,
-                contentDescription = null,
-                tint = Color(0xFFB0B0B0),
-            )
-        }
-
-        if (showDivider) {
-            Divider(
-                modifier = Modifier.padding(start = 16.dp),
-                color = Color(0xFFEEEEEE),
-                thickness = 1.dp,
-            )
-        }
-    }
+    WanListRow(
+        icon = icon,
+        title = title,
+        showDivider = showDivider,
+        onClick = onClick,
+    )
 }
 
 @Preview
 @Composable
 private fun MineScreenPreview() {
-    MaterialTheme {
+    WanTheme(darkTheme = false) {
         MineScreen(
             user = MineUser(name = "小小的太太阳", id = "27165"),
             onAction = {},
         )
     }
 }
-

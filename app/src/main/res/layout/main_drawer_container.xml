@@ -55,17 +55,6 @@
             android:background="@drawable/ripple_item_select"
             />
         <life.lixiaoyu.flipped.uikit.cell.FlippedCellItemView
-            android:id="@+id/item_theme"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:flipped_title="@string/dark_mode"
-            app:flipped_start_icon="@drawable/ic_dark_mode"
-            app:flipped_title_color="@color/TextPrimary"
-            app:flipped_start_icon_tint_color="@color/TextPrimary"
-            app:flipped_divider_color="@color/LinePrimary"
-            android:background="@drawable/ripple_item_select"
-            />
-        <life.lixiaoyu.flipped.uikit.cell.FlippedCellItemView
             android:id="@+id/item_about_us"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

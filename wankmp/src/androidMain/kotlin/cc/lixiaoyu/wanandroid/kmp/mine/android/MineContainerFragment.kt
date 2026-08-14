@@ -4,7 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.material.MaterialTheme
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
@@ -12,6 +13,8 @@ import cc.lixiaoyu.wanandroid.kmp.AndroidToastContext
 import cc.lixiaoyu.wanandroid.kmp.mine.ui.MineAction
 import cc.lixiaoyu.wanandroid.kmp.mine.ui.MineScreen
 import cc.lixiaoyu.wanandroid.kmp.mine.ui.MineUser
+import cc.lixiaoyu.wanandroid.kmp.theme.ThemeControllerRegistry
+import cc.lixiaoyu.wanandroid.kmp.theme.WanTheme
 
 /**
  * 承载 KMP [MineScreen] 的个人页容器；宿主 Activity 需实现 [MineActionHandler] 以处理跳转。
@@ -27,11 +30,13 @@ class MineContainerFragment : Fragment() {
 
         val handler = requireActivity() as? MineActionHandler
             ?: error("${requireActivity().javaClass.simpleName} must implement ${MineActionHandler::class.java.name}")
+        val themeController = ThemeControllerRegistry.controller
 
         return ComposeView(requireContext()).apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
-                MaterialTheme {
+                val isDarkMode by themeController.isDarkMode.collectAsState()
+                WanTheme(darkTheme = isDarkMode) {
                     MineScreen(
                         user = MineUser(name = "小小的太太阳", id = "27165"),
                         showTopBar = false,
@@ -55,4 +60,3 @@ class MineContainerFragment : Fragment() {
 fun interface MineActionHandler {
     fun onMineAction(fragment: Fragment, action: MineAction)
 }
-
