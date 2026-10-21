@@ -14,6 +14,10 @@ fun String.decodeHtmlEntities(): String {
         "quot" to "\"",
         "apos" to "'",
         "nbsp" to "\u00A0",
+        "ndash" to "–", "mdash" to "—", "hellip" to "…",
+        "lsquo" to "‘", "rsquo" to "’", "ldquo" to "“", "rdquo" to "”",
+        "middot" to "·", "bull" to "•", "copy" to "©", "reg" to "®",
+        "times" to "×", "divide" to "÷", "ensp" to " ", "emsp" to " ",
     )
     val out = StringBuilder(length)
     var i = 0

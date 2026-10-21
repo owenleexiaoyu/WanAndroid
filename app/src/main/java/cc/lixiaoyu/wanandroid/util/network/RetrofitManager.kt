@@ -1,12 +1,7 @@
 package cc.lixiaoyu.wanandroid.util.network
 
 import cc.lixiaoyu.wanandroid.api.WanAndroidService
-import cc.lixiaoyu.wanandroid.app.WanApplication.Companion.globalContext
 import cc.lixiaoyu.wanandroid.util.AppConst
-import com.franmontiel.persistentcookiejar.ClearableCookieJar
-import com.franmontiel.persistentcookiejar.PersistentCookieJar
-import com.franmontiel.persistentcookiejar.cache.SetCookieCache
-import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -27,12 +22,8 @@ object RetrofitManager  {
      * 初始化Retrofit
      */
     private fun initRetrofit() {
-        val cookieJar: ClearableCookieJar = PersistentCookieJar(
-            SetCookieCache(),
-            SharedPrefsCookiePersistor(globalContext)
-        )
         val okHttpClient: OkHttpClient = OkHttpClient.Builder()
-            .cookieJar(cookieJar)
+            .cookieJar(SharedNetworkSession.cookieJar)
             .build()
         retrofit = Retrofit.Builder()
             .baseUrl(AppConst.WANANDROID_BASEURL)

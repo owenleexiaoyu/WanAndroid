@@ -7,7 +7,7 @@ class DetailParam(
     val title: String,
     val link: String,
     private val detailType: DetailType,
-    val isCollected: Boolean = false,
+    var isCollected: Boolean = false,
 ) : Serializable {
 
     /**

@@ -3,6 +3,7 @@ package cc.lixiaoyu.wanandroid.core.collection
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import cc.lixiaoyu.wanandroid.kmp.home.HomeCollectionEvents
 import cc.lixiaoyu.wanandroid.core.account.AccountManager
 import cc.lixiaoyu.wanandroid.core.account.ui.LoginActivity
 import cc.lixiaoyu.wanandroid.util.network.RetrofitManager
@@ -26,6 +27,7 @@ object CollectAbility {
             try {
                 val response = apiService.collectArticle(articleId)
                 if (response.isSuccess()) {
+                    HomeCollectionEvents.publish(articleId, true)
                     onCollectResult(true)
                 } else {
                     onCollectResult(false)
@@ -46,6 +48,7 @@ object CollectAbility {
             try {
                 val response = apiService.unCollectArticleFromArticleList(articleId)
                 if (response.isSuccess()) {
+                    HomeCollectionEvents.publish(articleId, false)
                     onCollectResult(true)
                 } else {
                     onCollectResult(false)

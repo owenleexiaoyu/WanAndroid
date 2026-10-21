@@ -2,12 +2,26 @@ import UIKit
 import SwiftUI
 import WanKMPKit
 
-struct TestComposeView: UIViewControllerRepresentable {
+struct HomeComposeView: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> UIViewController {
-        MainViewControllerKt.MainViewController()
+        MainViewControllerKt.HomeViewController(
+            onSearch: { showHomeMessage("搜索页尚未接入 iOS 宿主") },
+            onArticle: { _ in showHomeMessage("文章详情页尚未接入 iOS 宿主") },
+            onLogin: { showHomeMessage("请先登录，iOS 登录页尚未接入") }
+        )
     }
 
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
+}
+
+private func showHomeMessage(_ text: String) {
+    guard let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+          let root = scene.windows.first(where: { $0.isKeyWindow })?.rootViewController else { return }
+    var presenter = root
+    while let presented = presenter.presentedViewController { presenter = presented }
+    let alert = UIAlertController(title: nil, message: text, preferredStyle: .alert)
+    alert.addAction(UIAlertAction(title: "确定", style: .default))
+    presenter.present(alert, animated: true)
 }
 
 struct NavComposeView: UIViewControllerRepresentable {
@@ -42,7 +56,7 @@ private struct PlaceholderScreen: View {
 struct ContentView: View {
     var body: some View {
         TabView {
-            TestComposeView()
+            HomeComposeView()
                 .ignoresSafeArea(.keyboard) // Compose has own keyboard handler
                 .tabItem {
                     Label("首页", systemImage: "house")

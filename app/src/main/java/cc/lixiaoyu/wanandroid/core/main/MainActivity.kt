@@ -3,6 +3,8 @@ package cc.lixiaoyu.wanandroid.core.main
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Build
+import cc.lixiaoyu.wanandroid.core.theme.ThemeManager
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -27,12 +29,15 @@ import cc.lixiaoyu.wanandroid.core.search.SearchActivity
 import cc.lixiaoyu.wanandroid.core.knowledgemap.KnowledgeMapFragment
 import cc.lixiaoyu.wanandroid.core.settings.KmpSettingsActivity
 import cc.lixiaoyu.wanandroid.databinding.ActivityMainBinding
-import cc.lixiaoyu.wanandroid.util.behavior.IJumpToTop
+import cc.lixiaoyu.wanandroid.core.home.HomeNavigator
+import cc.lixiaoyu.wanandroid.core.account.ui.LoginActivity
+import cc.lixiaoyu.wanandroid.kmp.home.Article
+import cc.lixiaoyu.wanandroid.kmp.home.plainText
 import cc.lixiaoyu.wanandroid.util.ToastUtil
 import com.ashokvarma.bottomnavigation.BottomNavigationBar
 import com.ashokvarma.bottomnavigation.BottomNavigationItem
 
-class MainActivity : AppCompatActivity(), NavWebDetailOpener, DiscoverWebDetailOpener, MineActionHandler {
+class MainActivity : AppCompatActivity(), NavWebDetailOpener, DiscoverWebDetailOpener, MineActionHandler, HomeNavigator {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var mainVM: MainViewModel
@@ -59,6 +64,14 @@ class MainActivity : AppCompatActivity(), NavWebDetailOpener, DiscoverWebDetailO
         mainVM = ViewModelProvider(this)[MainViewModel::class.java]
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val flags = window.decorView.systemUiVisibility
+            window.decorView.systemUiVisibility = if (ThemeManager.isDarkMode.value) {
+                flags and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv()
+            } else {
+                flags or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            }
+        }
         initView()
         subscribeObserver()
     }
@@ -67,8 +80,7 @@ class MainActivity : AppCompatActivity(), NavWebDetailOpener, DiscoverWebDetailO
         mainVM.currentTabIndex.observe(this) { index ->
             // 改变 ToolBar Title
             binding.mainPage.mainToolbar.title = getString(titleResIds[index])
-            // 隐藏或显示回到顶部按钮
-            binding.mainPage.mainBtnUp.visibility = if (index == 2 || index == 3 || index == 4) View.GONE else View.VISIBLE
+            binding.mainPage.mainToolbar.visibility = if (index == 0) View.GONE else View.VISIBLE
             // 切换 Fragment
             loadFragment(index)
         }
@@ -82,15 +94,6 @@ class MainActivity : AppCompatActivity(), NavWebDetailOpener, DiscoverWebDetailO
         initBottomNavBar()
         initDrawer()
 
-        //处理向上置顶按钮的事件
-        binding.mainPage.mainBtnUp.setOnClickListener {
-            when (mainVM.currentTabIndex.value ?: 0) {
-                0 -> (fragmentMap[HOME_FRAGMENT_TAG] as? IJumpToTop)?.jumpToListTop()
-                1 -> (fragmentMap[KNOWLEDGE_FRAGMENT_TAG] as? IJumpToTop)?.jumpToListTop()
-                2 -> Unit
-                4 -> Unit
-            }
-        }
     }
 
     /**
@@ -231,6 +234,19 @@ class MainActivity : AppCompatActivity(), NavWebDetailOpener, DiscoverWebDetailO
                 startActivity(Intent(this, SearchActivity::class.java))
         }
         return true
+    }
+
+    override fun openHomeSearch() {
+        startActivity(Intent(this, SearchActivity::class.java))
+    }
+
+    override fun openHomeArticle(article: Article) {
+        ArticleDetailActivity.actionStart(this, DetailParam(article.id, article.title.plainText(),
+            article.link, DetailParam.DetailType.ARTICLE, article.collect))
+    }
+
+    override fun openHomeLogin() {
+        startActivity(Intent(this, LoginActivity::class.java))
     }
 
     override fun openNavWebDetail(context: Context, title: String, url: String) {

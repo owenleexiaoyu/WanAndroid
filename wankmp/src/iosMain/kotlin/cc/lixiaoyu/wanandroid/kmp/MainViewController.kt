@@ -1,6 +1,8 @@
 package cc.lixiaoyu.wanandroid.kmp
 
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.window.ComposeUIViewController
 import cc.lixiaoyu.wanandroid.kmp.mine.ui.MineAction
 import cc.lixiaoyu.wanandroid.kmp.mine.ui.MineScreen
@@ -59,5 +61,41 @@ fun MineViewController() = ComposeUIViewController {
                 // iOS 侧可在后续版本接入登录/跳转等动作
             },
         )
+    }
+}
+
+/** Standalone shared home; native navigation is supplied by the iOS host. */
+fun HomeViewController(
+    onSearch: () -> Unit,
+    onArticle: (cc.lixiaoyu.wanandroid.kmp.home.Article) -> Unit,
+    onLogin: () -> Unit,
+) = ComposeUIViewController {
+    val scope = androidx.compose.runtime.rememberCoroutineScope()
+    val client = androidx.compose.runtime.remember { createNavigationHttpClient() }
+    val viewModel = androidx.compose.runtime.remember(client) {
+        cc.lixiaoyu.wanandroid.kmp.home.HomeViewModel(
+            cc.lixiaoyu.wanandroid.kmp.home.KtorHomeRepository(client), scope,
+        )
+    }
+    var message by androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf<String?>(null) }
+    DisposableEffect(viewModel) {
+        onDispose { viewModel.close(); client.close() }
+    }
+    WanTheme(darkTheme = androidx.compose.foundation.isSystemInDarkTheme()) {
+        cc.lixiaoyu.wanandroid.kmp.home.HomeScreen(viewModel) { effect ->
+            when (effect) {
+                cc.lixiaoyu.wanandroid.kmp.home.HomeEffect.OpenSearch -> onSearch()
+                cc.lixiaoyu.wanandroid.kmp.home.HomeEffect.RequestLogin -> onLogin()
+                is cc.lixiaoyu.wanandroid.kmp.home.HomeEffect.OpenArticle -> onArticle(effect.article)
+                is cc.lixiaoyu.wanandroid.kmp.home.HomeEffect.Message -> message = effect.text
+            }
+        }
+        message?.let { text ->
+            androidx.compose.material.AlertDialog(
+                onDismissRequest = { message = null },
+                text = { androidx.compose.material.Text(text) },
+                confirmButton = { androidx.compose.material.TextButton(onClick = { message = null }) { androidx.compose.material.Text("确定") } },
+            )
+        }
     }
 }
