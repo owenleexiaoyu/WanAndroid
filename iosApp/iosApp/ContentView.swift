@@ -26,15 +26,46 @@ private func showHomeMessage(_ text: String) {
 
 struct NavComposeView: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> UIViewController {
-        MainViewControllerKt.NavViewController()
+        MainViewControllerKt.NavViewController(
+            onOpenUrl: { _ in showHomeMessage("链接详情页尚未接入 iOS 宿主") }
+        )
+    }
+
+    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
+}
+
+struct DiscoverComposeView: UIViewControllerRepresentable {
+    func makeUIViewController(context: Context) -> UIViewController {
+        MainViewControllerKt.DiscoverViewController(
+            onOpenUrl: { _ in showHomeMessage("链接详情页尚未接入 iOS 宿主") },
+            onMessage: { showHomeMessage($0) }
+        )
+    }
+
+    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
+}
+
+struct SettingsComposeView: UIViewControllerRepresentable {
+    let onBack: () -> Void
+
+    func makeUIViewController(context: Context) -> UIViewController {
+        MainViewControllerKt.SettingsViewController(
+            onBack: onBack,
+            onMessage: { showHomeMessage($0) }
+        )
     }
 
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
 }
 
 struct MineComposeView: UIViewControllerRepresentable {
+    let onSettings: () -> Void
+
     func makeUIViewController(context: Context) -> UIViewController {
-        MainViewControllerKt.MineViewController()
+        MainViewControllerKt.MineViewController(
+            onSettings: onSettings,
+            onMessage: { showHomeMessage($0) }
+        )
     }
 
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
@@ -54,6 +85,8 @@ private struct PlaceholderScreen: View {
 }
 
 struct ContentView: View {
+    @State private var showSettings = false
+
     var body: some View {
         TabView {
             HomeComposeView()
@@ -67,7 +100,8 @@ struct ContentView: View {
                     Label("体系", systemImage: "square.grid.2x2")
                 }
 
-            PlaceholderScreen(title: "发现")
+            DiscoverComposeView()
+                .ignoresSafeArea(.keyboard)
                 .tabItem {
                     Label("发现", systemImage: "safari")
                 }
@@ -78,14 +112,15 @@ struct ContentView: View {
                     Label("导航", systemImage: "map")
                 }
 
-            MineComposeView()
+            MineComposeView(onSettings: { showSettings = true })
                 .ignoresSafeArea(.keyboard) // Compose has own keyboard handler
                 .tabItem {
                     Label("我的", systemImage: "person")
                 }
         }
+        .fullScreenCover(isPresented: $showSettings) {
+            SettingsComposeView(onBack: { showSettings = false })
+                .ignoresSafeArea(.keyboard)
+        }
     }
 }
-
-
-

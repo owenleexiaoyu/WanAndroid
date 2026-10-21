@@ -3,6 +3,7 @@ package cc.lixiaoyu.wanandroid.kmp.discover.mvi
 import cc.lixiaoyu.wanandroid.kmp.discover.domain.DiscoverRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,7 +15,7 @@ class DiscoverStore(
     private val repository: DiscoverRepository,
     scope: CoroutineScope,
 ) {
-    private val storeScope = CoroutineScope(scope.coroutineContext + SupervisorJob())
+    private val storeScope = CoroutineScope(scope.coroutineContext + SupervisorJob(scope.coroutineContext[Job]))
 
     private val _state = MutableStateFlow(DiscoverState())
     val state: StateFlow<DiscoverState> = _state

@@ -4,6 +4,7 @@ import cc.lixiaoyu.wanandroid.kmp.nav.domain.NavRepository
 import cc.lixiaoyu.wanandroid.kmp.nav.util.decodeHtmlEntities
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,7 +16,7 @@ class NavStore(
     private val repository: NavRepository,
     scope: CoroutineScope,
 ) {
-    private val storeScope = CoroutineScope(scope.coroutineContext + SupervisorJob())
+    private val storeScope = CoroutineScope(scope.coroutineContext + SupervisorJob(scope.coroutineContext[Job]))
 
     private val _state = MutableStateFlow(NavState(isLoading = true))
     val state: StateFlow<NavState> = _state
