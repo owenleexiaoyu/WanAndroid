@@ -81,21 +81,9 @@ fun HomeScreen(viewModel: HomeViewModel, modifier: Modifier = Modifier, onEffect
                         chapters.loaded && chapters.items.isEmpty() -> StatusPanel("暂无分类")
                         chapters.items.isNotEmpty() -> {
                             val selected = chapters.items.indexOfFirst { it.id == state.selectedChapters[tab] }.coerceAtLeast(0)
-                            ScrollableTabRow(selectedTabIndex = selected, edgePadding = 8.dp,
-                                backgroundColor = MaterialTheme.wanColors.surface, indicator = {}, divider = {}) {
-                                chapters.items.forEachIndexed { child, chapter ->
-                                    val active = selected == child
-                                    Tab(selected = active, onClick = {
-                                        if (active) scrollRequests.tryEmit(FeedKey(tab, chapter.id))
-                                        else viewModel.dispatch(HomeIntent.SelectChapter(tab, chapter.id))
-                                    }) {
-                                        Text(chapter.name.plainText(), fontSize = 13.sp,
-                                            color = if (active) MaterialTheme.wanColors.textPrimary else MaterialTheme.wanColors.textSecondary,
-                                            modifier = Modifier.padding(horizontal = 6.dp, vertical = 10.dp)
-                                                .background(if (active) MaterialTheme.wanColors.divider else MaterialTheme.wanColors.pageBackground, RoundedCornerShape(20.dp))
-                                                .padding(horizontal = 16.dp, vertical = 6.dp))
-                                    }
-                                }
+                            ChapterCapsuleTabs(chapters.items, chapters.items[selected].id) { chapter ->
+                                if (chapter.id == chapters.items[selected].id) scrollRequests.tryEmit(FeedKey(tab, chapter.id))
+                                else viewModel.dispatch(HomeIntent.SelectChapter(tab, chapter.id))
                             }
                             // Categories switch only on click; horizontal gestures belong to the main pager.
                             val key = FeedKey(tab, chapters.items[selected].id)
@@ -119,16 +107,47 @@ fun HomeScreen(viewModel: HomeViewModel, modifier: Modifier = Modifier, onEffect
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun ArticleFeed(key: FeedKey, state: HomeState, viewModel: HomeViewModel, scrollRequests: Flow<FeedKey>) {
-    val feed = state.feeds[key] ?: FeedState()
+    ArticleList(
+        feed = state.feeds[key] ?: FeedState(),
+        style = when (key.tab) {
+            HomeTab.Hot -> ArticleCellStyle.HeaderAuthor
+            HomeTab.Project -> ArticleCellStyle.Project
+            HomeTab.Square, HomeTab.WeChat -> ArticleCellStyle.FooterAuthor
+        }, collecting = state.collecting,
+        active = state.selectedTab == key.tab && (!key.tab.hasChapters || state.selectedChapters[key.tab] == key.chapterId),
+        scrollRequests = remember(key, scrollRequests) { scrollRequests.filter { it == key }.map { Unit } },
+        onRefresh = { viewModel.dispatch(HomeIntent.Refresh(key)) },
+        onLoadMore = { viewModel.dispatch(HomeIntent.LoadMore(key)) },
+        onArticle = { viewModel.dispatch(HomeIntent.OpenArticle(it)) },
+        onCollect = { viewModel.dispatch(HomeIntent.ToggleCollect(it)) },
+    )
+}
+
+/** Shared pagination, refresh and cell presentation for home and knowledge feeds. */
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun ArticleList(
+    feed: FeedState,
+    style: ArticleCellStyle,
+    collecting: Set<Int>,
+    active: Boolean,
+    scrollRequests: Flow<Unit>,
+    onRefresh: () -> Unit,
+    onLoadMore: () -> Unit,
+    onArticle: (Article) -> Unit,
+    onCollect: (Int) -> Unit,
+) {
+    val currentOnRefresh by rememberUpdatedState(onRefresh)
+    val currentOnLoadMore by rememberUpdatedState(onLoadMore)
     val listState = rememberLazyListState()
     val currentFeed by rememberUpdatedState(feed)
-    LaunchedEffect(key, listState) {
-        scrollRequests.filter { it == key }.collectLatest { listState.animateScrollToItem(0) }
+    LaunchedEffect(listState, scrollRequests) {
+        scrollRequests.collectLatest { listState.animateScrollToItem(0) }
     }
     // Only the visible list can request another page. Layout changes after a page is
     // appended re-evaluate the threshold, including short/filtered API pages.
-    LaunchedEffect(key, listState, state.selectedTab, state.selectedChapters[key.tab]) {
-        if (state.selectedTab != key.tab || (key.tab.hasChapters && state.selectedChapters[key.tab] != key.chapterId)) return@LaunchedEffect
+    LaunchedEffect(listState, active) {
+        if (!active) return@LaunchedEffect
         snapshotFlow {
             val data = currentFeed
             val last = listState.layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: -1
@@ -136,31 +155,30 @@ private fun ArticleFeed(key: FeedKey, state: HomeState, viewModel: HomeViewModel
         }.collect { (nearEnd, _, busy) ->
             val data = currentFeed
             if (nearEnd && !busy && data.initialized && !data.endReached && data.error == null) {
-                viewModel.dispatch(HomeIntent.LoadMore(key))
+                currentOnLoadMore()
             }
         }
     }
-    val refresh = rememberPullRefreshState(feed.refreshing, { viewModel.dispatch(HomeIntent.Refresh(key)) })
+    val refresh = rememberPullRefreshState(feed.refreshing, { currentOnRefresh() })
     Box(Modifier.fillMaxSize().pullRefresh(refresh).background(MaterialTheme.wanColors.pageBackground)) {
         LazyColumn(state = listState, modifier = Modifier.fillMaxSize(), contentPadding = PaddingValues(top = 8.dp)) {
             if (feed.articles.isEmpty()) item {
                 when {
                     feed.refreshing || !feed.initialized && feed.error == null -> StatusPanel("正在加载…", loading = true)
-                    feed.error != null -> StatusPanel(feed.error, "重试") { viewModel.dispatch(HomeIntent.Refresh(key)) }
-                    else -> StatusPanel("暂无文章", "刷新") { viewModel.dispatch(HomeIntent.Refresh(key)) }
+                    feed.error != null -> StatusPanel(feed.error, "重试") { currentOnRefresh() }
+                    else -> StatusPanel("暂无文章", "刷新") { currentOnRefresh() }
                 }
             }
             items(feed.articles, key = { it.id }) { article ->
-                ArticleCell(article, key.tab, article.id in state.collecting,
-                    onClick = { viewModel.dispatch(HomeIntent.OpenArticle(article)) },
-                    onCollect = { viewModel.dispatch(HomeIntent.ToggleCollect(article.id)) })
+                ArticleCell(article, style, article.id in collecting,
+                    onClick = { onArticle(article) }, onCollect = { onCollect(article.id) })
                 Spacer(Modifier.height(8.dp))
             }
             if (feed.articles.isNotEmpty()) item {
                 when {
                     feed.loadingMore -> StatusPanel("正在加载更多…", loading = true)
                     feed.error != null -> StatusPanel(feed.error, "重试") {
-                        viewModel.dispatch(if (feed.refreshFailed || !feed.initialized) HomeIntent.Refresh(key) else HomeIntent.LoadMore(key))
+                        if (feed.refreshFailed || !feed.initialized) currentOnRefresh() else currentOnLoadMore()
                     }
                     feed.endReached -> StatusPanel("没有更多了")
                 }
@@ -170,11 +188,13 @@ private fun ArticleFeed(key: FeedKey, state: HomeState, viewModel: HomeViewModel
     }
 }
 
-/** One cell, with explicit presentation differences for the four feeds. */
+enum class ArticleCellStyle { HeaderAuthor, FooterAuthor, Project }
+
+/** One cell, configured by presentation rather than a page's identity. */
 @Composable
-fun ArticleCell(article: Article, tab: HomeTab, collecting: Boolean, onClick: () -> Unit, onCollect: () -> Unit) {
-    val authorAtBottom = tab == HomeTab.Square || tab == HomeTab.WeChat
-    val project = tab == HomeTab.Project
+fun ArticleCell(article: Article, style: ArticleCellStyle, collecting: Boolean, onClick: () -> Unit, onCollect: () -> Unit) {
+    val authorAtBottom = style == ArticleCellStyle.FooterAuthor
+    val project = style == ArticleCellStyle.Project
     val author = article.displayAuthor.plainText()
     val category = if (authorAtBottom) "" else article.displayCategory
     val colors = MaterialTheme.wanColors

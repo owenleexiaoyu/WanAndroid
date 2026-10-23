@@ -128,6 +128,7 @@ class HomeViewModel(
                 repository.collect(id, !article.collect)
                 if (session == sessionGeneration) {
                     setCollected(id, !article.collect)
+                    HomeCollectionEvents.publish(id, !article.collect)
                     emit(HomeEffect.Message(if (article.collect) "取消收藏成功" else "收藏成功"))
                 }
             } catch (e: CancellationException) { throw e }

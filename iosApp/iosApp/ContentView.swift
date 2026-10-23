@@ -71,17 +71,16 @@ struct MineComposeView: UIViewControllerRepresentable {
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
 }
 
-private struct PlaceholderScreen: View {
-    let title: String
-
-    var body: some View {
-        NavigationView {
-            Text(title)
-                .font(.title2)
-                .foregroundColor(.secondary)
-                .navigationBarTitle(title, displayMode: .inline)
-        }.navigationViewStyle(.stack)
+struct KnowledgeComposeView: UIViewControllerRepresentable {
+    func makeUIViewController(context: Context) -> UIViewController {
+        MainViewControllerKt.KnowledgeViewController(
+            onArticle: { _ in showHomeMessage("文章详情页尚未接入 iOS 宿主") },
+            onLogin: { showHomeMessage("请先登录，iOS 登录页尚未接入") },
+            onMessage: { showHomeMessage($0) }
+        )
     }
+
+    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
 }
 
 struct ContentView: View {
@@ -95,7 +94,8 @@ struct ContentView: View {
                     Label("首页", systemImage: "house")
                 }
 
-            PlaceholderScreen(title: "体系")
+            KnowledgeComposeView()
+                .ignoresSafeArea(.keyboard)
                 .tabItem {
                     Label("体系", systemImage: "square.grid.2x2")
                 }

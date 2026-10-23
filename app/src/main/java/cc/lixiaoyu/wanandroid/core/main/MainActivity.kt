@@ -80,7 +80,7 @@ class MainActivity : AppCompatActivity(), NavWebDetailOpener, DiscoverWebDetailO
         mainVM.currentTabIndex.observe(this) { index ->
             // 改变 ToolBar Title
             binding.mainPage.mainToolbar.title = getString(titleResIds[index])
-            binding.mainPage.mainToolbar.visibility = if (index == 0) View.GONE else View.VISIBLE
+            binding.mainPage.mainToolbar.visibility = if (index == 0 || index == 1) View.GONE else View.VISIBLE
             // 切换 Fragment
             loadFragment(index)
         }

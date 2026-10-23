@@ -4,81 +4,54 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.util.TypedValue
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
-import androidx.recyclerview.widget.LinearLayoutManager
-import cc.lixiaoyu.wanandroid.R
-import cc.lixiaoyu.wanandroid.core.knowledgemap.model.KnowledgeNode
-import cc.lixiaoyu.wanandroid.core.knowledgemap.node.KnowledgeNodeContainerActivity
-import cc.lixiaoyu.wanandroid.databinding.FragmentKnowledgeMapBinding
-import cc.lixiaoyu.wanandroid.util.behavior.IJumpToTop
-import com.chad.library.adapter.base.BaseQuickAdapter
-import kotlinx.coroutines.launch
+import cc.lixiaoyu.wanandroid.core.account.AccountManager
+import cc.lixiaoyu.wanandroid.core.home.HomeNavigator
+import cc.lixiaoyu.wanandroid.kmp.knowledge.KnowledgeEffect
+import cc.lixiaoyu.wanandroid.kmp.knowledge.KnowledgeIntent
+import cc.lixiaoyu.wanandroid.kmp.knowledge.KnowledgeScreen
+import cc.lixiaoyu.wanandroid.kmp.theme.ThemeControllerRegistry
+import cc.lixiaoyu.wanandroid.kmp.theme.WanTheme
+import cc.lixiaoyu.wanandroid.util.ToastUtil
 
-class KnowledgeMapFragment : Fragment(), IJumpToTop {
+class KnowledgeMapFragment : Fragment() {
+    private val viewModel by lazy { ViewModelProvider(this)[KnowledgeMapViewModel::class.java] }
 
-    private lateinit var binding: FragmentKnowledgeMapBinding
-    private lateinit var viewModel: KnowledgeMapViewModel
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this)[KnowledgeMapViewModel::class.java]
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentKnowledgeMapBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        initView()
-    }
-
-    private fun initView() {
-        val knowledgeMapAdapter = KnowledgeMapAdapter(
-            R.layout.item_knowledge_system_category, emptyList()
-        ).apply {
-            onItemClickListener = BaseQuickAdapter.OnItemClickListener { _, _, position ->
-                val knowledgeNode = data[position]
-                goToKnowledgeNodePage(knowledgeNode)
-            }
-        }
-        binding.knowledgeNodeList.apply {
-            adapter = knowledgeMapAdapter
-            layoutManager = LinearLayoutManager(activity)
-        }
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.knowledgeNodeList.collect {
-                    knowledgeMapAdapter.setNewData(it)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        val navigator = requireActivity() as HomeNavigator
+        return ComposeView(requireContext()).apply {
+            val bottomBarSize = TypedValue()
+            requireContext().theme.resolveAttribute(androidx.appcompat.R.attr.actionBarSize, bottomBarSize, true)
+            setPadding(0, 0, 0, TypedValue.complexToDimensionPixelSize(bottomBarSize.data, resources.displayMetrics))
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+            setContent {
+                val dark by ThemeControllerRegistry.controller.isDarkMode.collectAsState()
+                WanTheme(darkTheme = dark) {
+                    KnowledgeScreen(viewModel.shared) { effect ->
+                        when (effect) {
+                            KnowledgeEffect.RequestLogin -> navigator.openHomeLogin()
+                            is KnowledgeEffect.OpenArticle -> navigator.openHomeArticle(effect.article)
+                            is KnowledgeEffect.Message -> ToastUtil.showToast(effect.text)
+                        }
+                    }
                 }
             }
         }
     }
-
-    private fun goToKnowledgeNodePage(knowledgeNode: KnowledgeNode) {
-        activity?.let {
-            KnowledgeNodeContainerActivity.actionStart(it, knowledgeNode)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        AccountManager.isLoginLiveData.observe(viewLifecycleOwner) {
+            viewModel.shared.dispatch(KnowledgeIntent.SessionChanged(it))
         }
     }
-
-    /**
-     * 回到列表顶部
-     */
-    override fun jumpToListTop() {
-        binding.knowledgeNodeList.smoothScrollToPosition(0)
+    override fun onResume() {
+        super.onResume()
+        viewModel.shared.dispatch(KnowledgeIntent.SessionChanged(AccountManager.isLogin()))
     }
-
-    companion object {
-        fun newInstance(): KnowledgeMapFragment {
-            return KnowledgeMapFragment()
-        }
-    }
+    companion object { fun newInstance() = KnowledgeMapFragment() }
 }

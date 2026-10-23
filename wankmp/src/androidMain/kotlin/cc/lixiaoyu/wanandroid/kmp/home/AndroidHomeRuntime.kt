@@ -10,10 +10,13 @@ import okhttp3.CookieJar
 
 /** Shares authentication storage with the legacy client, but owns its engine. */
 class AndroidHomeRuntime(cookieJar: CookieJar, scope: CoroutineScope, loggedIn: Boolean) {
-    private val client = HttpClient(OkHttp) {
-        engine { config { cookieJar(cookieJar) } }
-        install(ContentNegotiation) { json(createDefaultJson()) }
-    }
+    private val client = createAuthenticatedHomeHttpClient(cookieJar)
     val viewModel = HomeViewModel(KtorHomeRepository(client), scope, loggedIn)
     fun close() { viewModel.close(); client.close() }
+}
+
+/** Common Android session transport for shared article features. */
+internal fun createAuthenticatedHomeHttpClient(cookieJar: CookieJar) = HttpClient(OkHttp) {
+    engine { config { cookieJar(cookieJar) } }
+    install(ContentNegotiation) { json(createDefaultJson()) }
 }

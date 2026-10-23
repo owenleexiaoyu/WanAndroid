@@ -124,3 +124,28 @@ fun HomeViewController(
         }
     }
 }
+
+
+fun KnowledgeViewController(
+    onArticle: (cc.lixiaoyu.wanandroid.kmp.home.Article) -> Unit,
+    onLogin: () -> Unit,
+    onMessage: (String) -> Unit,
+) = ComposeUIViewController {
+    val scope = rememberCoroutineScope()
+    val client = remember { createNavigationHttpClient() }
+    val viewModel = remember(client) {
+        cc.lixiaoyu.wanandroid.kmp.knowledge.KnowledgeViewModel(
+            cc.lixiaoyu.wanandroid.kmp.knowledge.KtorKnowledgeRepository(client), scope,
+        )
+    }
+    DisposableEffect(viewModel) { onDispose { viewModel.close(); client.close() } }
+    IosWanTheme {
+        cc.lixiaoyu.wanandroid.kmp.knowledge.KnowledgeScreen(viewModel) { effect ->
+            when (effect) {
+                is cc.lixiaoyu.wanandroid.kmp.knowledge.KnowledgeEffect.OpenArticle -> onArticle(effect.article)
+                cc.lixiaoyu.wanandroid.kmp.knowledge.KnowledgeEffect.RequestLogin -> onLogin()
+                is cc.lixiaoyu.wanandroid.kmp.knowledge.KnowledgeEffect.Message -> onMessage(effect.text)
+            }
+        }
+    }
+}

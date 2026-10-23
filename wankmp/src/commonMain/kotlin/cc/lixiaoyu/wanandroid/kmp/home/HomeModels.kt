@@ -37,7 +37,7 @@ data class ArticlePage(
 )
 
 @Serializable
-data class Chapter(val id: Int, val name: String = "")
+data class Chapter(val id: Int, val name: String = "", val children: List<Chapter> = emptyList())
 
 fun String.plainText(): String = replace(Regex("(?i)<br\\s*/?>"), "\n")
     .replace(Regex("<[^>]*>"), "").decodeHtmlEntities().trim()
